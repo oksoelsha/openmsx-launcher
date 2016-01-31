@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Konami MSX SCC 1987 128<256",
+        "filters": [
+            {
+                "type": "COMPANY",
+                "value1": "Konami"
+            },
+            {
+                "type": "COUNTRY",
+                "value1": "JP"
+            },
+            {
+                "type": "SOUND",
+                "value1": "SCC"
+            },
+            {
+                "type": "GENERATION",
+                "value1": "MSX"
+            },
+            {
+                "type": "YEAR",
+                "value1": "1987",
+                "filterParameter": "EQUAL"
+            },
+            {
+                "type": "SIZE",
+                "value1": "131072",
+                "value2": "262144",
+                "filterParameter": "BETWEEN_INCLUSIVE"
+            }
+        ]
+    },
+    {
+        "name": "MSX-Music >1988",
+        "filters": [
+            {
+                "type": "SOUND",
+                "value1": "MSX_MUSIC"
+            },
+            {
+                "type": "SOUND",
+                "value1": "MSX_AUDIO"
+            },
+            {
+                "type": "YEAR",
+                "value1": "1988",
+                "filterParameter": "GREATER"
+            },
+            {
+                "type": "GENRE",
+                "value1": "SIMULATION"
+            }
+        ]
+    },
+    {
+        "name": "Scripts",
+        "filters": [
+            {
+                "type": "MEDIUM",
+                "value1": "SCRIPT"
+            }
+        ]
+    }
+]

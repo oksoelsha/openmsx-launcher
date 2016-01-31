@@ -1,0 +1,33 @@
+-- Database containing extra data for blueMSX Launcher but without versions section
+--
+-- The initial SHA1-to-Generaion-MSX id mapping in version 1.10 was taken from openMSX game ROM database
+-- Thanks to Sandy Pleyte from Generation-MSX for providing the iniial set (version 1.10) of generation (or system),sound chip and genre data based on game id
+--
+#2
+1,1,1
+5c3376ead0fa7541ff5e92ddb887ad3422a50196|c81e6b8949b5d57ad6b527b418cd2cd8d2c37bcf
+#261
+1,1,39
+9b55970341aaab59a73ae921c6ccf29009c1a8f0|56c4813ac549af8711b2e2e42d7db1b960c4c040
+#262
+1,1,39
+be16501255617bade264dbf63dc59008e1d84ac8|cc9a82898da39e5cfeb0400006d093d3b869f28c|8a3886d49fdecd92d37cfa418ab56c7c9c285a92
+#389
+1,1,44,-b
+7f7f710bcd7fabd6650007e4cf8a0561510fc3c0|080f73e12e1dc1c3be4a443d73dc639c4f7ea320
+#389
+1,1,44,-c
+2958ad169d53c7f9a68ded1230d5088dd08b337e
+#572
+1,1,1|25
+c9d10b1df3bcadb3d917cf2a6877ae6e71ca3a57|ddc1824826d78e29261b30a675bff9862f308392|7d566809ea870ab681680ba3daa8946cfcb060e5
+#961
+10,17,24|25,-en
+bfbd5cddc38b5f65543f41562a6be749beae9516
+#1797
+2,128,
+e5f090574f8043f13e86b61486f23f92138ced01|3454a11bf2e3858830f7ff96ab74b88a828a18bf
+-- Montana John
+#10003
+3,3,1
+9f2fb5f31c2bcff949e08449f197b0c31bdebe50|b493dd7d082e25fc40ad1cccc364e1945590a2f9|3ff276af654c7dc712abed79d9123317ce79b4e4|65160f0d59068dbbf76b11bc79e17a9369c8dcee
