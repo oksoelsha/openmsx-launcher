@@ -1,0 +1,266 @@
+<html>
+<head>
+<title>openMSX Launcher</title>
+<style>
+<!--
+.tab { margin-left: 30px; }
+.double-tab { margin-left: 60px; }
+table { border-collapse: collapse; }
+table, td, th { border: 1px solid black;}
+th { padding: 6px; text-align: left; }
+td { padding: 12px; }
+-->
+</style></head>
+
+<body>
+
+<h2>openMSX Launcher v1.5</h2>
+openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
+
+<p></p>
+After starting the launcher for the first time, you need to set a few fields in the settings window.
+
+<hr></hr>
+
+<h3><u>First time installation</u></h3>
+
+<p class="tab"><b>Windows</b>: unzip the Windows package anywhere on your system.</p>
+
+<p class="tab"><b>MacOS</b>: open the downloaded DMG and drag "openMSX Launcher.app" into your "Applications" directory.</p>
+
+<p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
+
+<h3><u>Upgrade from previous version (1.4)</u></h3>
+
+Databases created in previous versions are fully compatible with the current version.
+
+<p class="tab"><b>Windows</b>: if you have Java Runtime Environment (JRE) 8 installed then you can upgrade from within the
+Help->Check for Updates window. After you download, you need to restart the launcher. If you don't have JRE 8 installed,
+download the ZIP package from msxlaunchers.info and unzip it anywhere on your system. Replace the old exe, lib directory,
+extra-data.dat and README.html files with the new versions. Leave everything else untouched.</p>
+
+<p class="tab"><b>MacOS</b>: Upgrade from within the Help->Check for Updates window. After you download, you need to restart
+the launcher.</p>
+
+<p class="tab"><b>Linux/BSD</b>: Upgrade from within the Help->Check for Updates window. After you download, you need to restart
+the launcher.</p>
+
+<h3><u>How to start</u></h3>
+
+<p class="tab"><b>Windows</b>: double-click on the exe file.</p>
+
+<p class="tab"><b>MacOS</b>: double-click on the application icon.</p>
+
+<p class="tab"><b>Linux/OpenBSD</b>: type and enter openmsx-launcher.run in a terminal window. In a GNOME environment you can create a
+shortcut to the launcher</p>
+
+<h3><u>Settings</u></h3>
+
+1) Emulator and machines directories:
+
+<p><u>Note:</u> the detect button will 'suggest' the path to the openMSX based on the platform. Try that first, and if that doesn't
+work you can enter it manually.</p>
+
+<p class="tab"><b>Windows</b>:</p>
+<p class="double-tab">Emulator: &lt;Path&gt;\</p>
+
+<p class="tab"><b>Mac</b>:</p>
+<p class="double-tab">Emulator: /Applications</p>
+
+<p class="tab"><b>Linux (Debian, fedora, ubuntu)</b>:</p>
+<p class="double-tab">Emulator: /usr/bin</p>
+
+<p class="tab"><b>FreeBSD</b></p>
+<p class="double-tab">Emulator: /usr/local/bin</p>
+
+<p></p>
+2) Screenshots: This is the directory where game screenshots can be found. This collection of screenshots is the one used by blueMSX Launcher,
+and can be downloaded from: http://msxlaunchers.info.
+
+<p></p>
+3) Database: This is the database to display automatically when the launcher is started.
+
+<p></p>
+4) Language: openMSX Launcher supports many languages. When the launcher is started, it will try
+to detect the language of the system automatically. If that fails (i.e. if it still
+uses English text even if your system language is different), you can force the
+language selection here.
+
+<h3><u>Fill Database</u></h3>
+This is a tool that scans your storage drive for MSX software supported by openMSX and adds it to the launcher databases.
+
+<h3><u>Favorites</u></h3>
+Favorites button is located above the four main buttons. When pressing it, a menu containing the currently saved favorites appears.
+You can go straight to your favorite game by selecting one from the list. You can also delete the favorite there as well.
+
+<h3><u>Filters</u></h3>
+Filters button can be found under the game list. When pressing it, a menu pops up with a list of saved filters,
+small buttons to either delete or edit saved filters and options to reset current filters and add new ones.
+
+<h3><u>Update All Databases</u></h3>
+This is a tool that updates extra data for games in all databases (including update display of screenshots) when there's
+a new version of the extra-data.dat file and screenshots. It will also fix a bug that existed in versions
+1.0 and 1.1 where some fields were not set correctly when using the 'Fill database' feature.
+
+<h3><u>Right-click context menu</u></h3>
+When right-clicking on one or more selected profiles in the games list, a context menu appears with the followig items:
+<br></br>
+1) Move: this allows you to move the selected profiles to other databases. A confirmation dialog with many options
+appears in case of conflicts.
+<br></br>
+2) Locate File: this only works on a single selection and it brings up the current platform's file manager. File
+Explorer on Windows and Finder on MacOS will open up with the profile's main file highlighted. On Linux running
+GNOME, nautilus will open up with the directory where game's main file is.
+<br></br>
+3) Add to Favorites: add the selected game to the list of favorites. The list is accessible through the favorites button
+in the main window.
+<br></br>
+4) Info: this displays the user-specified info file using the system's default viewer. In the "Fill Database" feature, this
+field gets set to the game's MSX Generation page, but it can be anything the user desires (text file, PDF, etc).
+<br></br>
+5) Properties: this only works on a single selection and it brings up the properties screen for the selected game.
+
+<h3><u>Database Manager</u></h3>
+This can be accessed from the Tools menu. There you can rename or delete existing databases. You can also view, restore or delete backups.
+Backups are identified by their timestamps.
+
+<h3><u>Drag and Drop</u></h3>
+You can drag and drop game files and directories to the main launcher window for quick adding to the current database.
+
+<h3><u>Keyboard short-cuts</u></h3>
+<table>
+<tr><th>Windows / Linux / BSD</th><th>Mac</th><th>Action</th></tr>
+<tr><td>Enter</td><td>Enter</td><td>Launch</td></tr>
+<tr><td>Del</td><td>Del</td><td>Remove profile button</td></tr>
+<tr><td>Insert</td><td>Insert</td><td>Add profile button</td></tr>
+<tr><td>Ctrl+E</td><td>Command+E</td><td>Add profile button</td></tr>
+<tr><td>Ctrl+D</td><td>Command+D</td><td>Add to Favorites</td></tr>
+<tr><td>F1</td><td>F1</td><td>Info button</td></tr>
+<tr><td>Ctrl+X</td><td>Command+X</td><td>Move profile</td></tr>
+<tr><td>Ctrl+Shift+F</td><td>Command+Shift+F</td><td>Locate file</td></tr>
+<tr><td>Ctrl+F1</td><td>Command+F1</td><td>Properties</td></tr>
+</table>
+
+<h3><u>To do in future versions</u></h3>
+
+1) Android version (I developed a prototype but openMSX on Android doesn't accept arguments when started from a different App therefore I stopped).
+<br></br>
+2) Catapult features.
+<br></br>
+3) Search.
+<br></br>
+4) User-defined fields.
+<br></br>
+5) Play stats.
+
+<h3><u>Support/Suggestions/Questions/Translation fixes/New translations</u></h3>
+Email Sam Elsharif at oelsha at engineer dot com.
+
+<h3><u>Release history</u></h3>
+
+<b>Version 1.5 - released October 17, 2015</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Switched to JDK 8. Now Java Runtime Environment 8 or higher is needed to run the launcher</li>
+<li>Added support for viewing, deleting and restoring database backups</li>
+<li>Drag and drop game files and directories on the main window of the launcher for quick adding to the current database</li>
+</ul>
+Bug fixes:
+<ul>
+<li>Fixed many minor bugs</li>
+</ul>
+
+<b>Version 1.4 - released Feb 7, 2015</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added favorites support</li>
+<li>Added ability to check for updates from within the launcher and the ability to update automatically</li>
+<li>Made changes to main window</li>
+<li>Allow only one instance of the launcher to run</li>
+</ul>
+Bug fixes:
+<ul>
+<li>The extensions list in the Add/Edit profile was not showing the extensions for the latest versions of openMSX
+after the switch from directories to XML files. This should work now for all versions of openMSX. There is similar to the machines
+listing bug that was fixed in the previous version of the launcher</li>
+</ul>
+Internal changes:
+<ul>
+<li>Switched to an embedded database (Apache Derby) from CSV files to store launcher data. All user's CSV files are migrated to the new embedded database automatically when new launcher is started for the first time</li>
+<li>Old backups are deleted. The new version allows to take backups but they still cannot be restored</li>
+</ul>
+
+<b>Version 1.3 - released July 6, 2014</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Switched to JDK 7. Now Java Runtime Environment 7 or higher is needed to run the launcher</li>
+<li>Added Database Manager to rename or delete databases</li>
+<li>Simplified the settings window by removing the machines field and adding a button to detect the openMSX path (Note: Mac users
+need to set the openMSX path value to /Applications or the directory where the launcher is installed)</li>
+<li>The update all databases tool now returns the number of updated profiles</li>
+<li>Added keyboard short-cuts</li>
+<li>Added a tool to import blueMSX Launcher databases (only for the Windows version)</li>
+<li>Added total known dumps to the profile properties window</li>
+</ul>
+Bug fixes:
+<ul>
+<li>The machines list in the Add/Edit profile and Fill Database screens was not showing the machines for the latest versions of openMSX
+after the switch from directories to XML files. This should work now for all versions of openMSX</li>
+</ul>
+
+<b>Version 1.2 - released May 4, 2014</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added ability to filter databases by company, year, country, medium, size, MSX generation, sound chip and genre</li>
+<li>Added game properties in the right-click contect menu</li>
+<li>Added ability to update game extra data in all databases. Useful when there's a new version of the accompanying extra-data.dat file</li>
+<li>Added slight display improvements to the Mac version</li>
+<li>Added ability to select a game in the list by typing the first few letters of its name</li>
+</ul>
+Bug fixes:
+<ul>
+<li>Some fields set internally in the game profile (and only now displayable in the new properties screen) were not correct.
+The new 'Update all databases' feature fixes that automatically</li>
+</ul>
+
+<b>Version 1.1 - released Sep 7, 2013</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added ability to move games between databases via the right-click context menu</li>
+<li>Added ability to bring up the platform's file manager (File Explorer on Windows, Finder on MacOS, etc) via the
+right-click context menu</li>
+<li>Added menu item in the Help menu to bring up the help file</li>
+<li>Added ability to create empty databases</li>
+<li>Added a bar above the game list to show company, year and size of file of the selected game</li>
+<li>File fields in Add/Edit screens now support drag and drop of files</li>
+<li>If a script is defined in the profile then it will override all other fields when openMSX is launched</li>
+<li>Many other minor enhancements</li>
+</ul>
+Bug fixes:
+<ul>
+<li>When adding a new game or editing a new one, the recorded size for ZIP files, which is stored in the database,
+is wrong. This will be seen with this new version where the size displayed in the bar above the game list will be
+that of the ZIP file rather than the original size. In order to fix it, just edit the game and save immediately
+without modifying any other fields</li>
+</ul>
+
+<p></p>
+<b>Version 1.0 - released Jul 8, 2013</b>
+
+<ul>
+<li>Create multiple databases of all MSX software supported by openMSX</li>
+<li>Scan the hard disk to automatically fill launcher databases with ROMs, disks, tapes, hard disks and laserdiscs,
+and sync the database to your hard disk any time later.
+Display two screenshots for each game</li>
+<li>Display the text on the launcher using a number of supported languages (English, Arabic, Catalan, Chinese
+Simplified, Chinese Traditional, Dutch, Finnish, French, German, Italian, Japanese, Korean, Persian, Portuguese,
+Russian, Spanish and Swedish)</li>
+</ul>
+
+</body>
+</html>
