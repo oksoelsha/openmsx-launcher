@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.persistence;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersister;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
+import info.msxlaunchers.openmsx.launcher.persistence.search.Finder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 
 /**
@@ -72,4 +73,11 @@ public interface LauncherPersistence
 	 * @return Reference to the settings persister
 	 */
 	SettingsPersister getSettingsPersister();
+
+	/**
+	 * Returns the database finder
+	 * 
+	 * @return Reference to the Finder
+	 */
+	Finder getFinder();
 }

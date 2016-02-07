@@ -15,7 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.favorite;
 
-import info.msxlaunchers.openmsx.launcher.data.favorite.Favorite;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.persistence.DefaultDatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.TransactionalDatabaseOperation;
@@ -36,9 +36,9 @@ final class DeleteFavoriteAction extends TransactionalDatabaseOperation<Boolean>
 	private static final String DELETE_FAVORITE_STATEMENT = "DELETE FROM favorite where IDGAME = " +
 			"(SELECT game.ID FROM game join database on game.IDDB=database.ID and game.name=? and database.name=?)";
 
-	private final Favorite favorite;
+	private final DatabaseItem favorite;
 
-	DeleteFavoriteAction( Favorite favorite )
+	DeleteFavoriteAction( DatabaseItem favorite )
 	{
 		this.favorite = favorite;
 	}

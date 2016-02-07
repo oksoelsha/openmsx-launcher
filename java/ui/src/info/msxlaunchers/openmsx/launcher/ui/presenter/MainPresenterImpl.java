@@ -20,8 +20,8 @@ import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.common.VersionUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
-import info.msxlaunchers.openmsx.launcher.data.favorite.Favorite;
 import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
@@ -722,7 +722,7 @@ final class MainPresenterImpl implements MainPresenter
 	{
 		try
 		{
-			launcherPersistence.getFavoritePersister().addFavorite( new Favorite( gameName, database ) );
+			launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( gameName, database ) );
 		}
 		catch( FavoritePersistenceException lpe )
 		{
@@ -743,9 +743,9 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onRequestListOfFavorites()
 	{
-		Set<Favorite> favorites =  new TreeSet<>( new Comparator<Favorite>() {
+		Set<DatabaseItem> favorites =  new TreeSet<>( new Comparator<DatabaseItem>() {
 			@Override
-	        public int compare( Favorite fav1, Favorite fav2 )
+	        public int compare( DatabaseItem fav1, DatabaseItem fav2 )
 			{
 	            String gameName1 = fav1.getGameName();
 	            String gameName2 = fav2.getGameName();
@@ -796,7 +796,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		try
 		{
-			launcherPersistence.getFavoritePersister().deleteFavorite( new Favorite( gameName, database ) );
+			launcherPersistence.getFavoritePersister().deleteFavorite( new DatabaseItem( gameName, database ) );
 		}
 		catch( FavoritePersistenceException fpe )
 		{

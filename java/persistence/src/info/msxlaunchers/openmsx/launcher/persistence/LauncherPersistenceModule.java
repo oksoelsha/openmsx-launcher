@@ -20,6 +20,7 @@ import java.io.File;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersisterModule;
 import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersisterModule;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersisterModule;
+import info.msxlaunchers.openmsx.launcher.persistence.search.FinderModule;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersisterModule;
 
 import com.google.inject.AbstractModule;
@@ -51,6 +52,7 @@ public class LauncherPersistenceModule extends AbstractModule
 		install( new FilterPersisterModule() );
 		install( new FavoritePersisterModule() );
 		install( new SettingsPersisterModule() );
+		install( new FinderModule() );
 	}
 
 	private static class EmbeddedDatabaseFullPathProvider implements Provider<String>

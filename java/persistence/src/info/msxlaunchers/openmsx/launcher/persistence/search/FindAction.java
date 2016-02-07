@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.persistence.favorite;
+package info.msxlaunchers.openmsx.launcher.persistence.search;
 
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
@@ -29,16 +29,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class to get all favorites
+ * Class to find games in the database given a string. The search is for partial match and in all
+ * applicable fields
  * 
- * @since v1.4
+ * @since v1.6
  * @author Sam Elsharif
  *
  */
-final class GetFavoritesAction extends NonTransactionalDatabaseOperation<Set<DatabaseItem>>
+final class FindAction extends NonTransactionalDatabaseOperation<Set<DatabaseItem>>
 {
-	private static final String GET_ALL_FAVORITES_STATEMENT = "SELECT game.name AS gameName, database.name AS database FROM database JOIN game" +
-			" ON database.id=game.IDDB join favorite ON favorite.IDGAME=game.ID";
+	private static final String GET_MATCHES_STATEMENT = "SELECT game.name AS gameName,"
+			+ " database.name AS database FROM database JOIN game" +
+			" ON database.id=game.IDDB AND (game.name like ? OR game.sha1 like ?)";
+	private final String string;
+	private final int maximumMatches;
+
+	FindAction( String string, int maximumMatches )
+	{
+		this.string = string;
+		this.maximumMatches = maximumMatches;
+	}
 
 	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.NonTransactionalDatabaseOperation#executeNonTransactionalOperation(java.sql.Connection)
@@ -46,15 +56,19 @@ final class GetFavoritesAction extends NonTransactionalDatabaseOperation<Set<Dat
 	@Override
 	public DatabaseResponse<Set<DatabaseItem>> executeNonTransactionalOperation( Connection connection) throws LauncherPersistenceException
 	{
-		Set<DatabaseItem> favorites = new HashSet<DatabaseItem>();
+		Set<DatabaseItem> matches = new HashSet<DatabaseItem>();
 
-		try( PreparedStatement statement = connection.prepareStatement( GET_ALL_FAVORITES_STATEMENT ) )
+		try( PreparedStatement statement = connection.prepareStatement( GET_MATCHES_STATEMENT ) )
 		{
+			statement.setString( 1, "%" + string + "%" );
+			statement.setString( 2, "%" + string + "%" );
+			statement.setMaxRows( maximumMatches );
+
 			try( ResultSet result = statement.executeQuery() )
 			{
 				while( result.next() )
 				{
-					favorites.add( new DatabaseItem( result.getString( "gameName" ), result.getString( "database" ) ) );
+					matches.add( new DatabaseItem( result.getString( "gameName" ), result.getString( "database" ) ) );
 				}
 			}
 		}
@@ -63,6 +77,6 @@ final class GetFavoritesAction extends NonTransactionalDatabaseOperation<Set<Dat
 			//ignore - method will return an empty Set
 		}
 
-		return new GetFavoritesResponse( Collections.unmodifiableSet( favorites ) );
+		return new FindResponse( Collections.unmodifiableSet( matches ) );
 	}
 }

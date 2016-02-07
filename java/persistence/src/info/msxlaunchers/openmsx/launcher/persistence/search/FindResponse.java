@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Sam Elsharif
+ * Copyright 2016 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.persistence.favorite;
+package info.msxlaunchers.openmsx.launcher.persistence.search;
 
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
@@ -21,27 +21,27 @@ import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 import java.util.Set;
 
 /**
- * Class to contain result of <code>GetFavoritesAction</code> operation
+ * Class to contain result of <code>FindAction</code> operation
  * 
- * @since v1.4
+ * @since v1.6
  * @author Sam Elsharif
  *
  */
-final class GetFavoritesResponse implements DatabaseResponse<Set<DatabaseItem>>
+final class FindResponse implements DatabaseResponse<Set<DatabaseItem>>
 {
-	private final Set<DatabaseItem> favorites;
+	private final Set<DatabaseItem> foundItems;
 
-	GetFavoritesResponse( Set<DatabaseItem> favorites )
+	FindResponse( Set<DatabaseItem> foundItems )
 	{
-		this.favorites = favorites;
+		this.foundItems = foundItems;
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.DatabaseResponse#getResult()
+	 * @see info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse#getResult()
 	 */
 	@Override
 	public Set<DatabaseItem> getResult()
 	{
-		return favorites;
+		return foundItems;
 	}
 }
