@@ -123,6 +123,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JComboBox<String> databaseComboBox;
 	private DefaultComboBoxModel<String> databaseComboBoxModel;
 	private JButton favoritesButton;
+	private JButton searchButton;
 	private JButton filtersButton;
 	private JLabel currentFilterLabel;
 	private JButton launchButton;
@@ -406,6 +407,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		favoritesButton.setIcon(Icons.FAVORITE.getImageIcon());
 		favoritesButton.addActionListener(this);
 
+		searchButton = new JButton();
+		searchButton.setIcon(Icons.SEARCH.getImageIcon());
+		searchButton.addActionListener(this);
+
 		filtersButton = new JButton();
 		filtersButton.setIcon(Icons.FILTER.getImageIcon());
 		filtersButton.addActionListener(this);
@@ -432,7 +437,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 							.addComponent(false, countLabel, 60, GroupLayout.DEFAULT_SIZE, 60)))
 					.addGap(20)
 					.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
-						.addComponent(favoritesButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(favoritesButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+								.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 						.addComponent(launchButtonPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(removeButtonPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(addButtonPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -467,7 +474,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(35)
-									.addComponent(favoritesButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
+											.addComponent(favoritesButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+											.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 									.addGap(115)
 									.addComponent(launchButtonPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
@@ -601,6 +610,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		databaseLabel.setText(messages.get("DATABASE"));
 		countLabel.setText(messages.get("COUNT"));
 		favoritesButton.setToolTipText(messages.get("FAVORITES"));
+		searchButton.setToolTipText(messages.get("SEARCH"));
 		filtersButton.setToolTipText(messages.get("FILTERS"));
 		launchButton.setToolTipText(messages.get("LAUNCH"));
 		removeButton.setToolTipText(messages.get("REMOVE"));
@@ -716,6 +726,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		else if(source == favoritesButton)
 		{
 			processShowFavoritesMenuRequest();
+		}
+		else if(source == searchButton)
+		{
+			System.out.println("Search...");
 		}
 		else if(source == filtersButton)
 		{

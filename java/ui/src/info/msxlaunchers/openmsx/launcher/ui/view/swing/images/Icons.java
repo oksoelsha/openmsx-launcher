@@ -44,6 +44,7 @@ public enum Icons
 	NO_SCREENSHOT( "noscrsht" ),
 
 	FAVORITE( "favorite" ),
+	SEARCH( "search" ),
 
 	ADD_SMALL( "add_small" ),
 	DELETE_SMALL( "delete_small" ),
