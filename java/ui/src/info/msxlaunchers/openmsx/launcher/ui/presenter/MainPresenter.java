@@ -338,4 +338,12 @@ public interface MainPresenter
 	 * Called when user drags and drops game files on the main window
 	 */
 	void onRequestAddDraggedAndDroppedGamesScreen( File[] files ) throws LauncherException;
+
+	/**
+	 * Called when user requests game matches for the string entered in the search field
+	 * 
+	 * @param searchString String to search partially for
+	 * @throws LauncherException
+	 */
+	Set<String> onRequestSearchMatches( String searchString ) throws LauncherException;
 }

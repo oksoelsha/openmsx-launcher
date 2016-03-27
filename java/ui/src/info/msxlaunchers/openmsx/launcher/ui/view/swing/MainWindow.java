@@ -24,7 +24,9 @@ import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewProperties;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextFieldMenuItem;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
@@ -47,6 +49,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -93,7 +96,7 @@ import net.iharder.dnd.FileDrop;
  *
  */
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame implements ActionListener, WindowFocusListener
+public class MainWindow extends JFrame implements ActionListener, WindowFocusListener, SearchFieldHandler
 {
 	private final MainPresenter presenter;
 
@@ -144,6 +147,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JLabel screenshot2Label;
 
 	private JPopupMenu favoritesContextMenu;
+	private JPopupMenu searchContextMenu;
 
 	private JPopupMenu filtersContextMenu;
 	private JMenuItem newFilterMenuItem;
@@ -379,6 +383,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		gameList.registerKeyboardAction(event -> editGame(), getCtrl_EKeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> addSelectedGameToFavorites(), getCtrl_DKeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> viewGameInfo(), getF1KeyStroke(),  JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> processShowSearchScreenRequest(), getCtrl_FKeyStroke(),  JComponent.WHEN_FOCUSED);
 
         JScrollPane gameListScrollBar = new JScrollPane(gameList);
 
@@ -729,7 +734,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 		else if(source == searchButton)
 		{
-			System.out.println("Search...");
+			processShowSearchScreenRequest();
 		}
 		else if(source == filtersButton)
 		{
@@ -766,7 +771,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			}
 			else if(action instanceof FavoriteMenuItemName)
 			{
-				selectFavoriteGame(((PopupMenuItemName)action).getPopupMenuItemName());
+				selectGame(((PopupMenuItemName)action).getPopupMenuItemName());
 			}
 			gameList.requestFocusInWindow();
 		}
@@ -948,6 +953,33 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	public void setFilterNameLabelUntitled()
 	{
 		currentFilterLabel.setText("(" + messages.get("UNTITLED_FILTER") + ")");
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler#getSearchMatches(java.lang.String)
+	 */
+	@Override
+	public Set<String> getSearchMatches(String searchString)
+	{
+		try
+		{
+			return presenter.onRequestSearchMatches(searchString);
+		}
+		catch(LauncherException le)
+		{
+			//ignore for now - just return empty set
+		}
+
+		return Collections.emptySet();
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler#handleSearchSelection(java.lang.String)
+	 */
+	@Override
+	public void handleSearchSelection(String searchSelection)
+	{
+		selectGame(searchSelection);
 	}
 
 	@Override
@@ -1255,6 +1287,27 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
+	private void processShowSearchScreenRequest()
+	{
+		searchContextMenu = new JPopupMenu();
+		searchContextMenu.setComponentOrientation(orientation);
+
+		JMenuItem searchFieldMenuItem = new JSearchTextFieldMenuItem(searchContextMenu, this);
+		searchContextMenu.add(searchFieldMenuItem);
+
+		int x;
+		if(orientation == ComponentOrientation.RIGHT_TO_LEFT)
+		{
+			x = searchButton.getWidth() - searchButton.getPreferredSize().width - 2;
+		}
+		else
+		{
+			x = 2;
+		}
+		searchContextMenu.show(searchButton, x, searchButton.getHeight()-1);
+		searchFieldMenuItem.requestFocusInWindow();
+	}
+
 	private static void addFilterButtonHoverBehavior( final JButton button )
 	{
 	    button.getModel().addChangeListener(new ChangeListener() {
@@ -1397,7 +1450,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		resetFilterMenuItem.addActionListener(this);
 	}
 
-	private void selectFavoriteGame(String favoriteName)
+	private void selectGame(String favoriteName)
 	{
 		try
 		{
@@ -1449,6 +1502,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private KeyStroke getF1KeyStroke()
 	{
 		return KeyStroke.getKeyStroke("F1");
+	}
+
+	private KeyStroke getCtrl_FKeyStroke()
+	{
+		return KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
 	private static class SortedComboBoxModel extends DefaultComboBoxModel<String>

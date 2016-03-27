@@ -26,12 +26,12 @@ import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
  * @author Sam Elsharif
  *
  */
-public interface Finder
+public interface GameFinder
 {
 	/**
 	 * Returns a Set of matches for the entered string, up to a maximum, or an empty Set if no matches
 	 * 
-	 * @param string String to search (in any field in the database)
+	 * @param string String to search (in any field in the database). If null or empty, then return empty set
 	 * @param maximumMatches Maximum number of matches to return
 	 */
 	Set<DatabaseItem> find( String string, int maximumMatches );

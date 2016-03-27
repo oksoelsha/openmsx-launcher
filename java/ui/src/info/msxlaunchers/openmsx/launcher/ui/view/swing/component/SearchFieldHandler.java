@@ -13,20 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.persistence.search;
+package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
-import com.google.inject.AbstractModule;
+import java.util.Set;
 
 /**
+ * Interface containing a method to process text string entered by user by searching the database for matches
+ * 
  * @since v1.6
  * @author Sam Elsharif
  *
  */
-public class FinderModule extends AbstractModule
+public interface SearchFieldHandler
 {
-	@Override 
-	protected void configure()
-	{
-		bind( GameFinder.class ).to( EmbeddedDatabaseGameFinder.class );
-	}
+	/**
+	 * Get search matches for the given string
+	 * 
+	 * @param searchString String entered by user to use in the search
+	 */
+	Set<String> getSearchMatches(String searchString);
+
+	/**
+	 * Handle search selection (e.g. go the selected game on the UI)
+	 * 
+	 * @param searchSelection Search selection made by user
+	 */
+	void handleSearchSelection(String searchSelection);
 }

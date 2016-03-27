@@ -43,7 +43,7 @@ import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersister;
 import info.msxlaunchers.openmsx.launcher.persistence.game.DerbyLogSuppressor;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
-import info.msxlaunchers.openmsx.launcher.persistence.search.Finder;
+import info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 
 /**
@@ -84,7 +84,7 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 	private final FavoritePersister favoritePersister;
 	private final FilterPersister filterPersister;
 	private final SettingsPersister settingsPersister;
-	private final Finder finder;
+	private final GameFinder gameFinder;
 	private final String userDataDirectory;
 	private final File databasesDirectory;
 	private final String databaseFullPath;
@@ -98,7 +98,7 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			FavoritePersister favoritePersister,
 			FilterPersister filterPersister,
 			SettingsPersister settingsPersister,
-			Finder finder,
+			GameFinder gameFinder,
 			@Named("UserDataDirectory") String userDataDirectory,
 			@Named("DatabasesDirectoryName") String databasesDirectoryName,
 			@Named("EmbeddedDatabaseFullPath") String databaseFullPath )
@@ -107,7 +107,7 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 		this.favoritePersister = favoritePersister;
 		this.filterPersister = filterPersister;
 		this.settingsPersister = settingsPersister;
-		this.finder = finder;
+		this.gameFinder = gameFinder;
 		this.userDataDirectory = userDataDirectory;
 		this.databasesDirectory = new File( userDataDirectory, databasesDirectoryName );
 		this.databaseFullPath = databaseFullPath;
@@ -209,12 +209,12 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence#getFinder()
+	 * @see info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence#getGameFinder()
 	 */
 	@Override
-	public Finder getFinder()
+	public GameFinder getGameFinder()
 	{
-		return finder;
+		return gameFinder;
 	}
 
 	private void createTables( Connection connection ) throws SQLException

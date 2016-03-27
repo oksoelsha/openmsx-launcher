@@ -743,26 +743,7 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onRequestListOfFavorites()
 	{
-		Set<DatabaseItem> favorites =  new TreeSet<>( new Comparator<DatabaseItem>() {
-			@Override
-	        public int compare( DatabaseItem fav1, DatabaseItem fav2 )
-			{
-	            String gameName1 = fav1.getGameName();
-	            String gameName2 = fav2.getGameName();
-	            int sComp = gameName1.compareToIgnoreCase( gameName2 );
-
-	            if (sComp != 0)
-	            {
-	            	return sComp;
-	            }
-	            else
-	            {
-	            	String database1 = fav1.getDatabase();
-	            	String database2 = fav2.getDatabase();	               
-	            	return database1.compareToIgnoreCase( database2 );
-	            }
-			}
-			} );
+		Set<DatabaseItem> favorites =  new TreeSet<>( new DatabaseItemComparator() );
 
 		favorites.addAll( launcherPersistence.getFavoritePersister().getFavorites() );
 
@@ -1094,6 +1075,23 @@ final class MainPresenterImpl implements MainPresenter
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestSearchMatches(java.lang.String)
+	 */
+	@Override
+	public Set<String> onRequestSearchMatches( String searchString ) throws LauncherException
+	{
+		Set<DatabaseItem> matches =  new TreeSet<>( new DatabaseItemComparator() );
+
+		matches.addAll( launcherPersistence.getGameFinder().find( searchString, 5 ) );
+
+		Set<String> matchesAsString = new LinkedHashSet<>();
+
+		matches.forEach( match -> matchesAsString.add( match.getGameName() + " [" + match.getDatabase() + "]" ) );
+
+		return matchesAsString;
+	}
+
 	private static void startBrowser( String uriString, LauncherExceptionCode errCodeIfNotFound ) throws LauncherException
 	{
 		URI uri;
@@ -1318,5 +1316,27 @@ final class MainPresenterImpl implements MainPresenter
 		int lastOpeningBracketIndex = favoriteName.lastIndexOf( '[', lastClosingBracketIndex );
 
 		return favoriteName.substring( lastOpeningBracketIndex + 1, lastClosingBracketIndex );
+	}
+
+	private class DatabaseItemComparator implements Comparator<DatabaseItem>
+	{
+		@Override
+		public int compare( DatabaseItem fav1, DatabaseItem fav2 )
+		{
+			String gameName1 = fav1.getGameName();
+			String gameName2 = fav2.getGameName();
+			int sComp = gameName1.compareToIgnoreCase( gameName2 );
+
+			if (sComp != 0)
+			{
+				return sComp;
+			}
+			else
+			{
+				String database1 = fav1.getDatabase();
+				String database2 = fav2.getDatabase();
+				return database1.compareToIgnoreCase( database2 );
+			}
+		}
 	}
 }

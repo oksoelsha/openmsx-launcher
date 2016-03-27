@@ -21,35 +21,39 @@ import java.util.Set;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
+import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 
 /**
- * Implementation of the <code>Finder</code> interface that searches an embedded database.
+ * Implementation of the <code>GameFinder</code> interface that searches an embedded database.
  * 
  * @since v1.6
  * @author Sam Elsharif
  *
  */
-final class EmbeddedDatabaseFinder implements Finder
+final class EmbeddedDatabaseGameFinder implements GameFinder
 {
 	private final String databaseFullPath;
 
 	@Inject
-	EmbeddedDatabaseFinder( @Named("EmbeddedDatabaseFullPath") String databaseFullPath )
+	EmbeddedDatabaseGameFinder( @Named("EmbeddedDatabaseFullPath") String databaseFullPath )
 	{
 		this.databaseFullPath = databaseFullPath;
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.search.Finder#find(java.lang.String, int)
+	 * @see info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder#find(java.lang.String, int)
 	 */
 	@Override
 	public Set<DatabaseItem> find( String string, int maximumMatches )
 	{
 		try
 		{
-			return new FindAction( string, maximumMatches ).execute( databaseFullPath ).getResult();
+			if( !Utils.isEmpty( string ) )
+			{
+				return new GameFinderAction( string, maximumMatches ).execute( databaseFullPath ).getResult();
+			}
 		}
 		catch( LauncherPersistenceException lpe )
 		{
