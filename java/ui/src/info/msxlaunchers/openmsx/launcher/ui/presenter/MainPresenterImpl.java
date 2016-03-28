@@ -93,6 +93,7 @@ final class MainPresenterImpl implements MainPresenter
 
 	private static final String DEFAULT_SYSTEM_LANGUAGE = "SYSTEM_DEFAULT";
 	private static final String EMPTY_STRING = "";
+	private static final int MAX_SEARCH_MATCHES = 10;
 
 	//the following fields represent the model
 	private Settings settings;
@@ -749,7 +750,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		Set<String> favoritesAsString = new LinkedHashSet<>();
 
-		favorites.forEach( favorite -> favoritesAsString.add( favorite.getGameName() + " [" + favorite.getDatabase() + "]" ) );
+		favorites.forEach( favorite -> favoritesAsString.add( getDatabaseItemDisplay( favorite ) ) );
 
 		view.showFavoritesMenu( favoritesAsString );
 	}
@@ -1083,11 +1084,11 @@ final class MainPresenterImpl implements MainPresenter
 	{
 		Set<DatabaseItem> matches =  new TreeSet<>( new DatabaseItemComparator() );
 
-		matches.addAll( launcherPersistence.getGameFinder().find( searchString, 5 ) );
+		matches.addAll( launcherPersistence.getGameFinder().find( searchString, MAX_SEARCH_MATCHES ) );
 
 		Set<String> matchesAsString = new LinkedHashSet<>();
 
-		matches.forEach( match -> matchesAsString.add( match.getGameName() + " [" + match.getDatabase() + "]" ) );
+		matches.stream().forEach( match -> matchesAsString.add( getDatabaseItemDisplay( match ) ) );
 
 		return matchesAsString;
 	}
@@ -1300,6 +1301,11 @@ final class MainPresenterImpl implements MainPresenter
 		untitledFilter = false;
 		currentFilterName = filterName;
 		view.updateFilterNameLabel( filterName );
+	}
+
+	private String getDatabaseItemDisplay( DatabaseItem databaseItem )
+	{
+		return databaseItem.getGameName() + " [" + databaseItem.getDatabase() + "]";
 	}
 
 	private String getGameNameFromFavoriteName( String favoriteName )

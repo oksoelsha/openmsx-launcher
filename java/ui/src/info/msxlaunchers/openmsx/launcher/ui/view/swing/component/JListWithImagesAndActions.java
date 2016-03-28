@@ -191,6 +191,7 @@ public class JListWithImagesAndActions extends JList<Object>
 		int index = listModel.indexOf(new TextIcon(text, null));
 		setSelectedIndex(index);
 		ensureIndexIsVisible(index);
+		requestFocusInWindow();
 	}
 
 	public String[] getSelectedItems()
