@@ -21,9 +21,9 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.Painter;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -92,7 +92,7 @@ final class NimbusLookAndFeelSetup
 	 * The following Class implementation and its paint method were taken from the following page:
 	 * http://stackoverflow.com/questions/24379251/change-ui-lookup-for-progressbar-swing-in-nimbus-theme 
 	 */
-	private class MenuItemBackgroundColor implements Painter<JMenuItem>
+	private class MenuItemBackgroundColor implements Painter<JComponent>
 	{
         private final Color light = new Color(190,190,190);
         private final Color dark = new Color(160,160,160);
@@ -100,7 +100,7 @@ final class NimbusLookAndFeelSetup
         private GradientPaint gradPaint;
 
         @Override
-        public void paint(Graphics2D g, JMenuItem c, int w, int h)
+        public void paint(Graphics2D g, JComponent c, int w, int h)
         {
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             gradPaint = new GradientPaint((w / 2.0f), 0, light, (w / 2.0f), (h / 2.0f), dark, true);

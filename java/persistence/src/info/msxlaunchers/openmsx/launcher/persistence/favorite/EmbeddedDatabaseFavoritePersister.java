@@ -15,7 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.favorite;
 
-import info.msxlaunchers.openmsx.launcher.data.favorite.Favorite;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 
 import java.util.Objects;
@@ -48,7 +48,7 @@ final class EmbeddedDatabaseFavoritePersister implements FavoritePersister
 	 * @see info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister#addFavorite(info.msxlaunchers.openmsx.launcher.data.favorite.Favorite)
 	 */
 	@Override
-	public void addFavorite( Favorite favorite ) throws FavoritePersistenceException
+	public void addFavorite( DatabaseItem favorite ) throws FavoritePersistenceException
 	{
 		Objects.requireNonNull( favorite );
 
@@ -66,7 +66,7 @@ final class EmbeddedDatabaseFavoritePersister implements FavoritePersister
 	 * @see info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister#deleteFavorite(info.msxlaunchers.openmsx.launcher.data.favorite.Favorite)
 	 */
 	@Override
-	public void deleteFavorite( Favorite favorite ) throws FavoritePersistenceException
+	public void deleteFavorite( DatabaseItem favorite ) throws FavoritePersistenceException
 	{
 		Objects.requireNonNull( favorite );
 
@@ -84,7 +84,7 @@ final class EmbeddedDatabaseFavoritePersister implements FavoritePersister
 	 * @see info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister#getFavorites()
 	 */
 	@Override
-	public Set<Favorite> getFavorites()
+	public Set<DatabaseItem> getFavorites()
 	{
 		try
 		{

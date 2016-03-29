@@ -1,7 +1,7 @@
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
-import info.msxlaunchers.openmsx.launcher.data.favorite.Favorite;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
@@ -455,13 +455,13 @@ public class MainPresenterImplTest
 	{
 		presenter.onRequestAddFavorite( "gameName", "database" );
 
-		verify( favoritePersister, times( 1 ) ).addFavorite( new Favorite( "gameName", "database") );
+		verify( favoritePersister, times( 1 ) ).addFavorite( new DatabaseItem( "gameName", "database") );
 	}
 
 	@Test
 	public void testOnRequestAddFavoriteAlreadyExists_thenIgnore() throws LauncherException, FavoritePersistenceException
 	{
-		doThrow( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.FAVORITE_ALREADY_EXISTS ) ).when( favoritePersister) .addFavorite( any( Favorite.class ) );
+		doThrow( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.FAVORITE_ALREADY_EXISTS ) ).when( favoritePersister) .addFavorite( any( DatabaseItem.class ) );
 
 		presenter.onRequestAddFavorite( "gameName", "database" );
 	}
@@ -469,7 +469,7 @@ public class MainPresenterImplTest
 	@Test( expected = LauncherException.class )
 	public void testOnRequestAddFavoriteIOException_thenThrowException() throws LauncherException, FavoritePersistenceException
 	{
-		doThrow( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.IO ) ).when( favoritePersister ) .addFavorite( any( Favorite.class ) );
+		doThrow( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.IO ) ).when( favoritePersister ) .addFavorite( any( DatabaseItem.class ) );
 
 		try
 		{
@@ -485,15 +485,15 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestListOfFavorites() throws LauncherException
 	{
-		Favorite fav1 = new Favorite( "gameName", "database" );
-		Favorite fav2 = new Favorite( "Abc", "def" );
-		Favorite fav3 = new Favorite( "abc", "dee" );
-		Favorite fav4 = new Favorite( "srf", "mnb" );
-		Favorite fav5 = new Favorite( "t y r", "l wer tr" );
-		Favorite fav6 = new Favorite( "kkbb", "xx vv" );
-		Favorite fav7 = new Favorite( "Kk", "xx vv" );
+		DatabaseItem fav1 = new DatabaseItem( "gameName", "database" );
+		DatabaseItem fav2 = new DatabaseItem( "Abc", "def" );
+		DatabaseItem fav3 = new DatabaseItem( "abc", "dee" );
+		DatabaseItem fav4 = new DatabaseItem( "srf", "mnb" );
+		DatabaseItem fav5 = new DatabaseItem( "t y r", "l wer tr" );
+		DatabaseItem fav6 = new DatabaseItem( "kkbb", "xx vv" );
+		DatabaseItem fav7 = new DatabaseItem( "Kk", "xx vv" );
 
-		Set<Favorite> favorites = new HashSet<>();
+		Set<DatabaseItem> favorites = new HashSet<>();
 		favorites.add( fav1 );
 		favorites.add( fav2 );
 		favorites.add( fav3 );
@@ -539,13 +539,13 @@ public class MainPresenterImplTest
 	{
 		presenter.onRequestDeleteFavoriteAction( "game name [database name]" );
 
-		verify( favoritePersister, times( 1 ) ).deleteFavorite( new Favorite( "game name", "database name" ) );
+		verify( favoritePersister, times( 1 ) ).deleteFavorite( new DatabaseItem( "game name", "database name" ) );
 	}
 
 	@Test( expected = LauncherException.class )
 	public void testOnRequestDeleteFavoriteAction_thenThrowException() throws LauncherException, FavoritePersistenceException
 	{
-		doThrow( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.IO ) ).when( favoritePersister ) .deleteFavorite( any( Favorite.class ) );
+		doThrow( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.IO ) ).when( favoritePersister ) .deleteFavorite( any( DatabaseItem.class ) );
 
 		presenter.onRequestDeleteFavoriteAction( "game name [database name]" );
 	}

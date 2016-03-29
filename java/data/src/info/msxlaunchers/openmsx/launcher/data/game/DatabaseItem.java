@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.data.favorite;
+package info.msxlaunchers.openmsx.launcher.data.game;
 
 import java.util.Objects;
 
 /**
- * Favorite object - basically a container for a game and database names
+ * Container for a game and database names
  * 
- * @since v1.4
+ * @since v1.6
  * @author Sam Elsharif
  *
  */
-public final class Favorite
+public final class DatabaseItem
 {
 	private final String gameName;
 	private final String database;
 
-	public Favorite( String gameName, String database )
+	public DatabaseItem( String gameName, String database )
 	{
 		this.gameName = validateNonNull( gameName );
 		this.database = validateNonNull( database );
@@ -66,7 +66,7 @@ public final class Favorite
 		{
 			return false;
 		}
-		Favorite other = (Favorite) obj;
+		DatabaseItem other = (DatabaseItem) obj;
 		if( !gameName.equals( other.gameName ) || !database.equals( other.database ) )
 		{
 			return false;

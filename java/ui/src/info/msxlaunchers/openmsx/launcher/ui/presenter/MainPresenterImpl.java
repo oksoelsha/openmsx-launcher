@@ -20,8 +20,8 @@ import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.common.VersionUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
-import info.msxlaunchers.openmsx.launcher.data.favorite.Favorite;
 import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
@@ -93,6 +93,7 @@ final class MainPresenterImpl implements MainPresenter
 
 	private static final String DEFAULT_SYSTEM_LANGUAGE = "SYSTEM_DEFAULT";
 	private static final String EMPTY_STRING = "";
+	private static final int MAX_SEARCH_MATCHES = 10;
 
 	//the following fields represent the model
 	private Settings settings;
@@ -722,7 +723,7 @@ final class MainPresenterImpl implements MainPresenter
 	{
 		try
 		{
-			launcherPersistence.getFavoritePersister().addFavorite( new Favorite( gameName, database ) );
+			launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( gameName, database ) );
 		}
 		catch( FavoritePersistenceException lpe )
 		{
@@ -743,32 +744,13 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onRequestListOfFavorites()
 	{
-		Set<Favorite> favorites =  new TreeSet<>( new Comparator<Favorite>() {
-			@Override
-	        public int compare( Favorite fav1, Favorite fav2 )
-			{
-	            String gameName1 = fav1.getGameName();
-	            String gameName2 = fav2.getGameName();
-	            int sComp = gameName1.compareToIgnoreCase( gameName2 );
-
-	            if (sComp != 0)
-	            {
-	            	return sComp;
-	            }
-	            else
-	            {
-	            	String database1 = fav1.getDatabase();
-	            	String database2 = fav2.getDatabase();	               
-	            	return database1.compareToIgnoreCase( database2 );
-	            }
-			}
-			} );
+		Set<DatabaseItem> favorites =  new TreeSet<>( new DatabaseItemComparator() );
 
 		favorites.addAll( launcherPersistence.getFavoritePersister().getFavorites() );
 
 		Set<String> favoritesAsString = new LinkedHashSet<>();
 
-		favorites.forEach( favorite -> favoritesAsString.add( favorite.getGameName() + " [" + favorite.getDatabase() + "]" ) );
+		favorites.forEach( favorite -> favoritesAsString.add( getDatabaseItemDisplay( favorite ) ) );
 
 		view.showFavoritesMenu( favoritesAsString );
 	}
@@ -796,7 +778,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		try
 		{
-			launcherPersistence.getFavoritePersister().deleteFavorite( new Favorite( gameName, database ) );
+			launcherPersistence.getFavoritePersister().deleteFavorite( new DatabaseItem( gameName, database ) );
 		}
 		catch( FavoritePersistenceException fpe )
 		{
@@ -1094,6 +1076,23 @@ final class MainPresenterImpl implements MainPresenter
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestSearchMatches(java.lang.String)
+	 */
+	@Override
+	public Set<String> onRequestSearchMatches( String searchString ) throws LauncherException
+	{
+		Set<DatabaseItem> matches =  new TreeSet<>( new DatabaseItemComparator() );
+
+		matches.addAll( launcherPersistence.getGameFinder().find( searchString, MAX_SEARCH_MATCHES ) );
+
+		Set<String> matchesAsString = new LinkedHashSet<>();
+
+		matches.stream().forEach( match -> matchesAsString.add( getDatabaseItemDisplay( match ) ) );
+
+		return matchesAsString;
+	}
+
 	private static void startBrowser( String uriString, LauncherExceptionCode errCodeIfNotFound ) throws LauncherException
 	{
 		URI uri;
@@ -1304,6 +1303,11 @@ final class MainPresenterImpl implements MainPresenter
 		view.updateFilterNameLabel( filterName );
 	}
 
+	private String getDatabaseItemDisplay( DatabaseItem databaseItem )
+	{
+		return databaseItem.getGameName() + " [" + databaseItem.getDatabase() + "]";
+	}
+
 	private String getGameNameFromFavoriteName( String favoriteName )
 	{
 		int lastClosingBracketIndex = favoriteName.lastIndexOf( ']' );
@@ -1318,5 +1322,27 @@ final class MainPresenterImpl implements MainPresenter
 		int lastOpeningBracketIndex = favoriteName.lastIndexOf( '[', lastClosingBracketIndex );
 
 		return favoriteName.substring( lastOpeningBracketIndex + 1, lastClosingBracketIndex );
+	}
+
+	private class DatabaseItemComparator implements Comparator<DatabaseItem>
+	{
+		@Override
+		public int compare( DatabaseItem fav1, DatabaseItem fav2 )
+		{
+			String gameName1 = fav1.getGameName();
+			String gameName2 = fav2.getGameName();
+			int sComp = gameName1.compareToIgnoreCase( gameName2 );
+
+			if (sComp != 0)
+			{
+				return sComp;
+			}
+			else
+			{
+				String database1 = fav1.getDatabase();
+				String database2 = fav2.getDatabase();
+				return database1.compareToIgnoreCase( database2 );
+			}
+		}
 	}
 }

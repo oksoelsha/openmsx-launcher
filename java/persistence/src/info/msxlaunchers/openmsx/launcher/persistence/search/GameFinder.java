@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Sam Elsharif
+ * Copyright 2016 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,41 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.persistence.favorite;
+package info.msxlaunchers.openmsx.launcher.persistence.search;
 
 import java.util.Set;
 
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 
 /**
- * Favorite persister interface
+ * Search interface
  * 
- * @since v1.4
+ * @since v1.6
  * @author Sam Elsharif
  *
  */
-public interface FavoritePersister
+public interface GameFinder
 {
 	/**
-	 * Saves the given favorite in the database
+	 * Returns a Set of matches for the entered string, up to a maximum, or an empty Set if no matches
 	 * 
-	 * @param favorite Favorite object
-	 * @throws
+	 * @param string String to search (in any field in the database). If null or empty, then return empty set
+	 * @param maximumMatches Maximum number of matches to return
 	 */
-	void addFavorite( DatabaseItem favorite ) throws FavoritePersistenceException;
-
-	/**
-	 * Deletes the given favorite from the database
-	 * 
-	 * @param favorite Favorite object
-	 * @throws
-	 */
-	void deleteFavorite( DatabaseItem favorite ) throws FavoritePersistenceException;
-
-	/**
-	 * Returns a Set containing all favorites in the database
-	 * 
-	 * @return Unmodifiable Set containing favorites
-	 */
-	Set<DatabaseItem> getFavorites();
+	Set<DatabaseItem> find( String string, int maximumMatches );
 }

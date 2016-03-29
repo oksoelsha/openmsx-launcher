@@ -1,7 +1,7 @@
 package info.msxlaunchers.openmsx.launcher.persistence.favorite;
 
 import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
-import info.msxlaunchers.openmsx.launcher.data.favorite.Favorite;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.persistence.BasicTestModule;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
@@ -91,24 +91,24 @@ public class EmbeddedDatabaseFavoritePersisterTest
 		launcherPersistence.getGamePersister().createDatabase( database2 );
 		launcherPersistence.getGamePersister().saveGame( game3, database2 );
 
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( game1.getName(), database1 ) );
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( game2.getName(), database1 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( game1.getName(), database1 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( game2.getName(), database1 ) );
 
-		Set<Favorite> favorites = launcherPersistence.getFavoritePersister().getFavorites();
+		Set<DatabaseItem> favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
 		assertEquals( 2, favorites.size() );
-		assertTrue( favorites.contains( new Favorite( game1.getName(), database1 ) ) );
-		assertTrue( favorites.contains( new Favorite( game2.getName(), database1 ) ) );
+		assertTrue( favorites.contains( new DatabaseItem( game1.getName(), database1 ) ) );
+		assertTrue( favorites.contains( new DatabaseItem( game2.getName(), database1 ) ) );
 
 		//now add more favorites to a game in the other database
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( game3.getName(), database2 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( game3.getName(), database2 ) );
 
 		favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
 		assertEquals( 3, favorites.size() );
-		assertTrue( favorites.contains( new Favorite( game1.getName(), database1 ) ) );
-		assertTrue( favorites.contains( new Favorite( game2.getName(), database1 ) ) );
-		assertTrue( favorites.contains( new Favorite( game3.getName(), database2 ) ) );
+		assertTrue( favorites.contains( new DatabaseItem( game1.getName(), database1 ) ) );
+		assertTrue( favorites.contains( new DatabaseItem( game2.getName(), database1 ) ) );
+		assertTrue( favorites.contains( new DatabaseItem( game3.getName(), database2 ) ) );
 	}
 
 	@Test
@@ -121,20 +121,20 @@ public class EmbeddedDatabaseFavoritePersisterTest
 		launcherPersistence.getGamePersister().saveGame( game1, database1 );
 		launcherPersistence.getGamePersister().saveGame( game2, database1 );
 
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( game1.getName(), database1 ) );
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( game2.getName(), database1 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( game1.getName(), database1 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( game2.getName(), database1 ) );
 
-		Set<Favorite> favorites = launcherPersistence.getFavoritePersister().getFavorites();
+		Set<DatabaseItem> favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
 		assertEquals( 2, favorites.size() );
 
 		//now delete one of the favorites
-		launcherPersistence.getFavoritePersister().deleteFavorite( new Favorite( game1.getName(), database1 ) );
+		launcherPersistence.getFavoritePersister().deleteFavorite( new DatabaseItem( game1.getName(), database1 ) );
 
 		favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
 		assertEquals( 1, favorites.size() );
-		assertTrue( favorites.contains( new Favorite( game2.getName(), database1 ) ) );
+		assertTrue( favorites.contains( new DatabaseItem( game2.getName(), database1 ) ) );
 	}
 
 	@Test( expected = FavoritePersistenceException.class )
@@ -147,7 +147,7 @@ public class EmbeddedDatabaseFavoritePersisterTest
 
 		try
 		{
-			launcherPersistence.getFavoritePersister().addFavorite( new Favorite( "nonExistingName", database1 ) );
+			launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( "nonExistingName", database1 ) );
 		}
 		catch( FavoritePersistenceException fpe )
 		{
@@ -166,7 +166,7 @@ public class EmbeddedDatabaseFavoritePersisterTest
 
 		try
 		{
-			launcherPersistence.getFavoritePersister().addFavorite( new Favorite( "name1", "nonExistingDatabase" ) );
+			launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( "name1", "nonExistingDatabase" ) );
 		}
 		catch( FavoritePersistenceException fpe )
 		{
@@ -183,11 +183,11 @@ public class EmbeddedDatabaseFavoritePersisterTest
 		launcherPersistence.getGamePersister().createDatabase( database1 );
 		launcherPersistence.getGamePersister().saveGame( game1, database1 );
 
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( "name1", database1 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( "name1", database1 ) );
 
 		try
 		{
-			launcherPersistence.getFavoritePersister().addFavorite( new Favorite( "name1", database1 ) );
+			launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( "name1", database1 ) );
 		}
 		catch( FavoritePersistenceException fpe )
 		{
@@ -206,10 +206,10 @@ public class EmbeddedDatabaseFavoritePersisterTest
 		launcherPersistence.getGamePersister().saveGame( game1, database1 );
 		launcherPersistence.getGamePersister().saveGame( game2, database1 );
 
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( game1.getName(), database1 ) );
-		launcherPersistence.getFavoritePersister().addFavorite( new Favorite( game2.getName(), database1 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( game1.getName(), database1 ) );
+		launcherPersistence.getFavoritePersister().addFavorite( new DatabaseItem( game2.getName(), database1 ) );
 
-		Set<Favorite> favorites = launcherPersistence.getFavoritePersister().getFavorites();
+		Set<DatabaseItem> favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
 		assertEquals( 2, favorites.size() );
 
@@ -219,13 +219,13 @@ public class EmbeddedDatabaseFavoritePersisterTest
 		favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
 		assertEquals( 1, favorites.size() );
-		assertTrue( favorites.contains( new Favorite( game2.getName(), database1 ) ) );
+		assertTrue( favorites.contains( new DatabaseItem( game2.getName(), database1 ) ) );
 	}
 
 	@Test
 	public void test_givenNoFavoritesSaved_whenGetFavorites_thenReturnEmptySet() throws FavoritePersistenceException
 	{
-		Set<Favorite> favorites = launcherPersistence.getFavoritePersister().getFavorites();
+		Set<DatabaseItem> favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
 		assertEquals( 0, favorites.size() );
 	}
@@ -233,8 +233,8 @@ public class EmbeddedDatabaseFavoritePersisterTest
 	@Test( expected = UnsupportedOperationException.class )
 	public void test_whenAddToFavoritesSetFromGetFavorites_thenReturnThrowException() throws GamePersistenceException, FavoritePersistenceException
 	{
-		Set<Favorite> favorites = launcherPersistence.getFavoritePersister().getFavorites();
+		Set<DatabaseItem> favorites = launcherPersistence.getFavoritePersister().getFavorites();
 
-		favorites.add( new Favorite( "gameName", database1 ) );
+		favorites.add( new DatabaseItem( "gameName", database1 ) );
 	}
 }
