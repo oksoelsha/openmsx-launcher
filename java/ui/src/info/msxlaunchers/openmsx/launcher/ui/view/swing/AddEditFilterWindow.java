@@ -654,7 +654,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		private final JComboBox<String> secondYearsComboBox = new JComboBox<String>(getYears());
 
 		private final static int FIRST_YEAR = 1982;
-		private final static int LAST_YEAR = 2015;
+		private final static int LAST_YEAR = 2016;
 
 		YearsLayer()
 		{
