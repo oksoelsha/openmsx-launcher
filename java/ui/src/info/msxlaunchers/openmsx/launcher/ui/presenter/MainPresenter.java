@@ -343,7 +343,6 @@ public interface MainPresenter
 	 * Called when user requests game matches for the string entered in the search field
 	 * 
 	 * @param searchString String to search partially for
-	 * @throws LauncherException
 	 */
-	Set<String> onRequestSearchMatches( String searchString ) throws LauncherException;
+	Set<String> onRequestSearchMatches( String searchString );
 }

@@ -49,7 +49,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -961,16 +960,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	@Override
 	public Set<String> getSearchMatches(String searchString)
 	{
-		try
-		{
-			return presenter.onRequestSearchMatches(searchString);
-		}
-		catch(LauncherException le)
-		{
-			//ignore for now - just return empty set
-		}
-
-		return Collections.emptySet();
+		return presenter.onRequestSearchMatches(searchString);
 	}
 
 	/* (non-Javadoc)
@@ -1298,7 +1288,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		int x;
 		if(orientation == ComponentOrientation.RIGHT_TO_LEFT)
 		{
-			x = searchButton.getWidth() - searchButton.getPreferredSize().width - 2;
+			x = searchButton.getWidth() - searchContextMenu.getPreferredSize().width - 2;
 		}
 		else
 		{

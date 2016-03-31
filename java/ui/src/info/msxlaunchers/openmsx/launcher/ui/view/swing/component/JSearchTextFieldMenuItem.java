@@ -56,7 +56,7 @@ import javax.swing.event.PopupMenuListener;
 @SuppressWarnings("serial")
 public class JSearchTextFieldMenuItem extends JMenuItem
 {
-	private static final int TYPING_DELAY = 300;
+	private static final int TYPING_DELAY = 250;
 
 	private final SearchFieldHandler searchFieldHandler;
 	private final JPopupMenu parentMenu;
@@ -72,7 +72,7 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 
 	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(3, 5, 3, 5);
 	private static final int TEXT_FIELD_COLUMNS = 25;
-	private static final int MATCHES_MENU_ITEM_HEIGHT = 20;
+	private static final int MATCHES_MENU_ITEM_HEIGHT = 18;
 
 	private static final String ENTER_MAP_KEY = "Enter-key";
 	private static final String DOWN_MAP_KEY = "Down-key";
@@ -126,7 +126,7 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 			}
 		});
 
-		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true), ENTER_MAP_KEY);
+		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false), ENTER_MAP_KEY);
         field.getActionMap().put(ENTER_MAP_KEY, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent ae)
@@ -138,34 +138,44 @@ public class JSearchTextFieldMenuItem extends JMenuItem
             }
         });
 
-		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), DOWN_MAP_KEY);
+		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), DOWN_MAP_KEY);
         field.getActionMap().put(DOWN_MAP_KEY, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent ae)
             {
-            	if((currentMatchSelectionIndex+1) < currentMatchSelectionMaximum)
+            	if(currentMatchSelectionMaximum > 0)
             	{
-            		if(currentMatchSelectionIndex != UNSELECTED_INDEX)
-            		{
-                		matchesLabels[currentMatchSelectionIndex].unhighlight();
-            		}
-            		matchesLabels[++currentMatchSelectionIndex].highlight();
+	        		if(currentMatchSelectionIndex != UNSELECTED_INDEX)
+	        		{
+	            		matchesLabels[currentMatchSelectionIndex].unhighlight();
+	        		}
+	        		currentMatchSelectionIndex++;
+	        		if(currentMatchSelectionIndex == currentMatchSelectionMaximum)
+	        		{
+	        			currentMatchSelectionIndex = 0;
+	        		}
+	        		matchesLabels[currentMatchSelectionIndex].highlight();
             	}
             }
         });
 
-		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), UP_MAP_KEY);
+		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), UP_MAP_KEY);
         field.getActionMap().put(UP_MAP_KEY, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent ae)
             {
-            	if(currentMatchSelectionIndex > 0)
+            	if(currentMatchSelectionMaximum > 0)
             	{
-            		if(currentMatchSelectionIndex != UNSELECTED_INDEX)
-            		{
-                		matchesLabels[currentMatchSelectionIndex].unhighlight();
-            		}
-            		matchesLabels[--currentMatchSelectionIndex].highlight();
+	        		if(currentMatchSelectionIndex != UNSELECTED_INDEX)
+	        		{
+	            		matchesLabels[currentMatchSelectionIndex].unhighlight();
+	        		}
+	        		currentMatchSelectionIndex--;
+	        		if(currentMatchSelectionIndex < 0)
+	        		{
+	        			currentMatchSelectionIndex = currentMatchSelectionMaximum - 1;
+	        		}
+	        		matchesLabels[currentMatchSelectionIndex].highlight();
             	}
             }
         });

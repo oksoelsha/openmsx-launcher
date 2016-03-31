@@ -1080,7 +1080,7 @@ final class MainPresenterImpl implements MainPresenter
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestSearchMatches(java.lang.String)
 	 */
 	@Override
-	public Set<String> onRequestSearchMatches( String searchString ) throws LauncherException
+	public Set<String> onRequestSearchMatches( String searchString )
 	{
 		Set<DatabaseItem> matches =  new TreeSet<>( new DatabaseItemComparator() );
 

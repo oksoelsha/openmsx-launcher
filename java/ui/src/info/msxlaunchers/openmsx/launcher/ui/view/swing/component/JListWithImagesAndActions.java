@@ -100,7 +100,7 @@ public class JListWithImagesAndActions extends JList<Object>
 
 		addKeyListener(new KeyAdapter()
 		{
-			public void keyReleased(KeyEvent ke)
+			public void keyPressed(KeyEvent ke)
 			{
 				if(actionListener == null)
 				{
