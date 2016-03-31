@@ -16,6 +16,7 @@ import info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceExceptionIssue;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
+import info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 import info.msxlaunchers.openmsx.launcher.starter.EmulatorStarter;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
@@ -77,6 +78,7 @@ public class MainPresenterImplTest
 	@Mock FavoritePersister favoritePersister;
 	@Mock FilterPersister filterPersister;
 	@Mock DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory;
+	@Mock GameFinder gameFinder;
 
 	private final String extraDataDirectory = "extraDataDirectory";
 	private final String defaultDatabase = "defaultDatabase";
@@ -90,6 +92,7 @@ public class MainPresenterImplTest
 		when( launcherPersistence.getFavoritePersister() ).thenReturn( favoritePersister );
 		when( launcherPersistence.getFiltersPersister() ).thenReturn( filterPersister );
 		when( launcherPersistence.getSettingsPersister() ).thenReturn( settingsPersister );
+		when( launcherPersistence.getGameFinder() ).thenReturn( gameFinder );
 		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null ) );
 		Set<String> databases = new HashSet<>();
 		databases.add( defaultDatabase );
@@ -754,5 +757,39 @@ public class MainPresenterImplTest
 
 		//exception will be ignored
 		verify( launcherPersistence, times( 1 ) ).shutdown();
+	}
+
+	@Test
+	public void testOnRequestSearchMatches()
+	{
+		DatabaseItem match1 = new DatabaseItem( "gameName", "database" );
+		DatabaseItem match2 = new DatabaseItem( "Abc", "def" );
+		DatabaseItem match3 = new DatabaseItem( "abc", "dee" );
+		DatabaseItem match4 = new DatabaseItem( "srf", "mnb" );
+		DatabaseItem match5 = new DatabaseItem( "t y r", "l wer tr" );
+		DatabaseItem match6 = new DatabaseItem( "kkbb", "xx vv" );
+		DatabaseItem match7 = new DatabaseItem( "Kk", "xx vv" );
+
+		Set<DatabaseItem> matches = new HashSet<>();
+		matches.add( match1 );
+		matches.add( match2 );
+		matches.add( match3 );
+		matches.add( match4 );
+		matches.add( match5 );
+		matches.add( match6 );
+		matches.add( match7 );
+
+		when( gameFinder.find( anyString(), anyInt() ) ).thenReturn( matches );
+
+		Set<String> matchesAsStrings = presenter.onRequestSearchMatches( "searchString" );
+
+		assertEquals( matches.size(), matchesAsStrings.size() );
+		assertTrue( matchesAsStrings.contains( "gameName [database]" ) );
+		assertTrue( matchesAsStrings.contains( "Abc [def]" ) );
+		assertTrue( matchesAsStrings.contains( "abc [dee]" ) );
+		assertTrue( matchesAsStrings.contains( "srf [mnb]" ) );
+		assertTrue( matchesAsStrings.contains( "t y r [l wer tr]" ) );
+		assertTrue( matchesAsStrings.contains( "kkbb [xx vv]" ) );
+		assertTrue( matchesAsStrings.contains( "Kk [xx vv]" ) );
 	}
 }
