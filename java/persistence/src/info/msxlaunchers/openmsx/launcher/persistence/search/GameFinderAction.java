@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Sam Elsharif
+ * Copyright 2016 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,6 +76,6 @@ final class GameFinderAction extends NonTransactionalDatabaseOperation<Set<Datab
 			//ignore - method will return an empty Set
 		}
 
-		return new FindResponse( Collections.unmodifiableSet( matches ) );
+		return new GameFinderResponse( Collections.unmodifiableSet( matches ) );
 	}
 }

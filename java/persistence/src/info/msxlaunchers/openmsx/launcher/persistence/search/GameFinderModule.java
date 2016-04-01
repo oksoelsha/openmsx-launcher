@@ -22,7 +22,7 @@ import com.google.inject.AbstractModule;
  * @author Sam Elsharif
  *
  */
-public class FinderModule extends AbstractModule
+public class GameFinderModule extends AbstractModule
 {
 	@Override 
 	protected void configure()

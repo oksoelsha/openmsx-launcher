@@ -25,7 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Class to save new favorite
+ * Class to delete exiting favorite
  * 
  * @since v1.4
  * @author Sam Elsharif

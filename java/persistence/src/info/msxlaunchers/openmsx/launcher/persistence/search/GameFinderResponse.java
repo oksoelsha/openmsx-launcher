@@ -21,17 +21,17 @@ import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 import java.util.Set;
 
 /**
- * Class to contain result of <code>FindAction</code> operation
+ * Class to contain result of <code>GameFinderAction</code> operation
  * 
  * @since v1.6
  * @author Sam Elsharif
  *
  */
-final class FindResponse implements DatabaseResponse<Set<DatabaseItem>>
+final class GameFinderResponse implements DatabaseResponse<Set<DatabaseItem>>
 {
 	private final Set<DatabaseItem> foundItems;
 
-	FindResponse( Set<DatabaseItem> foundItems )
+	GameFinderResponse( Set<DatabaseItem> foundItems )
 	{
 		this.foundItems = foundItems;
 	}
