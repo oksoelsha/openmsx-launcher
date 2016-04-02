@@ -180,7 +180,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 		platformViewProperties.setDisplayProperties(this);
 
-		//Initialise media icons map
+		//Initialize media icons map
 		mediaIconsMap.put(Medium.ROM, Icons.MEDIA_ROM.getImageIcon());
 		mediaIconsMap.put(Medium.DISK, Icons.MEDIA_DISK.getImageIcon());
 		mediaIconsMap.put(Medium.TAPE, Icons.MEDIA_TAPE.getImageIcon());
@@ -358,6 +358,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		databaseComboBox.setMaximumRowCount(10);
 		databaseComboBox.setFont(FONT_SIZE_11);
 		databaseComboBox.addActionListener(event -> onSelectDatabase());
+		databaseComboBox.setFocusable(false);
 
 		countLabel = new JLabel();
 		countLabel.setFont(FONT_SIZE_11);
@@ -381,8 +382,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		gameList.registerKeyboardAction(event -> locateMainFileOfSelectedGame(), getCtrl_Shift_FKeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> editGame(), getCtrl_EKeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> addSelectedGameToFavorites(), getCtrl_DKeyStroke(), JComponent.WHEN_FOCUSED);
-		gameList.registerKeyboardAction(event -> viewGameInfo(), getF1KeyStroke(),  JComponent.WHEN_FOCUSED);
-		gameList.registerKeyboardAction(event -> processShowSearchScreenRequest(), getCtrl_FKeyStroke(),  JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> viewGameInfo(), getF1KeyStroke(), JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> processShowSearchScreenRequest(), getCtrl_FKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         JScrollPane gameListScrollBar = new JScrollPane(gameList);
 
@@ -410,14 +411,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		favoritesButton = new JButton();
 		favoritesButton.setIcon(Icons.FAVORITE.getImageIcon());
 		favoritesButton.addActionListener(this);
+		favoritesButton.setFocusable(false);
 
 		searchButton = new JButton();
 		searchButton.setIcon(Icons.SEARCH.getImageIcon());
 		searchButton.addActionListener(this);
+		searchButton.setFocusable(false);
 
 		filtersButton = new JButton();
 		filtersButton.setIcon(Icons.FILTER.getImageIcon());
 		filtersButton.addActionListener(this);
+		filtersButton.setFocusable(false);
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
