@@ -384,6 +384,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		gameList.registerKeyboardAction(event -> addSelectedGameToFavorites(), getCtrl_DKeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> viewGameInfo(), getF1KeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> processShowSearchScreenRequest(), getCtrl_FKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction( event -> processShowFavoritesMenuRequest(), getCtrl_IKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         JScrollPane gameListScrollBar = new JScrollPane(gameList);
 
@@ -1501,6 +1502,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private KeyStroke getCtrl_FKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+	}
+
+	private KeyStroke getCtrl_IKeyStroke()
+	{
+		return KeyStroke.getKeyStroke(KeyEvent.VK_I, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
 	private static class SortedComboBoxModel extends DefaultComboBoxModel<String>
