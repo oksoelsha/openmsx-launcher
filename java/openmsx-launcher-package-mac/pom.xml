@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>info.msxlaunchers.openmsx</groupId>
+	<artifactId>openmsx-launcher-package-mac</artifactId>
+	<version>1.5</version>
+	<packaging>pom</packaging>
+	<name>openmsx-launcher-package-mac</name>
+	<url>http://maven.apache.org</url>
+    <properties>
+        <version>1.5</version>
+    </properties>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask"
+									classpathref="maven.plugin.classpath"/>
+								<bundleapp
+									outputdirectory="target"
+									name="openMSX Launcher"
+									displayname="openMSX Launcher"
+									icon="resources/launcher.icns"
+									applicationCategory="public.app-category.developer-tools"
+									identifier="info.msxlaunchers.openmsx.launcher.ui.Launcher"
+									shortversion="${version}"
+									mainclassname="info.msxlaunchers.openmsx.launcher.ui.Launcher">
+									<classpath file="../openmsx-launcher-assembly/target/openmsx-launcher.jar"/>
+									<classpath file="${settings.localRepository}/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+									<classpath file="${settings.localRepository}/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar"/>
+									<classpath file="../ui/lib/filedrop/filedrop.jar"/>
+									<classpath file="${settings.localRepository}/com/google/inject/guice/3.0/guice-3.0.jar"/>
+									<classpath file="${settings.localRepository}/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar"/>
+									<classpath file="${settings.localRepository}/net/sourceforge/javacsv/javacsv/2.0/javacsv-2.0.jar"/>
+									<classpath file="${settings.localRepository}/javax/inject/javax.inject/1/javax.inject-1.jar"/>
+									<classpath file="${settings.localRepository}/net/minidev/json-smart/1.2/json-smart-1.2.jar"/>
+									<option value="-Xdock:name=&quot;openMSX Launcher&quot;"/>
+									<option value="-client"/>
+									<option value="-Xms150m"/>
+									<option value="-Xmx200m"/>
+								</bundleapp>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.oracle.appbundler</groupId>
+						<artifactId>appbundler</artifactId>
+						<version>1.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>
