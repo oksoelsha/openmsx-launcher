@@ -44,6 +44,8 @@
 					<descriptors>
 						<descriptor>framework_bin.xml</descriptor>
 					</descriptors>
+					<finalName>openmsx-launcher</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -23,13 +23,6 @@
 						<goals>
 							<goal>single</goal>
 						</goals>
-						<configuration>
-							<descriptors>
-								<descriptor>framework_bin.xml</descriptor>
-							</descriptors>
-							<finalName>framework</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
