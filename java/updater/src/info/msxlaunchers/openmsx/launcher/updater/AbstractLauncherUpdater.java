@@ -25,7 +25,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
- * Abstract class that implements <code>UpdateChecker</code> that contains platform common methods
+ * Abstract class that implements <code>LauncherUpdater</code> and contains common platform methods
  * 
  * @since v1.4
  * @author Sam Elsharif
@@ -35,10 +35,28 @@ abstract class AbstractLauncherUpdater implements LauncherUpdater
 {
 	private final int WRITE_BUFFER = 2048;
 	private final String JAR_EXT = ".jar";
-	private final String UPDATE_JAR_ENDING = JAR_EXT + "_update";
+	protected final String UPDATE_EXT = "_update";
+	protected final String STARTER_UPDATE_EXT = "_starter" + UPDATE_EXT;
+	private final String UPDATE_JAR_ENDING = JAR_EXT + UPDATE_EXT;
+	protected final String OLD_EXE_EXT = ".old";
 	private final String HELP_FILENAME = "README.html";
 
-	protected void unzipUpdateFile( String jarFilesDirectory, String helpFileDirectory, File zipFile ) throws FileUpdateFailedException, IOException
+	@Override
+	public final void installNewOpenMSXLauncher( String jarFilesDirectory, String executableDirectory, String helpFileDirectory, File zipFile )
+			throws FileUpdateFailedException, IOException
+	{
+		startInstallation( jarFilesDirectory, executableDirectory, helpFileDirectory, zipFile );
+
+		deleteNewLauncherStarters( jarFilesDirectory );
+	}
+
+	/**
+	 * @see info.msxlaunchers.openmsx.launcher.updater.LauncherUpdater#installNewOpenMSXLauncher(java.lang.String, java.lang.String, java.lang.String, java.io.File)
+	 */
+	abstract protected void startInstallation( String jarFilesDirectory, String executableDirectory, String helpFileDirectory, File zipFile )
+			throws FileUpdateFailedException, IOException;
+
+	protected final void unzipUpdateFile( String jarFilesDirectory, File zipFile ) throws FileUpdateFailedException, IOException
 	{
         byte[] buffer = new byte[WRITE_BUFFER];
         try( ZipInputStream zis = new ZipInputStream( new FileInputStream( zipFile ) ) )
@@ -76,7 +94,7 @@ abstract class AbstractLauncherUpdater implements LauncherUpdater
         }
 	}
 
-	protected void installNewJarFiles( String jarFilesDirectory ) throws FileUpdateFailedException
+	protected final void installNewJarFiles( String jarFilesDirectory ) throws FileUpdateFailedException
 	{
 		File files[] = new File( jarFilesDirectory ).listFiles();
 
@@ -121,7 +139,7 @@ abstract class AbstractLauncherUpdater implements LauncherUpdater
 		}
 	}
 
-	protected void installNewHelpFile( String jarFilesDirectory, String helpFileDirectory ) throws FileUpdateFailedException
+	protected final void installNewHelpFile( String jarFilesDirectory, String helpFileDirectory ) throws FileUpdateFailedException
 	{
 		File files[] = new File( jarFilesDirectory ).listFiles();
 
@@ -141,6 +159,30 @@ abstract class AbstractLauncherUpdater implements LauncherUpdater
 						throw new FileUpdateFailedException();
 					}
 					return;
+				}
+			}
+		}
+	}
+
+	/*
+	 * This method deletes all starters for all platforms (e.g. Windows and Linux/BSD) after finishing everything else.
+	 * The reason for doing this is that the upgrade contains different starters for all platforms and only one is needed per platform
+	 */
+	private void deleteNewLauncherStarters( String jarFilesDirectory ) throws FileUpdateFailedException
+	{
+		File files[] = new File( jarFilesDirectory ).listFiles();
+
+		if( files != null )
+		{
+			for( File file: files )
+			{
+				if( file.getName().endsWith( STARTER_UPDATE_EXT ) )
+				{
+					File destination = new File( jarFilesDirectory, file.getName() );
+					if( !destination.delete() )
+					{
+						throw new FileUpdateFailedException();
+					}
 				}
 			}
 		}

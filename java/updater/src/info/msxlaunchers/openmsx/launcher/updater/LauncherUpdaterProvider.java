@@ -33,9 +33,13 @@ final class LauncherUpdaterProvider implements Provider<LauncherUpdater>
 		{
 			return new WindowsLauncherUpdater();
 		}
-		else if( OSUtils.isUnixFamily() )
+		else if( OSUtils.isMac() )
 		{
-			return new UnixFamilyLauncherUpdater();
+			return new MacLauncherUpdater();
+		}
+		else if( OSUtils.isLinux() || OSUtils.isBSD() )
+		{
+			return new LinuxBSDLauncherUpdater();
 		}
 		else
 		{

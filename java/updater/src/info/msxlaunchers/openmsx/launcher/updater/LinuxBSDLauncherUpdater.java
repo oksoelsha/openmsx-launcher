@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Sam Elsharif
+ * Copyright 2016 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,17 +20,26 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.PosixFilePermission;
+
+import static java.nio.file.attribute.PosixFilePermission.OWNER_EXECUTE;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_READ;
+import static java.nio.file.attribute.PosixFilePermission.OWNER_WRITE;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * Implementation of <code>LauncherUpdater</code> for Windows
+ * Implementation of <code>LauncherUpdater</code> for Linux and BSD
  * 
- * @since v1.4
+ * @since v1.6
  * @author Sam Elsharif
  *
  */
-final class WindowsLauncherUpdater extends AbstractLauncherUpdater
+final class LinuxBSDLauncherUpdater extends AbstractLauncherUpdater
 {
-	private final String EXE_FILENAME = "openMSX Launcher.exe";
+	private final String EXE_FILENAME = "openmsx-launcher.run";
 	private final String EXE_FILENAME_UPDATE = EXE_FILENAME + STARTER_UPDATE_EXT;
 
 	/* (non-Javadoc)
@@ -40,17 +49,18 @@ final class WindowsLauncherUpdater extends AbstractLauncherUpdater
 	public void startInstallation( String jarFilesDirectory, String executableDirectory, String helpFileDirectory, File zipFile )
 			throws FileUpdateFailedException, IOException
 	{
-		//Windows version will unzip the update file and replace the README file (since it doesn't get locked). It will not attempt to delete the old JAR files
-		//as they're locked by the OS while the launcher is running. The Windows exe launcher will detect the presence of the update files and will copy them
-		//over the old ones before starting the JVM process. The updater will also rename the current exe (allowed in Windows) to install the new one,
+		//Linux and BSD OSes do not lock the JAR files that are used by the JVM process. This means that we can replace them while the launcher is running.
+		//The update will take effect (i.e. new start script and JARs will be used) when the launcher is restarted
 		unzipUpdateFile( jarFilesDirectory, zipFile );
 
-		installNewExecutable( jarFilesDirectory, executableDirectory );
+		installNewJarFiles( jarFilesDirectory );
+
+		installNewStartScript( jarFilesDirectory, executableDirectory );
 
 		installNewHelpFile( jarFilesDirectory, helpFileDirectory );
 	}
 
-	private void installNewExecutable( String jarFilesDirectory, String executableDirectory ) throws FileUpdateFailedException
+	private void installNewStartScript( String jarFilesDirectory, String executableDirectory ) throws FileUpdateFailedException
 	{
 		File files[] = new File( jarFilesDirectory ).listFiles();
 
@@ -61,13 +71,13 @@ final class WindowsLauncherUpdater extends AbstractLauncherUpdater
 				if( file.getName().equals( EXE_FILENAME_UPDATE ) )
 				{
 					Path currentExecutable = Paths.get( executableDirectory, EXE_FILENAME );
-					Path backupExecutable = currentExecutable.resolveSibling( currentExecutable.getFileName() + OLD_EXE_EXT );
 					Path newExecutable = Paths.get( jarFilesDirectory, EXE_FILENAME_UPDATE );
 
 					try
 					{
-						Files.move( currentExecutable, backupExecutable );
-						Files.move( newExecutable, currentExecutable );
+						Set<PosixFilePermission> permissions = Arrays.asList( OWNER_READ, OWNER_WRITE, OWNER_EXECUTE ).stream().collect( Collectors.toSet() );
+						Files.setPosixFilePermissions( newExecutable, permissions );
+						Files.move( newExecutable, currentExecutable, StandardCopyOption.REPLACE_EXISTING );
 					}
 					catch( IOException ioe )
 					{

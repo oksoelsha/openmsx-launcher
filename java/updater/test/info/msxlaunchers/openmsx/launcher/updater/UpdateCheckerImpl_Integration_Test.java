@@ -28,12 +28,16 @@ public class UpdateCheckerImpl_Integration_Test
 	public final TemporaryFolder jarTmpFilesDirectory = new TemporaryFolder();
 
 	@Rule
+	public final TemporaryFolder exeDirectory = new TemporaryFolder();
+
+	@Rule
 	public final TemporaryFolder extraDataTmpDirectory = new TemporaryFolder();
 
 	@Test @Ignore
 	public void testGetExtraDataVersion() throws IOException
 	{
-		UpdateCheckerImpl updateChecker = new UpdateCheckerImpl( jarTmpFilesDirectory.newFolder().getAbsolutePath(), extraDataTmpDirectory.newFolder().getAbsolutePath(), launcherUpdater );
+		UpdateCheckerImpl updateChecker = new UpdateCheckerImpl( jarTmpFilesDirectory.newFolder().getAbsolutePath(), exeDirectory.newFolder().getAbsolutePath(),
+				extraDataTmpDirectory.newFolder().getAbsolutePath(), launcherUpdater );
 
 		Map<String,String> versions = updateChecker.getVersions();
 
@@ -49,7 +53,8 @@ public class UpdateCheckerImpl_Integration_Test
 	{
 		String temporaryFolder = extraDataTmpDirectory.newFolder().getAbsolutePath();
 
-		UpdateCheckerImpl updateChecker = new UpdateCheckerImpl( jarTmpFilesDirectory.newFolder().getAbsolutePath(), temporaryFolder, launcherUpdater );
+		UpdateCheckerImpl updateChecker = new UpdateCheckerImpl( jarTmpFilesDirectory.newFolder().getAbsolutePath(), exeDirectory.newFolder().getAbsolutePath(),
+				temporaryFolder, launcherUpdater );
 
 		updateChecker.getNewExtraDataFile();
 

@@ -41,6 +41,7 @@ import com.google.inject.name.Named;
 final class UpdateCheckerImpl implements UpdateChecker
 {
 	private final String jarFilesDirectory;
+	private final String executableDirectory;
 	private final String extraDataDirectory;
 	private final String helpFileDirectory;
 	private final LauncherUpdater launcherUpdater;
@@ -48,12 +49,19 @@ final class UpdateCheckerImpl implements UpdateChecker
 	private final String UPDATED_JAR_FILENAME = "new-launcher.zip";
 	private final int WRITE_BUFFER = 2048;
 
+	private final String MAIN_URL = "http://msxlaunchers.info/openmsx-launcher";
+	private final String VERSIONS_RESOURCE = "/versions";
+	private final String NEW_LAUNCHER_RESOURCE = "/new/launcher";
+	private final String NEW_EXTRADATA_RESOURCE = "/new/extra-data";
+
 	private boolean isDownloadedNewOpenLauncher = false;
 
 	@Inject
-	UpdateCheckerImpl( @Named("JarFilesDirectory") String jarFilesDirectory, @Named("LauncherDataDirectory") String extraDataDirectory, LauncherUpdater launcherUpdater )
+	UpdateCheckerImpl( @Named("JarFilesDirectory") String jarFilesDirectory, @Named("LauncherDataDirectory") String executableDirectory,
+			@Named("LauncherDataDirectory") String extraDataDirectory, LauncherUpdater launcherUpdater )
 	{
 		this.jarFilesDirectory = jarFilesDirectory;
+		this.executableDirectory = executableDirectory;
 		this.extraDataDirectory = extraDataDirectory;
 		this.helpFileDirectory = extraDataDirectory;
 		this.launcherUpdater = launcherUpdater;
@@ -67,8 +75,8 @@ final class UpdateCheckerImpl implements UpdateChecker
 	{
 		Map<String,String> versions = new HashMap<String,String>();
 
-        HttpURLConnection conn = getWebServiceConnection( "http://msxlaunchers.info/openmsx-launcher/versions" );
- 
+        HttpURLConnection conn = getWebServiceConnection( MAIN_URL + VERSIONS_RESOURCE );
+
         try( BufferedReader br = new BufferedReader( new InputStreamReader( conn.getInputStream() ) ) )
         {
         	boolean done = false;
@@ -101,12 +109,12 @@ final class UpdateCheckerImpl implements UpdateChecker
 	@Override
 	public void getNewOpenMSXLauncher() throws FileUpdateFailedException, IOException
 	{
-        HttpURLConnection conn = getWebServiceConnection( "http://msxlaunchers.info/openmsx-launcher/new/launcher" );
+        HttpURLConnection conn = getWebServiceConnection( MAIN_URL + NEW_LAUNCHER_RESOURCE );
 
         File zipFile = new File( jarFilesDirectory, UPDATED_JAR_FILENAME );
         writeDownloadedFile( conn, zipFile );
 
-        launcherUpdater.installNewOpenMSXLauncher( jarFilesDirectory, helpFileDirectory, zipFile );
+        launcherUpdater.installNewOpenMSXLauncher( jarFilesDirectory, executableDirectory, helpFileDirectory, zipFile );
 
         isDownloadedNewOpenLauncher = true;
 	}
@@ -126,7 +134,7 @@ final class UpdateCheckerImpl implements UpdateChecker
 	@Override
 	public void getNewExtraDataFile() throws IOException
 	{
-        HttpURLConnection conn = getWebServiceConnection( "http://msxlaunchers.info/openmsx-launcher/new/extra-data" );
+        HttpURLConnection conn = getWebServiceConnection( MAIN_URL + NEW_EXTRADATA_RESOURCE );
 
         writeDownloadedFile( conn, new File( extraDataDirectory, "extra-data.dat" ) );
 	}

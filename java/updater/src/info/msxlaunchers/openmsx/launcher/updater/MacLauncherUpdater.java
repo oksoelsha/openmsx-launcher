@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Sam Elsharif
+ * Copyright 2016 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,23 +19,24 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Implementation of <code>LauncherUpdater</code> for Unix family of OSes (Linux, BSD and Mac)
+ * Implementation of <code>LauncherUpdater</code> for Mac
  * 
- * @since v1.4
+ * @since v1.6
  * @author Sam Elsharif
  *
  */
-final class UnixFamilyLauncherUpdater extends AbstractLauncherUpdater
+final class MacLauncherUpdater extends AbstractLauncherUpdater
 {
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.webclient.LauncherUpdater#installNewOpenMSXLauncher(java.lang.String, java.lang.String, java.io.File)
+	 * @see info.msxlaunchers.openmsx.launcher.updater.AbstractLauncherUpdater#startInstallation(java.lang.String, java.lang.String, java.lang.String, java.io.File)
 	 */
 	@Override
-	public void installNewOpenMSXLauncher( String jarFilesDirectory, String helpFileDirectory, File zipFile ) throws FileUpdateFailedException, IOException
+	public void startInstallation( String jarFilesDirectory, String executableDirectory, String helpFileDirectory, File zipFile )
+			throws FileUpdateFailedException, IOException
 	{
-		//The Unix family of OSes (Linux, BSD and Mac) do not lock the JAR files that are used by the JVM process. This means that we can replace them while
-		//the launcher is running. The update will take effect (i.e. new JARs will be used) when the launcher is restarted
-		unzipUpdateFile( jarFilesDirectory, helpFileDirectory, zipFile );
+		//MacOS does not lock the JAR files that are used by the JVM process. This means that we can replace them while the launcher is running.
+		//The update will take effect (i.e. new JARs will be used) when the launcher is restarted
+		unzipUpdateFile( jarFilesDirectory, zipFile );
 
 		installNewJarFiles( jarFilesDirectory );
 

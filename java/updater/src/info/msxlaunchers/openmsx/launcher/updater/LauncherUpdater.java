@@ -31,10 +31,11 @@ public interface LauncherUpdater
 	 * Install the new version of openMSX Launcher by unzipping the update file and copying files to their corresponding locations
 	 * 
 	 * @param jarFilesDirectory Diretory where JAR files are
+	 * @param executableDirectory Directory where program executable is (exe for Windows and run.sh for Linux)
 	 * @param helpFileDirectory Directory where REAEME html help file is
 	 * @param zipFile Downloaded zip file after being written to disk
 	 * @throws FileUpdateFailedException
 	 * @throws IOException
 	 */
-	void installNewOpenMSXLauncher( String jarFilesDirectory, String helpFileDirectory, File zipFile ) throws FileUpdateFailedException, IOException;
+	void installNewOpenMSXLauncher( String jarFilesDirectory, String executableDirectory, String helpFileDirectory, File zipFile ) throws FileUpdateFailedException, IOException;
 }
