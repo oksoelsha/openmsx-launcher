@@ -221,8 +221,7 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 		else
 		{
 			matchesPopup.setSize(field.getWidth(), matches.size() * MATCHES_MENU_ITEM_HEIGHT);
-			matchesPopup.setLocation(getLocationOnScreen().x + field.getLocation().x,
-					getLocationOnScreen().y + field.getLocation().y + field.getHeight());
+			matchesPopup.setLocation(field.getLocationOnScreen().x, field.getLocationOnScreen().y + field.getHeight());
 			matchesPanel.removeAll();
 
 			int index = 0;
@@ -233,6 +232,7 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 				matchesPanel.add(matchesLabels[index++]);
 			}
 
+			matchesPopup.setAlwaysOnTop(true);
 			matchesPopup.setVisible(true);
 		}
 
