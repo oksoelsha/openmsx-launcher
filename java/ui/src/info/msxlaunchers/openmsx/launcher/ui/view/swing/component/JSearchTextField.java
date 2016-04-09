@@ -16,7 +16,6 @@
 package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -31,13 +30,13 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.Painter;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
@@ -54,15 +53,13 @@ import javax.swing.event.PopupMenuListener;
  *
  */
 @SuppressWarnings("serial")
-public class JSearchTextFieldMenuItem extends JMenuItem
+public class JSearchTextField extends JTextField
 {
 	private static final int TYPING_DELAY = 250;
 
 	private final SearchFieldHandler searchFieldHandler;
 	private final JPopupMenu parentMenu;
-
-	private final JPanel fieldPanel;
-	private final JTextField field;
+	private final boolean gradientResultHighlight;
 
 	private final JWindow matchesPopup;
 	private final JPanel matchesPanel;
@@ -70,8 +67,6 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 	private final ActionListener timerListener = new TimerListener();
 	private final Timer fieldUpdateTimer = new Timer(TYPING_DELAY, timerListener);
 
-	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(3, 5, 3, 5);
-	private static final int TEXT_FIELD_COLUMNS = 25;
 	private static final int MATCHES_MENU_ITEM_HEIGHT = 18;
 
 	private static final String ENTER_MAP_KEY = "Enter-key";
@@ -84,28 +79,26 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 
 	private JMatchLabel matchesLabels[];
 
+	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(3, 7, 3, 7);
+	private static final Border LABEL_LINE = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.black);
+	private static final Border LABEL_COMPOUND_BORDER = BorderFactory.createCompoundBorder(LABEL_LINE, LABEL_MARGIN);
 	@SuppressWarnings("unchecked")
 	private static final Painter<JComponent> LABEL_BACKGROUND_PAINTER = (Painter<JComponent>)UIManager.get("MenuItem[MouseOver].backgroundPainter");
 
-	public JSearchTextFieldMenuItem(JPopupMenu parentMenu, SearchFieldHandler searchFieldHandler)
+	public JSearchTextField(int columns, JPopupMenu parentMenu, SearchFieldHandler searchFieldHandler, boolean gradientResultHighlight)
 	{
-		super();
+		super(columns);
 
 		this.parentMenu = parentMenu;
 		this.searchFieldHandler = searchFieldHandler;
-
-		fieldPanel = new JPanel();
-		field = new JTextField(TEXT_FIELD_COLUMNS);
-		fieldPanel.add(field);
-		add(fieldPanel);
-		setBorder(null);
+		this.gradientResultHighlight = gradientResultHighlight;
 
 		this.matchesPopup = new JWindow();
 		this.matchesPanel = new JPanel();
 		matchesPanel.setLayout(new GridLayout(0, 1));
 		this.matchesPopup.getContentPane().add(matchesPanel);
 
-		field.getDocument().addDocumentListener(new DocumentListener()
+		getDocument().addDocumentListener(new DocumentListener()
 		{
 			@Override
 			public void removeUpdate(DocumentEvent e)
@@ -126,64 +119,65 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 			}
 		});
 
-		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false), ENTER_MAP_KEY);
-        field.getActionMap().put(ENTER_MAP_KEY, new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent ae)
-            {
-            	if(currentMatchSelectionIndex > UNSELECTED_INDEX)
-            	{
-            		processMatchSelection(matchesLabels[currentMatchSelectionIndex].getText());
-            	}
-            }
-        });
+		getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false), ENTER_MAP_KEY);
+		getActionMap().put(ENTER_MAP_KEY, new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent ae)
+			{
+				if(currentMatchSelectionIndex > UNSELECTED_INDEX)
+				{
+					processMatchSelection(matchesLabels[currentMatchSelectionIndex].getText());
+				}
+			}
+		});
 
-		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), DOWN_MAP_KEY);
-        field.getActionMap().put(DOWN_MAP_KEY, new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent ae)
-            {
-            	if(currentMatchSelectionMaximum > 0)
-            	{
-	        		if(currentMatchSelectionIndex != UNSELECTED_INDEX)
-	        		{
-	            		matchesLabels[currentMatchSelectionIndex].unhighlight();
-	        		}
-	        		currentMatchSelectionIndex++;
-	        		if(currentMatchSelectionIndex == currentMatchSelectionMaximum)
-	        		{
-	        			currentMatchSelectionIndex = 0;
-	        		}
-	        		matchesLabels[currentMatchSelectionIndex].highlight();
-            	}
-            }
-        });
+		getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), DOWN_MAP_KEY);
+		getActionMap().put(DOWN_MAP_KEY, new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent ae)
+			{
+				if(currentMatchSelectionMaximum > 0)
+				{
+					if(currentMatchSelectionIndex != UNSELECTED_INDEX)
+					{
+						matchesLabels[currentMatchSelectionIndex].unhighlight();
+					}
+					currentMatchSelectionIndex++;
+					if(currentMatchSelectionIndex == currentMatchSelectionMaximum)
+					{
+						currentMatchSelectionIndex = 0;
+					}
+					matchesLabels[currentMatchSelectionIndex].highlight();
+				}
+			}
+		});
 
-		field.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), UP_MAP_KEY);
-        field.getActionMap().put(UP_MAP_KEY, new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent ae)
-            {
-            	if(currentMatchSelectionMaximum > 0)
-            	{
-	        		if(currentMatchSelectionIndex != UNSELECTED_INDEX)
-	        		{
-	            		matchesLabels[currentMatchSelectionIndex].unhighlight();
-	        		}
-	        		currentMatchSelectionIndex--;
-	        		if(currentMatchSelectionIndex < 0)
-	        		{
-	        			currentMatchSelectionIndex = currentMatchSelectionMaximum - 1;
-	        		}
-	        		matchesLabels[currentMatchSelectionIndex].highlight();
-            	}
-            }
-        });
+		getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), UP_MAP_KEY);
+		getActionMap().put(UP_MAP_KEY, new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent ae)
+			{
+				if(currentMatchSelectionMaximum > 0)
+				{
+					if(currentMatchSelectionIndex != UNSELECTED_INDEX)
+					{
+						matchesLabels[currentMatchSelectionIndex].unhighlight();
+					}
+					currentMatchSelectionIndex--;
+					if(currentMatchSelectionIndex < 0)
+					{
+						currentMatchSelectionIndex = currentMatchSelectionMaximum - 1;
+					}
+					matchesLabels[currentMatchSelectionIndex].highlight();
+				}
+			}
+		});
 
-        parentMenu.addPopupMenuListener(new PopupMenuListener() {
+		parentMenu.addPopupMenuListener(new PopupMenuListener() {
 			@Override
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e)
 			{
+				SwingUtilities.invokeLater(() -> requestFocusInWindow());
 			}
 			
 			@Override
@@ -200,18 +194,6 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 		});
 	}
 
-	@Override
-	public Dimension getPreferredSize()
-	{
-		return fieldPanel.getPreferredSize(); 
-	}
-
-	@Override
-	public boolean requestFocusInWindow()
-	{
-		return field.requestFocusInWindow();
-	}
-
 	private void showMatches(Set<String> matches)
 	{
 		if(matches.size() == 0)
@@ -220,8 +202,8 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 		}
 		else
 		{
-			matchesPopup.setSize(field.getWidth(), matches.size() * MATCHES_MENU_ITEM_HEIGHT);
-			matchesPopup.setLocation(field.getLocationOnScreen().x, field.getLocationOnScreen().y + field.getHeight());
+			matchesPopup.setSize(parentMenu.getWidth(), matches.size() * MATCHES_MENU_ITEM_HEIGHT);
+			matchesPopup.setLocation(parentMenu.getLocationOnScreen().x, parentMenu.getLocationOnScreen().y + parentMenu.getHeight() - 1);
 			matchesPanel.removeAll();
 
 			int index = 0;
@@ -250,17 +232,16 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 			super(label);
 			this.indexInMatchesList = indexInMatchesList;
 
-			setOpaque(false);
-			setContentAreaFilled(false);
+			setOpaque(!gradientResultHighlight);
 			addMouseListener(this);
-			setBorder(LABEL_MARGIN);
+			setBorder(LABEL_COMPOUND_BORDER);
 			mouseInsideLabel = false;
 		}
 
 		@Override
 		protected void paintComponent(Graphics g)
 		{
-			if(mouseInsideLabel)
+			if(gradientResultHighlight && mouseInsideLabel)
 			{
 				Painter<JComponent> painter = LABEL_BACKGROUND_PAINTER;
 				painter.paint((Graphics2D)g, this, getWidth() + 1, getHeight());
@@ -273,8 +254,15 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 		{
 			mouseInsideLabel = true;
 			setForeground(Color.white);
+			if(gradientResultHighlight)
+			{
+				repaint();
+			}
+			else
+			{
+				setBackground(Color.BLUE);
+			}
 			currentMatchSelectionIndex = indexInMatchesList;
-			repaint();
 		}
 
 		void unhighlight()
@@ -282,7 +270,10 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 			mouseInsideLabel = false;
 			setBackground(UIManager.getColor("MenuItem.background"));
 			setForeground(UIManager.getColor("MenuItem.foreground"));
-			repaint();
+			if(gradientResultHighlight)
+			{
+				repaint();
+			}
 		}
 
 		@Override
@@ -294,10 +285,10 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 		@Override
 		public void mouseEntered(MouseEvent e)
 		{
-    		if(currentMatchSelectionIndex != UNSELECTED_INDEX)
-    		{
-        		matchesLabels[currentMatchSelectionIndex].unhighlight();
-    		}
+			if(currentMatchSelectionIndex != UNSELECTED_INDEX)
+			{
+				matchesLabels[currentMatchSelectionIndex].unhighlight();
+			}
 			highlight();
 		}
 
@@ -328,7 +319,7 @@ public class JSearchTextFieldMenuItem extends JMenuItem
 		@Override
 		public void actionPerformed(ActionEvent evt)
 		{
-			Set<String> matches = searchFieldHandler.getSearchMatches(field.getText());
+			Set<String> matches = searchFieldHandler.getSearchMatches(getText());
 
 			showMatches(matches);
 

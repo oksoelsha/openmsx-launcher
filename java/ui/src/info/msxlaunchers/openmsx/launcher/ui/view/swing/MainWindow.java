@@ -24,7 +24,7 @@ import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewProperties;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextFieldMenuItem;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextField;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
@@ -171,6 +171,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	public static final Color POPUP_MENU_ITEM_BUTTON_HOVER_BG_COLOR = new Color(140, 140, 220);
 
 	private static final String SPACES = "                                ";
+	private static final int SEARCH_TEXT_FIELD_COLUMNS = 25;
 
 	private final MainWindow ref = this;
 
@@ -1287,8 +1288,21 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		searchContextMenu = new JPopupMenu();
 		searchContextMenu.setComponentOrientation(orientation);
 
-		JMenuItem searchFieldMenuItem = new JSearchTextFieldMenuItem(searchContextMenu, this);
-		searchContextMenu.add(searchFieldMenuItem);
+		JPanel searchPanel = new JPanel();
+		searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 4, 0));
+
+		boolean gradientResultHighlight;
+		if(OSUtils.isMac())
+		{
+			gradientResultHighlight = false;
+		}
+		else
+		{
+			gradientResultHighlight = true;
+		}
+		JSearchTextField searchField = new JSearchTextField(SEARCH_TEXT_FIELD_COLUMNS, searchContextMenu, this, gradientResultHighlight);
+		searchPanel.add(searchField);
+		searchContextMenu.add(searchPanel);
 
 		int x;
 		if(orientation == ComponentOrientation.RIGHT_TO_LEFT)
@@ -1300,7 +1314,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			x = 2;
 		}
 		searchContextMenu.show(searchButton, x, searchButton.getHeight()-1);
-		searchFieldMenuItem.requestFocusInWindow();
 	}
 
 	private static void addFilterButtonHoverBehavior( final JButton button )
