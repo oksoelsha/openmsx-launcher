@@ -48,6 +48,9 @@
 									<option value="-Xms150m"/>
 									<option value="-Xmx200m"/>
 								</bundleapp>
+								<mkdir dir="target/openMSX Launcher.app/share"/>
+								<copy file="../../extra/README.html" todir="target/openMSX Launcher.app/share"/>
+								<copy file="../../extra/extra-data.dat" todir="target/openMSX Launcher.app/share"/>
 							</target>
 						</configuration>
 					</execution>
