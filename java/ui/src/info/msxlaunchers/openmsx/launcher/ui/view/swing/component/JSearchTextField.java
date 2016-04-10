@@ -80,7 +80,7 @@ public class JSearchTextField extends JTextField
 	private JMatchLabel matchesLabels[];
 
 	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(3, 7, 3, 7);
-	private static final Border LABEL_LINE = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.black);
+	private static final Border LABEL_LINE = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.gray);
 	private static final Border LABEL_COMPOUND_BORDER = BorderFactory.createCompoundBorder(LABEL_LINE, LABEL_MARGIN);
 	@SuppressWarnings("unchecked")
 	private static final Painter<JComponent> LABEL_BACKGROUND_PAINTER = (Painter<JComponent>)UIManager.get("MenuItem[MouseOver].backgroundPainter");
@@ -94,6 +94,7 @@ public class JSearchTextField extends JTextField
 		this.gradientResultHighlight = gradientResultHighlight;
 
 		this.matchesPopup = new JWindow();
+
 		this.matchesPanel = new JPanel();
 		matchesPanel.setLayout(new GridLayout(0, 1));
 		this.matchesPopup.getContentPane().add(matchesPanel);
@@ -233,6 +234,7 @@ public class JSearchTextField extends JTextField
 			this.indexInMatchesList = indexInMatchesList;
 
 			setOpaque(!gradientResultHighlight);
+			setBackground(UIManager.getColor("MenuItem.background"));
 			addMouseListener(this);
 			setBorder(LABEL_COMPOUND_BORDER);
 			mouseInsideLabel = false;
@@ -260,7 +262,7 @@ public class JSearchTextField extends JTextField
 			}
 			else
 			{
-				setBackground(Color.BLUE);
+				setBackground(UIManager.getColor("MenuItem.selectionBackground"));
 			}
 			currentMatchSelectionIndex = indexInMatchesList;
 		}
