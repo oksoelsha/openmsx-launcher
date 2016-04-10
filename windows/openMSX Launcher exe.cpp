@@ -1,5 +1,5 @@
 /*
- * Launcher for openMSX Launcher v1.4
+ * Windows launcher for openMSX Launcher v1.6 and later
  *
  * Author - Sam Elsharif
  */
@@ -11,8 +11,8 @@
 #define JAVA_REGISTRY_CURRENT_VERSION L"CurrentVersion"
 #define JAVA_REGISTRY_JAVA_HOME L"JavaHome"
 #define JAVA_EXE L"\\bin\\java.exe"
-#define JAVA_ARGS TEXT(" -client -Xms50M -Xmx50M -cp \"lib\\*\" info.msxlaunchers.openmsx.launcher.ui.Launcher")
-#define JAVA_NOT_INSTALLED_MSG L"Java is not installed on your system or is not the right version. Please install Java Runtime Environment 7 or later"
+#define JAVA_ARGS TEXT(" -client -Xms150M -Xmx200M -cp \"lib\\*\" info.msxlaunchers.openmsx.launcher.ui.Launcher")
+#define JAVA_NOT_INSTALLED_MSG L"Java is not installed on your system or is not the right version. Please install Java Runtime Environment 8 or later"
 #define LAUNCHER_CANNOT_START_MSG L"Could not start openMSX Launcher"
 #define ERROR_TITLE L"Error"
 #define BUFFER_SIZE 256
@@ -22,6 +22,7 @@
 #define UPDATED_JAR_FILE_EXT_LENGTH _tcslen(UPDATED_JAR_FILE_EXT)
 #define UPDATE_IDENTIFIER_LENGTH _tcslen(L"_update")
 #define LEAST_VALID_JAVA_VERSION 8
+#define LAUNCHER_OLD_NAME L"\\openMSX Launcher.exe.old"
 
 using namespace std;
 typedef basic_string<TCHAR> tstring;
@@ -60,7 +61,7 @@ BOOL GetRegistryValue(TCHAR *keyPath, TCHAR *key, TCHAR *value)
 
 /*
 javaVersionPath: pre-allocated buffer that will hold the JRE full path upon return
-Return: True if JRE was found and is version 1.7 or later, FALSE otherwise
+Return: True if JRE was found and is version 1.8 or later, FALSE otherwise
 */
 BOOL GetJavaPath(TCHAR *javaVersionPath)
 {
@@ -71,7 +72,7 @@ BOOL GetJavaPath(TCHAR *javaVersionPath)
 		return FALSE;
 	}
 
-	//check if the version is 1.7 or later
+	//check if the version is 1.8 or later
 	tstring versionString = value;
 	tstring majorVersionString = versionString.substr(2, tstring::npos);
 	int majorVersionInt = (int)_ttoi(majorVersionString.c_str());
@@ -146,22 +147,30 @@ BOOL EndsWith(const TCHAR *fullString, const TCHAR *ending)
 void PrepareForUpdate()
 {
 	WIN32_FIND_DATA ffd;
-	TCHAR directory[MAX_PATH];
-	TCHAR directoryAllFiles[MAX_PATH];
+	TCHAR exeDirectory[MAX_PATH];
+	TCHAR libDirectory[MAX_PATH];
+	TCHAR libDirectoryAllFiles[MAX_PATH];
 	int totalFile = 0;
 	BOOL foundFilesTEndingWithNewString = FALSE;
 	TCHAR currentJarFiles[MAX_FILES][MAX_PATH];
 	TCHAR updatedJarFiles[MAX_FILES][MAX_PATH];
+	TCHAR oldExecutable[MAX_PATH];
 
-	GetCurrentDirectory(MAX_PATH, directory);
-	_tcscat_s(directory, MAX_PATH, L"\\lib\\");
-	_tcscpy_s(directoryAllFiles, directory);
-	_tcscat_s(directoryAllFiles, MAX_PATH, L"*.*");
+	GetCurrentDirectory(MAX_PATH, exeDirectory);
+
+	_tcscpy_s(libDirectory, exeDirectory);
+	_tcscat_s(libDirectory, MAX_PATH, L"\\lib\\");
+
+	_tcscpy_s(libDirectoryAllFiles, libDirectory);
+	_tcscat_s(libDirectoryAllFiles, MAX_PATH, L"\\*.*");
+
+	_tcscpy_s(oldExecutable, exeDirectory);
+	_tcscat_s(oldExecutable, MAX_PATH, LAUNCHER_OLD_NAME);
 
 	int jarFileCount = 0;
 	int updatedJarFileCount = 0;
 
-	HANDLE hFind = FindFirstFile(directoryAllFiles, &ffd);
+	HANDLE hFind = FindFirstFile(libDirectoryAllFiles, &ffd);
 	if (INVALID_HANDLE_VALUE != hFind)
 	{
 		do
@@ -169,7 +178,7 @@ void PrepareForUpdate()
 			if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
 				TCHAR fullFileName[MAX_PATH];
-				_tcscpy_s(fullFileName, directory);
+				_tcscpy_s(fullFileName, libDirectory);
 				_tcscat_s(fullFileName, MAX_PATH, ffd.cFileName);
 
 				if (EndsWith(ffd.cFileName, JAR_FILE_EXT))
@@ -205,6 +214,9 @@ void PrepareForUpdate()
 			MoveFile(updatedJarFiles[counter], newJarFileName);
 		}
 	}
+
+	//also delete the old executable file
+	DeleteFile(oldExecutable);
 }
 
 void BringOpenMSXLauncherToForeground(HWND hWnd)
