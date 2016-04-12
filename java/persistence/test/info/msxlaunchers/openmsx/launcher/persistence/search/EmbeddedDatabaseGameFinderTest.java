@@ -108,7 +108,7 @@ public class EmbeddedDatabaseGameFinderTest
 		assertTrue( matches.contains(  new DatabaseItem( "fighting 2", database2 ) ) );
 
 		//sha1 match
-		matches = launcherPersistence.getGameFinder().find( "6433", 5 );
+		matches = launcherPersistence.getGameFinder().find( "a1e4fb", 5 );
 		assertEquals( 1, matches.size() );
 		assertTrue( matches.contains(  new DatabaseItem( "Arcade", database2 ) ) );
 

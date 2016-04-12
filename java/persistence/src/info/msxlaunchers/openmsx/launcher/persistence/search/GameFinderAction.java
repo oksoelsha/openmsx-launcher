@@ -60,7 +60,7 @@ final class GameFinderAction extends NonTransactionalDatabaseOperation<Set<Datab
 		try( PreparedStatement statement = connection.prepareStatement( GET_MATCHES_STATEMENT ) )
 		{
 			statement.setString( 1, "%" + string + "%" );
-			statement.setString( 2, "%" + string.toLowerCase() + "%" );
+			statement.setString( 2, string.toLowerCase() + "%" );
 			statement.setMaxRows( maximumMatches );
 
 			try( ResultSet result = statement.executeQuery() )
