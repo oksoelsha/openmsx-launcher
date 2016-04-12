@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -488,43 +489,13 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestListOfFavorites() throws LauncherException
 	{
-		DatabaseItem fav1 = new DatabaseItem( "gameName", "database" );
-		DatabaseItem fav2 = new DatabaseItem( "Abc", "def" );
-		DatabaseItem fav3 = new DatabaseItem( "abc", "dee" );
-		DatabaseItem fav4 = new DatabaseItem( "srf", "mnb" );
-		DatabaseItem fav5 = new DatabaseItem( "t y r", "l wer tr" );
-		DatabaseItem fav6 = new DatabaseItem( "kkbb", "xx vv" );
-		DatabaseItem fav7 = new DatabaseItem( "Kk", "xx vv" );
-
-		Set<DatabaseItem> favorites = new HashSet<>();
-		favorites.add( fav1 );
-		favorites.add( fav2 );
-		favorites.add( fav3 );
-		favorites.add( fav4 );
-		favorites.add( fav5 );
-		favorites.add( fav6 );
-		favorites.add( fav7 );
+		Set<DatabaseItem> favorites = getTestDatabaseItems();
 
 		when( favoritePersister.getFavorites() ).thenReturn( favorites );
 
 		presenter.onRequestListOfFavorites();
 
-		Set<String> favoritesAsString = new LinkedHashSet<>();
-		String fav1AsString = "gameName [database]";
-		String fav2AsString = "Abc [def]";
-		String fav3AsString = "abc [dee]";
-		String fav4AsString = "srf [mnb]";
-		String fav5AsString = "t y r [l wer tr]";
-		String fav6AsString = "kkbb [xx vv]";
-		String fav7AsString = "Kk [xx vv]";
-
-		favoritesAsString.add( fav3AsString );
-		favoritesAsString.add( fav2AsString );
-		favoritesAsString.add( fav1AsString );
-		favoritesAsString.add( fav7AsString );
-		favoritesAsString.add( fav6AsString );
-		favoritesAsString.add( fav4AsString );
-		favoritesAsString.add( fav5AsString );
+		Set<String> favoritesAsString = getTestDatabaseItemsAsStrings( favorites );
 
 		verify( view, times( 1 ) ).showFavoritesMenu( favoritesAsString );
 	}
@@ -762,34 +733,40 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestSearchMatches()
 	{
-		DatabaseItem match1 = new DatabaseItem( "gameName", "database" );
-		DatabaseItem match2 = new DatabaseItem( "Abc", "def" );
-		DatabaseItem match3 = new DatabaseItem( "abc", "dee" );
-		DatabaseItem match4 = new DatabaseItem( "srf", "mnb" );
-		DatabaseItem match5 = new DatabaseItem( "t y r", "l wer tr" );
-		DatabaseItem match6 = new DatabaseItem( "kkbb", "xx vv" );
-		DatabaseItem match7 = new DatabaseItem( "Kk", "xx vv" );
-
-		Set<DatabaseItem> matches = new HashSet<>();
-		matches.add( match1 );
-		matches.add( match2 );
-		matches.add( match3 );
-		matches.add( match4 );
-		matches.add( match5 );
-		matches.add( match6 );
-		matches.add( match7 );
+		Set<DatabaseItem> matches = getTestDatabaseItems();
 
 		when( gameFinder.find( anyString(), anyInt() ) ).thenReturn( matches );
 
 		Set<String> matchesAsStrings = presenter.onRequestSearchMatches( "searchString" );
 
 		assertEquals( matches.size(), matchesAsStrings.size() );
-		assertTrue( matchesAsStrings.contains( "gameName [database]" ) );
-		assertTrue( matchesAsStrings.contains( "Abc [def]" ) );
-		assertTrue( matchesAsStrings.contains( "abc [dee]" ) );
-		assertTrue( matchesAsStrings.contains( "srf [mnb]" ) );
-		assertTrue( matchesAsStrings.contains( "t y r [l wer tr]" ) );
-		assertTrue( matchesAsStrings.contains( "kkbb [xx vv]" ) );
-		assertTrue( matchesAsStrings.contains( "Kk [xx vv]" ) );
+		assertEquals( getTestDatabaseItemsAsStrings( matches ), matchesAsStrings );
+	}
+
+	private Set<DatabaseItem> getTestDatabaseItems()
+	{
+		DatabaseItem databaseItem1 = new DatabaseItem( "gameName", "database" );
+		DatabaseItem databaseItem2 = new DatabaseItem( "Abc", "def" );
+		DatabaseItem databaseItem3 = new DatabaseItem( "abc", "dee" );
+		DatabaseItem databaseItem4 = new DatabaseItem( "srf", "mnb" );
+		DatabaseItem databaseItem5 = new DatabaseItem( "t y r", "l wer tr" );
+		DatabaseItem databaseItem6 = new DatabaseItem( "kkbb", "xx vv" );
+		DatabaseItem databaseItem7 = new DatabaseItem( "Kk", "xx vv" );
+
+		Set<DatabaseItem> set = new HashSet<>();
+		set.add( databaseItem1 );
+		set.add( databaseItem2 );
+		set.add( databaseItem3 );
+		set.add( databaseItem4 );
+		set.add( databaseItem5 );
+		set.add( databaseItem6 );
+		set.add( databaseItem7 );
+
+		return set;
+	}
+
+	private Set<String> getTestDatabaseItemsAsStrings( Set<DatabaseItem> set )
+	{
+		return set.stream().map( di -> di.getGameName() + " [" + di.getDatabase() + "]").collect( Collectors.toSet() );
 	}
 }
