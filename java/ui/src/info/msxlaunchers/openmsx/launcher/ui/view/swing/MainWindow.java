@@ -335,6 +335,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			//removing the current selected database will automatically select another from the drop down list and will
 			//therefore clear the list and re-populate it.
 			gameList.clear();
+			updateGameCount(0);
 		}
 	}
 
