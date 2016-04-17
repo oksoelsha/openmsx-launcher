@@ -398,7 +398,14 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onSelectGames( Set<String> gameNames )
 	{
-		if( gameNames == null || gameNames.size() != 1 )
+		if( currentDatabase == null )
+		{
+			//this happens when the last database is deleted
+			view.showGameScreenshots( null, null );
+			view.enableButtons( false, false, false, false );
+			view.resetGameCompanyYearSizeData();
+		}
+		else if( gameNames == null || gameNames.size() != 1 )
 		{
 			//this is the multi selection case
 			view.showGameScreenshots( null, null );
