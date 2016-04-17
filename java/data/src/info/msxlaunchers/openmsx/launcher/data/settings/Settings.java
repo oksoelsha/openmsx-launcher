@@ -35,24 +35,27 @@ public final class Settings
 	private final String screenshotsFullPath;
 	private final String defaultDatabase;
 	private final Language language;
+	private final boolean showUpdateAllDatabases;
 
 	public Settings( String openMSXFullPath,
 			String openMSXMachinesFullPath,
 			String screenshotsFullPath,
 			String defaultDatabase,
-			Language language )
+			Language language,
+			boolean showUpdateAllDatabases )
 	{
 		this.openMSXFullPath = openMSXFullPath;
 		this.openMSXMachinesFullPath = openMSXMachinesFullPath;
 		this.screenshotsFullPath = screenshotsFullPath;
 		this.defaultDatabase = defaultDatabase;
 		this.language = language;
+		this.showUpdateAllDatabases = showUpdateAllDatabases;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash( defaultDatabase, language, openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath );
+		return Objects.hash( defaultDatabase, language, openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, showUpdateAllDatabases );
 	}
 
 	@Override
@@ -71,7 +74,8 @@ public final class Settings
             		Objects.equals( language, other.language ) &&
             		Objects.equals( openMSXFullPath, other.openMSXFullPath ) &&
             		Objects.equals( openMSXMachinesFullPath, other.openMSXMachinesFullPath ) &&
-            		Objects.equals( screenshotsFullPath, other.screenshotsFullPath );
+            		Objects.equals( screenshotsFullPath, other.screenshotsFullPath ) &&
+            		Objects.equals( showUpdateAllDatabases, other.isShowUpdateAllDatabases() );
         }
 
         return false;
@@ -131,5 +135,10 @@ public final class Settings
 	public Language getLanguage()
 	{
 		return language;
+	}
+
+	public boolean isShowUpdateAllDatabases()
+	{
+		return showUpdateAllDatabases;
 	}
 }

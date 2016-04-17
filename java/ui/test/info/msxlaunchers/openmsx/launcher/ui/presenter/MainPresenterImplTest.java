@@ -94,7 +94,7 @@ public class MainPresenterImplTest
 		when( launcherPersistence.getFiltersPersister() ).thenReturn( filterPersister );
 		when( launcherPersistence.getSettingsPersister() ).thenReturn( settingsPersister );
 		when( launcherPersistence.getGameFinder() ).thenReturn( gameFinder );
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
 		Set<String> databases = new HashSet<>();
 		databases.add( defaultDatabase );
 		when( gamePersister.getDatabases() ).thenReturn( databases );
@@ -117,7 +117,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testDefaultDatabaseNullInConstructor() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
 
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
@@ -128,7 +128,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testDatabaseNotFoundWhenRetrieveGamesInConstructor() throws IOException, GamePersistenceException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
 		when( gamePersister.getGames( defaultDatabase ) ).thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND, defaultDatabase ) );
 
 		//no exception is thrown
@@ -140,7 +140,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testIOExceptionWhenRetrieveGamesInConstructor() throws IOException, GamePersistenceException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
 		when( gamePersister.getGames( defaultDatabase ) ).thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) );
 
 		//no exception is thrown
@@ -152,7 +152,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testStart() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
 
 		presenter.start();
 	}
@@ -658,7 +658,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestAddGameScreen() throws IOException, LauncherException
 	{
-		Settings settings = new Settings( null, null, null, defaultDatabase, null );
+		Settings settings = new Settings( null, null, null, defaultDatabase, null, false );
 
 		ProfileEditingPresenter profileEditingPresenter = Mockito.mock( ProfileEditingPresenter.class );
 		when( profileEditingPresenterFactory.create( settings, defaultDatabase, null) ).thenReturn( profileEditingPresenter );
@@ -670,7 +670,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestEditGameScreen() throws IOException, LauncherException
 	{
-		Settings settings = new Settings( null, null, null, defaultDatabase, null );
+		Settings settings = new Settings( null, null, null, defaultDatabase, null, false );
 
 		String gameName = "gameName";
 

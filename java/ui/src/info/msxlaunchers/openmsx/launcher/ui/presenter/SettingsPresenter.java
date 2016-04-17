@@ -48,10 +48,12 @@ public interface SettingsPresenter
 	 * @param screenshotsFullPath Full path to screenshots directory
 	 * @param defaultDatabase Default database
 	 * @param languageChoice String that represents language name in Language enum
+	 * @param showUpdateAllDatabases Flag to show update all databases menu item
 	 * @throws LauncherException
 	 */
 	void onRequestSettingsAction( String openMSXFullPath,
 			String screenshotsFullPath,
 			String defaultDatabase,
-			String languageChoice ) throws LauncherException;
+			String languageChoice,
+			boolean showUpdateAllDatabases ) throws LauncherException;
 }

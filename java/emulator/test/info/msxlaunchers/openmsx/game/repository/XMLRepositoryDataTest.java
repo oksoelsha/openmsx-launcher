@@ -40,7 +40,7 @@ public class XMLRepositoryDataTest
 	@Test
 	public void testGetRepositoryInfoValidXML() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "path-will-make-xml-file-valid", null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "path-will-make-xml-file-valid", null, null, null, false ) );
 
 		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
 
@@ -52,7 +52,7 @@ public class XMLRepositoryDataTest
 	@Test
 	public void testGetRepositoryInfoInvalidXML() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
 
 		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
 
@@ -74,7 +74,7 @@ public class XMLRepositoryDataTest
 	@Test
 	public void testGetGameInfo() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "machines-path", null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "machines-path", null, null, null, false ) );
 
 		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
 
@@ -96,7 +96,7 @@ public class XMLRepositoryDataTest
 	@Test
 	public void testGetAllDumpCodes() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
 
 		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
 
@@ -123,7 +123,8 @@ public class XMLRepositoryDataTest
 				"openMSXMachinesFullPath",
 				"screenshotsFullPath",
 				"defaultDatabase",
-				null));
+				null,
+				false ) );
 
 		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
 
@@ -138,7 +139,8 @@ public class XMLRepositoryDataTest
 				"openMSXMachinesFullPath",
 				"screenshotsFullPath",
 				"defaultDatabase",
-				null));
+				null,
+				false ) );
 
 		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
 

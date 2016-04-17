@@ -17,6 +17,7 @@ public class SettingsTest
 	private String screenshotsFullPath = "Screenshots Path";
 	private String defaultDatabase = "default Database";
 	private Language language = Language.CATALAN;
+	private boolean showUpdateAllDatabases = true;
 
 	@Test
 	public void testSettings()
@@ -24,36 +25,39 @@ public class SettingsTest
 		Settings settings;
 		
 		//test that all fields can be set
-		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language );
+		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
 
 		assertEquals( settings.getOpenMSXFullPath(), openMSXFullPath );
 		assertEquals( settings.getOpenMSXMachinesFullPath(), openMSXMachinesFullPath );
 		assertEquals( settings.getScreenshotsFullPath(), screenshotsFullPath );
 		assertEquals( settings.getDefaultDatabase(), defaultDatabase );
 		assertEquals( settings.getLanguage(), language );
+		assertEquals( settings.isShowUpdateAllDatabases(), true );
 		
 		//test that all fields can null
-		settings = new Settings( null, null, null, null, null );
+		settings = new Settings( null, null, null, null, null, false );
 
 		assertEquals( settings.getOpenMSXFullPath(), null );
 		assertEquals( settings.getOpenMSXMachinesFullPath(), null );
 		assertEquals( settings.getScreenshotsFullPath(), null );
 		assertEquals( settings.getDefaultDatabase(), null );
 		assertEquals( settings.getLanguage(), null );
+		assertEquals( settings.isShowUpdateAllDatabases(), false );
 	}
 
 	@Test
 	public void testEquals()
 	{
-		Settings settings1 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language );
-		Settings settings2 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language );
-		Settings settings3 = new Settings( null, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language );
-		Settings settings4 = new Settings( null, null, screenshotsFullPath, defaultDatabase, language );
-		Settings settings5 = new Settings( null, null, null, defaultDatabase, language );
-		Settings settings6 = new Settings( null, null, null, null, language );
-		Settings settings7 = new Settings( null, null, null, null, null );
-		Settings settings8 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, Language.KOREAN );
-		Settings settings9 = new Settings( openMSXFullPath, openMSXMachinesFullPath, "screenshotsFullPath2", defaultDatabase, language );
+		Settings settings1 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
+		Settings settings2 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
+		Settings settings3 = new Settings( null, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
+		Settings settings4 = new Settings( null, null, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
+		Settings settings5 = new Settings( null, null, null, defaultDatabase, language, showUpdateAllDatabases );
+		Settings settings6 = new Settings( null, null, null, null, language, showUpdateAllDatabases );
+		Settings settings7 = new Settings( null, null, null, null, null, false );
+		Settings settings8 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, Language.KOREAN, showUpdateAllDatabases );
+		Settings settings9 = new Settings( openMSXFullPath, openMSXMachinesFullPath, "screenshotsFullPath2", defaultDatabase, language, showUpdateAllDatabases );
+		Settings settings10 = new Settings( openMSXFullPath, openMSXMachinesFullPath, "screenshotsFullPath2", defaultDatabase, language, false );
 
 		assertTrue( settings1.equals( settings2 ) );
 		assertEquals( settings1.hashCode(), settings2.hashCode() );
@@ -73,12 +77,13 @@ public class SettingsTest
 		assertFalse( settings1.equals( "something" ) );
 		assertFalse( settings1.equals( settings8 ) );
 		assertFalse( settings1.equals( settings9 ) );
+		assertFalse( settings10.equals( settings9 ) );
 	}
 
 	@Test
-	public void testEmptyStringsShouldReturnNull()
+	public void testEmptyStringsShouldReturnNullOrFalse()
 	{
-		Settings settings = new Settings( " ", " ", " ", " ", null );
+		Settings settings = new Settings( " ", " ", " ", " ", null, false );
 
 		assertNull( settings.getOpenMSXFullPath() );
 		assertNull( settings.getOpenMSXMachinesFullPath() );

@@ -303,7 +303,8 @@ public class SettingsWindow  extends JDialog implements ActionListener
 				presenter.onRequestSettingsAction(openMSXFullPathTextField.getText(),
 						screenshotsFullPathTextField.getText(),
 						defaultDatabase,
-						languageComboBox.getSelectedCode());
+						languageComboBox.getSelectedCode(),
+						settings.isShowUpdateAllDatabases());
 				dispose();
 			}
 			catch(LauncherException le)

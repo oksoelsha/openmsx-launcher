@@ -154,7 +154,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
 
 		assertFalse( presenter.isNewScreenshotsVersionAvailable() );
 	}
@@ -174,7 +174,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false ) );
 
 		createTempVersionFile( "1.2" );
 
@@ -186,7 +186,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
 
 		assertFalse( presenter.isScreenshotsSetInSettings() );
 	}
@@ -196,7 +196,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false ) );
 
 		createTempVersionFile( "1.2" );
 
@@ -208,7 +208,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false ) );
 
 		assertFalse( presenter.isScreenshotsSetInSettings() );
 	}

@@ -101,6 +101,7 @@ final class MainPresenterImpl implements MainPresenter
 	private Language currentLanguage;
 	private String currentLanguageCode;
 	private boolean currentRightToLeft;
+	private boolean showUpdateAllDatabases;
 
 	private Set<String> databases = null;
 	private String currentDatabase = null;;
@@ -154,7 +155,7 @@ final class MainPresenterImpl implements MainPresenter
 		}
 		catch( LauncherPersistenceException lpe )
 		{
-			//This gets called at application initialisation time, so if it fails then log it and rethrow
+			//This gets called at application initialization time, so if it fails then log it and rethrow
 			//TODO: add proper logging
 			throw new IOException();
 		}
@@ -165,7 +166,7 @@ final class MainPresenterImpl implements MainPresenter
 		}
 		catch ( IOException ioe )
 		{
-			//This gets called at application initialisation time, so if it fails then log it and rethrow
+			//This gets called at application initialization time, so if it fails then log it and rethrow
 			//TODO: add proper logging
 			throw ioe;
 		}
@@ -189,10 +190,12 @@ final class MainPresenterImpl implements MainPresenter
 			}
 			catch ( GamePersistenceException gpe )
 			{
-				//This gets called at application initialisation time, so if it fails then just log it
+				//This gets called at application initialization time, so if it fails then just log it
 				//TODO: add proper logging
 			}
 		}
+
+		this.showUpdateAllDatabases = settings.isShowUpdateAllDatabases();
 
 		openMSXMachinesFullPath = settings.getOpenMSXMachinesFullPath();
 		initializeRepositoryInfoMap();
@@ -204,7 +207,7 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void start()
 	{
-		view.displayMain( currentLanguage, getSortedGameList(), databases, currentDatabase, currentRightToLeft );
+		view.displayMain( currentLanguage, getSortedGameList(), databases, currentDatabase, currentRightToLeft, showUpdateAllDatabases );
 	}
 
 	/* (non-Javadoc)

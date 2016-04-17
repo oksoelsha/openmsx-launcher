@@ -38,7 +38,8 @@ public class LinuxBSDStarterArgumentsTest
 				"/openMSX/share/machines",
 				null,
 				null,
-				null );
+				null,
+				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
 		Mockito.doNothing().when( argsBuilder ).appendIfValueDefined( any( String.class ), any( String.class ) );
@@ -73,7 +74,8 @@ public class LinuxBSDStarterArgumentsTest
 				"/openMSX/share/machines",
 				null,
 				null,
-				null );
+				null,
+				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
 		Mockito.doNothing().when( argsBuilder ).appendIfValueDefined( any( String.class ), any( String.class ) );

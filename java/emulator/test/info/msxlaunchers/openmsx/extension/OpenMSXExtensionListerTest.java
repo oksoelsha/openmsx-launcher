@@ -43,7 +43,7 @@ public class OpenMSXExtensionListerTest
 	@Test( expected = InvalidMachinesDirectoryException.class )
 	public void testGetInvalidMachinesDirectoryForMachinesPathAsNull() throws InvalidMachinesDirectoryException, IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
 
 		OpenMSXExtensionLister openMSXExtensionLister = new OpenMSXExtensionLister( settingsPersister );
 
@@ -54,7 +54,7 @@ public class OpenMSXExtensionListerTest
 	public void testGetInvalidMachinesDirectoryForMachinesPathAsFile() throws InvalidMachinesDirectoryException, IOException
 	{
 		String machinesDirectory = getClass().getResource( "file.txt" ).getFile();
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null, false ) );
 
 		OpenMSXExtensionLister openMSXExtensionLister = new OpenMSXExtensionLister( settingsPersister );
 
@@ -65,7 +65,7 @@ public class OpenMSXExtensionListerTest
 	public void testGetExtensionsDirectoryNotFound() throws InvalidMachinesDirectoryException, IOException
 	{
 		String machinesDirectory = getClass().getResource( "folder1/machines" ).getFile();
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null, false ) );
 
 		OpenMSXExtensionLister openMSXExtensionLister = new OpenMSXExtensionLister( settingsPersister );
 
@@ -78,7 +78,7 @@ public class OpenMSXExtensionListerTest
 	public void testGetExtensions() throws InvalidMachinesDirectoryException, IOException
 	{
 		String machinesDirectory = getClass().getResource( "folder2/machines" ).getFile();
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null, false ) );
 
 		OpenMSXExtensionLister openMSXExtensionLister = new OpenMSXExtensionLister( settingsPersister );
 
@@ -91,7 +91,7 @@ public class OpenMSXExtensionListerTest
 	public void testGetExtensionsCannotBeModified() throws InvalidMachinesDirectoryException, IOException
 	{
 		String machinesDirectory = getClass().getResource( "folder2/machines" ).getFile();
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null, false ) );
 
 		OpenMSXExtensionLister openMSXExtensionLister = new OpenMSXExtensionLister( settingsPersister );
 
@@ -104,7 +104,7 @@ public class OpenMSXExtensionListerTest
 	public void testGetWhenExtensionsIsFile() throws InvalidMachinesDirectoryException, IOException
 	{
 		String machinesDirectory = getClass().getResource( "folder3/machines" ).getFile();
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, machinesDirectory, null, null, null, false ) );
 
 		OpenMSXExtensionLister openMSXExtensionLister = new OpenMSXExtensionLister( settingsPersister );
 

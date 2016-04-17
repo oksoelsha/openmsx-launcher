@@ -50,7 +50,7 @@ public class OpenMSXStarterTest
 	{
 		OpenMSXStarter openMSXStarter = new OpenMSXStarter( starterPlatformArguments );
 
-		Settings settings = new Settings( null, null, null, null, null );
+		Settings settings = new Settings( null, null, null, null, null, false );
 
 		openMSXStarter.start( settings, null );
 	}
@@ -66,7 +66,8 @@ public class OpenMSXStarterTest
 				null,
 				null,
 				null,
-				null );
+				null,
+				false );
 
 		//this unit test will only work on Windows
 		List<String> args = new ArrayList<String>();
@@ -120,7 +121,8 @@ public class OpenMSXStarterTest
 				null,
 				null,
 				null,
-				null );
+				null,
+				false );
 
 		//this unit test will only work on Windows
 		List<String> args = new ArrayList<String>();

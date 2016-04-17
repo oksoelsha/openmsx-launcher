@@ -101,6 +101,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	private Set<String> databases;
 	private String currentDatabase;
+	private boolean showUpdateAllDatabases;
 
 	private JPanel contentPane;
 	private JMenuBar menuBar;
@@ -198,10 +199,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			Set<GameLabel> games,
 			Set<String> databases,
 			String currentDatabase,
-			boolean rightToLeft)
+			boolean rightToLeft,
+			boolean showUpdateAllDatabases)
 	{
 		this.databases = databases;
 		this.currentDatabase = currentDatabase;
+		this.showUpdateAllDatabases = showUpdateAllDatabases;
 
 		contentPane = new JPanelWithBackground();
 		setContentPane(contentPane);
@@ -278,9 +281,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         actionsMenu.add(actionsFillDatabase);
 
         actionsUpdateAllDatabase = new JMenuItem();
-        actionsUpdateAllDatabase.addActionListener(event -> onRequestUpdateAllDatabases());
-        actionsMenu.add(actionsUpdateAllDatabase);
-
+        if(showUpdateAllDatabases)
+        {
+        	actionsUpdateAllDatabase.addActionListener(event -> onRequestUpdateAllDatabases());
+        	actionsMenu.add(actionsUpdateAllDatabase);
+        }
         actionsImportBlueMSXLauncherDatabases = new JMenuItem();
 
         //import blueMSX Launcher databases is only for Windows

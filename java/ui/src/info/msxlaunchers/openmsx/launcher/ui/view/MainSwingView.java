@@ -60,9 +60,10 @@ class MainSwingView implements MainView
 			Set<GameLabel> games,
 			Set<String> databases,
 			String defaultDatabase,
-			boolean rightToLeft )
+			boolean rightToLeft,
+			boolean showUpdateAllDatabases )
 	{
-		SwingUtilities.invokeLater( new MainWindowStarter( language, games, databases, defaultDatabase, rightToLeft ) );
+		SwingUtilities.invokeLater( new MainWindowStarter( language, games, databases, defaultDatabase, rightToLeft, showUpdateAllDatabases ) );
 	}
 
 	/* (non-Javadoc)
@@ -274,24 +275,27 @@ class MainSwingView implements MainView
 		private final Set<String> databases;
 		private final String defaultDatabase;
 		private final boolean rightToLeft;
+		private final boolean showUpdateAllDatabases;
 
 		MainWindowStarter( Language language,
 				Set<GameLabel> games,
 				Set<String> databases,
 				String defaultDatabase,
-				boolean rightToLeft )
+				boolean rightToLeft,
+				boolean showUpdateAllDatabases )
 		{
 			this.language = language;
 			this.games = games;
 			this.databases = databases;
 			this.defaultDatabase = defaultDatabase;
 			this.rightToLeft = rightToLeft;
+			this.showUpdateAllDatabases = showUpdateAllDatabases;
 		}
 
 		@Override
 		public void run()
 		{
-			mainWindow.display( language, games, databases, defaultDatabase, rightToLeft );
+			mainWindow.display( language, games, databases, defaultDatabase, rightToLeft, showUpdateAllDatabases );
 		}		
 	}
 }

@@ -37,12 +37,14 @@ public interface MainView
 	 * @param databases Set containing database names
 	 * @param defaultDatabase Name of default database to display - could be null
 	 * @param rightToLeft Flag to determine screen orientation based on language
+	 * @param showUpdateAllDatabases Flag to show the update all databases menu item
 	 */
 	void displayMain( Language language,
 			Set<GameLabel> games,
 			Set<String> databases,
 			String defaultDatabase,
-			boolean rightToLeft );
+			boolean rightToLeft,
+			boolean showUpdateAllDatabases );
 
 	/**
 	 * Refreshes language display in the application based on the given language

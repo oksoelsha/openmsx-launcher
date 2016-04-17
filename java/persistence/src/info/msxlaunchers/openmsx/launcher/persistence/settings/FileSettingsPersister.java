@@ -53,6 +53,7 @@ final class FileSettingsPersister implements SettingsPersister
 	private final static String SCREENSHOTS_FULL_PATH = "screenshots-path";
 	private final static String DEFAULT_DATABASE = "default-database";
 	private final static String LANGUAGE = "language";
+	private final static String SHOW_UPDATE_ALL_DATABASES = "showUpdateAllDatabases";
 
 	private final File settingsFile;
 
@@ -81,12 +82,14 @@ final class FileSettingsPersister implements SettingsPersister
 		String screenshotsFullPath = getPropertyValue( settings.getScreenshotsFullPath() );
 		String defaultDatabase = getPropertyValue( settings.getDefaultDatabase() );
 		String language = Utils.getEnumValue( settings.getLanguage() );
+		boolean showUpdateAllDatabases = settings.isShowUpdateAllDatabases();
 
 		properties.put( OPENMSX_FULL_PATH, openMSXFullPath );
 		properties.put( OPENMSX_MACHINES_FULL_PATH, openMSXMachinesFullPath );
 		properties.put( SCREENSHOTS_FULL_PATH, screenshotsFullPath );
 		properties.put( DEFAULT_DATABASE, defaultDatabase );
 		properties.put( LANGUAGE, language );
+		properties.put( SHOW_UPDATE_ALL_DATABASES, new Boolean( showUpdateAllDatabases ).toString() );
 
 		try( OutputStream stream = new FileOutputStream( settingsFile ) )
 		{
@@ -95,7 +98,8 @@ final class FileSettingsPersister implements SettingsPersister
 											openMSXMachinesFullPath,
 											screenshotsFullPath,
 											defaultDatabase,
-											Language.fromValue( Utils.getNumber( language ) ) );
+											Language.fromValue( Utils.getNumber( language ) ),
+											showUpdateAllDatabases );
 		}
 	}
 
@@ -124,7 +128,8 @@ final class FileSettingsPersister implements SettingsPersister
 					properties.getProperty( OPENMSX_MACHINES_FULL_PATH ),
 					properties.getProperty( SCREENSHOTS_FULL_PATH ),
 					properties.getProperty( DEFAULT_DATABASE ) ,
-					Language.fromValue( Utils.getNumber( properties.getProperty( LANGUAGE ) ) ) );
+					Language.fromValue( Utils.getNumber( properties.getProperty( LANGUAGE ) ) ),
+					Boolean.parseBoolean( properties.getProperty( SHOW_UPDATE_ALL_DATABASES, "false" ) ) );
 
 			cachedSettings = settings;
 		}

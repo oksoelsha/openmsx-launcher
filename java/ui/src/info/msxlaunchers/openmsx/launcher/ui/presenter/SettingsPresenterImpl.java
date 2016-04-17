@@ -65,13 +65,14 @@ final class SettingsPresenterImpl implements SettingsPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.SettingsPresenter#onRequestSettingsAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.SettingsPresenter#onRequestSettingsAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	@Override
 	public void onRequestSettingsAction( String openMSXFullPath,
 			String screenshotsFullPath,
 			String defaultDatabase,
-			String languageChoice ) throws LauncherException
+			String languageChoice,
+			boolean showUpdateAllDatabases ) throws LauncherException
 	{
 		String openMSXMachinesFullPath = null;
 		if( platformViewProperties.isMachinesFolderInsideOpenMSX() )
@@ -95,7 +96,8 @@ final class SettingsPresenterImpl implements SettingsPresenter
 					openMSXMachinesFullPath,
 					screenshotsFullPath,
 					defaultDatabase,
-					language );
+					language,
+					showUpdateAllDatabases );
 
 			settingsPersister.saveSettings( newSettings );
 
