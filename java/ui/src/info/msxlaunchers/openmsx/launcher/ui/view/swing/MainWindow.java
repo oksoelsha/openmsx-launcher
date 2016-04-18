@@ -281,13 +281,14 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         actionsMenu.add(actionsFillDatabase);
 
         actionsUpdateAllDatabase = new JMenuItem();
+        //update all databases only appears if added manually to the settings file
         if(showUpdateAllDatabases)
         {
         	actionsUpdateAllDatabase.addActionListener(event -> onRequestUpdateAllDatabases());
         	actionsMenu.add(actionsUpdateAllDatabase);
         }
-        actionsImportBlueMSXLauncherDatabases = new JMenuItem();
 
+        actionsImportBlueMSXLauncherDatabases = new JMenuItem();
         //import blueMSX Launcher databases is only for Windows
         if(OSUtils.isWindows())
         {
@@ -431,7 +432,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		filtersButton.addActionListener(this);
 		filtersButton.setFocusable(false);
 
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		GroupLayout groupLayout = new GroupLayout(contentPane);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -513,7 +514,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		removeButton = getIconButton(removeButtonPanel, Icons.REMOVE.getImageIcon());
 		launchButton = getIconButton(launchButtonPanel, Icons.LAUNCH.getImageIcon());
 
-		getContentPane().setLayout(groupLayout);
+		contentPane.setLayout(groupLayout);
 
 	    ListSelectionListener listSelectionListener = new ListSelectionListener()
 	    {
