@@ -25,9 +25,12 @@ import com.google.inject.Inject;
 
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.common.VersionUtils;
+import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.data.version.Application;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
+import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 import info.msxlaunchers.openmsx.launcher.ui.view.UpdateCheckerView;
 import info.msxlaunchers.openmsx.launcher.updater.FileUpdateFailedException;
@@ -46,6 +49,8 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 	private final UpdateChecker updateChecker;
 	private final ExtraDataGetter extraDataGetter;
 	private final SettingsPersister settingsPersister;
+	private final LauncherPersistence launcherPersistence;
+	private final MainPresenter mainPresenter;
 
 	private final String DOWNLOAD_URL = "http://msxlaunchers.info/download.html";
 
@@ -53,12 +58,15 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 	private Map<String,String> versionsFromServer;
 
 	@Inject
-	public UpdateCheckerPresenterImpl( UpdateCheckerView view, UpdateChecker updateChecker, ExtraDataGetter extraDataGetter, SettingsPersister settingsPersister )
+	UpdateCheckerPresenterImpl( UpdateCheckerView view, UpdateChecker updateChecker, ExtraDataGetter extraDataGetter, SettingsPersister settingsPersister,
+			LauncherPersistence launcherPersistence, MainPresenter mainPresenter )
 	{
 		this.view = Objects.requireNonNull( view );
 		this.updateChecker = Objects.requireNonNull( updateChecker );
 		this.extraDataGetter = Objects.requireNonNull( extraDataGetter );
 		this.settingsPersister = Objects.requireNonNull( settingsPersister );
+		this.launcherPersistence = Objects.requireNonNull( launcherPersistence );
+		this.mainPresenter = Objects.requireNonNull( mainPresenter );
 
 		versionsFromServer = Collections.emptyMap();
 	}
@@ -184,6 +192,29 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 		{
 			throw new LauncherException( LauncherExceptionCode.ERR_CANNOT_INSTALL_NEW_UPDATED_FILES );
 		}
+
+		//at this point we need to update the databases with new information obtained from the new extra data file
+		Map<String, ExtraData> extraDataMap = null;
+
+		try
+		{
+			extraDataMap = extraDataGetter.getExtraData();
+		}
+		catch( IOException ioe )
+		{
+			throw new LauncherException( LauncherExceptionCode.ERR_IO );
+		}
+
+		try
+		{
+			launcherPersistence.getGamePersister().updateGameExtraDataInDatabases( extraDataMap );
+		}
+		catch( GamePersistenceException gpe )
+		{
+			throw new LauncherException( LauncherExceptionCode.ERR_IO );
+		}
+
+		mainPresenter.onUpdateViewedDatabase( null );
 	}
 
 	/* (non-Javadoc)

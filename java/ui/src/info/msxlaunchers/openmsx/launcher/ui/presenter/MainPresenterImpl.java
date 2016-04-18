@@ -495,24 +495,34 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onUpdateViewedDatabase( String database ) throws LauncherException
 	{
-		if( !databases.contains( database ) )
+		String effectiveDatabase;
+		if( database == null )
+		{
+			effectiveDatabase = currentDatabase;
+		}
+		else
+		{
+			effectiveDatabase = database;
+		}
+
+		if( !databases.contains( effectiveDatabase ) )
 		{
 			//then this is a new database
-			view.addDatabase( database );
-			databases.add( database );
+			view.addDatabase( effectiveDatabase );
+			databases.add( effectiveDatabase );
 		}
-		else if( currentDatabase != null && currentDatabase.equals( database ) )
+		else if( currentDatabase != null && currentDatabase.equals( effectiveDatabase ) )
 		{
 			//then the currently displayed database was modified
 			try
 			{
-				retrieveDatabaseGames( database );
+				retrieveDatabaseGames( effectiveDatabase );
 			}
 			catch( GamePersistenceException gpe )
 			{
 				if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
 				{
-					throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, database );
+					throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, effectiveDatabase );
 				}
 				else
 				{
@@ -520,8 +530,7 @@ final class MainPresenterImpl implements MainPresenter
 				}
 			}
 
-			currentDatabase = database;
-			view.fillGameList( database, getSortedGameList(), null );
+			view.fillGameList( effectiveDatabase, getSortedGameList(), null );
 		}
 	}
 

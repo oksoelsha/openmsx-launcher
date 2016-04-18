@@ -120,7 +120,7 @@ public interface MainPresenter
 	/**
 	 * Called when it is needed to update the game list in the current database (e.g. after running fill database)
 	 * 
-	 * @param database Name of the database to update
+	 * @param database Name of the database to update. If null, then use the currently selected database in the model
 	 * @throws LauncherException
 	 */
 	void onUpdateViewedDatabase( String database ) throws LauncherException;
