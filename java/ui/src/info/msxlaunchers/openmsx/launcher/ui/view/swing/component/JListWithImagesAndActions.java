@@ -102,7 +102,7 @@ public class JListWithImagesAndActions extends JList<Object>
 		{
 			public void keyPressed(KeyEvent ke)
 			{
-				if(actionListener == null)
+				if(actionListener == null || ke.isAltDown())
 				{
 					return;
 				}
