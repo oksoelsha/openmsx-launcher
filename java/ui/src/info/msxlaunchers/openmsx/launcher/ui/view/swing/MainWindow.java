@@ -206,15 +206,18 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		this.currentDatabase = currentDatabase;
 		this.showUpdateAllDatabases = showUpdateAllDatabases;
 
+		//allow the Enter key to work on buttons when in focus in all dialogs
+		UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
+
 		contentPane = new JPanelWithBackground();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-        setTitle("openMSX Launcher");
+		setTitle("openMSX Launcher");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-        addWindowListener( new WindowCloseAdapter() );
-        setResizable(false);
+		addWindowListener( new WindowCloseAdapter() );
+		setResizable(false);
 
-        //menus
+		//menus
 //		drawMenu();
 
 		//main window
