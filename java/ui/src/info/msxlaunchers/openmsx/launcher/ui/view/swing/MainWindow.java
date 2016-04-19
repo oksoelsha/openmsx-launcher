@@ -392,7 +392,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		gameList.registerKeyboardAction(event -> addSelectedGameToFavorites(), getCtrl_DKeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> viewGameInfo(), getF1KeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> processShowSearchScreenRequest(), getCtrl_FKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
-		gameList.registerKeyboardAction( event -> processShowFavoritesMenuRequest(), getCtrl_IKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> processShowFavoritesMenuRequest(), getCtrl_IKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> processShowFiltersMenuRequest(), getCtrl_LKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> applyFilter(null), getCtrl_RKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         JScrollPane gameListScrollBar = new JScrollPane(gameList);
 
@@ -772,7 +774,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		else if(source == resetFilterMenuItem)
 		{
 			applyFilter(null);
-			gameList.requestFocusInWindow();
 		}
 		else if(source instanceof JMenuItem)
 		{
@@ -1527,6 +1528,16 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private KeyStroke getCtrl_IKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_I, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+	}
+
+	private KeyStroke getCtrl_LKeyStroke()
+	{
+		return KeyStroke.getKeyStroke(KeyEvent.VK_L, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+	}
+
+	private KeyStroke getCtrl_RKeyStroke()
+	{
+		return KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
 	private static class SortedComboBoxModel extends DefaultComboBoxModel<String>
