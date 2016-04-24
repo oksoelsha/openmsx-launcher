@@ -670,7 +670,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 		else
 		{
-			enableButtons(false, false, false, false);
+			enableButtons(false, false, currentDatabase != null, false, false);
 		}
 	}
 
@@ -1001,10 +1001,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		//just ignore
 	}
 
-	public void enableButtons(boolean launchFlag, boolean removeFlag, boolean editFlag, boolean infoFlag)
+	public void enableButtons(boolean launchFlag, boolean removeFlag, boolean addFlag, boolean editFlag, boolean infoFlag)
 	{
 		launchButton.setEnabled(launchFlag);
 		removeButton.setEnabled(removeFlag);
+		addButton.setEnabled(addFlag);
 		editButton.setEnabled(editFlag);
 		infoMenuItem.setEnabled(infoFlag);
 	}
@@ -1057,6 +1058,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		try
 		{
 			presenter.onRequestDatabaseManagerScreen();
+
+			//after calling the database manager screen, the last database may have been deleted.
+			//in this case, disable the add button
+			addButton.setEnabled(currentDatabase != null);
 		}
 		catch(LauncherException le)
 		{

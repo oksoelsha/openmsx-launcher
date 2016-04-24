@@ -133,12 +133,12 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#enableButtons(boolean, boolean, boolean, boolean)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#enableButtons(boolean, boolean, boolean, boolean, boolean)
 	 */
 	@Override
-	public void enableButtons( boolean launchFlag, boolean removeFlag, boolean editFlag, boolean infoFlag )
+	public void enableButtons( boolean launchFlag, boolean removeFlag, boolean addFlag, boolean editFlag, boolean infoFlag )
 	{
-		mainWindow.enableButtons( launchFlag, removeFlag, editFlag, infoFlag );
+		mainWindow.enableButtons( launchFlag, removeFlag, addFlag, editFlag, infoFlag );
 	}
 
 	/* (non-Javadoc)

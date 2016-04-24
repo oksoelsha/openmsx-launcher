@@ -405,14 +405,14 @@ final class MainPresenterImpl implements MainPresenter
 		{
 			//this happens when the last database is deleted
 			view.showGameScreenshots( null, null );
-			view.enableButtons( false, false, false, false );
+			view.enableButtons( false, false, false, false, false );
 			view.resetGameCompanyYearSizeData();
 		}
 		else if( gameNames == null || gameNames.size() != 1 )
 		{
 			//this is the multi selection case
 			view.showGameScreenshots( null, null );
-			view.enableButtons( false, true, false, false );
+			view.enableButtons( false, true, true, false, false );
 			view.resetGameCompanyYearSizeData();
 		}
 		else
@@ -469,7 +469,7 @@ final class MainPresenterImpl implements MainPresenter
 				}
 				
 				//enable buttons according to the selection
-				view.enableButtons( true,  true, true, game.getInfo() != null );
+				view.enableButtons( true,  true, true, true, game.getInfo() != null );
 
 				//show game details
 				String company = EMPTY_STRING;

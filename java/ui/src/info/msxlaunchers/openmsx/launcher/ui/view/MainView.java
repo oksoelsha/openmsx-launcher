@@ -124,10 +124,11 @@ public interface MainView
 	 * 
 	 * @param launchFlag True if to enable, false to disable
 	 * @param removeFlag True if to enable, false to disable
+	 * @param addFlag True if to enable, false to disable
 	 * @param editFlag True if to enable, false to disable
 	 * @param infoFlag True if to enable, false to disable
 	 */
-	void enableButtons( boolean launchFlag, boolean removeFlag, boolean editFlag, boolean infoFlag );
+	void enableButtons( boolean launchFlag, boolean removeFlag, boolean addFlag, boolean editFlag, boolean infoFlag );
 
 	/**
 	 * Displays screen to ask user for the target database and return a set of the moved game names
