@@ -1060,8 +1060,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			presenter.onRequestDatabaseManagerScreen();
 
 			//after calling the database manager screen, the last database may have been deleted.
-			//in this case, disable the add button
+			//in this case, disable the add and filter buttons if no database is selected
 			addButton.setEnabled(currentDatabase != null);
+			filtersButton.setEnabled(currentDatabase != null);
 		}
 		catch(LauncherException le)
 		{
