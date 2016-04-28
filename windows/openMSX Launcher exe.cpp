@@ -11,7 +11,7 @@
 #define JAVA_REGISTRY_CURRENT_VERSION L"CurrentVersion"
 #define JAVA_REGISTRY_JAVA_HOME L"JavaHome"
 #define JAVA_EXE L"\\bin\\java.exe"
-#define JAVA_ARGS TEXT(" -client -Xms150M -Xmx200M -cp \"lib\\*\" info.msxlaunchers.openmsx.launcher.ui.Launcher")
+#define JAVA_ARGS TEXT(" -client -cp \"lib\\*\" info.msxlaunchers.openmsx.launcher.ui.Launcher")
 #define JAVA_NOT_INSTALLED_MSG L"Java is not installed on your system or is not the right version. Please install Java Runtime Environment 8 or later"
 #define LAUNCHER_CANNOT_START_MSG L"Could not start openMSX Launcher"
 #define ERROR_TITLE L"Error"

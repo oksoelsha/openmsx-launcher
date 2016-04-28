@@ -1,0 +1,9 @@
+set -C
+lockfile="/tmp/openmsx-launcher.lock"
+if echo "$$" > "$lockfile"; then
+#	echo "Successfully acquired lock"
+	java -client -cp "lib/openmsx-launcher.jar:lib/guice-3.0.jar:lib/guice-assistedinject-3.0.jar:lib/javax.inject.jar:lib/javacsv.jar:lib/aopalliance.jar:lib/filedrop.jar:lib/json-smart-1.2.jar:lib/derby.jar" info.msxlaunchers.openmsx.launcher.ui.Launcher
+	trap 'rm "$lockfile"' EXIT
+#else
+#	echo "Cannot acquire lock - already locked by $(cat "$lockfile")"
+fi
