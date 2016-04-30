@@ -14,7 +14,7 @@ td { padding: 12px; }
 
 <body>
 
-<h2>openMSX Launcher v1.5</h2>
+<h2>openMSX Launcher v1.6</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -30,20 +30,30 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from previous version (1.4)</u></h3>
+<h3><u>Upgrade from version 1.5</u></h3>
 
 Databases created in previous versions are fully compatible with the current version.
 
-<p class="tab"><b>Windows</b>: if you have Java Runtime Environment (JRE) 8 installed then you can upgrade from within the
-Help->Check for Updates window. After you download, you need to restart the launcher. If you don't have JRE 8 installed,
-download the ZIP package from msxlaunchers.info and unzip it anywhere on your system. Replace the old exe, lib directory,
-extra-data.dat and README.html files with the new versions. Leave everything else untouched.</p>
+<p class="tab"><b>Windows</b>: You can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.
+Before restarting though, you also need to replace the 'openMSX Launcher.exe' file, which you can extract from the ZIP file that you can download from
+<a href="http://msxlaunchers.info">msxlaunchers.info</a>. You do not need to perform this manual step in the future as the upgrade system in version
+1.6 was enhanced. Don't forget to upgrade the extra-data file from the 'Help->Check for Updates' window after the upgrade.
+<br>Yet another way to upgrade is to download the ZIP package from <a href="http://msxlaunchers.info">msxlaunchers.info</a> and unzip it anywhere on
+your system. You can then replace the old exe, extra-data.dat and README.html files with the new versions. Leave everything else untouched.</br></p>
 
-<p class="tab"><b>MacOS</b>: Upgrade from within the Help->Check for Updates window. After you download, you need to restart
-the launcher.</p>
+<p class="tab"><b>MacOS</b>: You can upgrade from within the 'Help->Check for Updates' window, but it is highly recommended though to trash the current openMSX
+Launcher app folder and replace it with the new one from <a href="http://msxlaunchers.info">msxlaunchers.info</a> as if this is a first time installation.
+All launcher data will be preserved since they are stored on the user folder outside of the app folder. In future upgrades you do not need to perform this
+complete reinstallation step as the upgrade system in version 1.6 was enhanced.</p>
 
-<p class="tab"><b>Linux/BSD</b>: Upgrade from within the Help->Check for Updates window. After you download, you need to restart
-the launcher.</p>
+<p class="tab"><b>Linux/BSD</b>: You can upgrade from within the 'Help->Check for Updates' window. After you download, also replace
+the 'openmsx-launcher.run' file, which you can extract from the ZIP file that you can download from
+<a href="http://msxlaunchers.info">msxlaunchers.info</a>. Restart the launcher for the changes to take effect. In future upgrades you do not need to perform
+this complete reinstallation step as the upgrade system in version 1.6 was enhanced. Don't forget to upgrade the extra-data file from the
+'Help->Check for Updates' window after the upgrade.
+<BR>Yet another way to upgrade is to replace the entire openMSX Launcher folder with the new one that you can get from
+<a href="http://msxlaunchers.info">msxlaunchers.info</a>. All launcher data will be preserved since they are stored on the user folder outside of
+the launcher folder.</BR></p>
 
 <h3><u>How to start</u></h3>
 
@@ -52,7 +62,7 @@ the launcher.</p>
 <p class="tab"><b>MacOS</b>: double-click on the application icon.</p>
 
 <p class="tab"><b>Linux/OpenBSD</b>: type and enter openmsx-launcher.run in a terminal window. In a GNOME environment you can create a
-shortcut to the launcher</p>
+shortcut to the launcher.</p>
 
 <h3><u>Settings</u></h3>
 
@@ -97,10 +107,17 @@ You can go straight to your favorite game by selecting one from the list. You ca
 Filters button can be found under the game list. When pressing it, a menu pops up with a list of saved filters,
 small buttons to either delete or edit saved filters and options to reset current filters and add new ones.
 
+<h3><u>Search</u></h3>
+Search button is located above the four main buttons. When pressing it, a text field appears. Enter any part of the name of the game or first few
+or all of SHA1 code. Search is case insensitive. SHA1 code search is useful if you want to locate a game by its SHA1 code to apply patches to it.
+As you type, a list of matches appears. Select the game you're looking for by mouse click or use arrow and enter keys to select it.
+<p><u>Note:</u> mouse clicks don't work on Ubuntu, the only Linux flavour that was tested. This could be a bug in the implementation that hasn't been identified yet. Use the keyboard instead.</p>
+
 <h3><u>Update All Databases</u></h3>
-This is a tool that updates extra data for games in all databases (including update display of screenshots) when there's
+<u>Note:</u> starting from version 1.6 this feature is hidden by default. Check appendix A for details.
+<BR>This is a tool that updates extra data for games in all databases (including update display of screenshots) when there's
 a new version of the extra-data.dat file and screenshots. It will also fix a bug that existed in versions
-1.0 and 1.1 where some fields were not set correctly when using the 'Fill database' feature.
+1.0 and 1.1 where some fields were not set correctly when using the 'Fill database' feature.</BR>
 
 <h3><u>Right-click context menu</u></h3>
 When right-clicking on one or more selected profiles in the games list, a context menu appears with the followig items:
@@ -134,29 +151,45 @@ You can drag and drop game files and directories to the main launcher window for
 <tr><td>Del</td><td>Del</td><td>Remove profile button</td></tr>
 <tr><td>Insert</td><td>Insert</td><td>Add profile button</td></tr>
 <tr><td>Ctrl+E</td><td>Command+E</td><td>Add profile button</td></tr>
-<tr><td>Ctrl+D</td><td>Command+D</td><td>Add to Favorites</td></tr>
-<tr><td>F1</td><td>F1</td><td>Info button</td></tr>
+<tr><td>Ctrl+F</td><td>Command+F</td><td>Show search field</td></tr>
+<tr><td>Ctrl+D</td><td>Command+D</td><td>Add to favorites</td></tr>
+<tr><td>Ctrl+I</td><td>Command+I</td><td>Show list of favorites</td></tr>
+<tr><td>Ctrl+L</td><td>Command+L</td><td>Show list of filters</td></tr>
+<tr><td>Ctrl+R</td><td>Command+R</td><td>Reset filters</td></tr>
 <tr><td>Ctrl+X</td><td>Command+X</td><td>Move profile</td></tr>
+<tr><td>F1</td><td>F1</td><td>Info button</td></tr>
 <tr><td>Ctrl+Shift+F</td><td>Command+Shift+F</td><td>Locate file</td></tr>
 <tr><td>Ctrl+F1</td><td>Command+F1</td><td>Properties</td></tr>
 </table>
 
 <h3><u>To do in future versions</u></h3>
 
-1) Android version (I developed a prototype but openMSX on Android doesn't accept arguments when started from a different App therefore I stopped).
+1) Revamped User Interface.
 <br></br>
 2) Catapult features.
 <br></br>
-3) Search.
+3) User-defined fields.
 <br></br>
-4) User-defined fields.
-<br></br>
-5) Play stats.
+4) Play stats.
 
 <h3><u>Support/Suggestions/Questions/Translation fixes/New translations</u></h3>
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.6 - released May 1, 2016</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added search for games by name or SHA1 code</li>
+<li>Improved keyboard support and added more keyboard shortcuts</li>
+<li>Removed 'Update all databases' from Action menu and incorporated the functionality in the upgrade system. Instructions on how to enable it are in the help file</li>
+</ul>
+Bug fixes:
+<ul>
+<li>Enhanced the in-line upgrade system (accessible through 'Help->Check for Updates')</li>
+<li>Fixed many minor bugs</li>
+</ul>
 
 <b>Version 1.5 - released October 17, 2015</b>
 <br></br>
@@ -261,6 +294,20 @@ Display two screenshots for each game</li>
 Simplified, Chinese Traditional, Dutch, Finnish, French, German, Italian, Japanese, Korean, Persian, Portuguese,
 Russian, Spanish and Swedish)</li>
 </ul>
+
+<hr></hr>
+
+<h3>Appendix A - Update all databases</h3>
+
+This feature is disabled by default starting from version 1.6. It was needed everytime you made changes to the extra-data.dat file
+(this file contains SHA1 code mapping to MSX generation, sound chip and genre) to update internal launcher data. There are two ways
+to update the file: download it through the launcher upgrade or manually if there's a new version posted on the msxlaunchers website,
+or update it yourself to add your own dumps. It was deemed that the only common way to update the extra-data.dat file is through the
+launcher upgrade system, and through that method the internal data are updated automatically upon a successful download and upgrade.
+If you still need to update the databases manually, you can get the menu item to appear by adding the followng line to the launcher's
+settings-oml.ini file (location depends on platform):
+<p>showUpdateAllDatabases=true</p>
+<p>and restart the launcher.
 
 </body>
 </html>
