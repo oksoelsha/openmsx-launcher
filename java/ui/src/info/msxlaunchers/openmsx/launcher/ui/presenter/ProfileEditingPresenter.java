@@ -50,7 +50,6 @@ public interface ProfileEditingPresenter
 	 * @param name Name of game
 	 * @param info Full path to info file or URL for a game
 	 * @param machine Machine name
-	 * @param romsUsed Flag to indicate if a ROM not an extension is used
 	 * @param romA Full path to ROM A file
 	 * @param romB Full path to ROM B file
 	 * @param extensionRom Name of openMSX extension
@@ -65,7 +64,6 @@ public interface ProfileEditingPresenter
 	void onRequestAddGameSaveAction( String name,
 			String info,
 			String machine,
-			boolean romsUsed,
 			String romA,
 			String romB,
 			String extensionRom,
@@ -80,7 +78,6 @@ public interface ProfileEditingPresenter
 	 * Called when user decides to launch the game from within the Add or Edit screens
 	 * 
 	 * @param machine Machine name
-	 * @param romsUsed Flag to indicate if a ROM not an extension is used
 	 * @param romA Full path to ROM A file
 	 * @param romB Full path to ROM B file
 	 * @param extensionRom Name of openMSX extension
@@ -93,7 +90,6 @@ public interface ProfileEditingPresenter
 	 * @throws LauncherException
 	 */
 	void onRequestLaunchAction( String machine,
-			boolean romsUsed,
 			String romA,
 			String romB,
 			String extensionRom,
@@ -111,7 +107,6 @@ public interface ProfileEditingPresenter
 	 * @param newName New name for the game to be edited - can be the same as the old name
 	 * @param info Full path to info file or URL for a game
 	 * @param machine Machine name
-	 * @param romsUsed Flag to indicate if a ROM not an extension is used
 	 * @param romA Full path to ROM A file
 	 * @param romB Full path to ROM B file
 	 * @param extensionRom Name of openMSX extension
@@ -127,7 +122,6 @@ public interface ProfileEditingPresenter
 			String newName,
 			String info,
 			String machine,
-			boolean romsUsed,
 			String romA,
 			String romB,
 			String extensionRom,

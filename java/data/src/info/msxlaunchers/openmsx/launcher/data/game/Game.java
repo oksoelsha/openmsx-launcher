@@ -109,7 +109,6 @@ public final class Game implements Serializable
 			//at least one of the following fields must be set
 			if( name == null &&
 					romA == null && romB == null
-//					&& extensionRom == null
 					&& diskA == null && diskB == null
 					&& tape == null && harddisk == null && laserdisc == null && tclScript == null )
 			{

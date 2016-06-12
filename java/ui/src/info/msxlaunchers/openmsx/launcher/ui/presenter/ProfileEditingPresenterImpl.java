@@ -143,13 +143,12 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestAddGameSaveAction(java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestAddGameSaveAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void onRequestAddGameSaveAction( String name,
 			String info,
 			String machine,
-			boolean romsUsed,
 			String romA,
 			String romB,
 			String extensionRom,
@@ -160,23 +159,6 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			String laserdisc,
 			String script) throws LauncherException
 	{
-		String romAEffectiveValue;
-		String romBEffectiveValue;
-		String extensionRomEffectiveValue;
-
-		if( romsUsed )
-		{
-			romAEffectiveValue = romA;
-			romBEffectiveValue = romB;
-			extensionRomEffectiveValue = null;
-		}
-		else
-		{
-			romAEffectiveValue = null;
-			romBEffectiveValue = null;
-			extensionRomEffectiveValue = extensionRom;
-		}
-
 		Map<String,ExtraData> extraDataMap = null;
 		try
 		{
@@ -191,7 +173,7 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 		
 		try
 		{
-			game = getGameObject( name, info, machine, romAEffectiveValue, romBEffectiveValue, extensionRomEffectiveValue,
+			game = getGameObject( name, info, machine, romA, romB, extensionRom,
 					diskA, diskB, tape, harddisk, laserdisc, script, extraDataMap );
 		}
 		catch( IllegalArgumentException iae )
@@ -232,11 +214,10 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestLaunchAction(java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestLaunchAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void onRequestLaunchAction( String machine,
-			boolean romsUsed,
 			String romA,
 			String romB,
 			String extensionRom,
@@ -247,21 +228,11 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			String laserdisc,
 			String script) throws LauncherException
 	{
-		String extensionRomEffectiveValue;
-		if( romsUsed )
-		{
-			extensionRomEffectiveValue = null;
-		}
-		else
-		{
-			extensionRomEffectiveValue = extensionRom;
-		}
-
 		Game game = null;
 		try
 		{
 			game = Game.machine( machine )
-				.romA( romA ).romB( romB ).extensionRom( extensionRomEffectiveValue )
+				.romA( romA ).romB( romB ).extensionRom( extensionRom )
 				.diskA( diskA ).diskB( diskB )
 				.tape( tape )
 				.harddisk( harddisk )
@@ -285,14 +256,13 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestEditGameSaveAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestEditGameSaveAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void onRequestEditGameSaveAction( String oldName,
 			String newName,
 			String info,
 			String machine,
-			boolean romsUsed,
 			String romA,
 			String romB,
 			String extensionRom,
@@ -303,23 +273,6 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			String laserdisc,
 			String script) throws LauncherException
 	{
-		String romAEffectiveValue;
-		String romBEffectiveValue;
-		String extensionRomEffectiveValue;
-
-		if( romsUsed )
-		{
-			romAEffectiveValue = romA;
-			romBEffectiveValue = romB;
-			extensionRomEffectiveValue = null;
-		}
-		else
-		{
-			romAEffectiveValue = null;
-			romBEffectiveValue = null;
-			extensionRomEffectiveValue = extensionRom;
-		}
-
 		Map<String,ExtraData> extraDataMap = null;
 		try
 		{
@@ -333,8 +286,8 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 		Game newGame = null;
 		try
 		{
-			newGame = getGameObject( newName, info, machine, romAEffectiveValue, romBEffectiveValue,
-					extensionRomEffectiveValue, diskA, diskB, tape, harddisk, laserdisc, script, extraDataMap );
+			newGame = getGameObject( newName, info, machine, romA, romB, extensionRom,
+					diskA, diskB, tape, harddisk, laserdisc, script, extraDataMap );
 		}
 		catch ( IllegalArgumentException iae )
 		{

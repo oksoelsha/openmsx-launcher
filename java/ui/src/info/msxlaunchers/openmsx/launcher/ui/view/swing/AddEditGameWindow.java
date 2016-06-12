@@ -34,20 +34,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
@@ -77,15 +75,13 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	private JButton browseInfoButton;
 	private JLabel machineLabel;
 	private JComboBox<String> machinesComboBox;
-	private JRadioButton romsRadioButton;
-	private JRadioButton extensionRadioButton;
+	private JCheckBox extensionCheckBox;
 	private JLabel romALabel;
 	private JTextFieldDragDrop romATextField;
 	private JButton browseRomAButton;
 	private JLabel romBLabel;
 	private JTextFieldDragDrop romBTextField;
 	private JButton browseRomBButton;
-	private JLabel extensionLabel;
 	private JComboBox<String> extensionComboBox;
 	private JLabel diskALabel;
 	private JTextFieldDragDrop diskATextField;
@@ -216,18 +212,16 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			nameTextField.setText(name);
 			infoTextField.setText(info);
 			machinesComboBox.setSelectedItem(machine);
+			romATextField.setText(romA);
+			romBTextField.setText(romB);
 			if(extension == null)
 			{
-				romsRadioButton.setSelected(true);
-				romATextField.setText(romA);
-				romBTextField.setText(romB);
-				enableROMFields(true);
+				extensionComboBox.setEnabled(false);
 			}
 			else
 			{
-				extensionRadioButton.setSelected(true);
+				extensionCheckBox.setSelected(true);
 				extensionComboBox.setSelectedItem(extension);
-				enableROMFields(false);
 			}
 			diskATextField.setText(diskA);
 			diskBTextField.setText(diskB);
@@ -238,8 +232,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		}
 		else
 		{
-			romsRadioButton.setSelected(true);
-			enableROMFields(true);
+			extensionComboBox.setEnabled(false);
 		}
 
 		setLocationRelativeTo(parent);
@@ -265,7 +258,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			try
 			{
 				presenter.onRequestLaunchAction(machinesComboBox.getSelectedItem().toString(),
-					romsRadioButton.isSelected(),
 					romATextField.getText(),
 					romBTextField.getText(),
 					getExtenstionRomSelection(),
@@ -291,7 +283,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							nameTextField.getText(),
 							infoTextField.getText(),
 							machinesComboBox.getSelectedItem().toString(),
-							romsRadioButton.isSelected(),
 							romATextField.getText(),
 							romBTextField.getText(),
 							getExtenstionRomSelection(),
@@ -307,7 +298,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					presenter.onRequestAddGameSaveAction(nameTextField.getText(),
 							infoTextField.getText(),
 							machinesComboBox.getSelectedItem().toString(),
-							romsRadioButton.isSelected(),
 							romATextField.getText(),
 							romBTextField.getText(),
 							getExtenstionRomSelection(),
@@ -366,19 +356,15 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		{
 			browseFile(scriptTextField);
 		}
-		else if(source == romsRadioButton)
+		else if(source == extensionCheckBox)
 		{
-			enableROMFields(true);
-		}
-		else if(source == extensionRadioButton)
-		{
-			enableROMFields(false);
+			extensionComboBox.setEnabled(extensionCheckBox.isSelected());
 		}
 	}
 
 	private String getExtenstionRomSelection()
 	{
-		return extensionComboBox.getSelectedItem() == null ? null : extensionComboBox.getSelectedItem().toString();
+		return extensionCheckBox.isSelected() ? extensionComboBox.getSelectedItem().toString() : null;
 	}
 
 	private void addGeneralTab(JTabbedPane tabbedPane)
@@ -456,11 +442,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel romPanel = new JPanel(false);
 
-		ButtonGroup buttonGroup = new ButtonGroup();
-
-		romsRadioButton = new JRadioButton();
-		romsRadioButton.addActionListener(this);
-		buttonGroup.add(romsRadioButton);
 		romALabel = new JLabel(messages.get("ROM_A"));
 		romALabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		romATextField = new JTextFieldDragDrop();
@@ -477,64 +458,59 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseRomBButton.setToolTipText(messages.get("BROWSE"));
 		browseRomBButton.addActionListener(this);
 
-		extensionRadioButton = new JRadioButton();
-		extensionRadioButton.addActionListener(this);
-		buttonGroup.add(extensionRadioButton);
-		extensionLabel = new JLabel(messages.get("EXTENSION"));
-		extensionLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		extensionCheckBox = new JCheckBox(messages.get("EXTENSION"));
+		extensionCheckBox.addActionListener(this);
 
 		extensionComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(extensions));
+
 		GroupLayout groupLayout = new GroupLayout(romPanel);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(45)
+					.addGap(5)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(extensionRadioButton)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(extensionLabel)
-							.addGap(18)
-							.addComponent(extensionComboBox, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(romsRadioButton)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(romBLabel)
+									.addComponent(romALabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 									.addGap(5)
-									.addComponent(romBTextField))
+									.addComponent(romATextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+									.addComponent(browseRomAButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(romALabel)
+									.addComponent(romBLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 									.addGap(5)
-									.addComponent(romATextField, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(browseRomAButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(browseRomBButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(31, Short.MAX_VALUE))
+									.addComponent(romBTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+									.addComponent(browseRomBButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(100)
+									.addComponent(extensionCheckBox)
+									.addGap(5)
+									.addComponent(extensionComboBox, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))))))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(35)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(romALabel)
-							.addComponent(romATextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(browseRomAButton))
-						.addComponent(romsRadioButton))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(romBLabel)
-						.addComponent(romBTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createSequentialGroup()
+						.addGap(35)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGap(3)
+								.addComponent(romALabel))
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(romATextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(browseRomAButton)))
+						.addGap(18)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGap(4)
+								.addComponent(romBLabel))
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGap(1)
+								.addComponent(romBTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addComponent(browseRomBButton))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(extensionRadioButton)
+						.addGap(18)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(extensionLabel)
-							.addComponent(extensionComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(35, Short.MAX_VALUE))
+							.addComponent(extensionCheckBox)
+							.addComponent(extensionComboBox)))
 		);
 		romPanel.setLayout(groupLayout);
 
@@ -597,8 +573,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(1)
 							.addComponent(diskBTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(browseDiskBButton))
-					.addGap(42))
+						.addComponent(browseDiskBButton)))
 		);
 		diskPanel.setLayout(groupLayout);
 
@@ -791,15 +766,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
         {
         	field.setText(fileChooser.getSelectedFile().getAbsolutePath());
         }		
-	}
-
-	private void enableROMFields(boolean enable)
-	{
-		romATextField.setEnabled(enable);
-		browseRomAButton.setEnabled(enable);
-		romBTextField.setEnabled(enable);
-		browseRomBButton.setEnabled(enable);
-		extensionComboBox.setEnabled(!enable);
 	}
 
 	private class FileFilterImpl extends FileFilter
