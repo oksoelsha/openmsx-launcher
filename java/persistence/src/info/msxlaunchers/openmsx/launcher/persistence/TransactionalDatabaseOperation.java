@@ -33,6 +33,7 @@ import java.sql.SQLException;
 abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabaseOperation<E>
 {
 	private static final String DUPLICATE_ERROR_CODE = "23505";
+	private static final int MAXIMUM_GAME_NAME_LENGTH = 128;
 
 	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.AbstractDatabaseOperation#executeOperation(java.sql.Connection)
@@ -59,7 +60,7 @@ abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabase
 
 	protected void setGameStatementFields( PreparedStatement statement, Game game, long databaseId ) throws SQLException
 	{
-		statement.setString( 1, game.getName() );
+		statement.setString( 1, game.getName().substring( 0, Math.min( game.getName().length(), MAXIMUM_GAME_NAME_LENGTH ) ) );
 		statement.setString( 2, game.getInfo() );
 		statement.setString( 3, game.getMachine() );
 		statement.setString( 4, game.getRomA() );
