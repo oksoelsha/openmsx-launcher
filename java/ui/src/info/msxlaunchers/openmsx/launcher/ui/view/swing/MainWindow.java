@@ -378,10 +378,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		countValueLabel = new JLabel();
 		countValueLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		countValueLabel.setFont(FONT_SIZE_11);
-		countValueLabel.setOpaque(true);
-		countValueLabel.setBackground(new Color(210,210,210));
 		countValueLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY, 1),
 				BorderFactory.createEmptyBorder(0, 3, 0, 3)));
+		countValueLabel.setOpaque(true);
 
 		gameDataLabel = new JLabel();
 		gameDataLabel.setFont(FONT_SIZE_10);
