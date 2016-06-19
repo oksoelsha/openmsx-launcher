@@ -378,6 +378,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		countValueLabel = new JLabel();
 		countValueLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		countValueLabel.setFont(FONT_SIZE_11);
+		countValueLabel.setOpaque(true);
+		countValueLabel.setBackground(new Color(210,210,210));
+		countValueLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY, 1),
+				BorderFactory.createEmptyBorder(0, 3, 0, 3)));
 
 		gameDataLabel = new JLabel();
 		gameDataLabel.setFont(FONT_SIZE_10);
@@ -452,7 +456,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(databaseComboBox, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
 							.addGap(30)
-							.addComponent(false, countValueLabel, 30, GroupLayout.DEFAULT_SIZE, 30))
+							.addComponent(false, countValueLabel, 45, GroupLayout.DEFAULT_SIZE, 30))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(false, databaseLabel, 100, GroupLayout.DEFAULT_SIZE, 100)
 							.addGap(94)
