@@ -27,21 +27,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
 
-import com.csvreader.CsvReader;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
-import info.msxlaunchers.openmsx.common.Utils;
-import info.msxlaunchers.openmsx.launcher.data.game.Game;
-import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersister;
 import info.msxlaunchers.openmsx.launcher.persistence.game.DerbyLogSuppressor;
-import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
@@ -90,8 +83,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 	private final String databaseFullPath;
 
 	private static final String BACKUPS_DIRECTORY = "backups";
-	private final String DATABASE_EXTENSION = ".dbo";
-	private final String DATABASE_BACKUP_EXTENSION = ".bak";
 
 	@Inject
 	EmbeddedDatabaseLauncherPersistence( GamePersister gamePersister,
@@ -137,8 +128,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 				{
 					//then this database did not exist before => create all tables and populate with old CSV files if found
 					createTables( connection );
-
-					importOldCSVFilesIfNecessary( connection );
 				}
 			}
 			catch( SQLException se )
@@ -269,127 +258,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			statement.execute( CREATE_FAVORITE_TABLE_STATEMENT );
 			statement.execute( ADD_FOREIGN_KEY_TO_FAVORITE_TABLE );
 		}
-	}
-
-	private void importOldCSVFilesIfNecessary( Connection connection ) throws LauncherPersistenceException
-	{
-		File[] files = databasesDirectory.listFiles();
-
-		if( files != null )
-		{
-			for( File file: files )
-			{
-				if( file.isFile() && file.getName().endsWith( DATABASE_EXTENSION ) ) 
-				{
-					try
-					{
-						importCSVFile( connection, file );
-					}
-					catch( IOException ioe )
-					{
-						throw new LauncherPersistenceException();
-					}
-	
-					//backup the file in case they're needed later
-					file.renameTo( new File( file.getParent(), file.getName() + DATABASE_BACKUP_EXTENSION ) );
-				}
-			}
-		}
-	}
-
-	private void importCSVFile( Connection connection, File database ) throws IOException, LauncherPersistenceException
-	{
-		String databaseName = database.getName().substring( 0, database.getName().lastIndexOf( DATABASE_EXTENSION ) );
-
-		try
-		{
-			getGamePersister().createDatabase( databaseName );
-
-			getGamePersister().saveGames( getGames( database ), databaseName );
-		}
-		catch( GamePersistenceException gpe )
-		{
-			throw new LauncherPersistenceException();
-		}
-	}
-
-	private Set<Game> getGames( File database ) throws IOException
-	{
-		Set<Game> games = new HashSet<Game>();
-		CsvReader gameRecords = null;
-		try
-		{
-			gameRecords = new CsvReader( database.getAbsolutePath() );
-
-			while ( gameRecords.readRecord() )
-			{
-				try
-				{
-					Game game = Game.name( gameRecords.get( 0 ) )
-						.info( gameRecords.get( 1 ) )
-						.machine( gameRecords.get( 2 ) )
-						.romA( gameRecords.get( 3 ) )
-						.extensionRom( gameRecords.get( 4 ) )
-						.romB( gameRecords.get( 5 ) )
-						.diskA( gameRecords.get( 6 ) )
-						.diskB( gameRecords.get( 7 ) )
-						.tape( gameRecords.get( 8 ) )
-						.harddisk( gameRecords.get( 9 ) )
-						.laserdisc( gameRecords.get( 10 ) )
-						.tclScript( gameRecords.get( 11 ) )
-						.isMSX( getBoolean( gameRecords.get( 12 ) ) )
-						.isMSX2( getBoolean( gameRecords.get( 13 ) ) )
-						.isMSX2Plus( getBoolean( gameRecords.get( 14 ) ) )
-						.isTurboR( getBoolean( gameRecords.get( 15 ) ) )
-						.isPSG( getBoolean( gameRecords.get( 16 ) ) )
-						.isSCC( getBoolean( gameRecords.get( 17 ) ) )
-						.isSCCI( getBoolean( gameRecords.get( 18 ) ) )
-						.isPCM( getBoolean( gameRecords.get( 19 ) ) )
-						.isMSXMUSIC( getBoolean( gameRecords.get( 20 ) ) )
-						.isMSXAUDIO( getBoolean( gameRecords.get( 21 ) ) )
-						.isMoonsound( getBoolean( gameRecords.get( 22 ) ) )
-						.isMIDI( getBoolean( gameRecords.get( 23 ) ) )
-						.genre1( Genre.fromValue( Utils.getNumber( gameRecords.get( 24 ) ) ) )
-						.genre2( Genre.fromValue( Utils.getNumber( gameRecords.get( 25 ) ) ) )
-						.msxGenID( Utils.getNumber( gameRecords.get( 26 ) ) )
-						.screenshotSuffix( gameRecords.get( 27 ) )
-						.sha1Code( gameRecords.get( 28 ) )
-						.size( Utils.getNumber( gameRecords.get( 29 ) ) )
-						.build();
-
-					games.add( game );
-				}
-				catch( IllegalArgumentException iaex )
-				{
-					//just skip this game
-				}
-			}
-		}
-		finally
-		{
-			if( gameRecords != null )
-			{
-				gameRecords.close();
-			}
-		}
-
-		return games;
-	}
-
-	private static boolean getBoolean( String string )
-	{
-		boolean value;
-
-		if( string.equals( "1" ) )
-		{
-			value = true;
-		}
-		else
-		{
-			value = false;
-		}
-
-		return value;
 	}
 
 	/*
