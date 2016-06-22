@@ -36,12 +36,12 @@
 									mainclassname="info.msxlaunchers.openmsx.launcher.ui.Launcher">
 									<classpath file="../openmsx-launcher-assembly/target/openmsx-launcher.jar"/>
 									<classpath file="${settings.localRepository}/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
-									<classpath file="${settings.localRepository}/org/apache/derby/derby/10.11.1.1/derby-10.12.1.1.jar"/>
+									<classpath file="${settings.localRepository}/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar"/>
 									<classpath file="../ui/lib/filedrop/filedrop.jar"/>
-									<classpath file="${settings.localRepository}/com/google/inject/guice/3.0/guice-4.1.0.jar"/>
-									<classpath file="${settings.localRepository}/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-4.1.0.jar"/>
+									<classpath file="${settings.localRepository}/com/google/inject/guice/3.0/guice-3.0.jar"/>
+									<classpath file="${settings.localRepository}/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar"/>
 									<classpath file="${settings.localRepository}/javax/inject/javax.inject/1/javax.inject-1.jar"/>
-									<classpath file="${settings.localRepository}/net/minidev/json-smart/1.2/json-smart-2.2.1.jar"/>
+									<classpath file="${settings.localRepository}/net/minidev/json-smart/2.2.1/json-smart-2.2.1.jar"/>
 									<option value="-Xdock:name=&quot;openMSX Launcher&quot;"/>
 									<option value="-client"/>
 								</bundleapp>
