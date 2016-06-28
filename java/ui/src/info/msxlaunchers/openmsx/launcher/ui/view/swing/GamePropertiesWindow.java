@@ -127,21 +127,24 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
         labelConstraints.gridwidth = 1;
 
         addPropertyToDisplay(messages.get("NAME"), game.getName());
-        File mainFile = new File(FileTypeUtils.getMainFile(game.getRomA(), game.getRomB(), game.getDiskA(), game.getDiskB(),
-        		game.getTape(), game.getHarddisk(), game.getLaserdisc(), game.getTclScript()));
-        if(FileTypeUtils.isROM(mainFile) && repositoryGame != null)
+        if(game.isROM() && repositoryGame != null)
         {
             addPropertyToDisplay(messages.get("NAME") + " (openMSX)", repositoryGame.getTitle());
         }
+        File mainFile = new File(FileTypeUtils.getMainFile(game.getRomA(), game.getRomB(), game.getDiskA(), game.getDiskB(),
+        		game.getTape(), game.getHarddisk(), game.getLaserdisc(), game.getTclScript()));
         addPropertyToDisplay(messages.get("FILE"), mainFile.getAbsolutePath());
         addPropertyToDisplay(messages.get("MEDIUM"), messages.get(getMedium(game)));
-        if(FileTypeUtils.isROM(mainFile) && repositoryGame != null)
+        if(game.isROM() && repositoryGame != null)
         {
             addPropertyToDisplay(messages.get("KNOWN_DUMPS"), String.valueOf(knownDumps));
         }
-        addPropertyToDisplay(messages.get("SIZE"), Utils.getString(game.getSize() / 1024) + " KB");
+        if(game.getSize() > 0)
+        {
+        	addPropertyToDisplay(messages.get("SIZE"), Utils.getString(game.getSize() / 1024) + " KB");
+        }
         addPropertyToDisplay("SHA1", game.getSha1Code(), true);
-        if(FileTypeUtils.isROM(mainFile) && repositoryGame != null)
+        if(game.isROM() && repositoryGame != null)
         {
             addPropertyToDisplay(messages.get("COMPANY"), repositoryGame.getCompany());
             addPropertyToDisplay(messages.get("YEAR"), repositoryGame.getYear());

@@ -54,14 +54,18 @@ final class GamePropertiesPresenterImpl implements GamePropertiesPresenter
 		RepositoryGame repositoryGame = null;
 		int knownDumps = 0;
 
-		try
+		//when sha1 code is missing then this is a script -=> ignore
+		if( game.getSha1Code() != null )
 		{
-			repositoryGame = repositoryData.getGameInfo( game.getSha1Code() );
-			knownDumps = repositoryData.getDumpCodes( game.getSha1Code() ).size();
-		}
-		catch( IOException e )
-		{
-			//in this case ignore - the properties screen will show nothing
+			try
+			{
+				repositoryGame = repositoryData.getGameInfo( game.getSha1Code() );
+				knownDumps = repositoryData.getDumpCodes( game.getSha1Code() ).size();
+			}
+			catch( IOException e )
+			{
+				//in this case ignore - the properties screen will show nothing
+			}
 		}
 
 		view.displayGamePropertiesScreen( game, repositoryGame, knownDumps, currentLanguage, currentRightToLeft );
