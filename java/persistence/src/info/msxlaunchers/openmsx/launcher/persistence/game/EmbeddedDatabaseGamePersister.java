@@ -292,11 +292,6 @@ final class EmbeddedDatabaseGamePersister implements GamePersister
 		Objects.requireNonNull( newGame );
 		Objects.requireNonNull( database );
 
-		if( Utils.isEmpty( newGame.getName() ) )
-		{
-			throw new GamePersistenceException( GamePersistenceExceptionIssue.GAME_WITH_NULL_NAME );
-		}
-
 		try
 		{
 			new UpdateGameAction( oldGame, newGame, database ).execute( databaseFullPath );

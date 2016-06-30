@@ -18,7 +18,6 @@ package info.msxlaunchers.openmsx.launcher.persistence.game;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.persistence.DefaultDatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.TransactionalDatabaseOperation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +31,7 @@ import java.sql.SQLException;
  * @author Sam Elsharif
  *
  */
-final class UpdateGameAction extends TransactionalDatabaseOperation<Boolean>
+final class UpdateGameAction extends AbstractPersistGameAction
 {
 	private static final String GET_GAME_ID_BY_NAME_STATEMENT = "SELECT ID FROM game WHERE name=? AND IDDB=?";
 	private static final String UPDATE_GAME_STATEMENT = "UPDATE game SET name=?, info=?, machine=?, romA=?, extension_rom=?, romB=?," +
@@ -58,6 +57,8 @@ final class UpdateGameAction extends TransactionalDatabaseOperation<Boolean>
 	@Override
 	public DefaultDatabaseResponse executeTransactionalOperation( Connection connection ) throws LauncherPersistenceException
 	{
+		validateGame( newGame );
+
 		long databaseId = getDatabaseId( connection, database );
 
 		try( PreparedStatement statementCheck = connection.prepareStatement( GET_GAME_ID_BY_NAME_STATEMENT ) )

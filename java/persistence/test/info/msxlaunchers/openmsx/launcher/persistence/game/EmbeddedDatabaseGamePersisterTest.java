@@ -219,6 +219,44 @@ public class EmbeddedDatabaseGamePersisterTest
 		}
 	}
 
+	@Test( expected = GamePersistenceException.class )
+	public void test_givenGameWithoutName_whenSaveGame_thenThrowException() throws GamePersistenceException
+	{
+		Game game = Game.machine( "machine" ).romA( "romA" ).build();
+
+		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
+
+		persister.createDatabase( database1 );
+		try
+		{
+			persister.saveGame( game, database1 );
+		}
+		catch( GamePersistenceException gpe )
+		{
+			assertEquals( GamePersistenceExceptionIssue.GAME_WITH_NULL_NAME, gpe.getIssue() );
+			throw gpe;
+		}
+	}
+
+	@Test( expected = GamePersistenceException.class )
+	public void test_givenGameWithoutMedia_whenSaveGame_thenThrowException() throws GamePersistenceException
+	{
+		Game game = Game.name( "name" ).machine( "machine" ).build();
+
+		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
+
+		persister.createDatabase( database1 );
+		try
+		{
+			persister.saveGame( game, database1 );
+		}
+		catch( GamePersistenceException gpe )
+		{
+			assertEquals( GamePersistenceExceptionIssue.GAME_WITH_MISSING_MEDIA, gpe.getIssue() );
+			throw gpe;
+		}
+	}
+
 	@Test
 	public void test_whenSaveGame_thenSuccess() throws GamePersistenceException
 	{
@@ -657,6 +695,27 @@ public class EmbeddedDatabaseGamePersisterTest
 		catch( GamePersistenceException gpe )
 		{
 			assertEquals( GamePersistenceExceptionIssue.GAME_WITH_NULL_NAME, gpe.getIssue() );
+			throw gpe;
+		}
+	}
+
+	@Test( expected = GamePersistenceException.class )
+	public void test_givenNewGameWithoutMedia_whenUpdateGame_thenThrowException() throws GamePersistenceException
+	{
+		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
+
+		persister.createDatabase( database1 );
+
+		Game game1 = Game.name( "name" ).info( "info" ).romA( "romA" ).build();
+		Game game2 = Game.name( "name" ).info( "info" ).build();
+
+		try
+		{
+			persister.updateGame( game1, game2, database1 );
+		}
+		catch( GamePersistenceException gpe )
+		{
+			assertEquals( GamePersistenceExceptionIssue.GAME_WITH_MISSING_MEDIA, gpe.getIssue() );
 			throw gpe;
 		}
 	}

@@ -15,11 +15,9 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
-import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.persistence.DefaultDatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.TransactionalDatabaseOperation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +31,7 @@ import java.util.Set;
  * @author Sam Elsharif
  *
  */
-final class SaveGamesAction extends TransactionalDatabaseOperation<Boolean>
+final class SaveGamesAction extends AbstractPersistGameAction
 {
 	private static final String INSERT_GAME_STATEMENT = "INSERT INTO game (name, info, machine, romA, extension_rom, romB, diskA, diskB," +
 			"tape, harddisk, laserdisc, tcl_script, msx, msx2, msx2plus, turbo_r, psg, scc, scc_i, pcm, msx_music, msx_audio, moonsound, midi," +
@@ -63,10 +61,7 @@ final class SaveGamesAction extends TransactionalDatabaseOperation<Boolean>
 
 			for( Game game: games )
 			{
-				if( Utils.isEmpty( game.getName() ) )
-				{
-					throwEncapsulatingException( new GamePersistenceException( GamePersistenceExceptionIssue.GAME_WITH_NULL_NAME ) );
-				}
+				validateGame( game );
 
 				//potential duplicate name
 				duplicateGame = game.getName();

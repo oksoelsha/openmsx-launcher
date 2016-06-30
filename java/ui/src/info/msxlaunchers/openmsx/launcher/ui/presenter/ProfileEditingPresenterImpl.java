@@ -198,6 +198,10 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			{
 				throw new LauncherException( LauncherExceptionCode.ERR_GAME_WITH_NULL_NAME );
 			}
+			else if( gpe.getIssue().equals( GamePersistenceExceptionIssue.GAME_WITH_MISSING_MEDIA ) )
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_EMPTY_GAME_FIELDS );
+			}
 			else if( gpe.getIssue().equals( GamePersistenceExceptionIssue.GAME_ALREADY_EXISTS ) )
 			{
 				throw new LauncherException( LauncherExceptionCode.ERR_GAME_ALREADY_EXISTS, name );
@@ -305,6 +309,10 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			if( gpe.getIssue().equals( GamePersistenceExceptionIssue.GAME_WITH_NULL_NAME ) )
 			{
 				throw new LauncherException( LauncherExceptionCode.ERR_GAME_WITH_NULL_NAME );
+			}
+			else if( gpe.getIssue().equals( GamePersistenceExceptionIssue.GAME_WITH_MISSING_MEDIA ) )
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_EMPTY_GAME_FIELDS );
 			}
 			else if( gpe.getIssue().equals( GamePersistenceExceptionIssue.GAME_ALREADY_EXISTS ) )
 			{
