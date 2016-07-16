@@ -198,17 +198,17 @@ public class DatabaseBackupsPresenterImplTest
 	@Test
 	public void test_WhenCallUpdateViewedDatabase_ThenViewUpdateIsCalled() throws LauncherException
 	{
-		presenter.updateViewedDatabase( timestamp );
+		presenter.viewRestoredDatabase( timestamp );
 
-		verify( databaseManagerPresenter, times( 1 ) ).updateViewedDatabase( database );
+		verify( databaseManagerPresenter, times( 1 ) ).viewRestoredDatabase( database );
 	}
 
 	@Test( expected = LauncherException.class )
 	public void test_GivenUpdateViewedDatabaseThrowsException_WhenCallUpdateViewedDatabase_ThenThrowException() throws LauncherException
 	{
-		Mockito.doThrow( new LauncherException( LauncherExceptionCode.ERR_IO ) ).when( databaseManagerPresenter ).updateViewedDatabase( database );
+		Mockito.doThrow( new LauncherException( LauncherExceptionCode.ERR_IO ) ).when( databaseManagerPresenter ).viewRestoredDatabase( database );
 
-		presenter.updateViewedDatabase( timestamp );
+		presenter.viewRestoredDatabase( timestamp );
 	}
 
 	@Test

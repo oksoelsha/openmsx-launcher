@@ -74,12 +74,12 @@ public interface DatabaseBackupsPresenter
 	void updateDatabaseInfoView();
 
 	/**
-	 * Update viewed database on the main screen when there are changes (e.g. when restoring an old database)
+	 * View restored database
 	 * 
 	 * @param timestamp Timestamp of the backup (to get the database from model)
 	 * @throws LauncherException
 	 */
-	void updateViewedDatabase( Timestamp timestamp ) throws LauncherException;
+	void viewRestoredDatabase( Timestamp timestamp ) throws LauncherException;
 
 	/**
 	 * Called when user requests to backup current database

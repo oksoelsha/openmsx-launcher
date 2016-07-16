@@ -391,7 +391,6 @@ public class MainPresenterImplTest
 		presenter.onRequestCreateEmptyDatabaseAction( defaultDatabase );
 
 		verify( gamePersister, times( 1 ) ).createDatabase( defaultDatabase );
-		verify( view, times( 1 ) ).addDatabase( defaultDatabase );
 	}
 
 	@Test( expected = LauncherException.class )
@@ -501,9 +500,9 @@ public class MainPresenterImplTest
 	}
 
 	@Test
-	public void testOnSelectFavorite() throws LauncherException, FavoritePersistenceException
+	public void testOnSelectDatabaseItem() throws LauncherException, FavoritePersistenceException
 	{
-		presenter.onSelectFavorite( "game name [database name]" );
+		presenter.onSelectDatabaseItem( "game name [database name]" );
 
 		verify( view, times( 1 ) ).highlightGame( "game name" );
 	}

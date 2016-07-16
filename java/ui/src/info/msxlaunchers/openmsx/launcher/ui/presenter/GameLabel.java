@@ -29,15 +29,24 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 public final class GameLabel implements Comparable<GameLabel>
 {
 	private final String name;
+	private final String company;
+	private final String year;
+	private final long size;
 	private final Medium medium;
 
-	public GameLabel( String name, Medium medium )
+	public GameLabel( String name, String company, String year, long size, Medium medium )
 	{
 		this.name = Objects.requireNonNull( name );
+		this.company = company;
+		this.year = year;
+		this.size = size;
 		this.medium = Objects.requireNonNull( medium );
 	}
 
 	public String getName() { return name; }
+	public String getCommany() { return company; }
+	public String getYear() { return year; }
+	public long getSize() { return size; }
 	public Medium getMedium() { return medium; }
 
 	@Override

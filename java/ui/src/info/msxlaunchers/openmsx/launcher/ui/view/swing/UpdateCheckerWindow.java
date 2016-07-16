@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.UpdateCheckerPresenter;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
@@ -34,12 +35,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -61,9 +61,9 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 	private final boolean rightToLeft;
 	private final Component parent;
 
-	private Component updateOpenMSXLauncherButton;
-	private Component updateExtraDataButton;
-	private Component downloadScreenshotsButton;
+	private JComponent updateOpenMSXLauncherButton;
+	private JComponent updateExtraDataButton;
+	private JComponent downloadScreenshotsButton;
 	private JButton closeButton;
 	private JPanel launcherVersionPane;
 	private JPanel extraDataVersionPane;
@@ -107,9 +107,9 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		valueConstraints.gridwidth = GridBagConstraints.REMAINDER;
 		valueConstraints.insets = new Insets(4, 4, 4, 8);
 
-        labelConstraints = (GridBagConstraints)valueConstraints.clone();
-        labelConstraints.weightx = 0.0;
-        labelConstraints.gridwidth = 1;
+		labelConstraints = (GridBagConstraints)valueConstraints.clone();
+		labelConstraints.weightx = 0.0;
+		labelConstraints.gridwidth = 1;
 
 		//openMSX Launcher version
 		launcherVersionPane = new JPanel();
@@ -123,7 +123,7 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		else if(presenter.isNewOpenMSXLauncherVersionAvailable())
 		{
 			launcherMessage.setText(messages.get("NEW_VERSION_AVAILABLE"));
-			updateOpenMSXLauncherButton = new ActionButton(this, messages.get("INSTALL"));
+			updateOpenMSXLauncherButton = new InstallButton(this, messages.get("INSTALL"));
 			launcherVersionPane.add(updateOpenMSXLauncherButton);
 		}
 		else
@@ -141,7 +141,7 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		if(presenter.isNewExtraDataVersionAvailable())
 		{
 			extraDataMessage.setText(messages.get("NEW_VERSION_AVAILABLE"));
-			updateExtraDataButton = new ActionButton(this, messages.get("INSTALL"));
+			updateExtraDataButton = new InstallButton(this, messages.get("INSTALL"));
 			extraDataVersionPane.add(updateExtraDataButton);
 		}
 		else
@@ -163,7 +163,7 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		else if(presenter.isNewScreenshotsVersionAvailable())
 		{
 			screenshotsMessage.setText(messages.get("NEW_VERSION_AVAILABLE"));
-			downloadScreenshotsButton = new ActionButton(this, messages.get("DOWNLOAD"));
+			downloadScreenshotsButton = new InstallButton(this, messages.get("DOWNLOAD"));
 			screenshotsVersionPane.add(downloadScreenshotsButton);
 		}
 		else
@@ -218,16 +218,16 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		{
 			attributeLabel = new JLabel(attribute + ":");				
 		}
-        tableLayout.setConstraints(attributeLabel, labelConstraints);
-        tablePane.add(attributeLabel);
+		tableLayout.setConstraints(attributeLabel, labelConstraints);
+		tablePane.add(attributeLabel);
 
-        if(rightToLeft)
-        {
-        	attributeLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        }
+		if(rightToLeft)
+		{
+			attributeLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		}
 
-        tableLayout.setConstraints(value, valueConstraints);
-        tablePane.add(value);
+		tableLayout.setConstraints(value, valueConstraints);
+		tablePane.add(value);
 	}
 
 	@Override
@@ -284,82 +284,31 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		panel.repaint();
 	}
 
-	private class ActionButton extends Component
+	private class InstallButton extends AbstractActionButton
 	{
 		private final String label;
 
-		private final Color NORMAL_COLOR = new Color(40, 70, 170);
-		private final Color HOVER_COLOR = new Color(50, 80, 180);
-		private final Color PRESSED_COLOR = new Color(30, 40, 150);
-
-	    private boolean inside = false;
-	    private boolean pressed = false;
-
-		public ActionButton(final ActionListener listener, final String label)
+		InstallButton(ActionListener listener, String label)
 		{
+			super(listener, new Color(40, 70, 170), new Color(50, 80, 180), new Color(30, 40, 150));
+
 			this.label = label;
 
 			setPreferredSize(INSTALL_BUTTON_SIZE);
-		    setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-		    final ActionButton actionButtonRef = this;
-
-		    addMouseListener(new MouseAdapter() {
-		        @Override
-		        public void mouseClicked(MouseEvent me) {
-		        	listener.actionPerformed(new ActionEvent(actionButtonRef, 0, null));
-		        }
-		        @Override
-		        public void mousePressed(MouseEvent me)
-		        {
-		        	pressed = true;
-		        	repaint();
-		        }
-		        @Override
-		        public void mouseReleased(MouseEvent me)
-		        {
-		        	pressed = false;
-		        	repaint();
-		        }
-		        @Override
-		        public void mouseEntered(MouseEvent me) {
-		        	inside = true;
-		        	repaint();
-		        }
-		        @Override
-		        public void mouseExited(MouseEvent me) {
-		        	inside = false;
-		        	repaint();
-		        }
-		    });
+			setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
 
-	    @Override
-	    public void paint(Graphics g)
-	    {
-	    	if(inside)
-	    	{
-	    		if(pressed)
-	    		{
-		    		g.setColor(PRESSED_COLOR);
-	    		}
-	    		else
-	    		{
-				    g.setColor(HOVER_COLOR);
-	    		}
-	    	}
-	    	else
-	    	{
-			    g.setColor(NORMAL_COLOR);
-	    	}
-	        g.fillRoundRect(0, 0, getWidth(), getHeight() - 1, 10, 10);
+		@Override
+		protected void drawButton(Graphics g)
+		{
+			g.fillRoundRect(0, 0, getWidth(), getHeight() - 1, 10, 10);
 
-	        g.drawRoundRect(0, 0, getWidth(), getHeight() - 1, 10, 10);
+			g.drawRoundRect(0, 0, getWidth(), getHeight() - 1, 10, 10);
 
-            g.setColor(Color.white);
-		    FontMetrics fm = getFontMetrics(getFont());
-		    
-            g.drawString(label, getWidth() / 2 - fm.stringWidth(label) / 2, getHeight() / 2 + fm.getMaxDescent() + 1);
-	    }
+			g.setColor(Color.white);
+			FontMetrics fm = getFontMetrics(getFont());
+
+			g.drawString(label, getWidth() / 2 - fm.stringWidth(label) / 2, getHeight() / 2 + fm.getMaxDescent() + 1);
+		}
 	}
 }

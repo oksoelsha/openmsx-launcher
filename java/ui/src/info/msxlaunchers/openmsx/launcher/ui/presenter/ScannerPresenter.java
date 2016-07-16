@@ -73,8 +73,10 @@ public interface ScannerPresenter
 			boolean backupDatabase ) throws LauncherException;
 
 	/**
+	 * Called to view modified database
+	 * 
 	 * @param database
 	 * @throws LauncherException
 	 */
-	void onUpdateViewedDatabase( String database ) throws LauncherException;
+	void onViewUpdatedDatabase( String database ) throws LauncherException;
 }

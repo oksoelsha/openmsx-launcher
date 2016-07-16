@@ -150,7 +150,7 @@ final class DraggedAndDroppedGamesPresenterImpl implements DraggedAndDroppedGame
 	@Override
 	public void onUpdateViewedDatabase( String database ) throws LauncherException
 	{
-		mainPresenter.onUpdateViewedDatabase( database );
+		mainPresenter.onViewUpdatedDatabase( database );
 	}	
 
 	private boolean isDirectoryOrPotentialMSXFile( File file )

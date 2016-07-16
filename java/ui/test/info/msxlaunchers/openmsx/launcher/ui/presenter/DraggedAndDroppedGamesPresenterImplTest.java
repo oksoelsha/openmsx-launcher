@@ -335,6 +335,6 @@ public class DraggedAndDroppedGamesPresenterImplTest
 
 		presenter.onUpdateViewedDatabase( database );
 
-		verify( mainPresenter, times( 1 ) ).onUpdateViewedDatabase( database );
+		verify( mainPresenter, times( 1 ) ).onViewUpdatedDatabase( database );
 	}
 }

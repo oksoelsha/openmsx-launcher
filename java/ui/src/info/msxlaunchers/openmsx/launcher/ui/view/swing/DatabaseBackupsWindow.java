@@ -256,7 +256,7 @@ public class DatabaseBackupsWindow extends JDialog implements ActionListener
 			presenter.onRequestRestoreBackup(timestamp);
 			presenter.updateDatabaseAndBackupsView(timestamp);
 			presenter.updateDatabaseInfoView();
-			presenter.updateViewedDatabase(timestamp);
+			presenter.viewRestoredDatabase(timestamp);
 			tableModel.removeRow(index);
 		}
 	}

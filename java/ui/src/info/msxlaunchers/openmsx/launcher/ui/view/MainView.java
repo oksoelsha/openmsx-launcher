@@ -80,13 +80,6 @@ public interface MainView
 	void updateGameCount( int total );
 
 	/**
-	 * Adds database to the list of database names in the screen
-	 * 
-	 * @param database Database name
-	 */
-	void addDatabase( String database );
-
-	/**
 	 * Removes a database from the list of database names in the screen
 	 * 
 	 * @param database Database name
@@ -165,25 +158,18 @@ public interface MainView
 	void displayCreateEmptyDatabase( Language language, boolean rightToLeft );
 
 	/**
-	 * Shows company name, year and size of main file for selected game
-	 * 
-	 * @param company Name of company
-	 * @param year Year of game release
-	 * @param size Size of main game file in KB
-	 */
-	void showGameCompanyYearSizeData( String company, String year, long size );
-
-	/**
-	 * Resets display of company name, year and size of main file
-	 */
-	void resetGameCompanyYearSizeData();
-
-	/**
 	 * Shows the favorites menu
 	 * 
 	 * @param favorites Set of favorites represented as moniker strings
 	 */
 	void showFavoritesMenu( Set<String> favoritesAsStrings );
+
+	/**
+	 * Shows the databases list
+	 * 
+	 * @param databases Set of database names
+	 */
+	void showDatabasesList( Set<String> databases );
 
 	/**
 	 * Highlights the given game by name

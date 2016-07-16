@@ -141,7 +141,7 @@ public final class Utils
 	{
 		Objects.requireNonNull( set );
 
-		return set.parallelStream().sorted( String.CASE_INSENSITIVE_ORDER ).collect( Collectors.toList() ).toArray( new String[set.size()] );
+		return set.stream().sorted( String.CASE_INSENSITIVE_ORDER ).collect( Collectors.toList() ).toArray( new String[set.size()] );
 	}
 
 	/**

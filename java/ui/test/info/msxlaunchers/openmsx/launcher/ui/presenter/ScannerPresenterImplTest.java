@@ -291,9 +291,9 @@ public class ScannerPresenterImplTest
 
 		String database = "db";
 
-		presenter.onUpdateViewedDatabase( database );
+		presenter.onViewUpdatedDatabase( database );
 
-		verify( mainPresenter, times( 1 ) ).onUpdateViewedDatabase( database );
+		verify( mainPresenter, times( 1 ) ).onViewUpdatedDatabase( database );
 	}
 
 	@Test( expected = LauncherException.class )
@@ -303,8 +303,8 @@ public class ScannerPresenterImplTest
 
 		String database = "db";
 
-		Mockito.doThrow( new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND ) ).when( mainPresenter ).onUpdateViewedDatabase( database );
+		Mockito.doThrow( new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND ) ).when( mainPresenter ).onViewUpdatedDatabase( database );
 
-		presenter.onUpdateViewedDatabase( database );
+		presenter.onViewUpdatedDatabase( database );
 	}
 }

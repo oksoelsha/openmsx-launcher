@@ -157,11 +157,11 @@ final class ScannerPresenterImpl implements ScannerPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ScannerPresenter#onUpdateViewedDatabase(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ScannerPresenter#onViewUpdatedDatabase(java.lang.String)
 	 */
 	@Override
-	public void onUpdateViewedDatabase( String database ) throws LauncherException
+	public void onViewUpdatedDatabase( String database ) throws LauncherException
 	{
-		mainPresenter.onUpdateViewedDatabase( database );
+		mainPresenter.onViewUpdatedDatabase( database );
 	}	
 }

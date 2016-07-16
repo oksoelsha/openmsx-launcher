@@ -92,7 +92,6 @@ final class MainPresenterImpl implements MainPresenter
 	private static final String SCREENSHOT2_SUFFIX = "b";
 
 	private static final String DEFAULT_SYSTEM_LANGUAGE = "SYSTEM_DEFAULT";
-	private static final String EMPTY_STRING = "";
 	private static final int MAX_SEARCH_MATCHES = 10;
 
 	//the following fields represent the model
@@ -175,11 +174,26 @@ final class MainPresenterImpl implements MainPresenter
 
 		databases = launcherPersistence.getGamePersister().getDatabases();
 
-		//if the default database from the settings (maybe because it was renamed but not updated in the settings) then don't set the current database
+		databases = databases.stream().collect( Collectors.toCollection( () -> new TreeSet<String>( (db1, db2) -> db1.compareToIgnoreCase( db2 ) ) ) );
+
 		String defaultDatabase = settings.getDefaultDatabase();
-		if( databases.contains( defaultDatabase ) )
+		if( defaultDatabase == null )
+		{
+			//in this case there is no default database in the settings => just select the first database in the list.
+			//if list is empty then nothing will be selected anyway
+			if( databases.size() > 0 )
+			{
+				currentDatabase = databases.iterator().next();
+			}
+		}
+		else if( databases.contains( defaultDatabase ) )
 		{
 			currentDatabase = defaultDatabase;
+		}
+		else
+		{
+			//if the default database from the settings is not in database list (maybe because it was renamed but not updated in the settings)
+			//then the current database will remain null
 		}
 
 		if( currentDatabase != null )
@@ -406,14 +420,12 @@ final class MainPresenterImpl implements MainPresenter
 			//this happens when the last database is deleted
 			view.showGameScreenshots( null, null );
 			view.enableButtons( false, false, false, false, false );
-			view.resetGameCompanyYearSizeData();
 		}
 		else if( gameNames == null || gameNames.size() != 1 )
 		{
 			//this is the multi selection case
 			view.showGameScreenshots( null, null );
 			view.enableButtons( false, true, true, false, false );
-			view.resetGameCompanyYearSizeData();
 		}
 		else
 		{
@@ -470,68 +482,44 @@ final class MainPresenterImpl implements MainPresenter
 				
 				//enable buttons according to the selection
 				view.enableButtons( true,  true, true, true, game.getInfo() != null );
-
-				//show game details
-				String company = EMPTY_STRING;
-				String year = EMPTY_STRING;
-
-				if( repositoryInfoMap != null )
-				{
-					RepositoryGame repositoryGame = repositoryInfoMap.get( game.getSha1Code() );
-					if( repositoryGame != null )
-					{
-						company = repositoryGame.getCompany();
-						year = repositoryGame.getYear();
-					}
-				}
-				view.showGameCompanyYearSizeData( company, year, game.getSize() / 1024 );
 			}
 		}
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onUpdateViewedDatabase(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onViewUpdatedDatabase(java.lang.String)
 	 */
 	@Override
-	public void onUpdateViewedDatabase( String database ) throws LauncherException
+	public void onViewUpdatedDatabase( String database ) throws LauncherException
 	{
-		String effectiveDatabase;
-		if( database == null )
+		if( database != null )
 		{
-			effectiveDatabase = currentDatabase;
-		}
-		else
-		{
-			effectiveDatabase = database;
+			currentDatabase = database;
 		}
 
-		if( !databases.contains( effectiveDatabase ) )
+		if( !databases.contains( currentDatabase ) )
 		{
 			//then this is a new database
-			view.addDatabase( effectiveDatabase );
-			databases.add( effectiveDatabase );
+			databases.add( currentDatabase );
 		}
-		else if( currentDatabase != null && currentDatabase.equals( effectiveDatabase ) )
-		{
-			//then the currently displayed database was modified
-			try
-			{
-				retrieveDatabaseGames( effectiveDatabase );
-			}
-			catch( GamePersistenceException gpe )
-			{
-				if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
-				{
-					throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, effectiveDatabase );
-				}
-				else
-				{
-					throw new LauncherException( LauncherExceptionCode.ERR_IO );
-				}
-			}
 
-			view.fillGameList( effectiveDatabase, getSortedGameList(), null );
+		try
+		{
+			retrieveDatabaseGames( currentDatabase );
 		}
+		catch( GamePersistenceException gpe )
+		{
+			if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, currentDatabase );
+			}
+			else
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_IO );
+			}
+		}
+
+		view.fillGameList( currentDatabase, getSortedGameList(), null );
 	}
 
 	/* (non-Javadoc)
@@ -678,7 +666,6 @@ final class MainPresenterImpl implements MainPresenter
 		{
 			launcherPersistence.getGamePersister().createDatabase( newDatabase );
 
-			view.addDatabase( newDatabase );
 			databases.add( newDatabase );
 		}
 		catch( GamePersistenceException gpe )
@@ -775,15 +762,24 @@ final class MainPresenterImpl implements MainPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onSelectFavorite(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestDatabasesList()
 	 */
 	@Override
-	public void onSelectFavorite( String favoriteName ) throws LauncherException
+	public void onRequestDatabasesList()
+	{
+		view.showDatabasesList( databases );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onSelectDatabaseItem(java.lang.String)
+	 */
+	@Override
+	public void onSelectDatabaseItem( String databaseItem ) throws LauncherException
 	{
 		//switch database and highlight the game
-		onSelectDatabase( getDatabaseFromFavoriteName( favoriteName ) );
+		onSelectDatabase( getDatabaseFromDatabaseItem( databaseItem ) );
 
-		view.highlightGame( getGameNameFromFavoriteName( favoriteName ) );
+		view.highlightGame( getGameNameFromDatabaseItem( databaseItem ) );
 	}
 
 	/* (non-Javadoc)
@@ -792,8 +788,8 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onRequestDeleteFavoriteAction( String favoriteName ) throws LauncherException
 	{
-		String database = getDatabaseFromFavoriteName( favoriteName );
-		String gameName = getGameNameFromFavoriteName( favoriteName );
+		String database = getDatabaseFromDatabaseItem( favoriteName );
+		String gameName = getGameNameFromDatabaseItem( favoriteName );
 
 		try
 		{
@@ -1007,7 +1003,6 @@ final class MainPresenterImpl implements MainPresenter
 			if( !databases.contains( importedDatabase ) )
 			{
 				//the reason we're checking is that some databases may have been replaced so we don't need to re-add them since they have the same name
-				view.addDatabase( importedDatabase );
 				databases.add( importedDatabase );
 			}
 		}
@@ -1178,10 +1173,27 @@ final class MainPresenterImpl implements MainPresenter
 			gamesMap.entrySet().stream()
 					.map( Entry::getValue )
 					.sorted( (game1, game2) -> game1.getName().compareToIgnoreCase( game2.getName() ) )
-					.forEach( game -> sortedList.add( new GameLabel( game.getName(), getGameMedium( game ) ) ) );
+					.forEach( game -> sortedList.add( getGameLabel( game ) ) );
 		}
 		
 		return sortedList;
+	}
+
+	private GameLabel getGameLabel( Game game )
+	{
+		String company = null;
+		String year = null;
+		if( repositoryInfoMap != null )
+		{
+			RepositoryGame repositoryGame = repositoryInfoMap.get( game.getSha1Code() );
+			if( repositoryGame != null )
+			{
+				company = repositoryGame.getCompany();
+				year = repositoryGame.getYear();
+			}
+		}
+
+		return new GameLabel( game.getName(), company, year, game.getSize(), getGameMedium( game ) );
 	}
 
 	private static Medium getGameMedium( Game game )
@@ -1228,7 +1240,7 @@ final class MainPresenterImpl implements MainPresenter
 		{
 			Set<Game> filteredGames = new HashSet<Game>();
 
-			games.parallelStream().filter( game -> !isFiltered( game ) ).forEach( game -> filteredGames.add( game ) );
+			games.stream().filter( game -> !isFiltered( game ) ).forEach( game -> filteredGames.add( game ) );
 
 			setGameMap( filteredGames );
 		}
@@ -1327,20 +1339,20 @@ final class MainPresenterImpl implements MainPresenter
 		return databaseItem.getGameName() + " [" + databaseItem.getDatabase() + "]";
 	}
 
-	private String getGameNameFromFavoriteName( String favoriteName )
+	private String getGameNameFromDatabaseItem( String databaseItem )
 	{
-		int lastClosingBracketIndex = favoriteName.lastIndexOf( ']' );
-		int lastOpeningBracketIndex = favoriteName.lastIndexOf( '[', lastClosingBracketIndex );
+		int lastClosingBracketIndex = databaseItem.lastIndexOf( ']' );
+		int lastOpeningBracketIndex = databaseItem.lastIndexOf( '[', lastClosingBracketIndex );
 
-		return favoriteName.substring( 0, lastOpeningBracketIndex - 1 );
+		return databaseItem.substring( 0, lastOpeningBracketIndex - 1 );
 	}
 
-	private String getDatabaseFromFavoriteName( String favoriteName )
+	private String getDatabaseFromDatabaseItem( String databaseItem )
 	{
-		int lastClosingBracketIndex = favoriteName.lastIndexOf( ']' );
-		int lastOpeningBracketIndex = favoriteName.lastIndexOf( '[', lastClosingBracketIndex );
+		int lastClosingBracketIndex = databaseItem.lastIndexOf( ']' );
+		int lastOpeningBracketIndex = databaseItem.lastIndexOf( '[', lastClosingBracketIndex );
 
-		return favoriteName.substring( lastOpeningBracketIndex + 1, lastClosingBracketIndex );
+		return databaseItem.substring( lastOpeningBracketIndex + 1, lastClosingBracketIndex );
 	}
 
 	private class DatabaseItemComparator implements Comparator<DatabaseItem>

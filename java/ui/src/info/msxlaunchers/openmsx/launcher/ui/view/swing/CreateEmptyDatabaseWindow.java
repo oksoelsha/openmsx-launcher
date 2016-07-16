@@ -62,6 +62,7 @@ public class CreateEmptyDatabaseWindow
 			try
 			{
 				presenter.onRequestCreateEmptyDatabaseAction(userInput);
+				presenter.onViewUpdatedDatabase(userInput);
 			}
 			catch(LauncherException le)
 			{

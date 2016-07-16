@@ -262,7 +262,7 @@ public class UpdateCheckerPresenterImplTest
 		verify( updateChecker, times( 1 ) ).getNewExtraDataFile();
 		verify( extraDataGetter, times( 1 ) ).getExtraData();
 		verify( gamePersister, times( 1 ) ).updateGameExtraDataInDatabases( extraDataMap );
-		verify( mainPresenter, times( 1 ) ).onUpdateViewedDatabase( null );
+		verify( mainPresenter, times( 1 ) ).onViewUpdatedDatabase( null );
 	}
 
 	@Test( expected = LauncherException.class )

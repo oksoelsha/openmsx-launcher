@@ -15,8 +15,10 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,10 +32,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
+import info.msxlaunchers.openmsx.common.Utils;
 
 /**
  * @since v1.0
@@ -48,8 +53,7 @@ public class JListWithImagesAndActions extends JList<Object>
 	public final static String DELETE_KEY_COMMAND = "deleteKeyCommand";
 	public final static String INSERT_KEY_COMMAND = "insertKeyCommand";
 
-	private final static Border MARGIN = new EmptyBorder(0, 1, 1, 0);
-	private final static Color BACKGROUND_COLOR = new Color(250,250,250);
+	private final static Color BACKGROUND_COLOR = new Color(250, 250, 250);
 
 	private int KEYBOARD_PRESS_DELAY = 800;
 	private StringBuilder pressedKeysBuffer = new StringBuilder();
@@ -171,9 +175,9 @@ public class JListWithImagesAndActions extends JList<Object>
 		});
 	}
 
-	public void addElement(String text, ImageIcon icon)
+	public void addElement(String name, String company, String year, long size, ImageIcon icon)
 	{
-		listModel.addElement(new TextIcon(text, icon));
+		listModel.addElement(new TextIcon(name, company, year, size, icon));
 	}
 
 	public void clear()
@@ -186,11 +190,11 @@ public class JListWithImagesAndActions extends JList<Object>
 		listModel.remove(index);
 	}
 
-	public void setSelectedValue(String text)
+	public void setSelectedValue(String name)
 	{
-		int index = listModel.indexOf(new TextIcon(text, null));
+		int index = listModel.indexOf(new TextIcon(name, null, null, 0, null));
 		setSelectedIndex(index);
-		ensureIndexIsVisible(index);
+		SwingUtilities.invokeLater(() -> ensureIndexIsVisible(index));
 		requestFocusInWindow();
 	}
 
@@ -202,7 +206,7 @@ public class JListWithImagesAndActions extends JList<Object>
 
 		for(int ix=0; ix < size; ix++)
 		{
-			selectedItems[ix] = ((TextIcon)selectionValues.get(ix)).text;
+			selectedItems[ix] = ((TextIcon)selectionValues.get(ix)).name;
 		}
 
 		return selectedItems;
@@ -217,7 +221,7 @@ public class JListWithImagesAndActions extends JList<Object>
 		}
 		else
 		{
-			element = ((TextIcon)listModel.elementAt(index)).text;
+			element = ((TextIcon)listModel.elementAt(index)).name;
 		}
 
 		return element;
@@ -242,13 +246,34 @@ public class JListWithImagesAndActions extends JList<Object>
 	            block != Character.UnicodeBlock.SPECIALS;
 	}
 
-	private static class JListCellRenderer extends JLabel implements ListCellRenderer<Object>
-    {
-		public JListCellRenderer()
+	private static class JListCellRenderer extends JPanel implements ListCellRenderer<Object>
+	{
+		private static final JLabel iconLabel = new JLabel();
+		private static final JLabel nameLabel = new JLabel();
+		private static final JLabel infoLabel = new JLabel();
+		private static JPanel textPanel = new JPanel();
+		private static final FlowLayout allLayout = new FlowLayout(FlowLayout.LEFT, 0, 2);
+		private static final BorderLayout textLayout = new BorderLayout();
+		private final static Color background = new Color(190, 220, 230);
+		private final static Color infoColor = new Color(100, 100, 100);
+
+		private static final String LABEL_DASH = " - ";
+		private static final String LABEL_KB = " KB";
+		private static final String LABEL_SPACE = " ";
+		private final static Border LABEL_MARGIN = new EmptyBorder(0, 3, 0, 0);
+
+		static
 		{
-            setOpaque(true);
-            setVerticalAlignment(CENTER);
-			setFont(new Font(null, Font.PLAIN, 11));
+			nameLabel.setFont(new Font(null, Font.PLAIN, 14));
+			nameLabel.setBorder(LABEL_MARGIN);
+
+			infoLabel.setFont(new Font(null, Font.PLAIN, 9));
+			infoLabel.setBorder(LABEL_MARGIN);
+			infoLabel.setForeground(infoColor);
+
+			textPanel.setLayout(textLayout);
+			textPanel.add(nameLabel, BorderLayout.NORTH);
+			textPanel.add(infoLabel, BorderLayout.SOUTH);
 		}
 
 		public Component getListCellRendererComponent(
@@ -257,43 +282,68 @@ public class JListWithImagesAndActions extends JList<Object>
                     int index,
                     boolean isSelected,
                     boolean cellHasFocus)
-    	{
+		{
+			removeAll();
+			setLayout(allLayout);
 			TextIcon textIcon = (TextIcon)value;
 
-			setBorder(MARGIN);
-
-		    if (isSelected)
+			if (isSelected)
 			{
-				setBackground(list.getSelectionBackground());
-				setForeground(list.getSelectionForeground());
+				setBackground(background);
+				textPanel.setBackground(background);
 			}
 			else
 			{
-                setBackground(BACKGROUND_COLOR);
-                setForeground(list.getForeground());
+				setBackground(BACKGROUND_COLOR);
+				textPanel.setBackground(BACKGROUND_COLOR);
 			}
 
-	    	setText(textIcon.text);
-	    	setIcon(textIcon.icon);
+			iconLabel.setIcon(textIcon.icon);
+			add(iconLabel);
 
-		    return this;
-    	}
-    }
+			nameLabel.setText(textIcon.name);
+			infoLabel.setText(getFormattedString(textIcon));
+			add(textPanel, BorderLayout.CENTER);
+
+			return this;
+		}
+
+		private String getFormattedString(TextIcon textIcon)
+		{
+			StringBuilder builder = new StringBuilder();
+
+			if(Utils.isEmpty(textIcon.company) && Utils.isEmpty(textIcon.year))
+			{
+				//size 0 is for files with real size of 0, files that don't exist and scripts
+				if(textIcon.size > 0.0)
+				{
+					builder.append(textIcon.size / 1024).append(LABEL_KB);
+				}
+			}
+			else
+			{
+				builder.append(textIcon.company).append(LABEL_SPACE).append(textIcon.year).append(LABEL_DASH).append(textIcon.size / 1024).append(LABEL_KB);
+			}
+
+			return builder.toString();
+		}
+	}
 
 	private class TextIcon
 	{
-		private final String text;
+		private final String name;
+		private final String company;
+		private final String year;
+		private long size;
 		private final ImageIcon icon;
 
-		public TextIcon(String text, ImageIcon icon)
+		TextIcon(String name, String company, String year, long size, ImageIcon icon)
 		{
-			this.text = text;
+			this.name = name;
+			this.company = company;
+			this.year = year;
+			this.size = size;
 			this.icon = icon;
-		}
-
-		public String getText()
-		{
-			return text;
 		}
 
 		@Override
@@ -301,7 +351,7 @@ public class JListWithImagesAndActions extends JList<Object>
 		{
 			//this is a simplified equals() method for a very specific case and that is setSelectedValue()
 			//to locate an element in the list
-			return ((TextIcon)obj).getText().equals(text);
+			return ((TextIcon)obj).name.equals(name);
 		}
 	}
 }

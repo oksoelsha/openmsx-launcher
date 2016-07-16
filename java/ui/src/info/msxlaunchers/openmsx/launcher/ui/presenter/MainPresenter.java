@@ -118,12 +118,12 @@ public interface MainPresenter
 	void onRequestFillDatabaseScreen() throws LauncherException;
 
 	/**
-	 * Called when it is needed to update the game list in the current database (e.g. after running fill database)
+	 * Called to view modified database (e.g. after running fill database)
 	 * 
 	 * @param database Name of the database to update. If null, then use the currently selected database in the model
 	 * @throws LauncherException
 	 */
-	void onUpdateViewedDatabase( String database ) throws LauncherException;
+	void onViewUpdatedDatabase( String database ) throws LauncherException;
 
 	/**
 	 * Called when user requests view the game's info file, or web URL in a browser
@@ -201,12 +201,12 @@ public interface MainPresenter
 	void onRequestListOfFavorites();
 
 	/**
-	 * Called when user selects a favorite
+	 * Called when user selects a database item (e.g. favorite or search item)
 	 * 
-	 * @param favoriteName Selected favorite name
+	 * @param databaseItem Selected favorite or search item
 	 * @throws LauncherException
 	 */
-	void onSelectFavorite( String favoriteName ) throws LauncherException;
+	void onSelectDatabaseItem( String databaseItem ) throws LauncherException;
 
 	/**
 	 * Called when user requests to delete selected a favorite
@@ -220,6 +220,11 @@ public interface MainPresenter
 	 * Called when user requests the current list of saved filters
 	 */
 	void onRequestListOfSavedFilters();
+
+	/**
+	 * Called when user requests the current list of databases
+	 */
+	void onRequestDatabasesList();
 
 	/**
 	 * Called when user selects a saved filter

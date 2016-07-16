@@ -168,15 +168,6 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#addDatabase(java.lang.String)
-	 */
-	@Override
-	public void addDatabase( String database )
-	{
-		mainWindow.addDatabase( database );
-	}
-
-	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#removeDatabase(java.lang.String)
 	 */
 	@Override
@@ -206,30 +197,21 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showGameCompanyYearSizeData(java.lang.String, java.lang.String, long)
-	 */
-	@Override
-	public void showGameCompanyYearSizeData( String company, String year, long size )
-	{
-		mainWindow.showGameCompanyYearSizeData( company, year, size );
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#resetGameCompanyYearSizeData()
-	 */
-	@Override
-	public void resetGameCompanyYearSizeData()
-	{
-		mainWindow.resetGameCompanyYearSizeData();
-	}
-
-	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showFavoritesMenu(java.util.Set)
 	 */
 	@Override
 	public void showFavoritesMenu( Set<String> favoritesAsStrings )
 	{
 		mainWindow.showFavoritesMenu( favoritesAsStrings );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showDatabasesList(java.util.Set)
+	 */
+	@Override
+	public void showDatabasesList( Set<String> databases )
+	{
+		mainWindow.showDatabasesList( databases );
 	}
 
 	/* (non-Javadoc)

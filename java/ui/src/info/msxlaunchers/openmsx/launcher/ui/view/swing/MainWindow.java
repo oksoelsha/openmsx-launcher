@@ -16,13 +16,14 @@
 package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
 import info.msxlaunchers.openmsx.common.OSUtils;
-import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewProperties;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JCompositeLabel;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextField;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
@@ -34,7 +35,6 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -58,12 +58,10 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -74,7 +72,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -119,16 +116,13 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenuItem helpFile;
 	private JMenuItem helpCheckForUpdates;
 	private JListWithImagesAndActions gameList;
-	private JLabel databaseLabel;
-	private JLabel countLabel;
-	private JLabel countValueLabel;
-	private JLabel gameDataLabel;
-	private JComboBox<String> databaseComboBox;
-	private DefaultComboBoxModel<String> databaseComboBoxModel;
+	private JComponent databaseSelectButton;
+	private JCompositeLabel databaseLabel;
+	private JCompositeLabel totalLabel;
+	private JComponent filtersSelectButton;
+	private JCompositeLabel filtersLabel;
 	private JButton favoritesButton;
 	private JButton searchButton;
-	private JButton filtersButton;
-	private JLabel currentFilterLabel;
 	private JButton launchButton;
 	private JButton removeButton;
 	private JButton addButton;
@@ -147,6 +141,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JLabel screenshot2Label;
 
 	private JPopupMenu favoritesContextMenu;
+	private JPopupMenu databasesContextMenu;
 	private JPopupMenu searchContextMenu;
 
 	private JPopupMenu filtersContextMenu;
@@ -164,8 +159,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	public static final Dimension BUTTON_DIMENSION = new Dimension(109, 28);
 
-	private static final Font FONT_SIZE_11 = new Font(null, Font.PLAIN, 11);
-	private static final Font FONT_SIZE_10 = new Font(null, Font.PLAIN, 10);
 	private static final Color DEFAULT_BUTTON_BG_COLOR = UIManager.getLookAndFeelDefaults().getColor("Button.background");
 	private static final Insets POPUP_MENU_ITEM_BUTTON_INSETS = new Insets(-1, 0, -1, -13);
 	private static final Dimension POPUP_MENU_ITEM_BUTTON_DIMENSION = new Dimension(18, 18);
@@ -330,63 +323,40 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         }
 	}
 
-	public void addDatabase(String database)
-	{
-		databaseComboBoxModel.addElement(database);
-	}
-
 	public void removeDatabase(String database)
 	{
-		databaseComboBoxModel.removeElement(database);
-		if(databaseComboBoxModel.getSize() == 0)
+		if(database.equals(currentDatabase))
 		{
-			//In this case force clear the game list. When there are other databases there's no need to do that because
-			//removing the current selected database will automatically select another from the drop down list and will
-			//therefore clear the list and re-populate it.
+			currentDatabase = null;
+			databaseLabel.setValue(null);
 			gameList.clear();
 			updateGameCount(0);
+			filtersSelectButton.setEnabled(false);
+			applyFilter(null);
+			updateFilterNameLabel(null);
 		}
+
+		//disable the database selector button if there were no databases left
+		databaseSelectButton.setEnabled(databases.size() > 0);
 	}
 
 	public void renameDatabase(String oldDatabase, String newDatabase)
 	{
-		databaseComboBoxModel.addElement(newDatabase);
 		if(oldDatabase.equals(currentDatabase))
 		{
-			databaseComboBox.setSelectedItem(newDatabase);
+			databaseLabel.setValue(newDatabase);
 			currentDatabase = newDatabase;
 		}
-		databaseComboBoxModel.removeElement(oldDatabase);
 	}
 
 	private void drawScreen()
 	{
-		databaseLabel = new JLabel();
-		databaseLabel.setFont(FONT_SIZE_11);
+		databaseSelectButton = new ExpandMenuButton(this);
+		databaseLabel = new JCompositeLabel(172, 131, false);
+		totalLabel = new JCompositeLabel(50, 37, true);
 
-		databaseComboBoxModel = new SortedComboBoxModel(Utils.getSortedCaseInsensitiveArray(databases));
-		databaseComboBox = new JComboBox<String>(databaseComboBoxModel);
-		databaseComboBox.setMaximumRowCount(10);
-		databaseComboBox.setFont(FONT_SIZE_11);
-		databaseComboBox.addActionListener(event -> onSelectDatabase());
-		databaseComboBox.setFocusable(false);
-
-		countLabel = new JLabel();
-		countLabel.setFont(FONT_SIZE_11);
-		countLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-		countValueLabel = new JLabel();
-		countValueLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		countValueLabel.setFont(FONT_SIZE_11);
-		countValueLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY, 1),
-				BorderFactory.createEmptyBorder(0, 3, 0, 3)));
-		countValueLabel.setOpaque(true);
-
-		gameDataLabel = new JLabel();
-		gameDataLabel.setFont(FONT_SIZE_10);
-		gameDataLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY, 1),
-				BorderFactory.createEmptyBorder(0, 3, 0, 3)));
-		gameDataLabel.setOpaque(true);
+		//disable the database selector button if there were no databases left
+		databaseSelectButton.setEnabled(databases.size() > 0);
 
 		gameList = new JListWithImagesAndActions(new DefaultListModel<Object>());
 		//need to unregister the gameList component from the ToolTipManager to allow the Ctrl+F1 to work
@@ -404,11 +374,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
         JScrollPane gameListScrollBar = new JScrollPane(gameList);
 
-		currentFilterLabel = new JLabel();
-		currentFilterLabel.setFont(FONT_SIZE_10);
-		currentFilterLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY, 1),
-				BorderFactory.createEmptyBorder(0, 3, 0, 3)));
-		currentFilterLabel.setOpaque(true);
+		filtersLabel = new JCompositeLabel(118, 90, false);
+		filtersSelectButton = new ExpandMenuButton(this);
 
 		JPanel launchButtonPanel = new JPanel();
 		launchButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
@@ -435,32 +402,23 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		searchButton.addActionListener(this);
 		searchButton.setFocusable(false);
 
-		filtersButton = new JButton();
-		filtersButton.setIcon(Icons.FILTER.getImageIcon());
-		filtersButton.addActionListener(this);
-		filtersButton.setFocusable(false);
-
 		GroupLayout groupLayout = new GroupLayout(contentPane);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(20)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(gameListScrollBar, GroupLayout.PREFERRED_SIZE, 333, GroupLayout.PREFERRED_SIZE)
-						.addComponent(gameDataLabel, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
+						.addComponent(gameListScrollBar, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(filtersButton, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-								.addGap(1)
-								.addComponent(currentFilterLabel, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(databaseComboBox, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-							.addGap(30)
-							.addComponent(false, countValueLabel, 45, GroupLayout.DEFAULT_SIZE, 30))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(false, databaseLabel, 100, GroupLayout.DEFAULT_SIZE, 100)
-							.addGap(94)
-							.addComponent(false, countLabel, 60, GroupLayout.DEFAULT_SIZE, 60)))
-					.addGap(20)
+							.addGap(2)
+							.addComponent(false, databaseSelectButton, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
+							.addComponent(false, databaseLabel, GroupLayout.PREFERRED_SIZE, databaseLabel.getComponentWidth(), GroupLayout.PREFERRED_SIZE)
+							.addGap(4)
+							.addComponent(false, totalLabel, GroupLayout.PREFERRED_SIZE, totalLabel.getComponentWidth(), GroupLayout.PREFERRED_SIZE)
+							.addGap(4)
+							.addComponent(false, filtersSelectButton, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
+							.addComponent(false, filtersLabel, GroupLayout.PREFERRED_SIZE, filtersLabel.getComponentWidth(), GroupLayout.PREFERRED_SIZE)))
+					.addGap(14)
 					.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
 						.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(favoritesButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
@@ -482,20 +440,13 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(databaseLabel)
-								.addComponent(countLabel))
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(databaseComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(countValueLabel))
+								.addComponent(databaseSelectButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(databaseLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(totalLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(filtersSelectButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(filtersLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
 							.addGap(4)
-							.addComponent(gameDataLabel, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-							.addGap(4)
-							.addComponent(gameListScrollBar, GroupLayout.PREFERRED_SIZE, 448, GroupLayout.PREFERRED_SIZE)
-							.addGap(2)
-							.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
-								.addComponent(filtersButton, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-								.addComponent(currentFilterLabel, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE))
-								.addGap(5))
+							.addComponent(gameListScrollBar, GroupLayout.PREFERRED_SIZE, 474, GroupLayout.PREFERRED_SIZE))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(35)
@@ -511,10 +462,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(editButtonPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(15)
+									.addGap(18)
 									.addComponent(screenshot1Label, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-									.addGap(15)
-									.addComponent(screenshot2Label, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)))))
+									.addGap(16)
+									.addComponent(screenshot2Label, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))))
+						.addGap(10))
 		);
 
 		editButton = getIconButton(editButtonPanel, Icons.EDIT.getImageIcon());
@@ -632,11 +584,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         helpCheckForUpdates.setMnemonic(KeyStroke.getKeyStroke(messages.get("CHECK_FOR_UPDATES_MNEMONIC")).getKeyCode());
         helpAbout.setText(messages.get("ABOUT"));
         helpAbout.setMnemonic(KeyStroke.getKeyStroke(messages.get("ABOUT_MNEMONIC")).getKeyCode());
-		databaseLabel.setText(messages.get("DATABASE"));
-		countLabel.setText(messages.get("COUNT"));
+		databaseLabel.setTitle(messages.get("DATABASE"));
+		totalLabel.setTitle(messages.get("COUNT"));
 		favoritesButton.setToolTipText(messages.get("FAVORITES"));
 		searchButton.setToolTipText(messages.get("SEARCH"));
-		filtersButton.setToolTipText(messages.get("FILTERS"));
+		filtersLabel.setTitle(messages.get("FILTERS"));
 		launchButton.setToolTipText(messages.get("LAUNCH"));
 		removeButton.setToolTipText(messages.get("REMOVE"));
 		addButton.setToolTipText(messages.get("ADD"));
@@ -658,13 +610,14 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	public void fillGameList(String currentDatabase, Set<GameLabel> games, String selectedGame)
 	{
-		databaseComboBox.setSelectedItem(currentDatabase);
-		filtersButton.setEnabled(currentDatabase != null);
+		this.currentDatabase = currentDatabase;
+		databaseLabel.setValue(currentDatabase);
+		filtersSelectButton.setEnabled(currentDatabase != null);
 		gameList.clear();
 
 		for(GameLabel gameLabel: games)
 		{
-			gameList.addElement(gameLabel.getName(), mediaIconsMap.get(gameLabel.getMedium()));
+			gameList.addElement(gameLabel.getName(), gameLabel.getCommany(), gameLabel.getYear(), gameLabel.getSize(), mediaIconsMap.get(gameLabel.getMedium()));
 		}
 
 		if(selectedGame != null)
@@ -675,11 +628,14 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		{
 			enableButtons(false, false, currentDatabase != null, false, false);
 		}
+
+		//disable the database selector button if there were no databases left
+		databaseSelectButton.setEnabled(databases.size() > 0);
 	}
 
 	public void updateGameCount(int total)
 	{
-		countValueLabel.setText(String.valueOf(total));
+		totalLabel.setValue(String.valueOf(total));
 	}
 
 	/*
@@ -756,9 +712,13 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		{
 			processShowSearchScreenRequest();
 		}
-		else if(source == filtersButton)
+		else if(source == filtersSelectButton)
 		{
 			processShowFiltersMenuRequest();
+		}
+		else if(source == databaseSelectButton)
+		{
+			processShowDatabasesMenuRequest();
 		}
 		else if(source == newFilterMenuItem)
 		{
@@ -791,6 +751,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			else if(action instanceof FavoriteMenuItemName)
 			{
 				selectGame(((PopupMenuItemName)action).getPopupMenuItemName());
+			}
+			else if(action instanceof DatabaseMenuItemName)
+			{
+				onSelectDatabase(((PopupMenuItemName)action).getPopupMenuItemName());
 			}
 			gameList.requestFocusInWindow();
 		}
@@ -832,31 +796,22 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
-	public void showGameCompanyYearSizeData(String company, String year, long size)
+	public void showDatabasesList(Set<String> databases)
 	{
-		String displayString;
-		if(Utils.isEmpty(company) && Utils.isEmpty(year))
-		{
-			if(size == 0.0)
-			{
-				//size 0 is for files with real size of 0, files that don't exist and scripts
-				displayString = "";
-			}
-			else
-			{
-				displayString = size + " KB";
-			}
-		}
-		else
-		{
-			displayString = company + " " + year + " - " + size + " KB";
-		}
-		gameDataLabel.setText(displayString);
-	}
+		databasesContextMenu = new JPopupMenu();
+		databasesContextMenu.setComponentOrientation(orientation);
 
-	public void resetGameCompanyYearSizeData()
-	{
-		gameDataLabel.setText("");
+		for(String database:databases)
+		{
+			JMenuItem databaseMenuItem = new JMenuItem();
+			databaseMenuItem.setComponentOrientation(orientation);
+			databaseMenuItem.setAction(new DatabaseMenuItemName(database));
+			databaseMenuItem.addActionListener(this);
+
+			databasesContextMenu.add(databaseMenuItem);
+		}
+
+		showButtonMenu(databaseSelectButton, databasesContextMenu, 0);
 	}
 
 	public void showFavoritesMenu(Set<String> favoritesAsStrings)
@@ -886,16 +841,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		    favoritesContextMenu.add(favoriteMenuItem);			
 		}
 
-		int x;
-		if(orientation == ComponentOrientation.RIGHT_TO_LEFT)
-		{
-			x = favoritesButton.getWidth() - favoritesContextMenu.getPreferredSize().width - 2;
-		}
-		else
-		{
-			x = 2;
-		}
-		favoritesContextMenu.show(favoritesButton, x, favoritesButton.getHeight()-1);
+		showButtonMenu(favoritesButton, favoritesContextMenu, 2);
 	}
 
 	public void higlightGame( String gameName )
@@ -956,22 +902,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 		filtersContextMenu.add(newFilterMenuItem);
 
-		int x = filtersButton.getWidth();
-		if(orientation == ComponentOrientation.RIGHT_TO_LEFT)
-		{
-			x -= filtersContextMenu.getPreferredSize().width + x;
-		}
-		filtersContextMenu.show(filtersButton, x, 0 - filtersContextMenu.getPreferredSize().height);
+		showButtonMenu(filtersSelectButton, filtersContextMenu, 0);
 	}
 
 	public void updateFilterNameLabel(String filterName)
 	{
-		currentFilterLabel.setText(filterName);
+		filtersLabel.setValue(filterName);
 	}
 
 	public void setFilterNameLabelUntitled()
 	{
-		currentFilterLabel.setText("(" + messages.get("UNTITLED_FILTER") + ")");
+		filtersLabel.setValue("(" + messages.get("UNTITLED_FILTER") + ")");
 	}
 
 	/* (non-Javadoc)
@@ -1013,6 +954,20 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		infoMenuItem.setEnabled(infoFlag);
 	}
 
+	private void showButtonMenu(JComponent button, JPopupMenu menu, int xOffset)
+	{
+		int x;
+		if(orientation == ComponentOrientation.RIGHT_TO_LEFT)
+		{
+			x = button.getWidth() - menu.getPreferredSize().width - xOffset;
+		}
+		else
+		{
+			x = xOffset;
+		}
+		menu.show(button, x, button.getHeight()-1);
+	}
+
 	private void onRequestFillDatabaseScreen()
 	{
 		try
@@ -1032,7 +987,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			if(MessageBoxUtil.showYesNoMessageBox(ref, updateAllDatabasesConfirmationMessage, messages, orientation) == 0)
 			{
 				int numberUpdatedProfiles = presenter.onRequestUpdateAllDatabases();
-				presenter.onUpdateViewedDatabase(currentDatabase);
+				presenter.onViewUpdatedDatabase(currentDatabase);
 
 				MessageBoxUtil.showInformationMessageBox(ref, messages.get("TOTAL_UPDATED_PROFILES") + ": " + numberUpdatedProfiles,
 						messages, orientation);
@@ -1064,8 +1019,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 			//after calling the database manager screen, the last database may have been deleted.
 			//in this case, disable the add and filter buttons if no database is selected
-			addButton.setEnabled(currentDatabase != null);
-			filtersButton.setEnabled(currentDatabase != null);
+			if(currentDatabase == null)
+			{
+				addButton.setEnabled(false);
+				filtersSelectButton.setEnabled(false);
+			}
 		}
 		catch(LauncherException le)
 		{
@@ -1097,22 +1055,22 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
-	private void onSelectDatabase()
+	private void onSelectDatabase(String database)
 	{
-    	try
-    	{
-    		presenter.onSelectDatabase((String)databaseComboBox.getSelectedItem());
+		try
+		{
+    		presenter.onSelectDatabase(database);
 		}
 		catch(LauncherException le)
 		{
 			//here a non-existing database was selected.
 			//In this case force selection of previous valid one
-			databaseComboBox.setSelectedItem(currentDatabase);
+			databaseLabel.setValue(currentDatabase);
 
 			MessageBoxUtil.showErrorMessageBox(this, le, messages, orientation);
 		}
 
-    	currentDatabase = (String)databaseComboBox.getSelectedItem();
+		currentDatabase = database;
 	}
 
 	private JButton getIconButton(JPanel buttonPanel, ImageIcon icon)
@@ -1220,7 +1178,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		{
 			//selected games could be null if nothing was highlighted in the game list.
 			//this can happen if Ctrl+X was pressed, for example, without selecting games
-			Set<String> movedGames = presenter.onRequestMoveGamesScreen(games, (String)databaseComboBox.getSelectedItem());
+			Set<String> movedGames = presenter.onRequestMoveGamesScreen(games, currentDatabase);
 	
 			int gamesTotal = gameList.getListSize();
 			for(int index = gamesTotal - 1; index > -1; index--)
@@ -1289,6 +1247,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private void processShowFiltersMenuRequest()
 	{
 		presenter.onRequestListOfSavedFilters();
+	}
+
+	private void processShowDatabasesMenuRequest()
+	{
+		presenter.onRequestDatabasesList();
 	}
 
 	private void addFilter()
@@ -1398,15 +1361,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		newFilterMenuItem.setComponentOrientation(orientation);
 		editCurrentUntitledFilterMenuItem.setComponentOrientation(orientation);
 		resetFilterMenuItem.setComponentOrientation(orientation);
-	    moveMenuItem.setComponentOrientation(orientation);
-	    locateFileMenuItem.setComponentOrientation(orientation);
-	    addFavoriteMenuItem.setComponentOrientation(orientation);
-	    infoMenuItem.setComponentOrientation(orientation);
-	    propertiesMenuItem.setComponentOrientation(orientation);
+		moveMenuItem.setComponentOrientation(orientation);
+		locateFileMenuItem.setComponentOrientation(orientation);
+		addFavoriteMenuItem.setComponentOrientation(orientation);
+		infoMenuItem.setComponentOrientation(orientation);
+		propertiesMenuItem.setComponentOrientation(orientation);
+		databaseLabel.setComponentOrientation(orientation);
+		totalLabel.setComponentOrientation(orientation);
+		filtersLabel.setComponentOrientation(orientation);
 
 		//force the following to always be left to right
 		gameList.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		databaseComboBox.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 	}
 
 	private String getSelectedGame()
@@ -1478,11 +1443,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		resetFilterMenuItem.addActionListener(this);
 	}
 
-	private void selectGame(String favoriteName)
+	private void selectGame(String databaseItem)
 	{
 		try
 		{
-			presenter.onSelectFavorite(favoriteName);
+			presenter.onSelectDatabaseItem(databaseItem);
 		}
 		catch(LauncherException le)
 		{
@@ -1550,31 +1515,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private KeyStroke getCtrl_RKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
-	}
-
-	private static class SortedComboBoxModel extends DefaultComboBoxModel<String>
-	{
-		public SortedComboBoxModel(String[] elements)
-		{
-			super(elements);
-		}
-
-		@Override
-        public void addElement(String element)
-		{
-			int index;
-			int size = getSize();
-
-			for(index = 0; index < size; index++)
-			{
-				if(element.compareToIgnoreCase(getElementAt(index)) < 0)
-				{
-					break;
-				}
-			}
-
-			insertElementAt(element, index);
-        }
 	}
 
 	abstract private class PopupMenuAction extends AbstractAction
@@ -1666,6 +1606,14 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
+	private class DatabaseMenuItemName extends PopupMenuItemName
+	{
+		DatabaseMenuItemName(String databaseName)
+		{
+			super(databaseName);
+		}
+	}
+
 	private class FavoriteMenuItemDelete extends PopupMenuItemDelete
 	{
 		FavoriteMenuItemDelete(String favoriteName)
@@ -1702,6 +1650,34 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		{
 			super.paintComponent(g);
 			g.drawImage(Icons.BACKGROUND.getImage(), 0, 0, null);
+		}
+	}
+
+	private static class ExpandMenuButton extends AbstractActionButton
+	{
+		private static final Color arrowColor = new Color(235, 235, 235);
+
+		ExpandMenuButton(final ActionListener listener)
+		{
+			super(listener, new Color(187, 187, 187), new Color(207, 207, 207), new Color(157, 157, 157));
+		}
+
+		@Override
+		protected void drawButton(Graphics g)
+		{
+			int width = getWidth();
+			int height = getHeight();
+
+			int halfWidth = width / 2;
+			int startOfArrowHeight = (height / 2) - halfWidth;
+
+			g.fillRect(0, 0, width, height);
+			g.setColor(arrowColor);
+
+			for(int ix = 0; ix <= halfWidth; ix++)
+			{
+				g.drawLine(ix, startOfArrowHeight + ix, width - ix - 1, startOfArrowHeight + ix);
+			}
 		}
 	}
 }

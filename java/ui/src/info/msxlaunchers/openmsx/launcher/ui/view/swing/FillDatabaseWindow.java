@@ -239,7 +239,6 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		buttonGroup.add(newDatabaseRadioButton);
 
 		existingDatabasesComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(databases));
-		existingDatabasesComboBox.setSelectedItem(currentDatabase);
 
 		newDatabaseTextField = new JTextField();
 		newDatabaseTextField.setColumns(10);
@@ -351,6 +350,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		);
 		directoriesPanel.setLayout(gl_panel);
 		JPanel buttonPanel = new JPanel();
+
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -379,7 +379,8 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 					.addGroup(gl_buttonPane.createSequentialGroup()
 						.addGroup(gl_buttonPane.createParallelGroup(Alignment.CENTER)
 							.addComponent(okButton)
-							.addComponent(cancelButton)))
+							.addComponent(cancelButton))
+							.addGap(5))
 			);
 			buttonPanel.setLayout(gl_buttonPane);
 		}
@@ -388,6 +389,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		if(databases.size() == 0)
 		{
 			newDatabaseRadioButton.setSelected(true);
+			existingDatabaseRadioButton.setEnabled(false);
 			addModeLabel.setEnabled(false);
 			addModesComboBox.setEnabled(false);
 			existingDatabasesComboBox.setEnabled(false);
@@ -397,6 +399,14 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		{
 			existingDatabaseRadioButton.setSelected(true);
 			newDatabaseTextField.setEnabled(false);
+			if(currentDatabase == null)
+			{
+				existingDatabasesComboBox.setSelectedItem(databases.iterator().next());
+			}
+			else
+			{
+				existingDatabasesComboBox.setSelectedItem(currentDatabase);
+			}
 		}
 
 		if(rightToLeft)
@@ -538,7 +548,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		{
 			try
 			{
-				presenter.onUpdateViewedDatabase(getDatabase());
+				presenter.onViewUpdatedDatabase(getDatabase());
 			}
 			catch(LauncherException le)
 			{

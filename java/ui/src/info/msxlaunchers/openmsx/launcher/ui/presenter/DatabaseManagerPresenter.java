@@ -94,10 +94,10 @@ public interface DatabaseManagerPresenter
 	void onRequestDatabaseBackupsScreen( String database );
 
 	/**
-	 * Update viewed database on the main screen when there are changes (e.g. when restoring an old database)
+	 * View restored database on the main screen
 	 * 
 	 * @param database Name of database
 	 * @throws LauncherException
 	 */
-	void updateViewedDatabase( String database ) throws LauncherException;
+	void viewRestoredDatabase( String database ) throws LauncherException;
 }

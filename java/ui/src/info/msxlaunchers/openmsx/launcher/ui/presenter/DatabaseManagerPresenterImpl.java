@@ -239,12 +239,12 @@ final class DatabaseManagerPresenterImpl implements DatabaseManagerPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.DatabaseManagerPresenter#updateViewedDatabase(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.DatabaseManagerPresenter#viewRestoredDatabase(java.lang.String)
 	 */
 	@Override
-	public void updateViewedDatabase( String database ) throws LauncherException
+	public void viewRestoredDatabase( String database ) throws LauncherException
 	{
-		mainPresenter.onUpdateViewedDatabase( database );
+		mainPresenter.onViewUpdatedDatabase( database );
 	}
 
 	private int getTotalGamesInDatabase( String database )

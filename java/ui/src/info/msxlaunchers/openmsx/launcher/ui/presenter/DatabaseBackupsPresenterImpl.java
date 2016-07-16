@@ -144,12 +144,12 @@ final class DatabaseBackupsPresenterImpl implements DatabaseBackupsPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.DatabaseBackupsPresenter#updateViewedDatabase(java.sql.Timestamp)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.DatabaseBackupsPresenter#viewRestoredDatabase(java.sql.Timestamp)
 	 */
 	@Override
-	public void updateViewedDatabase( Timestamp timestamp ) throws LauncherException
+	public void viewRestoredDatabase( Timestamp timestamp ) throws LauncherException
 	{
-		databaseManagerPresenter.updateViewedDatabase( timestampToBackup.get( timestamp ).getDatabase() );
+		databaseManagerPresenter.viewRestoredDatabase( timestampToBackup.get( timestamp ).getDatabase() );
 	}
 
 	/* (non-Javadoc)

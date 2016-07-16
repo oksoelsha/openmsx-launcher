@@ -294,8 +294,8 @@ public class DatabaseManagerPresenterImplTest
 	@Test
 	public void test_WhenCallUpdateViewedDatabase_ThenMainPresenteronUpdateViewedDatabaseIsCalled() throws LauncherException
 	{
-		presenter.updateViewedDatabase( database );
+		presenter.viewRestoredDatabase( database );
 
-		verify( mainPresenter, times( 1 ) ).onUpdateViewedDatabase( database );
+		verify( mainPresenter, times( 1 ) ).onViewUpdatedDatabase( database );
 	}
 }
