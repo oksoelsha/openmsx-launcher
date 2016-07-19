@@ -420,12 +420,16 @@ final class MainPresenterImpl implements MainPresenter
 			//this happens when the last database is deleted
 			view.showGameScreenshots( null, null );
 			view.enableButtons( false, false, false, false, false );
+			view.enableSoundIndicators( false, false, false, false, false, false, false, false );
+			view.enableGenerationIndicators( false,  false,  false,  false );
 		}
 		else if( gameNames == null || gameNames.size() != 1 )
 		{
 			//this is the multi selection case
 			view.showGameScreenshots( null, null );
 			view.enableButtons( false, true, true, false, false );
+			view.enableSoundIndicators( false, false, false, false, false, false, false, false );
+			view.enableGenerationIndicators( false,  false,  false,  false );
 		}
 		else
 		{
@@ -480,8 +484,11 @@ final class MainPresenterImpl implements MainPresenter
 					view.showGameScreenshots( null, null  );
 				}
 				
-				//enable buttons according to the selection
+				//enable buttons and indicators according to the selection
 				view.enableButtons( true,  true, true, true, game.getInfo() != null );
+				view.enableSoundIndicators( game.isPSG(), game.isSCC(), game.isSCCI(), game.isPCM(), game.isMSXMUSIC(), game.isMSXAUDIO(),
+						game.isMoonsound(), game.isMIDI() );
+				view.enableGenerationIndicators( game.isMSX(), game.isMSX2(), game.isMSX2Plus(), game.isTurboR() );
 			}
 		}
 	}

@@ -149,6 +149,20 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenuItem editCurrentUntitledFilterMenuItem;
 	private JMenuItem resetFilterMenuItem;
 
+	private JLabel soundIndicatorPSG;
+	private JLabel soundIndicatorSCC;
+	private JLabel soundIndicatorSCCI;
+	private JLabel soundIndicatorPCM;
+	private JLabel soundIndicatorMSXMusic;
+	private JLabel soundIndicatorMSXAudio;
+	private JLabel soundIndicatorMoonsound;
+	private JLabel soundIndicatorMidi;
+
+	private JLabel generationIndicatorMSX;
+	private JLabel generationIndicatorMSX2;
+	private JLabel generationIndicatorMSX2P;
+	private JLabel generationIndicatorTurboR;
+
 	private ComponentOrientation orientation = null;
 	private int popupMenuOrientation = 0;
 
@@ -245,6 +259,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		updateGameCount(games.size());
 
 		addWindowFocusListener(this);
+
+		enableSoundIndicators(false, false, false, false, false, false, false, false);
+		enableGenerationIndicators(false, false, false, false);
 
 		pack();
 		setLocationRelativeTo(null);
@@ -402,6 +419,40 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		searchButton.addActionListener(this);
 		searchButton.setFocusable(false);
 
+		Color indicatorsPanelBackground = new Color(187, 187, 187);
+
+		JPanel soundIndicatorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 1));
+		soundIndicatorsPanel.setBackground(indicatorsPanelBackground);
+		soundIndicatorPSG = new JLabel(Icons.SOUND_PSG.getImageIcon());
+		soundIndicatorSCC = new JLabel(Icons.SOUND_SCC.getImageIcon());
+		soundIndicatorSCCI = new JLabel(Icons.SOUND_SCC_I.getImageIcon());
+		soundIndicatorPCM = new JLabel(Icons.SOUND_PCM.getImageIcon());
+		soundIndicatorMSXMusic = new JLabel(Icons.SOUND_MSX_MUSIC.getImageIcon());
+		soundIndicatorMSXAudio = new JLabel(Icons.SOUND_MSX_AUDIO.getImageIcon());
+		soundIndicatorMoonsound = new JLabel(Icons.SOUND_MOONSOUND.getImageIcon());
+		soundIndicatorMidi = new JLabel(Icons.SOUND_MIDI.getImageIcon());
+
+		soundIndicatorsPanel.add(soundIndicatorPSG);
+		soundIndicatorsPanel.add(soundIndicatorSCC);
+		soundIndicatorsPanel.add(soundIndicatorSCCI);
+		soundIndicatorsPanel.add(soundIndicatorPCM);
+		soundIndicatorsPanel.add(soundIndicatorMSXMusic);
+		soundIndicatorsPanel.add(soundIndicatorMSXAudio);
+		soundIndicatorsPanel.add(soundIndicatorMoonsound);
+		soundIndicatorsPanel.add(soundIndicatorMidi);
+
+		JPanel generationIndicatorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 1));
+		generationIndicatorsPanel.setBackground(indicatorsPanelBackground);
+		generationIndicatorMSX = new JLabel(Icons.GENERATION_MSX.getImageIcon());
+		generationIndicatorMSX2 = new JLabel(Icons.GENERATION_MSX2.getImageIcon());
+		generationIndicatorMSX2P = new JLabel(Icons.GENERATION_MSX2P.getImageIcon());
+		generationIndicatorTurboR = new JLabel(Icons.GENERATION_TURBO_R.getImageIcon());
+
+		generationIndicatorsPanel.add(generationIndicatorMSX);
+		generationIndicatorsPanel.add(generationIndicatorMSX2);
+		generationIndicatorsPanel.add(generationIndicatorMSX2P);
+		generationIndicatorsPanel.add(generationIndicatorTurboR);
+
 		GroupLayout groupLayout = new GroupLayout(contentPane);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -417,7 +468,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 							.addComponent(false, totalLabel, GroupLayout.PREFERRED_SIZE, totalLabel.getComponentWidth(), GroupLayout.PREFERRED_SIZE)
 							.addGap(4)
 							.addComponent(false, filtersSelectButton, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
-							.addComponent(false, filtersLabel, GroupLayout.PREFERRED_SIZE, filtersLabel.getComponentWidth(), GroupLayout.PREFERRED_SIZE)))
+							.addComponent(false, filtersLabel, GroupLayout.PREFERRED_SIZE, filtersLabel.getComponentWidth(), GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(2)
+							.addComponent(soundIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(16)
+							.addComponent(generationIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(14)
 					.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
 						.addGroup(groupLayout.createSequentialGroup()
@@ -445,7 +501,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 								.addComponent(totalLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 								.addComponent(filtersSelectButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 								.addComponent(filtersLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-							.addGap(4)
+							.addGap(2)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+									.addComponent(soundIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addComponent(generationIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(2)
 							.addComponent(gameListScrollBar, GroupLayout.PREFERRED_SIZE, 474, GroupLayout.PREFERRED_SIZE))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
@@ -952,6 +1012,27 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		addButton.setEnabled(addFlag);
 		editButton.setEnabled(editFlag);
 		infoMenuItem.setEnabled(infoFlag);
+	}
+
+	public void enableSoundIndicators(boolean psgFlag, boolean sccFlag, boolean scciFlag, boolean pcmFlag,
+			boolean msxMusicFlag, boolean msxAudioFlag, boolean moonsoundFlag, boolean midiFlag)
+	{
+		soundIndicatorPSG.setEnabled(psgFlag);
+		soundIndicatorSCC.setEnabled(sccFlag);
+		soundIndicatorSCCI.setEnabled(scciFlag);
+		soundIndicatorPCM.setEnabled(pcmFlag);
+		soundIndicatorMSXMusic.setEnabled(msxMusicFlag);
+		soundIndicatorMSXAudio.setEnabled(msxAudioFlag);
+		soundIndicatorMoonsound.setEnabled(moonsoundFlag);
+		soundIndicatorMidi.setEnabled(midiFlag);
+	}
+
+	public void enableGenerationIndicators(boolean msxFlag, boolean msx2Flag, boolean msx2pFlag, boolean turboRFlag)
+	{
+		generationIndicatorMSX.setEnabled(msxFlag);
+		generationIndicatorMSX2.setEnabled(msx2Flag);
+		generationIndicatorMSX2P.setEnabled(msx2pFlag);
+		generationIndicatorTurboR.setEnabled(turboRFlag);
 	}
 
 	private void showButtonMenu(JComponent button, JPopupMenu menu, int xOffset)

@@ -82,7 +82,21 @@ public enum Icons
 	FLAG_ru_RU( "flags/ru_RU" ),
 	FLAG_sv_SE( "flags/sv_SE" ),
 	FLAG_zh_CN( "flags/zh_CN" ),
-	FLAG_zh_TW( "flags/zh_TW" )
+	FLAG_zh_TW( "flags/zh_TW" ),
+
+	SOUND_PSG( "sound/psg" ),
+	SOUND_SCC( "sound/scc" ),
+	SOUND_SCC_I( "sound/scc_i" ),
+	SOUND_PCM( "sound/pcm" ),
+	SOUND_MSX_MUSIC( "sound/msx_music" ),
+	SOUND_MSX_AUDIO( "sound/msx_audio" ),
+	SOUND_MOONSOUND( "sound/moonsound" ),
+	SOUND_MIDI( "sound/midi" ),
+
+	GENERATION_MSX( "generation/msx" ),
+	GENERATION_MSX2( "generation/msx2" ),
+	GENERATION_MSX2P( "generation/msx2p" ),
+	GENERATION_TURBO_R( "generation/msxturbor" )
 	;
 
 	private final ImageIcon imageIcon;

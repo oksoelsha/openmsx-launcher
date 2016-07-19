@@ -124,6 +124,31 @@ public interface MainView
 	void enableButtons( boolean launchFlag, boolean removeFlag, boolean addFlag, boolean editFlag, boolean infoFlag );
 
 	/**
+	 * Enables or disables the sound indicators based on the data of the selected game
+	 *
+	 * @param psgFlag PSG flag
+	 * @param sccFlag SCC flag
+	 * @param scciFlag SCC+ flag
+	 * @param pcmFlag PCM flag
+	 * @param msxMusicFlag MSX-Music flag
+	 * @param msxAudioFlag MSX-Audio flag
+	 * @param moonsoundFlag Moonsound flag
+	 * @param midiFlag MIDI flag
+	 */
+	void enableSoundIndicators( boolean psgFlag, boolean sccFlag, boolean scciFlag, boolean pcmFlag,
+			boolean msxMusicFlag, boolean msxAudioFlag, boolean moonsoundFlag, boolean midiFlag );
+
+	/**
+	 * Enables or disables the generation indicators based on the data of the selected game
+	 *
+	 * @param msxFlag MSX flag
+	 * @param msx2Flag MSX2 flag
+	 * @param msx2pFlag MSX2+ flag
+	 * @param turboRFlag Turbo-R flag
+	 */
+	void enableGenerationIndicators( boolean msxFlag, boolean msx2Flag, boolean msx2pFlag, boolean turboRFlag );
+
+	/**
 	 * Displays screen to ask user for the target database and return a set of the moved game names
 	 * 
 	 * @param language Language

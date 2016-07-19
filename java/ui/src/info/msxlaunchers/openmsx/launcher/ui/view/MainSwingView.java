@@ -142,6 +142,25 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#enableSoundIndicators(boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean)
+	 */
+	@Override
+	public void enableSoundIndicators( boolean psgFlag, boolean sccFlag, boolean scciFlag, boolean pcmFlag,
+			boolean msxMusicFlag, boolean msxAudioFlag, boolean moonsoundFlag, boolean midiFlag )
+	{
+		mainWindow.enableSoundIndicators( psgFlag, sccFlag, scciFlag, pcmFlag, msxMusicFlag, msxAudioFlag, moonsoundFlag, midiFlag );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#enableGenerationIndicators(boolean, boolean, boolean, boolean)
+	 */
+	@Override
+	public void enableGenerationIndicators( boolean msxFlag, boolean msx2Flag, boolean msx2pFlag, boolean turboRFlag )
+	{
+		mainWindow.enableGenerationIndicators( msxFlag, msx2Flag, msx2pFlag, turboRFlag );
+	}
+
+	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#displayAndGetMoveGames(info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, java.util.Set, java.lang.String, java.util.Set, boolean)
 	 */
 	@Override
