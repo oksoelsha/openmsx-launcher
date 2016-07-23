@@ -472,7 +472,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(2)
 							.addComponent(soundIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(16)
+							.addGap(28)
 							.addComponent(generationIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(14)
 					.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
