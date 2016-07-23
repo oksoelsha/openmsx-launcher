@@ -501,7 +501,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 								.addComponent(totalLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 								.addComponent(filtersSelectButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 								.addComponent(filtersLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-							.addGap(2)
+							.addGap(4)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 									.addComponent(soundIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addComponent(generationIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -526,7 +526,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 									.addComponent(screenshot1Label, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
 									.addGap(16)
 									.addComponent(screenshot2Label, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))))
-						.addGap(10))
+						.addGap(20))
 		);
 
 		editButton = getIconButton(editButtonPanel, Icons.EDIT.getImageIcon());
