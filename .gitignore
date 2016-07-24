@@ -1,0 +1,7 @@
+.classpath
+.project
+.settings
+.gitignore
+launcherdb/
+settings-oml.ini
+target/
