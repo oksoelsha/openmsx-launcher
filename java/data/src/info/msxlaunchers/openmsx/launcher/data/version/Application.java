@@ -24,7 +24,7 @@ package info.msxlaunchers.openmsx.launcher.data.version;
  */
 public interface Application
 {
-	public final static String VERSION = "1.6";
+	public final static String VERSION = "1.7";
 
 	public final static String RELEASE_YEARS = "2013-2016";
 }

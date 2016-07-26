@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.msxlaunchers.openmsx</groupId>
 	<artifactId>openmsx-launcher-package-mac</artifactId>
-	<version>1.6</version>
+	<version>1.7</version>
 	<packaging>pom</packaging>
 	<name>openmsx-launcher-package-mac</name>
 	<url>http://maven.apache.org</url>
-    <properties>
-        <version>1.6</version>
-    </properties>
+	<properties>
+		<version>1.7</version>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
