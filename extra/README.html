@@ -9,12 +9,13 @@ table { border-collapse: collapse; }
 table, td, th { border: 1px solid black;}
 th { padding: 6px; text-align: left; }
 td { padding: 12px; }
+.bgrd {background-color: #f0f0f0;}
 -->
 </style></head>
 
 <body>
 
-<h2>openMSX Launcher v1.6</h2>
+<h2>openMSX Launcher v1.7</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -30,30 +31,18 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from version 1.5</u></h3>
+<h3><u>Upgrade from version 1.6</u></h3>
 
 Databases created in previous versions are fully compatible with the current version.
 
-<p class="tab"><b>Windows</b>: You can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.
-Before restarting though, you also need to replace the 'openMSX Launcher.exe' file, which you can extract from the ZIP file that you can download from
-<a href="http://msxlaunchers.info">msxlaunchers.info</a>. You do not need to perform this manual step in the future as the upgrade system in version
-1.6 was enhanced. Don't forget to upgrade the extra-data file from the 'Help->Check for Updates' window after the upgrade.
-<br>Yet another way to upgrade is to download the ZIP package from <a href="http://msxlaunchers.info">msxlaunchers.info</a> and unzip it anywhere on
-your system. You can then replace the old exe, extra-data.dat and README.html files with the new versions. Leave everything else untouched.</br></p>
+<p>In all platforms (Windows, MacOS, Linux and BSD) you can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.</p>
 
-<p class="tab"><b>MacOS</b>: You can upgrade from within the 'Help->Check for Updates' window, but it is highly recommended though to trash the current openMSX
-Launcher app folder and replace it with the new one from <a href="http://msxlaunchers.info">msxlaunchers.info</a> as if this is a first time installation.
-All launcher data will be preserved since they are stored on the user folder outside of the app folder. In future upgrades you do not need to perform this
-complete reinstallation step as the upgrade system in version 1.6 was enhanced.</p>
+<p><u>Note:</u> This upgrade method will only work if you're upgrading from v1.6. Unfortunately, this upgrade feature exists in v1.4 and v1.5
+but it didn't work properly in these versions.</p>
 
-<p class="tab"><b>Linux/BSD</b>: You can upgrade from within the 'Help->Check for Updates' window. After you download, also replace
-the 'openmsx-launcher.run' file, which you can extract from the ZIP file that you can download from
-<a href="http://msxlaunchers.info">msxlaunchers.info</a>. Restart the launcher for the changes to take effect. In future upgrades you do not need to perform
-this complete reinstallation step as the upgrade system in version 1.6 was enhanced. Don't forget to upgrade the extra-data file from the
-'Help->Check for Updates' window after the upgrade.
-<BR>Yet another way to upgrade is to replace the entire openMSX Launcher folder with the new one that you can get from
-<a href="http://msxlaunchers.info">msxlaunchers.info</a>. All launcher data will be preserved since they are stored on the user folder outside of
-the launcher folder.</BR></p>
+<h3><u>Upgrade from versions earlier than 1.6</u></h3>
+
+Refer to upgrade instructions in older versions. You can find them in past README files.
 
 <h3><u>How to start</u></h3>
 
@@ -142,7 +131,7 @@ This can be accessed from the Tools menu. There you can rename or delete existin
 Backups are identified by their timestamps.
 
 <h3><u>Drag and Drop</u></h3>
-You can drag and drop game files and directories to the main launcher window for quick adding to the current database.
+You can drag and drop game files and directories to the main launcher window for quick addition to the current database.
 
 <h3><u>Keyboard short-cuts</u></h3>
 <table>
@@ -150,9 +139,10 @@ You can drag and drop game files and directories to the main launcher window for
 <tr><td>Enter</td><td>Enter</td><td>Launch</td></tr>
 <tr><td>Del</td><td>Del</td><td>Remove profile button</td></tr>
 <tr><td>Insert</td><td>Insert</td><td>Add profile button</td></tr>
-<tr><td>Ctrl+E</td><td>Command+E</td><td>Add profile button</td></tr>
+<tr><td>Ctrl+E</td><td>Command+E</td><td>Edit profile button</td></tr>
 <tr><td>Ctrl+F</td><td>Command+F</td><td>Show search field</td></tr>
 <tr><td>Ctrl+D</td><td>Command+D</td><td>Add to favorites</td></tr>
+<tr><td>Ctrl+Q</td><td>Command+Q</td><td>Show list of databases</td></tr>
 <tr><td>Ctrl+I</td><td>Command+I</td><td>Show list of favorites</td></tr>
 <tr><td>Ctrl+L</td><td>Command+L</td><td>Show list of filters</td></tr>
 <tr><td>Ctrl+R</td><td>Command+R</td><td>Reset filters</td></tr>
@@ -164,18 +154,46 @@ You can drag and drop game files and directories to the main launcher window for
 
 <h3><u>To do in future versions</u></h3>
 
-1) Revamped User Interface.
+1) Catapult features.
 <br></br>
-2) Catapult features.
+2) User-defined fields.
 <br></br>
-3) User-defined fields.
-<br></br>
-4) Play stats.
+3) Play stats.
+
+<h3><u>Application menu on Ubuntu 15.10 and later</u></h3>
+Starting from Ubuntu 15.10, Java Swing applications do not use Ubuntu's global menu and HUD by default even when this option is set in Ubuntu's
+settings for all applications. If you prefer to have openMSX Launcher menu behave the same as other applications, you can enable JAyatana
+(a project that integrates Java Swing applications with Ubuntu's global menu and HUD) globally by creating a file called "jayatana.conf" under
+/usr/share/upstart/sessions/ and pasting this in the file:
+
+<div class="bgrd"><pre>
+description "Java Ayatana"
+
+start on starting dbus
+
+script
+ initctl set-env --global JAVA_TOOL_OPTIONS="-javaagent:/usr/share/java/jayatanaag.jar $JAVA_TOOL_OPTIONS"
+end script
+</pre></div>
+
+<p>You can also enable it for only openMSX Launcher and not globally. You can find more information about this topic on the Web.</p>
 
 <h3><u>Support/Suggestions/Questions/Translation fixes/New translations</u></h3>
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.7 - released July 30, 2016</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Changed main window look and added sound and generation indicators when selecting a game</li>
+<li>Allowed extensions to be set in addition to ROMs. In older versions, you could not set both ROMs and extensions at the same time</li>
+</ul>
+Bug fixes:
+<ul>
+<li>Fixed many minor bugs</li>
+</ul>
 
 <b>Version 1.6 - released May 1, 2016</b>
 <br></br>
