@@ -4,6 +4,7 @@ import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
 import info.msxlaunchers.openmsx.launcher.data.backup.DatabaseBackup;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.persistence.BasicTestModule;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
@@ -269,6 +270,7 @@ public class EmbeddedDatabaseGamePersisterTest
 				.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 				.genre1( Genre.ADVENTURE_ALL ).genre2( Genre.ARCADE )
 				.msxGenID( 25 ).sha1Code( "sha1Code" ).screenshotSuffix( "ss" ).size( 100 )
+				.fddMode( FDDMode.DISABLE_SECOND )
 				.build();
 
 		Game game2 = Game.name( "name2" ).machine( "machine2" ).diskA( "diskA2" ).build();
@@ -316,6 +318,7 @@ public class EmbeddedDatabaseGamePersisterTest
 				assertEquals( "sha1Code", game.getSha1Code() );
 				assertEquals( "ss", game.getScreenshotSuffix() );
 				assertEquals( 100, game.getSize() );
+				assertEquals( FDDMode.DISABLE_SECOND, game.getFDDMode() );
 			}
 		}
 	}
@@ -549,6 +552,7 @@ public class EmbeddedDatabaseGamePersisterTest
 				.isMSXMUSIC( true ).isMSXAUDIO( false ).isMoonsound( true ).isMIDI( false )
 				.genre1( Genre.BEAT_EM_UP ).genre2( Genre.BOARD_GAMES )
 				.msxGenID( 26 ).sha1Code( "sha1Code2" ).screenshotSuffix( "rr" ).size( 110 )
+				.fddMode( FDDMode.DISABLE_BOTH )
 				.build();
 
 		persister.updateGame( game1, game2, database1 );
@@ -590,6 +594,7 @@ public class EmbeddedDatabaseGamePersisterTest
 				assertEquals( "sha1Code2", game.getSha1Code() );
 				assertEquals( "rr", game.getScreenshotSuffix() );
 				assertEquals( 110, game.getSize() );
+				assertEquals( FDDMode.DISABLE_BOTH, game.getFDDMode() );
 			}
 			else
 			{
@@ -615,6 +620,7 @@ public class EmbeddedDatabaseGamePersisterTest
 				.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 				.genre1( Genre.ADVENTURE_ALL ).genre2( Genre.ARCADE )
 				.msxGenID( 25 ).sha1Code( "sha1Code" ).screenshotSuffix( "ss" ).size( 100 )
+				.fddMode( FDDMode.DISABLE_BOTH )
 				.build();
 
 		persister.saveGame( game1, database1 );
@@ -669,6 +675,7 @@ public class EmbeddedDatabaseGamePersisterTest
 				assertEquals( "sha1Code2", game.getSha1Code() );
 				assertEquals( "rr", game.getScreenshotSuffix() );
 				assertEquals( 110, game.getSize() );
+				assertEquals( FDDMode.ENABLE_BOTH, game.getFDDMode() );
 			}
 			else
 			{
@@ -1469,6 +1476,7 @@ public class EmbeddedDatabaseGamePersisterTest
 				.isPSG( true ).isSCC( true ).isSCCI( true ).isPCM( true ).isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 				.genre1( Genre.ADVENTURE_POINT_AND_CLICK ).genre2( Genre.BOARD_GAMES )
 				.msxGenID( 4567 ).sha1Code( "testSha1Code" ).size( 102030 ).screenshotSuffix( "tx" )
+				.fddMode( FDDMode.ENABLE_BOTH )
 				.build();
 		Game game2 = Game.name( "testName2" ).romA( "testRomA2" ).machine( "testMachine2" ).build();
 
@@ -1545,6 +1553,7 @@ public class EmbeddedDatabaseGamePersisterTest
 		assertEquals( "testSha1Code", restoredGame1.getSha1Code() );
 		assertEquals( 102030, restoredGame1.getSize() );
 		assertEquals( "tx", restoredGame1.getScreenshotSuffix() );
+		assertEquals( FDDMode.ENABLE_BOTH, restoredGame1.getFDDMode() );
 	}
 
 	@Test( expected = GamePersistenceException.class )

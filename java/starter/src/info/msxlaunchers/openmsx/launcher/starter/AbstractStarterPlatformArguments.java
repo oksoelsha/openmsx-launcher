@@ -17,6 +17,7 @@ package info.msxlaunchers.openmsx.launcher.starter;
 
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.platform.ArgumentsBuilder;
 
@@ -32,10 +33,13 @@ import java.util.List;
  */
 abstract class AbstractStarterPlatformArguments implements StarterPlatformArguments
 {
+	private static final String PRESS_CTRL_SCRIPT = "pressctrl.tcl";
+	private static final String PRESS_SHIFT_SCRIPT = "pressshift.tcl";
+
 	@Override
 	abstract public List<String> getArguments( Settings settings, Game game );
 
-	void buildArguments( String openMSXPath, String openMSXBinary, ArgumentsBuilder argumentsBuilder, Game game )
+	void buildArguments( String openMSXPath, String openMSXBinary, ArgumentsBuilder argumentsBuilder, Game game, String extraDataDirectory )
 	{
 		File openMSXDirectory = new File( openMSXPath );
 		File fullpath = new File( openMSXDirectory, openMSXBinary );
@@ -56,6 +60,14 @@ abstract class AbstractStarterPlatformArguments implements StarterPlatformArgume
 			argumentsBuilder.appendIfValueDefined( "-hda", game.getHarddisk() );
 			argumentsBuilder.appendIfValueDefined( "-machine", game.getMachine() );
 			argumentsBuilder.appendIfValueDefined( "-laserdisc", game.getLaserdisc() );
+			if( game.getFDDMode() == FDDMode.DISABLE_SECOND )
+			{
+				argumentsBuilder.appendIfValueDefined( "-script", new File( extraDataDirectory, PRESS_CTRL_SCRIPT ).toString() );
+			}
+			else if( game.getFDDMode() == FDDMode.DISABLE_BOTH )
+			{
+				argumentsBuilder.appendIfValueDefined( "-script", new File( extraDataDirectory, PRESS_SHIFT_SCRIPT ).toString() );
+			}
 		}
 		else
 		{

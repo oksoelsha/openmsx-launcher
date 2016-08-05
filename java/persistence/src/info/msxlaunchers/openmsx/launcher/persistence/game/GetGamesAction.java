@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
@@ -109,6 +110,7 @@ final class GetGamesAction extends NonTransactionalDatabaseOperation<Set<Game>>
 				.screenshotSuffix( result.getString( "screenshot_suffix" ) )
 				.sha1Code( result.getString( "sha1" ) )
 				.size( result.getLong( "size" ) )
+				.fddMode( FDDMode.fromValue( result.getShort( "fdd_mode" )) )
 				.build();
 	}
 }

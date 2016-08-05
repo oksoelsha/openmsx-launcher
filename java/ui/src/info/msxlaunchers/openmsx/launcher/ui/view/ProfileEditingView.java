@@ -60,8 +60,9 @@ public interface ProfileEditingView
 	 * @param harddisk Full path to Hard Disk file
 	 * @param laserdisc Full path to Laserdisc file
 	 * @param script Full path to Script file
+	 * @param fddModeCode FDD Mode Enum code
 	 */
 	void displayEditGameScreen( ProfileEditingPresenter presenter, Language language, Set<String> machines, Set<String> extensions, boolean rightToLeft, 
 			String name, String info, String machine, String romA, String romB, String extension,
-			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script );
+			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script, int fddModeCode );
 }

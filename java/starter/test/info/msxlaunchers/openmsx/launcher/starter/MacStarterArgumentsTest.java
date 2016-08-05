@@ -3,6 +3,7 @@ package info.msxlaunchers.openmsx.launcher.starter;
 import java.io.File;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.platform.ArgumentsBuilder;
 
@@ -43,7 +44,7 @@ public class MacStarterArgumentsTest
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
 		Mockito.doNothing().when( argsBuilder ).appendIfValueDefined( any( String.class ), any( String.class ) );
 
-		MacStarterArguments arguments = new MacStarterArguments( argsBuilder );
+		MacStarterArguments arguments = new MacStarterArguments( argsBuilder, "directory" );
 
 		arguments.getArguments( settings,  game );
 
@@ -79,7 +80,7 @@ public class MacStarterArgumentsTest
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
 		Mockito.doNothing().when( argsBuilder ).appendIfValueDefined( any( String.class ), any( String.class ) );
 
-		MacStarterArguments arguments = new MacStarterArguments( argsBuilder );
+		MacStarterArguments arguments = new MacStarterArguments( argsBuilder, "directory" );
 
 		arguments.getArguments( settings,  game );
 
@@ -97,5 +98,99 @@ public class MacStarterArgumentsTest
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
 
 		verify( argsBuilder, times( 9 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+	}
+
+	@Test
+	public void testGetArgumentsWithoutScriptsButWithPressCtrlWhileBoot()
+	{
+		Game game = Game.machine( "Boosted_MSX2_EN" )
+				.romA( "romA" )
+				.romB( "romB" )
+				.extensionRom( "extensionRom" )
+				.diskA( "diskA" )
+				.diskB( "diskB" )
+				.tape( "tape" )
+				.harddisk( "harddisk" )
+				.machine( "machine" )
+				.laserdisc( "laserdisc" )
+				.fddMode( FDDMode.DISABLE_SECOND )
+				.build();
+		
+		Settings settings = new Settings( "/openMSX dir/",
+				"/openMSX/share/machines",
+				null,
+				null,
+				null,
+				false );
+
+		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
+		Mockito.doNothing().when( argsBuilder ).appendIfValueDefined( any( String.class ), any( String.class ) );
+
+		MacStarterArguments arguments = new MacStarterArguments( argsBuilder, "directory" );
+
+		arguments.getArguments( settings,  game );
+
+		verify( argsBuilder, times( 1 ) ).append( new File( "/openMSX dir/openmsx.app/Contents/MacOS/openmsx" ).getAbsolutePath() );
+
+		//verify that all media were appended
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-carta" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-cartb" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-ext" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-diska" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-diskb" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-cassetteplayer" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-hda" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-machine" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( new File( "directory", "pressctrl.tcl").toString() ) );
+
+		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+	}
+
+	@Test
+	public void testGetArgumentsWithoutScriptsButWithPressShiftWhileBoot()
+	{
+		Game game = Game.machine( "Boosted_MSX2_EN" )
+				.romA( "romA" )
+				.romB( "romB" )
+				.extensionRom( "extensionRom" )
+				.diskA( "diskA" )
+				.diskB( "diskB" )
+				.tape( "tape" )
+				.harddisk( "harddisk" )
+				.machine( "machine" )
+				.laserdisc( "laserdisc" )
+				.fddMode( FDDMode.DISABLE_BOTH )
+				.build();
+		
+		Settings settings = new Settings( "/openMSX dir/",
+				"/openMSX/share/machines",
+				null,
+				null,
+				null,
+				false );
+
+		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
+		Mockito.doNothing().when( argsBuilder ).appendIfValueDefined( any( String.class ), any( String.class ) );
+
+		MacStarterArguments arguments = new MacStarterArguments( argsBuilder, "directory" );
+
+		arguments.getArguments( settings,  game );
+
+		verify( argsBuilder, times( 1 ) ).append( new File( "/openMSX dir/openmsx.app/Contents/MacOS/openmsx" ).getAbsolutePath() );
+
+		//verify that all media were appended
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-carta" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-cartb" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-ext" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-diska" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-diskb" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-cassetteplayer" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-hda" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-machine" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( new File( "directory", "pressshift.tcl").toString() ) );
+
+		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
 	}
 }

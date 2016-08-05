@@ -38,7 +38,7 @@ final class UpdateGameAction extends AbstractPersistGameAction
 			"diskA=?, diskB=?, tape=?, harddisk=?, laserdisc=?, tcl_script=?," +
 			"msx=?, msx2=?, msx2plus=?, turbo_r=?, psg=?, scc=?, scc_i=?, pcm=?," +
 			"msx_music=?, msx_audio=?, moonsound=?, midi=?, genre1=?, genre2=?," +
-			"msx_genid=?, screenshot_suffix=?, sha1=?, size=?, IDDB=? WHERE id=?";
+			"msx_genid=?, screenshot_suffix=?, sha1=?, size=?, IDDB=?, fdd_mode=? WHERE id=?";
 
 	private final Game oldGame;
 	private final Game newGame;
@@ -79,7 +79,7 @@ final class UpdateGameAction extends AbstractPersistGameAction
 					try ( PreparedStatement statementUpdate = connection.prepareStatement( UPDATE_GAME_STATEMENT ) )
 					{
 						setGameStatementFields( statementUpdate, newGame, databaseId );
-						statementUpdate.setLong( 32, gameId );
+						statementUpdate.setLong( 33, gameId );
 
 						if( statementUpdate.executeUpdate() == 0 )
 						{

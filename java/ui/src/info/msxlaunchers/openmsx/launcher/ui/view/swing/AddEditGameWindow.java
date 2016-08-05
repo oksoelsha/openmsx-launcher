@@ -17,6 +17,7 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.Utils;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter;
@@ -30,6 +31,7 @@ import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -89,6 +91,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	private JLabel diskBLabel;
 	private JTextFieldDragDrop diskBTextField;
 	private JButton browseDiskBButton;
+	private JLabel fddModeLabel;
+	private JComboBox<String> fddModesComboBox;
 	private JLabel tapeLabel;
 	private JTextFieldDragDrop tapeTextField;
 	private JButton browseTapeButton;
@@ -135,7 +139,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			String tape,
 			String harddisk,
 			String laserdisc,
-			String script)
+			String script,
+			int fddModeCode)
 	{
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		if(editMode)
@@ -225,6 +230,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			}
 			diskATextField.setText(diskA);
 			diskBTextField.setText(diskB);
+			fddModesComboBox.setSelectedIndex(fddModeCode);
 			tapeTextField.setText(tape);
 			harddiskTextField.setText(harddisk);
 			laserdiscTextField.setText(laserdisc);
@@ -247,7 +253,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			throw new RuntimeException("Cannot call this in Edit mode");
 		}
 
-		display(null, null, null, null, null, null, null, null, null, null, null, null);
+		display(null, null, null, null, null, null, null, null, null, null, null, null, 0);
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -266,7 +272,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					tapeTextField.getText(),
 					harddiskTextField.getText(),
 					laserdiscTextField.getText(),
-					scriptTextField.getText());
+					scriptTextField.getText(),
+					fddModesComboBox.getSelectedIndex());
 			}
 			catch(LauncherException le)
 			{
@@ -291,7 +298,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							tapeTextField.getText(),
 							harddiskTextField.getText(),
 							laserdiscTextField.getText(),
-							scriptTextField.getText());
+							scriptTextField.getText(),
+							fddModesComboBox.getSelectedIndex());
 				}
 				else
 				{
@@ -306,7 +314,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							tapeTextField.getText(),
 							harddiskTextField.getText(),
 							laserdiscTextField.getText(),
-							scriptTextField.getText());
+							scriptTextField.getText(),
+							fddModesComboBox.getSelectedIndex());
 				}
 
 				dispose();
@@ -537,6 +546,11 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseDiskBButton.setToolTipText(messages.get("BROWSE"));
 		browseDiskBButton.addActionListener(this);
 
+		fddModeLabel = new JLabel(messages.get("FDD_MODE"));
+		fddModeLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		String fddModesModes[] = Arrays.asList(FDDMode.values()).stream().map(f -> messages.get(f.toString())).toArray(String[]::new);
+		fddModesComboBox = new JComboBox<String>(fddModesModes);
+
 		GroupLayout groupLayout = new GroupLayout(diskPanel);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -552,7 +566,11 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							.addComponent(diskBLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 							.addGap(5)
 							.addComponent(diskBTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
-							.addComponent(browseDiskBButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))))
+							.addComponent(browseDiskBButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(fddModeLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+						.addGap(5)
+						.addComponent(fddModesComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -573,7 +591,11 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(1)
 							.addComponent(diskBTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(browseDiskBButton)))
+						.addComponent(browseDiskBButton))
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(fddModeLabel)
+					.addComponent(fddModesComboBox)))
 		);
 		diskPanel.setLayout(groupLayout);
 

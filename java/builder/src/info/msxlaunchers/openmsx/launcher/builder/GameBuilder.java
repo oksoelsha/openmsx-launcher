@@ -33,6 +33,7 @@ import info.msxlaunchers.openmsx.common.HashUtils;
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 
 /**
@@ -67,6 +68,7 @@ public class GameBuilder
 	 * @param harddisk Hard disk file name
 	 * @param laserdisc Laserdisc file name
 	 * @param script Script file name
+	 * @param fddMode FDD Mode
 	 * @param extraDataMap Map containing extra data for game by sha1 code
 	 * @return Game object or null if all main game fields are null
 	 */
@@ -79,6 +81,7 @@ public class GameBuilder
 		String harddisk,
 		String laserdisc,
 		String script,
+		FDDMode fddMode,
 		Map<String,ExtraData> extraDataMap )
 	{
 		boolean notScript = isNotScript( romA, romB, diskA, diskB, tape, harddisk, laserdisc, script );
@@ -103,6 +106,7 @@ public class GameBuilder
 				harddisk,
 				laserdisc,
 				script,
+				fddMode,
 				fileSha1CodeAndSize.sha1Code,
 				fileSha1CodeAndSize.size,
 				initIfNull( extraDataMap ) );
@@ -146,6 +150,7 @@ public class GameBuilder
 				diskA, diskB,
 				tape,
 				harddisk,
+				null,
 				null,
 				null,
 				fileSha1CodeAndSize.sha1Code,
@@ -198,6 +203,7 @@ public class GameBuilder
 			harddisk,
 			laserdisc,
 			null,
+			null,
 			sha1Code,
 			fileSize,
 			initIfNull( extraDataMap ) );
@@ -224,6 +230,7 @@ public class GameBuilder
 				game.getHarddisk(),
 				game.getLaserdisc(),
 				game.getTclScript(),
+				null,
 				game.getSha1Code(),
 				game.getSize(),
 				initIfNull( extraDataMap ) );
@@ -248,6 +255,7 @@ public class GameBuilder
 				String harddisk,
 				String laserdisc,
 				String script,
+				FDDMode fddMode,
 				String sha1Code,
 				long fileSize,
 				Map<String,ExtraData> extraDataMap )
@@ -316,6 +324,7 @@ public class GameBuilder
 				.isMSXMUSIC( isMSXMUSIC ).isMSXAUDIO( isMSXAUDIO ).isMoonsound( isMoonsound ).isMIDI( isMIDI )
 				.genre1( Genre.fromValue( genre1  ) ).genre2( Genre.fromValue( genre2 ) )
 				.screenshotSuffix( screenshotSuffix )
+				.fddMode( fddMode )
 				.build();
 		}
 		catch( IllegalArgumentException iae )

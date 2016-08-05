@@ -35,8 +35,8 @@ final class SaveGamesAction extends AbstractPersistGameAction
 {
 	private static final String INSERT_GAME_STATEMENT = "INSERT INTO game (name, info, machine, romA, extension_rom, romB, diskA, diskB," +
 			"tape, harddisk, laserdisc, tcl_script, msx, msx2, msx2plus, turbo_r, psg, scc, scc_i, pcm, msx_music, msx_audio, moonsound, midi," +
-			"genre1, genre2, msx_genid, screenshot_suffix, sha1, size, IDDB) " +
-			"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"genre1, genre2, msx_genid, screenshot_suffix, sha1, size, IDDB, fdd_mode) " +
+			"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private final Set<Game> games;
 	private final String database;

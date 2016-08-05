@@ -20,6 +20,7 @@ import info.msxlaunchers.platform.ArgumentsBuilderProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.name.Named;
 
 /**
  * @since v1.0
@@ -29,11 +30,13 @@ import com.google.inject.Provider;
 final class PlatformArgumentsProvider implements Provider<StarterPlatformArguments>
 {
 	private final ArgumentsBuilderProvider argumentsBuilderProvider;
+	private final String extraDataDirectory;
 
 	@Inject
-	PlatformArgumentsProvider( ArgumentsBuilderProvider argumentsBuilderProvider )
+	PlatformArgumentsProvider( ArgumentsBuilderProvider argumentsBuilderProvider, @Named("LauncherDataDirectory") String extraDataDirectory )
 	{
 		this.argumentsBuilderProvider = argumentsBuilderProvider;
+		this.extraDataDirectory = extraDataDirectory;
 	}
 
 	@Override
@@ -41,15 +44,15 @@ final class PlatformArgumentsProvider implements Provider<StarterPlatformArgumen
 	{
 		if( OSUtils.isWindows() )
 		{
-			return new WindowsStarterArguments( argumentsBuilderProvider.get() );
+			return new WindowsStarterArguments( argumentsBuilderProvider.get(), extraDataDirectory );
 		}
 		else if( OSUtils.isMac() )
 		{
-			return new MacStarterArguments( argumentsBuilderProvider.get() );
+			return new MacStarterArguments( argumentsBuilderProvider.get(), extraDataDirectory );
 		}
 		else if( OSUtils.isLinux() || OSUtils.isBSD() )
 		{
-			return new LinuxBSDStarterArguments( argumentsBuilderProvider.get() );
+			return new LinuxBSDStarterArguments( argumentsBuilderProvider.get(), extraDataDirectory );
 		}
 		else
 		{

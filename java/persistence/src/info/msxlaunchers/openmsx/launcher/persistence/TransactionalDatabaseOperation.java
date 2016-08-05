@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.persistence;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 
 import java.sql.Connection;
@@ -91,6 +92,7 @@ abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabase
 		statement.setString( 29, game.getSha1Code() );
 		statement.setLong( 30, game.getSize() );
 		statement.setLong( 31, databaseId );
+		statement.setShort( 32, getFDDModeEnumValue( game.getFDDMode() ) );
 	}
 
 	protected int getGenreEnumValue( Genre genre )
@@ -100,6 +102,18 @@ abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabase
 		if( genre != null )
 		{
 			value = genre.getValue();
+		}
+
+		return value;
+	}
+
+	protected short getFDDModeEnumValue( FDDMode fddMode )
+	{
+		short value = 0;
+
+		if( fddMode != null )
+		{
+			value = (short)fddMode.getValue();
 		}
 
 		return value;

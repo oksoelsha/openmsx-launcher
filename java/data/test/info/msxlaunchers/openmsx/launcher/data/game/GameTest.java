@@ -1,6 +1,7 @@
 package info.msxlaunchers.openmsx.launcher.data.game;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class GameTest
 			.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 			.genre1( Genre.ACTION ).genre2( Genre.ADVENTURE_TEXT_AND_GFX )
 			.msxGenID( 80 ).sha1Code( "123456789abcdef" ).size( 16 ).screenshotSuffix( "suffix" )
-			.tclScript( "tclScript" ).build();
+			.tclScript( "tclScript" ).fddMode( FDDMode.DISABLE_BOTH ).build();
 
 		assertEquals( "name", game.getName() );
 		assertEquals( "info", game.getInfo() );
@@ -56,6 +57,7 @@ public class GameTest
 		assertEquals( 16, game.getSize() );
 		assertEquals( "suffix", game.getScreenshotSuffix() );
 		assertEquals( "tclScript", game.getTclScript() );
+		assertEquals( FDDMode.DISABLE_BOTH, game.getFDDMode() );
 	}
 
 	@Test( expected = IllegalArgumentException.class )
@@ -192,7 +194,7 @@ public class GameTest
 		assertNull( game.getSha1Code() );
 		assertNull( game.getTclScript() );
 
-		//now make sure name fields also gets set to null if emoty String
+		//now make sure name fields also gets set to null if empty String
 		game = Game.name( "" ).romA( "romA" ).build();
 
 		assertNull( game.getName() );

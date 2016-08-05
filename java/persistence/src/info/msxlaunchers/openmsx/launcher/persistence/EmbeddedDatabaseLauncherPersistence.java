@@ -16,13 +16,6 @@
 package info.msxlaunchers.openmsx.launcher.persistence;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -64,7 +57,7 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			"psg BOOLEAN default false, scc BOOLEAN default false, scc_i BOOLEAN default false, pcm BOOLEAN default false," +
 			"msx_music BOOLEAN default false, msx_audio BOOLEAN default false, moonsound BOOLEAN default false, midi BOOLEAN default false," +
 			"genre1 INTEGER, genre2 INTEGER, msx_genid INTEGER, screenshot_suffix VARCHAR(10), sha1 VARCHAR(40), size BIGINT," +
-			"IDDB BIGINT not null, primary key (ID))";
+			"IDDB BIGINT not null, primary key (ID), fdd_mode SMALLINT)";
 	private final String CREATE_GAME_TABLE_STATEMENT = "CREATE TABLE game" + GAME_TABLE_DEF;
 	private final String ADD_FOREIGN_KEY_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT DATABASE_GAME_FK Foreign Key (IDDB) REFERENCES database (ID) ON DELETE CASCADE";
 	private final String ADD_UNIQUE_CONSTRAINT_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT UNIQUE_GAMENAME UNIQUE(name,IDDB)";
@@ -73,16 +66,18 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 	private final String CREATE_FAVORITE_TABLE_STATEMENT = "CREATE TABLE favorite (ID BIGINT not null generated always as identity, IDGAME BIGINT not null unique, primary key (ID))";
 	private final String ADD_FOREIGN_KEY_TO_FAVORITE_TABLE = "ALTER TABLE favorite ADD CONSTRAINT GAME_FK Foreign Key (IDGAME) REFERENCES game (ID) ON DELETE CASCADE";
 
+	//upgrade statements
+	private final String ADD_FDD_MODE_COLUMN_TO_GAME = "ALTER TABLE game ADD COLUMN fdd_mode SMALLINT";
+	private final String ADD_FDD_MODE_COLUMN_TO_GAME_BACKUP = "ALTER TABLE game_backup ADD COLUMN fdd_mode SMALLINT";
+	private final String COLUMN_ALREADY_EXISTS_ERROR_CODE = "X0Y32";
+
 	private final GamePersister gamePersister;
 	private final FavoritePersister favoritePersister;
 	private final FilterPersister filterPersister;
 	private final SettingsPersister settingsPersister;
 	private final GameFinder gameFinder;
-	private final String userDataDirectory;
 	private final File databasesDirectory;
 	private final String databaseFullPath;
-
-	private static final String BACKUPS_DIRECTORY = "backups";
 
 	@Inject
 	EmbeddedDatabaseLauncherPersistence( GamePersister gamePersister,
@@ -99,7 +94,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 		this.filterPersister = filterPersister;
 		this.settingsPersister = settingsPersister;
 		this.gameFinder = gameFinder;
-		this.userDataDirectory = userDataDirectory;
 		this.databasesDirectory = new File( userDataDirectory, databasesDirectoryName );
 		this.databaseFullPath = databaseFullPath;
 	}
@@ -126,8 +120,14 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			{
 				if( connection.getWarnings() == null )
 				{
-					//then this database did not exist before => create all tables and populate with old CSV files if found
+					//then this database did not exist before => create all tables
 					createTables( connection );
+				}
+				else
+				{
+					//then might be the upgrade case
+					//first case to deal with is FDDMode column in Games table (new in v1.8)
+					addFDDModeColumnIfNecessary( connection );
 				}
 			}
 			catch( SQLException se )
@@ -140,8 +140,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
     	{
     		//TODO What to do?
     	}
-
-		deleteOldBackupsDirectoryIfExists();
 	}
 
 	/* (non-Javadoc)
@@ -260,44 +258,20 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 		}
 	}
 
-	/*
-	 * The following code was taken (and modified slightly) from:
-	 * http://fahdshariff.blogspot.ru/2011/08/java-7-deleting-directory-by-walking.html
-	 */
-	private void deleteOldBackupsDirectoryIfExists()
+	private void addFDDModeColumnIfNecessary( Connection connection ) throws SQLException
 	{
-		String  backupsDirectory = new File( userDataDirectory, BACKUPS_DIRECTORY ).toString();
-
-		Path dir = Paths.get( backupsDirectory );
-		try
+		try( Statement statement = connection.createStatement() )
 		{
-			Files.walkFileTree( dir, new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile( Path file, BasicFileAttributes attrs) throws IOException
-				{
-					Files.delete(file);
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult postVisitDirectory( Path dir, IOException ioe ) throws IOException
-				{
-					if( ioe == null )
-					{
-						Files.delete(dir);
-						return FileVisitResult.CONTINUE;
-					}
-					else
-					{
-						throw ioe;
-					}
-				}
-			});
+			statement.execute( ADD_FDD_MODE_COLUMN_TO_GAME );
+			statement.execute( ADD_FDD_MODE_COLUMN_TO_GAME_BACKUP );
 		}
-		catch( IOException ioe )
+		catch( SQLException se )
 		{
-			//TODO what do we do here?
+			if( !se.getSQLState().equals( COLUMN_ALREADY_EXISTS_ERROR_CODE ) )
+			{
+				//if we get an exception other than 'column already exists' then rethrow it
+				throw se;
+			}
 		}
 	}
 }

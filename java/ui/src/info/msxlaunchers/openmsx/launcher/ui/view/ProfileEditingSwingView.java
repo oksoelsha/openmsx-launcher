@@ -41,17 +41,14 @@ class ProfileEditingSwingView implements ProfileEditingView
 		addEditWindow.display();
 	}
 
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.ProfileEditingView#displayEditGameScreen(info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter, info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, java.util.Set, java.util.Set, boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-	 */
 	@Override
 	public void displayEditGameScreen( ProfileEditingPresenter presenter, Language language, Set<String> machines, Set<String> extensions, boolean rightToLeft,
 			String name, String info, String machine, String romA, String romB, String extensionRom,
-			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script )
+			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script, int fddModeCode )
 	{
 		AddEditGameWindow addEditWindow = new AddEditGameWindow( presenter, language, machines, extensions, rightToLeft, true );
 
 		addEditWindow.display( name, info, machine, romA, romB, extensionRom, diskA, diskB, tape, harddisk,
-				laserdisc, script );
+				laserdisc, script, fddModeCode );
 	}
 }

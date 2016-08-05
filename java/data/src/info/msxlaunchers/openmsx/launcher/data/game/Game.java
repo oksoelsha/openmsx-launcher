@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.data.game;
 import java.io.Serializable;
 
 import info.msxlaunchers.openmsx.common.Utils;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 
 /**
@@ -52,6 +53,7 @@ public final class Game implements Serializable
 	private final long size;
 	private final String screenshotSuffix;
 	private final String tclScript;
+	private final FDDMode fddMode;
 
 	public static class GameParam
 	{
@@ -72,6 +74,7 @@ public final class Game implements Serializable
 		private long size;
 		private String screenshotSuffix;
 		private String tclScript;
+		private FDDMode fddMode;
 
 		public GameParam machine( String machine ) { this.machine = Utils.resetIfEmpty( machine ); return this; }
 		public GameParam romA( String romA ) { this.romA = Utils.resetIfEmpty( romA ); return this; }
@@ -103,6 +106,7 @@ public final class Game implements Serializable
 		public GameParam size( long size ) { this.size = size; return this; }
 		public GameParam screenshotSuffix( String screenshotSuffix ) { this.screenshotSuffix = Utils.resetIfEmpty( screenshotSuffix ); return this; }
 		public GameParam tclScript( String tclScript ) { this.tclScript = Utils.resetIfEmpty( tclScript ); return this; }
+		public GameParam fddMode( FDDMode fddMode ) { this.fddMode = fddMode; return this; }
 
 		public Game build()
 		{
@@ -149,6 +153,7 @@ public final class Game implements Serializable
 	public static GameParam size( long size ) { return new GameParam().size( size ); }
 	public static GameParam screenshotSuffix( String screenshotSuffix ) { return new GameParam().screenshotSuffix( screenshotSuffix ); }
 	public static GameParam tclScript( String tclScript ) { return new GameParam().tclScript( tclScript ); }
+	public static GameParam fddMode( FDDMode fddMode ) { return new GameParam().fddMode( fddMode ); }
 
 	private Game( GameParam param )
 	{
@@ -183,15 +188,13 @@ public final class Game implements Serializable
 
 		this.msxGenID = param.msxGenID;
 		
-		if( param.sha1Code == null )
-		{
-//			throw new IllegalArgumentException( "SHA1 code must be pre-calculated" );
-		}
 		this.sha1Code = param.sha1Code;
 
 		this.size = param.size;
 		this.screenshotSuffix = param.screenshotSuffix;
 		this.tclScript = param.tclScript;
+
+		this.fddMode = param.fddMode;
 	}
 
 	@Override
@@ -250,6 +253,7 @@ public final class Game implements Serializable
 	public long getSize() { return size; }
 	public String getScreenshotSuffix() { return screenshotSuffix; }
 	public String getTclScript() { return tclScript; }
+	public FDDMode getFDDMode() { return fddMode; };
 	
 	//the following are to determine what kind of media the game is.
 	//the order of check is ROM, Disk, Tape, Laserdisc

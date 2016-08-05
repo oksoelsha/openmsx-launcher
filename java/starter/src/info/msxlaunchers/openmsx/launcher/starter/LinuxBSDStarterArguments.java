@@ -22,6 +22,7 @@ import info.msxlaunchers.platform.ArgumentsBuilder;
 import java.util.List;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * Implementation of <code>StarterPlatformArguments</code> for Linux and BSD
@@ -33,11 +34,13 @@ import com.google.inject.Inject;
 final class LinuxBSDStarterArguments extends AbstractStarterPlatformArguments
 {
 	private final ArgumentsBuilder argumentsBuilder;
+	private final String extraDataDirectory;
 
 	@Inject
-	LinuxBSDStarterArguments( ArgumentsBuilder argumentsBuilder )
+	LinuxBSDStarterArguments( ArgumentsBuilder argumentsBuilder, @Named("LauncherDataDirectory") String extraDataDirectory )
 	{
 		this.argumentsBuilder = argumentsBuilder;
+		this.extraDataDirectory = extraDataDirectory;
 	}
 
 	/* (non-Javadoc)
@@ -46,7 +49,7 @@ final class LinuxBSDStarterArguments extends AbstractStarterPlatformArguments
 	@Override
 	public List<String> getArguments( Settings settings, Game game )
 	{
-		buildArguments( settings.getOpenMSXFullPath(), "openmsx", argumentsBuilder, game );
+		buildArguments( settings.getOpenMSXFullPath(), "openmsx", argumentsBuilder, game, extraDataDirectory );
 
 		return argumentsBuilder.getArgumentList();
 	}
