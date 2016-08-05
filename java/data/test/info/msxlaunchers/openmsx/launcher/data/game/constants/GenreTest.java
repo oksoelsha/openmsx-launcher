@@ -1,7 +1,5 @@
 package info.msxlaunchers.openmsx.launcher.data.game.constants;
 
-import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
