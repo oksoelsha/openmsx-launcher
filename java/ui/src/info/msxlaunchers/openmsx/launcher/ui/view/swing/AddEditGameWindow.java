@@ -546,7 +546,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseDiskBButton.setToolTipText(messages.get("BROWSE"));
 		browseDiskBButton.addActionListener(this);
 
-		fddModeLabel = new JLabel(messages.get("FDD_MODE"));
+		fddModeLabel = new JLabel(messages.get("CONFIGURATION"));
 		fddModeLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		String fddModesModes[] = Arrays.asList(FDDMode.values()).stream().map(f -> messages.get(f.toString())).toArray(String[]::new);
 		fddModesComboBox = new JComboBox<String>(fddModesModes);
