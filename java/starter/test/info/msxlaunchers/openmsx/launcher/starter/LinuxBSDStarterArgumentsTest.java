@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -98,9 +97,9 @@ public class LinuxBSDStarterArgumentsTest
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-hda" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-machine" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
-		verify( argsBuilder, never() ).appendIfValueDefined( eq( "-script" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( null ) );
 
-		verify( argsBuilder, times( 9 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
 	}
 
 	@Test

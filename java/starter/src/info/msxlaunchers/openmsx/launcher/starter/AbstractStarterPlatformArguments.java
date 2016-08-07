@@ -60,19 +60,28 @@ abstract class AbstractStarterPlatformArguments implements StarterPlatformArgume
 			argumentsBuilder.appendIfValueDefined( "-hda", game.getHarddisk() );
 			argumentsBuilder.appendIfValueDefined( "-machine", game.getMachine() );
 			argumentsBuilder.appendIfValueDefined( "-laserdisc", game.getLaserdisc() );
-			if( game.getFDDMode() == FDDMode.DISABLE_SECOND )
-			{
-				argumentsBuilder.appendIfValueDefined( "-script", new File( extraDataDirectory, PRESS_CTRL_SCRIPT ).toString() );
-			}
-			else if( game.getFDDMode() == FDDMode.DISABLE_BOTH )
-			{
-				argumentsBuilder.appendIfValueDefined( "-script", new File( extraDataDirectory, PRESS_SHIFT_SCRIPT ).toString() );
-			}
+			argumentsBuilder.appendIfValueDefined( "-script", getFDDScriptIfNeeded( game, extraDataDirectory ) );
 		}
 		else
 		{
 			//script in this case overrides all other arguments
 			argumentsBuilder.appendIfValueDefined( "-script", script );
 		}
+	}
+
+	private String getFDDScriptIfNeeded( Game game, String extraDataDirectory )
+	{
+		String script = null;
+
+		if( game.getFDDMode() == FDDMode.DISABLE_SECOND )
+		{
+			script = new File( extraDataDirectory, PRESS_CTRL_SCRIPT ).toString();
+		}
+		else if( game.getFDDMode() == FDDMode.DISABLE_BOTH )
+		{
+			script = new File( extraDataDirectory, PRESS_SHIFT_SCRIPT ).toString();
+		}
+
+		return script;
 	}
 }

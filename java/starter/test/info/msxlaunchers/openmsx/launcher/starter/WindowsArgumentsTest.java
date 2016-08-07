@@ -97,8 +97,9 @@ public class WindowsArgumentsTest
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-hda" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-machine" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( null ) );
 
-		verify( argsBuilder, times( 9 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
 	}
 
 	@Test
