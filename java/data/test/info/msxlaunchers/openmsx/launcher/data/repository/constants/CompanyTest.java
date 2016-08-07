@@ -11,8 +11,8 @@ public class CompanyTest
 	{
 		String[] companies = { "Activision", "Al Alamiah", "ASCII", "Bothtec", "The Bytebusters", "Casio","Compile", "dB-SOFT",
 				"ENIX", "German Gomez Herrera", "Hudson Soft", "Hudson Soft / Japanese Softbank", "Infinite", "Karoshi Corporation",
-				"Konami", "Mass Tael", "Microcabin", "Nippon Columbia / Colpax / Universal", "Pack-In-Video", "Paxanga Soft",
-				"Pony Canyon", "Sega", "Sony", "TAITO", "T&ESOFT", "Telenet Japan", "ZAP", "Zemina" };
+				"Kai Magazine", "Konami", "Mass Tael", "Microcabin", "Nippon Columbia / Colpax / Universal", "Pack-In-Video",
+				"Paxanga Soft", "Pony Canyon", "Sega", "Sony", "TAITO", "T&ESOFT", "Telenet Japan", "ZAP", "Zemina" };
 
 		Company[] enumCompanies = Company.values();
 
@@ -27,6 +27,6 @@ public class CompanyTest
 	@Test
 	public void testTotalCompaniesCount()
 	{
-		assertEquals( Company.values().length, 28 );
+		assertEquals( Company.values().length, 29 );
 	}
 }

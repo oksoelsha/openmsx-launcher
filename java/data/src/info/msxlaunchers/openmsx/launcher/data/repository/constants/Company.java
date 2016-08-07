@@ -40,6 +40,7 @@ public enum Company implements EnumWithDisplayName
 	HUSDON_SOFT_SOFTBANK( "Hudson Soft / Japanese Softbank" ),
 	INFINITE( "Infinite" ),
 	KAROSHI( "Karoshi Corporation" ),
+	KAI_MAGAZINE( "Kai Magazine" ),
 	KONAMI( "Konami" ),
 	MASS_TAEL( "Mass Tael" ),
 	MICROCABIN( "Microcabin" ),
