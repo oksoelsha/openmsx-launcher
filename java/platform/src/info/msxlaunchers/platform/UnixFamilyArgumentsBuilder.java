@@ -71,7 +71,7 @@ final class UnixFamilyArgumentsBuilder implements ArgumentsBuilder
 	public List<String> getArgumentList()
 	{
 		argsList.add( builder.toString() );
-		List<String> argsListCopy = new ArrayList<String>( argsList );
+		List<String> argsListCopy = new ArrayList<>( argsList );
 
 		//re-initialize
 		initialize();
@@ -81,10 +81,10 @@ final class UnixFamilyArgumentsBuilder implements ArgumentsBuilder
 
 	private void initialize()
 	{
-		argsList = new ArrayList<String>( 3 );
+		argsList = new ArrayList<>( 3 );
 		builder = new StringBuilder();
 
-		//initialise argsList
+		//Initialize argsList
 		argsList.add( "bash" );
 		argsList.add( "-c" );
 	}

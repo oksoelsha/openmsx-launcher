@@ -31,7 +31,7 @@ import info.msxlaunchers.openmsx.common.Utils;
  */
 final class WindowsArgumentsBuilder implements ArgumentsBuilder
 {
-	private List<String> argsList = new ArrayList<String>();
+	private List<String> argsList = new ArrayList<>();
 
 	/* (non-Javadoc)
 	 * @see info.msxlaunchers.platform.ArgumentsBuilder#append(java.lang.String)
@@ -65,7 +65,7 @@ final class WindowsArgumentsBuilder implements ArgumentsBuilder
 	@Override
 	public List<String> getArgumentList()
 	{
-		List<String> argsListCopy = new ArrayList<String>( argsList );
+		List<String> argsListCopy = new ArrayList<>( argsList );
 		argsList.clear();
 
 		return Collections.unmodifiableList( argsListCopy );
