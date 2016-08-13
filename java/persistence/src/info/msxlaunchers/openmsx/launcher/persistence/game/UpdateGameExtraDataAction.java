@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
@@ -133,6 +134,8 @@ final class UpdateGameExtraDataAction extends TransactionalDatabaseOperation<Int
 		}
 		catch( SQLException se )
 		{
+			LauncherLogger.logException( this, se );
+
 			throwEncapsulatingException( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) );
 		}
 

@@ -25,6 +25,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersister;
 import info.msxlaunchers.openmsx.launcher.persistence.game.DerbyLogSuppressor;
@@ -270,6 +271,8 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			if( !se.getSQLState().equals( COLUMN_ALREADY_EXISTS_ERROR_CODE ) )
 			{
 				//if we get an exception other than 'column already exists' then rethrow it
+				LauncherLogger.logException( this, se );
+
 				throw se;
 			}
 		}

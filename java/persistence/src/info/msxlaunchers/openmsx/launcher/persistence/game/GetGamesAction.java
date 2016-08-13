@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
@@ -72,7 +73,8 @@ final class GetGamesAction extends NonTransactionalDatabaseOperation<Set<Game>>
 		}
 		catch( SQLException se )
 		{
-			//ignore - method will return an empty Set
+			//there's no valid reason for this so ignore - method will return an empty Set
+			LauncherLogger.logException( this, se );
 		}
 
 		return new GetGamesResponse( Collections.unmodifiableSet( games ) );

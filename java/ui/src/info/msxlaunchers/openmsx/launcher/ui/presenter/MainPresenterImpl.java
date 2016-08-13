@@ -17,7 +17,8 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.Utils;
-import info.msxlaunchers.openmsx.common.VersionUtils;
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
+import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
@@ -155,7 +156,8 @@ final class MainPresenterImpl implements MainPresenter
 		catch( LauncherPersistenceException lpe )
 		{
 			//This gets called at application initialization time, so if it fails then log it and rethrow
-			//TODO: add proper logging
+			LauncherLogger.logException( this, lpe );
+
 			throw new IOException();
 		}
 
@@ -166,7 +168,8 @@ final class MainPresenterImpl implements MainPresenter
 		catch ( IOException ioe )
 		{
 			//This gets called at application initialization time, so if it fails then log it and rethrow
-			//TODO: add proper logging
+			LauncherLogger.logException( this, ioe );
+
 			throw ioe;
 		}
 
@@ -205,7 +208,7 @@ final class MainPresenterImpl implements MainPresenter
 			catch ( GamePersistenceException gpe )
 			{
 				//This gets called at application initialization time, so if it fails then just log it
-				//TODO: add proper logging
+				LauncherLogger.logException( this, gpe );
 			}
 		}
 
@@ -317,6 +320,8 @@ final class MainPresenterImpl implements MainPresenter
 		try
 		{
 			emulatorStarter.start( settings, gamesMap.get( gameName ) );
+
+			LauncherLogger.logMessage( "LAUNCH: " + gameName + "[" + currentDatabase + "]" );
 		}
 		catch ( IOException e )
 		{

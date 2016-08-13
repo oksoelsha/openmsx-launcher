@@ -1,4 +1,4 @@
-package info.msxlaunchers.openmsx.common;
+package info.msxlaunchers.openmsx.common.version;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class VersionUtilsTest
 {
@@ -49,5 +51,25 @@ public class VersionUtilsTest
 		PrintWriter writer = new PrintWriter( tmpFile );
 		writer.println( version );
 		writer.close();
+	}
+
+	@Test
+	public void testIsVersionNewer()
+	{
+		assertTrue( VersionUtils.isVersionNewer( "1", "2" ) );
+		assertTrue( VersionUtils.isVersionNewer( "1.2", "1.3" ) );
+		assertFalse( VersionUtils.isVersionNewer( "1.2", "1.2" ) );
+		assertFalse( VersionUtils.isVersionNewer( "1.3", "1.2" ) );
+		assertTrue( VersionUtils.isVersionNewer( "1.3", "3.4.9" ) );
+		assertFalse( VersionUtils.isVersionNewer( "2.1", "2.1.0" ) );
+		assertTrue( VersionUtils.isVersionNewer( "2.1", "2.1.1" ) );
+		assertFalse( VersionUtils.isVersionNewer( "2.1.1", "2.1" ) );
+		assertTrue( VersionUtils.isVersionNewer( "1.12.13.3", "1.12.13.4" ) );
+		assertFalse( VersionUtils.isVersionNewer( "1.3", null ) );
+		assertFalse( VersionUtils.isVersionNewer( null, "3.4" ) );
+		assertFalse( VersionUtils.isVersionNewer( "1.3", "as" ) );
+		assertFalse( VersionUtils.isVersionNewer( "h", "3.2" ) );
+		assertFalse( VersionUtils.isVersionNewer( "", "2.4" ) );
+		assertFalse( VersionUtils.isVersionNewer( "1.1", "" ) );
 	}
 }

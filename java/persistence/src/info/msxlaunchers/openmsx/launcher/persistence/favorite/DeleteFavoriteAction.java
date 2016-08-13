@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.favorite;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.persistence.DefaultDatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
@@ -58,6 +59,8 @@ final class DeleteFavoriteAction extends TransactionalDatabaseOperation<Boolean>
 		}
 		catch( SQLException se )
 		{
+			LauncherLogger.logException( this, se );
+
 			throwEncapsulatingException( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.IO ) );
 		}
 

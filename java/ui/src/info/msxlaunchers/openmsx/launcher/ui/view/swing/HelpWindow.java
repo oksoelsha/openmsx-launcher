@@ -16,8 +16,8 @@
 package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
 import info.msxlaunchers.openmsx.common.Utils;
+import info.msxlaunchers.openmsx.common.version.Application;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.data.version.Application;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 

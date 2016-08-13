@@ -141,26 +141,6 @@ public class UtilsTest
 		assertEquals( resultAsArray[5], "Zoo" );
 	}
 
-	@Test
-	public void testIsVersionNewer()
-	{
-		assertTrue( Utils.isVersionNewer( "1", "2" ) );
-		assertTrue( Utils.isVersionNewer( "1.2", "1.3" ) );
-		assertFalse( Utils.isVersionNewer( "1.2", "1.2" ) );
-		assertFalse( Utils.isVersionNewer( "1.3", "1.2" ) );
-		assertTrue( Utils.isVersionNewer( "1.3", "3.4.9" ) );
-		assertFalse( Utils.isVersionNewer( "2.1", "2.1.0" ) );
-		assertTrue( Utils.isVersionNewer( "2.1", "2.1.1" ) );
-		assertFalse( Utils.isVersionNewer( "2.1.1", "2.1" ) );
-		assertTrue( Utils.isVersionNewer( "1.12.13.3", "1.12.13.4" ) );
-		assertFalse( Utils.isVersionNewer( "1.3", null ) );
-		assertFalse( Utils.isVersionNewer( null, "3.4" ) );
-		assertFalse( Utils.isVersionNewer( "1.3", "as" ) );
-		assertFalse( Utils.isVersionNewer( "h", "3.2" ) );
-		assertFalse( Utils.isVersionNewer( "", "2.4" ) );
-		assertFalse( Utils.isVersionNewer( "1.1", "" ) );
-	}
-
 	private enum NumericalEnumImpl implements NumericalEnum
 	{
 		TEST;

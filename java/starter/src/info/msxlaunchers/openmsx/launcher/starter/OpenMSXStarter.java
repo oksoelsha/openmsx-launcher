@@ -15,11 +15,14 @@
  */
 package info.msxlaunchers.openmsx.launcher.starter;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.google.inject.Inject;
 
@@ -49,7 +52,11 @@ final class OpenMSXStarter implements EmulatorStarter
 		Objects.requireNonNull( settings );
 		Objects.requireNonNull( game );
 
-		ProcessBuilder pb = new ProcessBuilder( platformArguments.getArguments( settings, game ) );
+		List<String> arguments = platformArguments.getArguments( settings, game );
+
+		LauncherLogger.logMessage( arguments.stream().collect( Collectors.joining( " " ) ) );
+
+		ProcessBuilder pb = new ProcessBuilder( arguments );
 
 		return pb.start();
 	}

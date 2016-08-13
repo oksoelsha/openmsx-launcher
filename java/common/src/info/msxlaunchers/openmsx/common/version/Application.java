@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.data.version;
+package info.msxlaunchers.openmsx.common.version;
 
 /**
  * Application version constants
@@ -24,6 +24,8 @@ package info.msxlaunchers.openmsx.launcher.data.version;
  */
 public interface Application
 {
+	public final static String APP_NAME = "openMSX Launcher";
+
 	public final static String VERSION = "1.7";
 
 	public final static String RELEASE_YEARS = "2013-2016";

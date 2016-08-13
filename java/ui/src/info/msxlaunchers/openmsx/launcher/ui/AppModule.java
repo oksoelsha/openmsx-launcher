@@ -19,6 +19,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import info.msxlaunchers.openmsx.common.OSUtils;
+import info.msxlaunchers.openmsx.common.Utils;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
@@ -31,7 +32,6 @@ import com.google.inject.util.Providers;
  */
 public class AppModule extends AbstractModule
 {
-	private final static String APP_NAME = "openMSX Launcher";
 	private final static String GENERATION_MSX_URL = "http://www.generation-msx.nl/msxdb/softwareinfo/";
 
 	@Override
@@ -46,20 +46,7 @@ public class AppModule extends AbstractModule
 
 	private String getUserDataDirectory()
 	{
-		String userDataDirectory = null;
-
-		if( OSUtils.isWindows() )
-		{
-			userDataDirectory = System.getProperty( "user.dir" );
-		}
-		else if( OSUtils.isMac() )
-		{
-			userDataDirectory = System.getProperty( "user.home" ) + "/Library/Application Support/" + APP_NAME;
-		}
-		else if( OSUtils.isLinux() || OSUtils.isBSD() )
-		{
-			userDataDirectory = System.getProperty( "user.home" ) + "/" + APP_NAME;
-		}
+		String userDataDirectory = Utils.getUserDataDirectory();
 
 		//before anything, make sure user data directories exist
 		createUserDataDirectoryIfNecessary( userDataDirectory );

@@ -24,10 +24,10 @@ import java.util.Objects;
 import com.google.inject.Inject;
 
 import info.msxlaunchers.openmsx.common.Utils;
-import info.msxlaunchers.openmsx.common.VersionUtils;
+import info.msxlaunchers.openmsx.common.version.Application;
+import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.data.version.Application;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
@@ -95,7 +95,7 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 	@Override
 	public boolean isNewOpenMSXLauncherVersionAvailable()
 	{
-		return Utils.isVersionNewer( Application.VERSION, versionsFromServer.get( UpdateChecker.KEY_OPENMSX_LAUNCHER ) );
+		return VersionUtils.isVersionNewer( Application.VERSION, versionsFromServer.get( UpdateChecker.KEY_OPENMSX_LAUNCHER ) );
 	}
 
 	/* (non-Javadoc)
@@ -124,7 +124,7 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 			//TODO return new exception that current extra data file is not readable for some reason
 		}
 
-		return Utils.isVersionNewer( currentExtraDataVersion, versionsFromServer.get( UpdateChecker.KEY_EXTRA_DATA ) );
+		return VersionUtils.isVersionNewer( currentExtraDataVersion, versionsFromServer.get( UpdateChecker.KEY_EXTRA_DATA ) );
 	}
 
 	/* (non-Javadoc)
@@ -141,7 +141,7 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 
 			if( screenshotsPath != null )
 			{
-				answer = Utils.isVersionNewer( VersionUtils.getScreenshotsVersion( screenshotsPath ), versionsFromServer.get( UpdateChecker.KEY_SCREENSHOTS ) );
+				answer = VersionUtils.isVersionNewer( VersionUtils.getScreenshotsVersion( screenshotsPath ), versionsFromServer.get( UpdateChecker.KEY_SCREENSHOTS ) );
 			}
 		}
 		catch( IOException ioe )

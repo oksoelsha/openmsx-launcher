@@ -25,6 +25,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import info.msxlaunchers.openmsx.common.version.Application;
+
 /**
  * Utility class that contains general purpose methods
  * 
@@ -163,82 +165,27 @@ public final class Utils
 	}
 
 	/**
-	 * Returns true if the new version is newer than the current version. This method works on versions that contain digits and any number of decimal points
+	 * Returns the OS-specific directory full name where the launcher will save some of its data
 	 * 
-	 * @param currentVersion Current version
-	 * @param newVersion New version to compare against the current version
-	 * @return True if newVersion is newer than currentVersion, false otherwise or if one of the versions is null or invalid format
 	 */
-	public static boolean isVersionNewer( String currentVersion, String newVersion )
+	public static String getUserDataDirectory()
 	{
-		boolean answer = false;
+		String userDataDirectory = null;
 
-		if( currentVersion != null && newVersion != null )
+		if( OSUtils.isWindows() )
 		{
-			String[] currentVersionDigits = currentVersion.split( "\\." );
-			String[] newVersionDigits = newVersion.split( "\\." );
-	
-			boolean done = false;
-			int counter = 0;
-	
-			try
-			{
-				while( !done )
-				{
-					int currentVersionInt;
-					int newVersionInt;
-	
-					if( currentVersionDigits.length > counter && newVersionDigits.length > counter )
-					{
-						currentVersionInt = Integer.parseInt( currentVersionDigits[counter] );
-						newVersionInt = Integer.parseInt( newVersionDigits[counter] );
-		
-						if( newVersionInt > currentVersionInt )
-						{
-							answer = true;
-							done = true;
-						}
-						else
-						{
-							counter++;
-						}
-					}
-					else
-					{
-						//pad the one with shorter length with a 0
-						if( currentVersionDigits.length > counter && newVersionDigits.length == counter )
-						{
-							currentVersionInt = Integer.parseInt( currentVersionDigits[counter] );
-							newVersionInt = 0;
-						}
-						else if( currentVersionDigits.length == counter && newVersionDigits.length > counter )
-						{
-							currentVersionInt = 0;
-							newVersionInt = Integer.parseInt( newVersionDigits[counter] );
-						}
-						else
-						{
-							currentVersionInt = 0;
-							newVersionInt = 0;
-						}
-	
-						if( newVersionInt > currentVersionInt )
-						{
-							answer = true;
-						}
-	
-						done = true;
-					}
-				}
-			}
-			catch( NumberFormatException nfe )
-			{
-				//any invalid version format (e.g. non-digits) just return false
-				answer = false;
-			}
+			userDataDirectory = System.getProperty( "user.dir" );
+		}
+		else if( OSUtils.isMac() )
+		{
+			userDataDirectory = System.getProperty( "user.home" ) + "/Library/Application Support/" + Application.APP_NAME;
+		}
+		else if( OSUtils.isLinux() || OSUtils.isBSD() )
+		{
+			userDataDirectory = System.getProperty( "user.home" ) + "/" + Application.APP_NAME;
 		}
 
-		return answer;
+		return userDataDirectory;
 	}
 
 	/**

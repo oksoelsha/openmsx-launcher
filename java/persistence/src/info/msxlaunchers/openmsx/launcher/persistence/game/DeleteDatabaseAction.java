@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.persistence.DefaultDatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.TransactionalDatabaseOperation;
@@ -60,6 +61,8 @@ final class DeleteDatabaseAction extends TransactionalDatabaseOperation<Boolean>
 		}
 		catch( SQLException se )
 		{
+			LauncherLogger.logException( this, se );
+
 			throwEncapsulatingException( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) );
 		}
 

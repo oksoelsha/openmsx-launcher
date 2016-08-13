@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.favorite;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
@@ -60,7 +61,8 @@ final class GetFavoritesAction extends NonTransactionalDatabaseOperation<Set<Dat
 		}
 		catch( SQLException se )
 		{
-			//ignore - method will return an empty Set
+			//ignore and log - method will return an empty Set
+			LauncherLogger.logException( this, se );
 		}
 
 		return new GetFavoritesResponse( Collections.unmodifiableSet( favorites ) );

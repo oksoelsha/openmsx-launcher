@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
+import info.msxlaunchers.openmsx.common.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.data.backup.DatabaseBackup;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.NonTransactionalDatabaseOperation;
@@ -68,7 +69,8 @@ final class GetDatabaseBackupsAction extends NonTransactionalDatabaseOperation<S
 		}
 		catch( SQLException se )
 		{
-			//ignore - method will return an empty Set
+			//there's no valid reason for this so ignore - method will return an empty Set
+			LauncherLogger.logException( this, se );
 		}
 
 		return new GetDatabaseBackupsResponse( backups );
