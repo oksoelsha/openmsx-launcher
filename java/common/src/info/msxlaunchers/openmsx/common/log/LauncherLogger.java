@@ -57,7 +57,9 @@ public final class LauncherLogger
 		try
 		{
 			messageHandler = new FileHandler( new File( logDirectory, MESSAGE_LOG_FILENAME ).toString(), MAX_LOG_SIZE, MAX_LOGS_NUMBER, true );
+			messageHandler.setEncoding( "UTF-8" );
 			exceptionHandler = new FileHandler( new File( logDirectory, EXCEPTION_LOG_FILENAME ).toString(), MAX_LOG_SIZE, MAX_LOGS_NUMBER, true );
+			exceptionHandler.setEncoding( "UTF-8" );
 		}
 		catch( SecurityException | IOException ex )
 		{
@@ -71,6 +73,17 @@ public final class LauncherLogger
 		exceptionHandler.setFormatter( new SimpleFormatter() );
 		exceptionLogger.addHandler( exceptionHandler );
 		exceptionLogger.setUseParentHandlers( false );
+	}
+
+	/**
+	 * Log messages to the message log without specifying originating class. Currently this is only used to log game launch events
+	 * 
+	 * @param event Log event
+	 * @param message Message to log
+	 */
+	public static void logMessage( LogEvent event, String message )
+	{
+		logMessage( event + " " + message );
 	}
 
 	/**

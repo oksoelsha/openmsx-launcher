@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.common.log.LauncherLogger;
+import info.msxlaunchers.openmsx.common.log.LogEvent;
 import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
@@ -321,7 +322,7 @@ final class MainPresenterImpl implements MainPresenter
 		{
 			emulatorStarter.start( settings, gamesMap.get( gameName ) );
 
-			LauncherLogger.logMessage( "LAUNCH: " + gameName + "[" + currentDatabase + "]" );
+			LauncherLogger.logMessage( LogEvent.LAUNCH, gameName + "[" + currentDatabase + "]" );
 		}
 		catch ( IOException e )
 		{
