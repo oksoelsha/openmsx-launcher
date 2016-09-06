@@ -33,7 +33,6 @@ public interface GamePropertiesPresenter
 	 * @param game Game object
 	 * @param currentLanguage Current language
 	 * @param currentRightToLeft Orientation of the current language
-	 * @throws LauncherException
 	 */
 	void onRequestGamePropertiesScreen( Game game, Language currentLanguage, boolean currentRightToLeft );
 }

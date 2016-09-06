@@ -29,7 +29,7 @@ import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 public interface GamePropertiesView
 {
 	/**
-	 * Displays screen to add a new filter
+	 * Displays screen to show game properties
 	 * 
 	 * @param game Game object
 	 * @param repositoryGame RepositoryGame object. Null if information is unavailable
