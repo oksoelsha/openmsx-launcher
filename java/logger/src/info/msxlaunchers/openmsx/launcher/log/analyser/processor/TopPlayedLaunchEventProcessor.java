@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.log.analyser.processor;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,8 +61,11 @@ final class TopPlayedLaunchEventProcessor implements LaunchEventProcessor
 	@Override
 	public LogProcessItem getProcessedData()
 	{
+		Comparator<Map.Entry<DatabaseItem,Integer>> gameNameComparator = (g1, g2) -> g1.getKey().getGameName().compareToIgnoreCase( g2.getKey().getGameName() );
+		Comparator<Map.Entry<DatabaseItem,Integer>> databaseComparator = (d1, d2) -> d1.getKey().getDatabase().compareToIgnoreCase( d2.getKey().getDatabase() );
+
 		List<String[]> list = topPlayedGames.entrySet().stream()
-				.sorted( Map.Entry.<DatabaseItem,Integer>comparingByValue().reversed().thenComparing( g -> g.getKey().getGameName() ).thenComparing( d -> d.getKey().getDatabase() ) )
+				.sorted( Map.Entry.<DatabaseItem,Integer>comparingByValue().reversed().thenComparing( gameNameComparator ).thenComparing( databaseComparator ) )
 				.limit( MAX_TOP_GAMES )
 				.map( e -> new String[] {e.getKey().getGameName(), e.getKey().getDatabase(), e.getValue().toString()} )
 				.collect( Collectors.toList() );
