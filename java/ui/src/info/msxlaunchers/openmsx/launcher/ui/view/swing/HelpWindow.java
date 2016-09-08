@@ -57,7 +57,7 @@ public class HelpWindow extends JDialog implements ActionListener
 	private final Component parent;
 
 	private JButton okButton;
-	
+
 	public HelpWindow(Language language, boolean rightToLeft, String extraDataVersion, String screenshotsVersion, Component parent)
 	{
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
@@ -117,6 +117,7 @@ public class HelpWindow extends JDialog implements ActionListener
 		aboutMessageTextField.append(" Afsaneh Tajvidi - Persian translation and graphics\n");
 		aboutMessageTextField.append(" Eric Chen - Chinese translation\n");
 		aboutMessageTextField.append(" Giuseve - Beta testing and suggestions\n");
+		aboutMessageTextField.append(" rderooy - Suggesting and testing the disable-FDD feature\n");
 		aboutMessageTextField.append("\n");
 		aboutMessageTextField.append(messages.get("TRANSLATION_SOURCES"));
 		aboutMessageTextField.append("\n");
