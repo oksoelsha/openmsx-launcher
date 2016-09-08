@@ -40,6 +40,7 @@ public class ViewModule extends AbstractModule
 		bind( UpdateCheckerView.class ).to( UpdateCheckerSwingView.class );
 		bind( AddDraggedAndDroppedGamesView.class ).to( AddDraggedAndDroppedGamesSwingView.class );
 		bind( DatabaseBackupsView.class ).to( DatabaseBackupsSwingView.class );
+		bind( ActivityViewerView.class ).to( ActivityViewerSwingView.class );
 
 		install( new ViewPlatformModule() );
 	}

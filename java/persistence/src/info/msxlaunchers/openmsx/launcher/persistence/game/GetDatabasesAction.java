@@ -15,7 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
-import info.msxlaunchers.openmsx.common.log.LauncherLogger;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.NonTransactionalDatabaseOperation;
 

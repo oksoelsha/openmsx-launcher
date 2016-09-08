@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.common.log;
+package info.msxlaunchers.openmsx.launcher.ui.presenter;
+
+import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 
 /**
- * Enum class to list all message log events
+ * Interface for Activity Viewer UI Model and Presenter
  * 
  * @since v1.8
  * @author Sam Elsharif
  *
  */
-public enum LogEvent
+public interface ActivityViewerPresenter
 {
-	LAUNCH,
+	/**
+	 * Called when user requests Activity Viewer screen
+	 * 
+	 * @param currentLanguage Current language
+	 * @param currentRightToLeft Orientation of the current language
+	 */
+	void onRequestActivityViewerScreen( Language currentLanguage, boolean currentRightToLeft );
 }

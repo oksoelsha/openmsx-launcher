@@ -86,9 +86,10 @@
 		</dependency>
 	</dependencies>
 	<modules>
-		<module>../builder</module>
 		<module>../common</module>
 		<module>../data</module>
+		<module>../logger</module>
+		<module>../builder</module>
 		<module>../extra</module>
 		<module>../persistence</module>
 		<module>../emulator</module>

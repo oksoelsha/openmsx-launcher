@@ -75,6 +75,54 @@ public final class DatabaseItem
 		return true;
 	}
 
+	/**
+	 * Return an instance of DatabaseItem for the given string of the format gamename[database]
+	 * 
+	 * @param databaseItemString String of the format gamename[database]
+	 * @return Instance of DatabaseItem from the given string. If input is null or incorrect, return an instance with empty fields
+	 */
+	public static DatabaseItem getDatabaseItem( String databaseItemString )
+	{
+		DatabaseItem databaseItem;
+
+		if( databaseItemString == null )
+		{
+			databaseItem = new DatabaseItem( "", "" );
+		}
+		else
+		{
+			int lastClosingBracketIndex = databaseItemString.lastIndexOf( ']' );
+			if( lastClosingBracketIndex > -1 )
+			{
+				int lastOpeningBracketIndex = databaseItemString.lastIndexOf( '[', lastClosingBracketIndex );
+
+				if( lastOpeningBracketIndex > -1 &&  lastOpeningBracketIndex < lastClosingBracketIndex )
+				{
+					String gameName = databaseItemString.substring( 0, lastOpeningBracketIndex ).trim();
+					String database = databaseItemString.substring( lastOpeningBracketIndex + 1, lastClosingBracketIndex );
+
+					databaseItem = new DatabaseItem( gameName, database );
+				}
+				else
+				{
+					databaseItem = new DatabaseItem( "", "" );
+				}
+			}
+			else
+			{
+				databaseItem = new DatabaseItem( "", "" );
+			}
+		}
+
+		return databaseItem;
+	}
+
+	@Override
+	public String toString()
+	{
+		return gameName + " [" + database + "]";
+	}
+
 	private <T extends Object> T validateNonNull( T object )
 	{
 		if( object == null )

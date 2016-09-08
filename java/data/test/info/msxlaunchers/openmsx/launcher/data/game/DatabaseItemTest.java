@@ -6,6 +6,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DatabaseItemTest
 {
@@ -53,5 +54,59 @@ public class DatabaseItemTest
 		assertNotEquals( databaseItem1a.hashCode(), databaseItem2.hashCode() );
 		assertNotEquals( databaseItem1b.hashCode(), databaseItem2.hashCode() );
 		assertNotEquals( databaseItem2.hashCode(), databaseItem3.hashCode() );
+	}
+
+	@Test
+	public void testGetDatabaseItem()
+	{
+		DatabaseItem databaseItem;
+
+		databaseItem = DatabaseItem.getDatabaseItem( null );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "some-string" );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "game[" );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "database]" );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "][" );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "[game" );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "]database" );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "gamename[]" );
+		assertEquals( "gamename", databaseItem.getGameName() );
+		assertTrue( databaseItem.getDatabase().isEmpty() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "[database]" );
+		assertTrue( databaseItem.getGameName().isEmpty() );
+		assertEquals( "database", databaseItem.getDatabase() );
+
+		databaseItem = DatabaseItem.getDatabaseItem( "gamename[database]" );
+		assertEquals( "gamename", databaseItem.getGameName() );
+		assertEquals( "database", databaseItem.getDatabase() );
+	}
+
+	@Test
+	public void testGetDatabaseItemDisplay()
+	{
+		DatabaseItem databaseItem = new DatabaseItem( "gamename", "database" );
+
+		assertEquals( "gamename [database]", databaseItem.toString() );
 	}
 }

@@ -203,10 +203,10 @@ public interface MainPresenter
 	/**
 	 * Called when user selects a database item (e.g. favorite or search item)
 	 * 
-	 * @param databaseItem Selected favorite or search item
+	 * @param databaseItemString Selected favorite or search item (in the format gamename [database])
 	 * @throws LauncherException
 	 */
-	void onSelectDatabaseItem( String databaseItem ) throws LauncherException;
+	void onSelectDatabaseItem( String databaseItemString ) throws LauncherException;
 
 	/**
 	 * Called when user requests to delete selected a favorite
@@ -311,6 +311,11 @@ public interface MainPresenter
 	 * @throws LauncherException
 	 */
 	void onRequestDatabaseManagerScreen() throws LauncherException;
+
+	/**
+	 * Called when user requests the activity viewer screen
+	 */
+	void onRequestActivityViewerScreen();
 
 	/**
 	 * Called when user is done  deleting a database by name

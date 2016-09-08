@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.common.log;
+package info.msxlaunchers.openmsx.launcher.log;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public final class LauncherLogger
 
 	private final static String MESSAGE_LOGGER_NAME = "MessageLogger";
 	private final static String EXCEPTION_LOGGER_NAME = "ExceptionLogger";
-	private final static String MESSAGE_LOG_FILENAME = "message.log";
+	public final static String MESSAGE_LOG_FILENAME = "message.log";
 	private final static String EXCEPTION_LOG_FILENAME = "exception.log";
 	private final static int MAX_LOG_SIZE = 1024 * 50;
 	private final static int MAX_LOGS_NUMBER = 2;

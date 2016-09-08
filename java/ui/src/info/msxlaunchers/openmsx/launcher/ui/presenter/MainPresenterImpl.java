@@ -17,8 +17,6 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.Utils;
-import info.msxlaunchers.openmsx.common.log.LauncherLogger;
-import info.msxlaunchers.openmsx.common.log.LogEvent;
 import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
@@ -30,6 +28,8 @@ import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
+import info.msxlaunchers.openmsx.launcher.log.LogEvent;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceException;
@@ -80,6 +80,7 @@ final class MainPresenterImpl implements MainPresenter
 	private final Provider<GamePropertiesPresenter> gamePropertiesPresenterFactory;
 	private final Provider<BlueMSXLauncherDatabasesImporterPresenter> blueMSXLauncherImporterPresenterFactory;
 	private final DatabaseManagerPresenterFactory databaseManagerPresenterFactory;
+	private final Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	private final Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory;
 	private final LauncherPersistence launcherPersistence;
 	private final EmulatorStarter emulatorStarter;
@@ -124,6 +125,7 @@ final class MainPresenterImpl implements MainPresenter
 			Provider<GamePropertiesPresenter> gamePropertiesPresenterFactory,
 			Provider<BlueMSXLauncherDatabasesImporterPresenter> blueMSXLauncherImporterPresenterFactory,
 			DatabaseManagerPresenterFactory databaseManagerPresenterFactory,
+			Provider<ActivityViewerPresenter> activityViewerPresenterFactory,
 			Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory,
 			LauncherPersistence launcherPersistence,
 			EmulatorStarter emulatorStarter,
@@ -141,6 +143,7 @@ final class MainPresenterImpl implements MainPresenter
 		this.gamePropertiesPresenterFactory = Objects.requireNonNull( gamePropertiesPresenterFactory );
 		this.blueMSXLauncherImporterPresenterFactory = Objects.requireNonNull( blueMSXLauncherImporterPresenterFactory );
 		this.databaseManagerPresenterFactory = Objects.requireNonNull( databaseManagerPresenterFactory );
+		this.activityViewerPresenterFactory = Objects.requireNonNull( activityViewerPresenterFactory );
 		this.updateCheckerPresenterFactory = Objects.requireNonNull( updateCheckerPresenterFactory );
 		this.launcherPersistence = Objects.requireNonNull( launcherPersistence );
 		this.emulatorStarter = Objects.requireNonNull( emulatorStarter );
@@ -769,7 +772,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		Set<String> favoritesAsString = new LinkedHashSet<>();
 
-		favorites.forEach( favorite -> favoritesAsString.add( getDatabaseItemDisplay( favorite ) ) );
+		favorites.forEach( favorite -> favoritesAsString.add( favorite.toString() ) );
 
 		view.showFavoritesMenu( favoritesAsString );
 	}
@@ -787,12 +790,14 @@ final class MainPresenterImpl implements MainPresenter
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onSelectDatabaseItem(java.lang.String)
 	 */
 	@Override
-	public void onSelectDatabaseItem( String databaseItem ) throws LauncherException
+	public void onSelectDatabaseItem( String databaseItemString ) throws LauncherException
 	{
 		//switch database and highlight the game
-		onSelectDatabase( getDatabaseFromDatabaseItem( databaseItem ) );
+		DatabaseItem databaseItem = DatabaseItem.getDatabaseItem( databaseItemString );
 
-		view.highlightGame( getGameNameFromDatabaseItem( databaseItem ) );
+		onSelectDatabase( databaseItem.getDatabase() );
+
+		view.highlightGame( databaseItem.getGameName() );
 	}
 
 	/* (non-Javadoc)
@@ -801,12 +806,9 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onRequestDeleteFavoriteAction( String favoriteName ) throws LauncherException
 	{
-		String database = getDatabaseFromDatabaseItem( favoriteName );
-		String gameName = getGameNameFromDatabaseItem( favoriteName );
-
 		try
 		{
-			launcherPersistence.getFavoritePersister().deleteFavorite( new DatabaseItem( gameName, database ) );
+			launcherPersistence.getFavoritePersister().deleteFavorite( DatabaseItem.getDatabaseItem( favoriteName ) );
 		}
 		catch( FavoritePersistenceException fpe )
 		{
@@ -1031,6 +1033,15 @@ final class MainPresenterImpl implements MainPresenter
 	}
 
 	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestActivityViewerScreen()
+	 */
+	@Override
+	public void onRequestActivityViewerScreen()
+	{
+		activityViewerPresenterFactory.get().onRequestActivityViewerScreen( currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestDeleteDatabaseAction(java.lang.String)
 	 */
 	@Override
@@ -1115,7 +1126,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		Set<String> matchesAsString = new LinkedHashSet<>();
 
-		matches.stream().forEach( match -> matchesAsString.add( getDatabaseItemDisplay( match ) ) );
+		matches.stream().forEach( match -> matchesAsString.add( match.toString() ) );
 
 		return matchesAsString;
 	}
@@ -1345,27 +1356,6 @@ final class MainPresenterImpl implements MainPresenter
 		untitledFilter = false;
 		currentFilterName = filterName;
 		view.updateFilterNameLabel( filterName );
-	}
-
-	private String getDatabaseItemDisplay( DatabaseItem databaseItem )
-	{
-		return databaseItem.getGameName() + " [" + databaseItem.getDatabase() + "]";
-	}
-
-	private String getGameNameFromDatabaseItem( String databaseItem )
-	{
-		int lastClosingBracketIndex = databaseItem.lastIndexOf( ']' );
-		int lastOpeningBracketIndex = databaseItem.lastIndexOf( '[', lastClosingBracketIndex );
-
-		return databaseItem.substring( 0, lastOpeningBracketIndex - 1 );
-	}
-
-	private String getDatabaseFromDatabaseItem( String databaseItem )
-	{
-		int lastClosingBracketIndex = databaseItem.lastIndexOf( ']' );
-		int lastOpeningBracketIndex = databaseItem.lastIndexOf( '[', lastClosingBracketIndex );
-
-		return databaseItem.substring( lastOpeningBracketIndex + 1, lastClosingBracketIndex );
 	}
 
 	private class DatabaseItemComparator implements Comparator<DatabaseItem>

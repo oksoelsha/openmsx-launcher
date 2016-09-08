@@ -68,6 +68,7 @@ public class MainPresenterImplTest
 	@Mock Provider<GamePropertiesPresenter> gamePropertiesPresenterFactory;
 	@Mock Provider<BlueMSXLauncherDatabasesImporterPresenter> blueMSXLauncherImporterPresenterFactory;
 	@Mock DatabaseManagerPresenterFactory databaseManagerPresenterFactory;
+	@Mock Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	@Mock Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory;
 	@Mock SettingsPersister settingsPersister;
 	@Mock LauncherPersistence launcherPersistence;
@@ -100,7 +101,7 @@ public class MainPresenterImplTest
 		when( gamePersister.getDatabases() ).thenReturn( databases );
 
 		presenter = new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
-				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
+				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
 	}
 
@@ -110,7 +111,7 @@ public class MainPresenterImplTest
 		when( settingsPersister.getSettings() ).thenThrow( new IOException() );
 
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
-				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
+				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
 	}
 
@@ -121,7 +122,7 @@ public class MainPresenterImplTest
 
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
-				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
+				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
 	}
 
@@ -133,7 +134,7 @@ public class MainPresenterImplTest
 
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
-				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
+				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
 	}
 
@@ -145,7 +146,7 @@ public class MainPresenterImplTest
 
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
-				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
+				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
 	}
 

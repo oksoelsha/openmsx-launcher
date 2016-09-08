@@ -111,6 +111,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenuItem actionsImportBlueMSXLauncherDatabases;
 	private JMenu toolsMenu;
 	private JMenuItem databaseManager;
+	private JMenuItem activityViewer;
 	private JMenu helpMenu;
 	private JMenuItem helpAbout;
 	private JMenuItem helpFile;
@@ -317,6 +318,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         databaseManager = new JMenuItem();
         databaseManager.addActionListener(event -> onRequestDatabaseManagerScreen());
         toolsMenu.add(databaseManager);
+
+        activityViewer = new JMenuItem();
+        activityViewer.addActionListener(event -> onRequestActivityViewerScreen());
+        toolsMenu.add(activityViewer);
 
         //help menu
         helpMenu = new JMenu();
@@ -626,25 +631,27 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		actionsMenu.setText(messages.get("ACTIONS"));
 		actionsMenu.setMnemonic(KeyStroke.getKeyStroke(messages.get("ACTIONS_MNEMONIC")).getKeyCode());
 		actionsCreateEmptyDatabase.setText(messages.get("CREATE_EMPTY_DATABASE") + "...");
-        actionsCreateEmptyDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("CREATE_EMPTY_DATABASE_MNEMONIC")).getKeyCode());
+		actionsCreateEmptyDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("CREATE_EMPTY_DATABASE_MNEMONIC")).getKeyCode());
 		actionsFillDatabase.setText(messages.get("FILL_DATABASE") + "...");
-        actionsFillDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("FILL_DATABASE_MNEMONIC")).getKeyCode());
+		actionsFillDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("FILL_DATABASE_MNEMONIC")).getKeyCode());
 		actionsUpdateAllDatabase.setText(messages.get("UPDATE_ALL_DATABASES"));
-        actionsUpdateAllDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("UPDATE_ALL_DATABASES_MNEMONIC")).getKeyCode());
+		actionsUpdateAllDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("UPDATE_ALL_DATABASES_MNEMONIC")).getKeyCode());
 		actionsImportBlueMSXLauncherDatabases.setText(messages.get("IMPORT_BLUEMSXLAUNCHER_DATABASES"));
-        actionsImportBlueMSXLauncherDatabases.setMnemonic(KeyStroke.getKeyStroke(messages.get("IMPORT_BLUEMSXLAUNCHER_DATABASES_MNEMONIC")).getKeyCode());
+		actionsImportBlueMSXLauncherDatabases.setMnemonic(KeyStroke.getKeyStroke(messages.get("IMPORT_BLUEMSXLAUNCHER_DATABASES_MNEMONIC")).getKeyCode());
 		toolsMenu.setText(messages.get("TOOLS"));
-        toolsMenu.setMnemonic(KeyStroke.getKeyStroke(messages.get("TOOLS_MNEMONIC")).getKeyCode());
+		toolsMenu.setMnemonic(KeyStroke.getKeyStroke(messages.get("TOOLS_MNEMONIC")).getKeyCode());
 		databaseManager.setText(messages.get("DATABASE_MANAGER"));
-        databaseManager.setMnemonic(KeyStroke.getKeyStroke(messages.get("DATABASE_MANAGER_MNEMONIC")).getKeyCode());
+		databaseManager.setMnemonic(KeyStroke.getKeyStroke(messages.get("DATABASE_MANAGER_MNEMONIC")).getKeyCode());
+		activityViewer.setText(messages.get("ACTIVITY_VIEWER"));
+		activityViewer.setMnemonic(KeyStroke.getKeyStroke(messages.get("ACTIVITY_VIEWER_MNEMONIC")).getKeyCode());
 		helpMenu.setText(messages.get("HELP"));
-        helpMenu.setMnemonic(KeyStroke.getKeyStroke(messages.get("HELP_MNEMONIC")).getKeyCode());
+		helpMenu.setMnemonic(KeyStroke.getKeyStroke(messages.get("HELP_MNEMONIC")).getKeyCode());
 		helpFile.setText(messages.get("HELP"));
-        helpFile.setMnemonic(KeyStroke.getKeyStroke(messages.get("HELP_MNEMONIC")).getKeyCode());
-        helpCheckForUpdates.setText(messages.get("CHECK_FOR_UPDATES") + "...");
-        helpCheckForUpdates.setMnemonic(KeyStroke.getKeyStroke(messages.get("CHECK_FOR_UPDATES_MNEMONIC")).getKeyCode());
-        helpAbout.setText(messages.get("ABOUT"));
-        helpAbout.setMnemonic(KeyStroke.getKeyStroke(messages.get("ABOUT_MNEMONIC")).getKeyCode());
+		helpFile.setMnemonic(KeyStroke.getKeyStroke(messages.get("HELP_MNEMONIC")).getKeyCode());
+		helpCheckForUpdates.setText(messages.get("CHECK_FOR_UPDATES") + "...");
+		helpCheckForUpdates.setMnemonic(KeyStroke.getKeyStroke(messages.get("CHECK_FOR_UPDATES_MNEMONIC")).getKeyCode());
+		helpAbout.setText(messages.get("ABOUT"));
+		helpAbout.setMnemonic(KeyStroke.getKeyStroke(messages.get("ABOUT_MNEMONIC")).getKeyCode());
 		databaseLabel.setTitle(messages.get("DATABASE"));
 		totalLabel.setTitle(messages.get("COUNT"));
 		favoritesButton.setToolTipText(messages.get("FAVORITES"));
@@ -1113,6 +1120,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
+	private void onRequestActivityViewerScreen()
+	{
+		presenter.onRequestActivityViewerScreen();
+	}
+
 	private void onRequestHelpFile()
 	{
 		try
@@ -1440,6 +1452,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		menuBar.setComponentOrientation(orientation);
 		optionsMenu.applyComponentOrientation(orientation);
 		actionsMenu.applyComponentOrientation(orientation);
+		toolsMenu.applyComponentOrientation(orientation);
 		helpMenu.applyComponentOrientation(orientation);
 		contentPane.setComponentOrientation(orientation);
 		contentPane.applyComponentOrientation(orientation);
