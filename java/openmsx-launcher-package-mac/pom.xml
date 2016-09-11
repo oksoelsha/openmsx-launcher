@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.msxlaunchers.openmsx</groupId>
 	<artifactId>openmsx-launcher-package-mac</artifactId>
-	<version>1.7</version>
+	<version>1.8</version>
 	<packaging>pom</packaging>
 	<name>openmsx-launcher-package-mac</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<version>1.7</version>
+		<version>1.8</version>
 	</properties>
 	<build>
 		<plugins>
@@ -40,6 +40,7 @@
 									<classpath file="../ui/lib/filedrop/filedrop.jar"/>
 									<classpath file="${settings.localRepository}/com/google/inject/guice/3.0/guice-3.0.jar"/>
 									<classpath file="${settings.localRepository}/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar"/>
+									<classpath file="${settings.localRepository}/com/google/inject/extensions/guice-multibindings/3.0/guice-multibindings-3.0.jar"/>
 									<classpath file="${settings.localRepository}/javax/inject/javax.inject/1/javax.inject-1.jar"/>
 									<classpath file="${settings.localRepository}/net/minidev/json-smart/1.3.1/json-smart-1.3.1.jar"/>
 									<option value="-Xdock:name=&quot;openMSX Launcher&quot;"/>
@@ -48,6 +49,8 @@
 								<mkdir dir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/README.html" todir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/extra-data.dat" todir="target/openMSX Launcher.app/share"/>
+								<copy file="../../extra/pressctrl.tcl" todir="target/openMSX Launcher.app/share"/>
+								<copy file="../../extra/pressshift.tcl" todir="target/openMSX Launcher.app/share"/>
 							</target>
 						</configuration>
 					</execution>

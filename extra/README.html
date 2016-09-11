@@ -15,7 +15,7 @@ td { padding: 12px; }
 
 <body>
 
-<h2>openMSX Launcher v1.7</h2>
+<h2>openMSX Launcher v1.8</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -31,18 +31,20 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from version 1.6</u></h3>
+<h3><u>Upgrade from version 1.6 or version 1.7</u></h3>
 
 Databases created in previous versions are fully compatible with the current version.
 
-<p>In all platforms (Windows, MacOS, Linux and BSD) you can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.</p>
+<p>In all platforms (Windows, MacOS, Linux and BSD) you can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.
+In order to get the new 1.8 feature 'Disable second or both FDDs', you need to copy the two scripts pressctrl.tcl and pressshift.tcl to the directory where the files extra-data.dat
+and README.html are. You can get these new files from the download page on the <a href="http://msxlaunchers.info">msxlaunchers.info</a> site.</p>
 
-<p><u>Note:</u> This upgrade method will only work if you're upgrading from v1.6. Unfortunately, this upgrade feature exists in v1.4 and v1.5
+<p><u>Note:</u> This upgrade method will only work if you're upgrading from v1.6 or 1.7. Unfortunately, this upgrade feature exists in v1.4 and v1.5
 but it didn't work properly in these versions.</p>
 
 <h3><u>Upgrade from versions earlier than 1.6</u></h3>
 
-Refer to upgrade instructions in older versions. You can find them in past README files.
+Refer to upgrade instructions in older versions to 1.6. You can find them in past README files.
 
 <h3><u>How to start</u></h3>
 
@@ -93,7 +95,7 @@ Favorites button is located above the four main buttons. When pressing it, a men
 You can go straight to your favorite game by selecting one from the list. You can also delete the favorite there as well.
 
 <h3><u>Filters</u></h3>
-Filters button can be found under the game list. When pressing it, a menu pops up with a list of saved filters,
+Filters box can be found above the game list. When pressing the arrow on it, a menu pops up with a list of saved filters,
 small buttons to either delete or edit saved filters and options to reset current filters and add new ones.
 
 <h3><u>Search</u></h3>
@@ -127,8 +129,11 @@ field gets set to the game's MSX Generation page, but it can be anything the use
 5) Properties: this only works on a single selection and it brings up the properties screen for the selected game.
 
 <h3><u>Database Manager</u></h3>
-This can be accessed from the Tools menu. There you can rename or delete existing databases. You can also view, restore or delete backups.
+This can be accessed from the Tools menu and there you can rename or delete existing databases. You can also view, restore or delete backups.
 Backups are identified by their timestamps.
+
+<h3><u>Activity Viewer</u></h3>
+This can be accessed from the Tools menu and there you can view the game launch history as well as the most played 10 games.
 
 <h3><u>Drag and Drop</u></h3>
 You can drag and drop game files and directories to the main launcher window for quick addition to the current database.
@@ -152,14 +157,6 @@ You can drag and drop game files and directories to the main launcher window for
 <tr><td>Ctrl+F1</td><td>Command+F1</td><td>Properties</td></tr>
 </table>
 
-<h3><u>To do in future versions</u></h3>
-
-1) Catapult features.
-<br></br>
-2) User-defined fields.
-<br></br>
-3) Play stats.
-
 <h3><u>Application menu on Ubuntu 15.10 and later</u></h3>
 Starting from Ubuntu 15.10, Java Swing applications do not use Ubuntu's global menu and HUD by default even when this option is set in Ubuntu's
 settings for all applications. If you prefer to have openMSX Launcher menu behave the same as other applications, you can enable JAyatana
@@ -182,6 +179,18 @@ end script
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.8 - released Septebmer 12, 2016</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added ability to disable second or both disk drives per game. This is useful for some disk and tape games that require more memory</li>
+<li>Added Activity Viewer tool to view game launch history as well the most played games</li>
+</ul>
+Internal changes:
+<ul>
+<li>Added logging. Currently game launch events (used by the new Activity Viewer tool) and launcher command line output are logged</li>
+</ul>
 
 <b>Version 1.7 - released July 30, 2016</b>
 <br></br>
