@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.log.analyser.processor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
@@ -47,6 +48,8 @@ final class AllPlayHistoryLaunchEventProcessor implements LaunchEventProcessor
 	@Override
 	public LogProcessItem getProcessedData()
 	{
+		Collections.reverse( allPlayHistory );
+
 		return new LogProcessItem( "ALL_PLAY_HISTORY", allPlayHistory );
 	}
 }
