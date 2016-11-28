@@ -27,11 +27,13 @@ public class AllPlayHistoryLaunchEventProcessorTest
 		List<String[]> items = logProcessItem.getItems();
 		assertEquals( 100, items.size() );
 
-		for( int count = 0; count < 100; count++ )
+		final int loopLimit = 100;
+		for( int count = 0; count < loopLimit; count++ )
 		{
-			assertEquals( "date" + count, items.get( count )[0] );
-			assertEquals( "game" + count, items.get( count )[1] );
-			assertEquals( "database" + count, items.get( count )[2] );
+			int index = loopLimit - count - 1;
+			assertEquals( "date" + index, items.get( count )[0] );
+			assertEquals( "game" + index, items.get( count )[1] );
+			assertEquals( "database" + index, items.get( count )[2] );
 		}
 	}
 }
