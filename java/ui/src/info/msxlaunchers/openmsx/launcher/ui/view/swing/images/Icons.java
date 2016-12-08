@@ -83,6 +83,7 @@ public enum Icons
 	FLAG_sv_SE( "flags/sv_SE" ),
 	FLAG_zh_CN( "flags/zh_CN" ),
 	FLAG_zh_TW( "flags/zh_TW" ),
+	FLAG_pl_PL( "flags/pl_PL" ),
 
 	SOUND_PSG( "sound/psg" ),
 	SOUND_SCC( "sound/scc" ),

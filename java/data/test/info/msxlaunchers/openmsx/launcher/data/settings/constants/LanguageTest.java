@@ -42,6 +42,7 @@ public class LanguageTest
 		assertEquals( "ru_RU", Language.RUSSIAN.getLocaleName() );
 		assertEquals( "es_ES", Language.SPANISH.getLocaleName() );
 		assertEquals( "sv_SE", Language.SWEDISH.getLocaleName() );
+		assertEquals( "pl_PL", Language.POLISH.getLocaleName() );
 	}
 
 	@Test
@@ -49,7 +50,7 @@ public class LanguageTest
 	{
 		assertNull( Language.fromValue( -1 ) );
 		assertNull( Language.fromValue( 0 ) );
-		assertNull( Language.fromValue( 18 ) );
+		assertNull( Language.fromValue( 19 ) );
 	}
 
 	@Test
@@ -78,6 +79,7 @@ public class LanguageTest
 		assertTrue( Language.isLeftToRight( Language.JAPANESE ) );
 		assertTrue( Language.isLeftToRight( Language.KOREAN ) );
 		assertTrue( Language.isRightToLeft( Language.PERSIAN ) );
+		assertTrue( Language.isLeftToRight( Language.POLISH ) );
 		assertTrue( Language.isLeftToRight( Language.PORTUGUESE ) );
 		assertTrue( Language.isLeftToRight( Language.RUSSIAN ) );
 		assertTrue( Language.isLeftToRight( Language.SPANISH ) );

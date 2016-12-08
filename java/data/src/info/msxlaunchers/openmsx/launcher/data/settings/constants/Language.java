@@ -47,6 +47,7 @@ public enum Language implements NumericalEnum
 	RUSSIAN(15, "ru_RU"),				//Russian - Russia
 	SPANISH(16, "es_ES"),				//Spanish - Spain
 	SWEDISH(17, "sv_SE"),				//Swedish - Sweden
+	POLISH(18, "pl_PL"),				//Polish - Poland
 	;
 
 	private final int value;
