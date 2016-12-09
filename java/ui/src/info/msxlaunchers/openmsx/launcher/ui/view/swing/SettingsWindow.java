@@ -30,8 +30,13 @@ import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -63,6 +68,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 	private final Settings settings;
 	private final Set<String> databases;
 	private final Map<String,String> messages;
+	private final Language language;
 	private final String languageCode;
 	private final boolean rightToLeft;
 	private final String suggestedOpenMSXPath;
@@ -92,6 +98,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		this.parent = GlobalSwingContext.getIntance().getMainWindow();
 
 		messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
+		this.language = language;
 		this.languageCode = languageCode;
 		this.rightToLeft = rightToLeft;
 		this.suggestedOpenMSXPath = suggestedOpenMSXPath;
@@ -152,18 +159,22 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		}
 		{
 			Language[] languages = Language.values();
-			String languageCodes[] = new String[languages.length+1];
-			String localizedLanguageNames[] = new String[languages.length+1];
-			ImageIcon languageImages[] = new ImageIcon[languages.length+1];
-			languageCodes[0] = null;
-			localizedLanguageNames[0] = messages.get("SYSTEM_DEFAULT");
+			List<LanguageAndIcon> languagesAndIcons = new ArrayList<>(languages.length + 1);
+
 			for(int ix=0; ix < languages.length; ix++)
 			{
-				languageCodes[ix+1] = languages[ix].toString();
-				localizedLanguageNames[ix+1] = (messages.get(languages[ix].toString()));
-				languageImages[ix+1] = Icons.valueOf("FLAG_" + languages[ix].getLocaleName()).getImageIcon();
+				languagesAndIcons.add(new LanguageAndIcon(languages[ix].toString(),
+						messages.get(languages[ix].toString()),
+						Icons.valueOf("FLAG_" + languages[ix].getLocaleName()).getImageIcon()));
 			}
-			languageComboBox = new JComboBoxWithImages(languageCodes, localizedLanguageNames, languageImages, rightToLeft);
+			Collator collator = Collator.getInstance(Locale.forLanguageTag(language.getLocaleName()));
+			languagesAndIcons = languagesAndIcons.stream().sorted((l1, l2) -> collator.compare(l1.language, l2.language)).collect(Collectors.toList());
+
+			languagesAndIcons.add(0, new LanguageAndIcon(null, messages.get("SYSTEM_DEFAULT"), null));
+			languageComboBox = new JComboBoxWithImages(languagesAndIcons.stream().map(li -> li.languageCode).toArray(size -> new String[size]),
+					languagesAndIcons.stream().map(li -> li.language).toArray(size -> new String[size]),
+					languagesAndIcons.stream().map(li -> li.icon).toArray(size -> new ImageIcon[size]),
+					rightToLeft);
 			languageComboBox.setMaximumRowCount(languages.length+1);
 			languageComboBox.setSelectedItem(messages.get(languageCode));
 		}
@@ -341,6 +352,20 @@ public class SettingsWindow  extends JDialog implements ActionListener
 			{
 				screenshotsFullPathTextField.setText(chooser.getSelectedFile().getAbsolutePath());
 			}
+		}
+	}
+
+	private class LanguageAndIcon
+	{
+		private final String languageCode;
+		private final String language;
+		private final ImageIcon icon;
+
+		LanguageAndIcon(String languageCode, String language, ImageIcon icon)
+		{
+			this.languageCode = languageCode;
+			this.language = language;
+			this.icon = icon;
 		}
 	}
 }
