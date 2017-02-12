@@ -54,9 +54,9 @@ public class ActivityViewerWindow extends JDialog implements ActionListener
 	private final Component parent;
 	private final Map<String,String> messages;
 
-	private final int GAME_COL_WIDTH = 260;
-	private final int DATABASE_COL_WIDTH = 180;
-	private final int TIME_COL_WIDTH = 300;
+	private final int GAME_COL_WIDTH = 300;
+	private final int DATABASE_COL_WIDTH = 220;
+	private final int TIME_COL_WIDTH = 420;
 	private final int COUNT_COL_WIDTH = 60;
 
 	private JButton okButton;
