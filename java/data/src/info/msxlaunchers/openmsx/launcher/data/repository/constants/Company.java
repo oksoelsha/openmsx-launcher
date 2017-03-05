@@ -44,6 +44,7 @@ public enum Company implements EnumWithDisplayName
 	KONAMI( "Konami" ),
 	MASS_TAEL( "Mass Tael" ),
 	MICROCABIN( "Microcabin" ),
+	NAMCO( "NAMCO" ),
 	NIPPON_COLPAX_UNIV( "Nippon Columbia / Colpax / Universal" ),
 	PACK_IN_VIDEO( "Pack-In-Video" ),
 	PAXANGA_SOFT( "Paxanga Soft" ),
