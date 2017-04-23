@@ -34,6 +34,7 @@ public final class FileTypeUtils
 	private static final Set<String> laserdiscExtensions;
 	private static final Set<String> zipExtensions;
 	private static final Set<String> xmlExtension;
+	private static final Set<String> ipsExtension;
 
 	static
 	{
@@ -70,6 +71,8 @@ public final class FileTypeUtils
 		zipExtensions = Collections.unmodifiableSet( zipExtensionsTemp );
 
 		xmlExtension = Collections.unmodifiableSet( Collections.singleton( "xml" ) );
+
+		ipsExtension = Collections.unmodifiableSet( Collections.singleton( "ips" ) );
 	}
 
 	public static final long MAX_DISK_FILE_SIZE = 737280;
@@ -138,6 +141,17 @@ public final class FileTypeUtils
 	public static boolean isXML( File file )
 	{
 		return isType( file, xmlExtension );
+	}
+
+	/**
+	 * Returns if the given file is an IPS file based on its extension
+	 * 
+	 * @param file File
+	 * @return true if file is an IPS file, false otherwise
+	 */
+	public static boolean isIPS( File file )
+	{
+		return isType( file, ipsExtension );
 	}
 
 	/**
@@ -244,6 +258,16 @@ public final class FileTypeUtils
 	public static Set<String> getZIPExtensions()
 	{
 		return zipExtensions;
+	}
+
+	/**
+	 * Returns set containing IPS file extensions
+	 * 
+	 * @return Non-modifiable set containing IPS file extensions
+	 */
+	public static Set<String> getIPSExtensions()
+	{
+		return ipsExtension;
 	}
 
 	private static boolean isType( File file, Set<String> validExtensions )

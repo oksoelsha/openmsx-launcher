@@ -76,7 +76,6 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 	private JButton okButton;
 	private JButton cancelButton;
 
-	private final Dimension iconButtonDimension = new Dimension(35, 26);
 	private final Dimension databaseListDimension = new Dimension(180, 150);
 
 	public ImportBlueMSXLauncherDatabasesWindow(BlueMSXLauncherDatabasesImporterPresenter presenter, Language language, boolean rightToLeft, Set<String> machines)
@@ -113,7 +112,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 		launcherDirectoryPane.add(blueMSXLauncherDirectoryTextField);
 
 		blueMSXLauncherDirectoryButton = new JButton(Icons.FOLDER.getImageIcon());
-		blueMSXLauncherDirectoryButton.setPreferredSize(iconButtonDimension);
+		blueMSXLauncherDirectoryButton.setPreferredSize(WindowUtils.iconButtonDimension);
 		blueMSXLauncherDirectoryButton.addActionListener(this);
 		blueMSXLauncherDirectoryButton.setToolTipText(messages.get("BROWSE"));
 		launcherDirectoryPane.add(blueMSXLauncherDirectoryButton);
@@ -163,13 +162,13 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 
 		rightArrowButton = new JButton();
 		rightArrowButton.addActionListener(this);
-		rightArrowButton.setPreferredSize(iconButtonDimension);
+		rightArrowButton.setPreferredSize(WindowUtils.iconButtonDimension);
 		rightArrowButton.setEnabled(false);
 		arrowsPane.add(rightArrowButton);
 
 		leftArrowButton = new JButton();
 		leftArrowButton.addActionListener(this);
-		leftArrowButton.setPreferredSize(iconButtonDimension);
+		leftArrowButton.setPreferredSize(WindowUtils.iconButtonDimension);
 		leftArrowButton.setEnabled(false);
 		arrowsPane.add(leftArrowButton);
 

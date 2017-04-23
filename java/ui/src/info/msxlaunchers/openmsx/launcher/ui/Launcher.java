@@ -22,6 +22,7 @@ import info.msxlaunchers.openmsx.launcher.builder.GameBuilderModule;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataModule;
 import info.msxlaunchers.openmsx.launcher.importer.DatabaseImporterModule;
 import info.msxlaunchers.openmsx.launcher.log.analyser.LoggerModule;
+import info.msxlaunchers.openmsx.launcher.patch.PatcherModule;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceModule;
 import info.msxlaunchers.openmsx.launcher.starter.StarterModule;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
@@ -60,7 +61,8 @@ public class Launcher
 	    		new DatabaseImporterModule(),
 	    		new GameBuilderModule(),
 	    		new UpdateCheckerModule(),
-	    		new LoggerModule()
+	    		new LoggerModule(),
+	    		new PatcherModule()
 				);
 
 		MainPresenter launcher = injector.getInstance( MainPresenter.class );

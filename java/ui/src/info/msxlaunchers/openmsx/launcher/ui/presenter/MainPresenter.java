@@ -313,11 +313,6 @@ public interface MainPresenter
 	void onRequestDatabaseManagerScreen() throws LauncherException;
 
 	/**
-	 * Called when user requests the activity viewer screen
-	 */
-	void onRequestActivityViewerScreen();
-
-	/**
 	 * Called when user is done  deleting a database by name
 	 * 
 	 * @param database Database name
@@ -338,6 +333,16 @@ public interface MainPresenter
 	 * @throws LauncherException
 	 */
 	void onRequestUpdatesChecker() throws LauncherException;
+
+	/**
+	 * Called when user requests the activity viewer screen
+	 */
+	void onRequestActivityViewerScreen();
+
+	/**
+	 * Called when user requests the patcher screen
+	 */
+	void onRequestPatcherScreen();
 
 	/**
 	 * Called when application closes down

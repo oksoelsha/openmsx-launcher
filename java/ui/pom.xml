@@ -76,6 +76,11 @@
 			<version>${version}</version>
 		</dependency>
 		<dependency>
+			<groupId>info.msxlaunchers.openmsx</groupId>
+			<artifactId>patch</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
 			<groupId>net.iharder</groupId>
 			<artifactId>filedrop</artifactId>
 			<version>1.1</version>

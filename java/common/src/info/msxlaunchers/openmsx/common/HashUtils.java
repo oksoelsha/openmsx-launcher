@@ -32,6 +32,7 @@ import java.util.Objects;
 public final class HashUtils
 {
 	private final static String SHA1 = "SHA1";
+	private final static String MD5 = "MD5";
 
 	/**
 	 * Returns SHA1 code of data coming from given stream
@@ -44,10 +45,59 @@ public final class HashUtils
 	{
 		Objects.requireNonNull( inputStream );
 
+		return getHash( inputStream, SHA1 );
+	}
+
+	/**
+	 * Returns SHA1 code of the given file
+	 * 
+	 * @param file File
+	 * @return SHA1 code of the file, or null if a FileNotFoundException is thrown when converting the given file to a file input stream
+	 * @throws NullPointerException if file is null
+	 */
+	public static String getSHA1Code( File file )
+	{
+		Objects.requireNonNull( file );
+
+		try( FileInputStream fis = new FileInputStream( file ) )
+		{
+			return getSHA1Code( fis );
+		}
+		catch( IOException ioe )
+		{
+			//This should not happen
+			return null;
+		}
+	}
+
+	/**
+	 * Returns MD5 sum of the given file
+	 * 
+	 * @param file File
+	 * @return MD5 sum of the file, or null if the file is not found
+	 * @throws NullPointerException if file is null
+	 */
+	public static String getMD5Sum( File file )
+	{
+		Objects.requireNonNull( file );
+
+		try( FileInputStream fis = new FileInputStream( file ) )
+		{
+			return getHash( fis, MD5 );
+		}
+		catch( IOException ioe )
+		{
+			//This should not happen
+			return null;
+		}
+	}
+
+	private static String getHash( InputStream inputStream, String algorithm )
+	{
 		MessageDigest md = null;
 		try
 		{
-			md = MessageDigest.getInstance( SHA1 );
+			md = MessageDigest.getInstance( algorithm );
 		}
 		catch( NoSuchAlgorithmException e )
 		{
@@ -81,27 +131,5 @@ public final class HashUtils
 		}
 		
 		return sb.toString();
-	}
-
-	/**
-	 * Returns SHA1 code of the given file
-	 * 
-	 * @param file File
-	 * @return SHA1 code of the file, or null if a FileNotFoundException is thrown when converting the given file to a file input stream
-	 * @throws NullPointerException if file is null
-	 */
-	public static String getSHA1Code( File file )
-	{
-		Objects.requireNonNull( file );
-
-		try( FileInputStream fis = new FileInputStream( file ) )
-		{
-			return getSHA1Code( fis );
-		}
-		catch( IOException ioe )
-		{
-			//This should not happen
-			return null;
-		}
 	}
 }

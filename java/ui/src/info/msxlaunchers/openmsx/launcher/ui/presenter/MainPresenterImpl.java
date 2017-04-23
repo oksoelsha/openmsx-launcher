@@ -80,7 +80,6 @@ final class MainPresenterImpl implements MainPresenter
 	private final Provider<GamePropertiesPresenter> gamePropertiesPresenterFactory;
 	private final Provider<BlueMSXLauncherDatabasesImporterPresenter> blueMSXLauncherImporterPresenterFactory;
 	private final DatabaseManagerPresenterFactory databaseManagerPresenterFactory;
-	private final Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	private final Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory;
 	private final LauncherPersistence launcherPersistence;
 	private final EmulatorStarter emulatorStarter;
@@ -89,6 +88,8 @@ final class MainPresenterImpl implements MainPresenter
 	private final RepositoryData repositoryData;
 	private final FileLocator fileLocator;
 	private final DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory;
+	private final Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
+	private final Provider<PatcherPresenter> patcherPresenterFactory;
 
 	private static final String SCREENSHOT_EXT = ".png";
 	private static final String SCREENSHOT1_SUFFIX = "a";
@@ -133,7 +134,8 @@ final class MainPresenterImpl implements MainPresenter
 			@Named("LauncherDataDirectory") String extraDataDirectory,
 			RepositoryData repositoryData,
 			FileLocator fileLocator,
-			DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory ) throws IOException
+			DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory,
+			Provider<PatcherPresenter> patcherPresenterFactory ) throws IOException
 	{
 		this.view = Objects.requireNonNull( view );
 		this.settingsPresenterFactory = Objects.requireNonNull( settingsPresenterFactory );
@@ -143,7 +145,6 @@ final class MainPresenterImpl implements MainPresenter
 		this.gamePropertiesPresenterFactory = Objects.requireNonNull( gamePropertiesPresenterFactory );
 		this.blueMSXLauncherImporterPresenterFactory = Objects.requireNonNull( blueMSXLauncherImporterPresenterFactory );
 		this.databaseManagerPresenterFactory = Objects.requireNonNull( databaseManagerPresenterFactory );
-		this.activityViewerPresenterFactory = Objects.requireNonNull( activityViewerPresenterFactory );
 		this.updateCheckerPresenterFactory = Objects.requireNonNull( updateCheckerPresenterFactory );
 		this.launcherPersistence = Objects.requireNonNull( launcherPersistence );
 		this.emulatorStarter = Objects.requireNonNull( emulatorStarter );
@@ -152,6 +153,8 @@ final class MainPresenterImpl implements MainPresenter
 		this.repositoryData = Objects.requireNonNull( repositoryData );
 		this.fileLocator = Objects.requireNonNull( fileLocator );
 		this.draggedAndDroppedGamesPresenterFactory = Objects.requireNonNull( draggedAndDroppedGamesPresenterFactory );
+		this.activityViewerPresenterFactory = Objects.requireNonNull( activityViewerPresenterFactory );
+		this.patcherPresenterFactory = Objects.requireNonNull( patcherPresenterFactory );
 
 		try
 		{
@@ -1033,15 +1036,6 @@ final class MainPresenterImpl implements MainPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestActivityViewerScreen()
-	 */
-	@Override
-	public void onRequestActivityViewerScreen()
-	{
-		activityViewerPresenterFactory.get().onRequestActivityViewerScreen( currentLanguage, currentRightToLeft );
-	}
-
-	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestDeleteDatabaseAction(java.lang.String)
 	 */
 	@Override
@@ -1080,6 +1074,24 @@ final class MainPresenterImpl implements MainPresenter
 	public void onRequestUpdatesChecker() throws LauncherException
 	{
 		updateCheckerPresenterFactory.get().onRequestCheckForUpdatesScreen( currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestActivityViewerScreen()
+	 */
+	@Override
+	public void onRequestActivityViewerScreen()
+	{
+		activityViewerPresenterFactory.get().onRequestActivityViewerScreen( currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestPatcherScreen()
+	 */
+	@Override
+	public void onRequestPatcherScreen()
+	{
+		patcherPresenterFactory.get().onRequestIPSPatcherScreen( currentLanguage, currentRightToLeft );
 	}
 
 	/* (non-Javadoc)

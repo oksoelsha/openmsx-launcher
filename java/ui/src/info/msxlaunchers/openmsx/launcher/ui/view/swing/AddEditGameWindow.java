@@ -30,9 +30,7 @@ import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +39,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -50,7 +47,6 @@ import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileFilter;
 
 /**
  * Add/Edit game dialog class
@@ -331,39 +327,39 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		}
 		else if(source == browseInfoButton)
 		{
-			browseFile(infoTextField);
+			WindowUtils.browseFile(this, infoTextField);
 		}
 		else if(source == browseRomAButton)
 		{
-			browseFile(romATextField, "ROM", FileTypeUtils.getROMExtensions(), true);
+			WindowUtils.browseFile(this, romATextField, messages.get("ROM"), FileTypeUtils.getROMExtensions(), true);
 		}
 		else if(source == browseRomBButton)
 		{
-			browseFile(romBTextField, "ROM", FileTypeUtils.getROMExtensions(), true);
+			WindowUtils.browseFile(this, romBTextField, messages.get("ROM"), FileTypeUtils.getROMExtensions(), true);
 		}
 		else if(source == browseDiskAButton)
 		{
-			browseFile(diskATextField, "DISK", FileTypeUtils.getDiskExtensions(), true);
+			WindowUtils.browseFile(this, diskATextField, messages.get("DISK"), FileTypeUtils.getDiskExtensions(), true);
 		}
 		else if(source == browseDiskBButton)
 		{
-			browseFile(diskBTextField, "DISK", FileTypeUtils.getDiskExtensions(), true);
+			WindowUtils.browseFile(this, diskBTextField, messages.get("DISK"), FileTypeUtils.getDiskExtensions(), true);
 		}
 		else if(source == browseTapeButton)
 		{
-			browseFile(tapeTextField, "TAPE", FileTypeUtils.getTapeExtensions(), true);
+			WindowUtils.browseFile(this, tapeTextField, messages.get("TAPE"), FileTypeUtils.getTapeExtensions(), true);
 		}
 		else if(source == browseHarddiskButton)
 		{
-			browseFile(harddiskTextField, "HARDDISK", FileTypeUtils.getDiskExtensions(), true);
+			WindowUtils.browseFile(this, harddiskTextField, messages.get("HARDDISK"), FileTypeUtils.getDiskExtensions(), true);
 		}
 		else if(source == browseLaserdiscButton)
 		{
-			browseFile(laserdiscTextField, "LASERDISC", FileTypeUtils.getLaserdiscExtensions(), true);
+			WindowUtils.browseFile(this, laserdiscTextField, messages.get("LASERDISC"), FileTypeUtils.getLaserdiscExtensions(), true);
 		}
 		else if(source == browseScriptButton)
 		{
-			browseFile(scriptTextField);
+			WindowUtils.browseFile(this, scriptTextField);
 		}
 		else if(source == extensionCheckBox)
 		{
@@ -761,70 +757,5 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		scriptPanel.setLayout(groupLayout);
 
 		tabbedPane.addTab(messages.get("SCRIPT"), scriptPanel);
-	}
-
-	private void browseFile(JTextField field)
-	{
-		browseFile(field, null, null, false);
-	}
-
-	private void browseFile(JTextField field, String filterDescription, Set<String> extensions, boolean includeZipFiles)
-	{
-		JFileChooser fileChooser = new JFileChooser();
-
-		Set<String> extensionsEffectiveValue = extensions;
-
-		if(filterDescription != null)
-		{
-			if(includeZipFiles)
-			{
-				extensionsEffectiveValue = new HashSet<String>(extensions);
-				extensionsEffectiveValue.addAll(FileTypeUtils.getZIPExtensions());
-			}
-			fileChooser.addChoosableFileFilter(new FileFilterImpl(filterDescription, extensionsEffectiveValue));
-		}
-
-        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-        {
-        	field.setText(fileChooser.getSelectedFile().getAbsolutePath());
-        }		
-	}
-
-	private class FileFilterImpl extends FileFilter
-	{
-		private final String description;
-		private final Set<String> extensions;
-
-		FileFilterImpl(String description, Set<String> extensions)
-		{
-			this.description = messages.get(description);
-			this.extensions = extensions;
-		}
-
-		@Override
-		public boolean accept(File file)
-		{
-			boolean accept;
-
-			if(file.isDirectory())
-			{
-				accept = true;
-			}
-			else
-			{
-				String filename = file.getPath();
-				String extension = filename.substring(filename.lastIndexOf('.') + 1).toLowerCase();
-
-				accept = extensions.contains(extension);
-			}
-
-			return accept;
-		}
-
-		@Override
-		public String getDescription()
-		{
-			return description;
-		}
 	}
 }

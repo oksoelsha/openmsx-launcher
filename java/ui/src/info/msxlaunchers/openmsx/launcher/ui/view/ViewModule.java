@@ -41,6 +41,7 @@ public class ViewModule extends AbstractModule
 		bind( AddDraggedAndDroppedGamesView.class ).to( AddDraggedAndDroppedGamesSwingView.class );
 		bind( DatabaseBackupsView.class ).to( DatabaseBackupsSwingView.class );
 		bind( ActivityViewerView.class ).to( ActivityViewerSwingView.class );
+		bind( PatcherView.class ).to( IPSPatcherSwingView.class );
 
 		install( new ViewPlatformModule() );
 	}

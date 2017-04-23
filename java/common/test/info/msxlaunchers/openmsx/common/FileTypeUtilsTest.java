@@ -44,6 +44,8 @@ public class FileTypeUtilsTest
 
 	private String xml = getClass().getResource("files/xml.Xml").getFile();
 
+	private String ips = getClass().getResource("files/ips.IPS").getFile();
+
 	private String non = getClass().getResource("files/non.non").getFile();
 
 	@Test
@@ -80,6 +82,9 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isROM( file ) );
 
 		file = new File( xml );
+		assertFalse( FileTypeUtils.isROM( file ) );
+
+		file = new File( ips );
 		assertFalse( FileTypeUtils.isROM( file ) );
 	}
 
@@ -129,6 +134,9 @@ public class FileTypeUtilsTest
 
 		file = new File( xml );
 		assertFalse( FileTypeUtils.isDisk( file ) );
+
+		file = new File( ips );
+		assertFalse( FileTypeUtils.isDisk( file ) );
 	}
 
 	@Test
@@ -159,6 +167,9 @@ public class FileTypeUtilsTest
 
 		file = new File( xml );
 		assertFalse( FileTypeUtils.isTape( file ) );
+
+		file = new File( ips );
+		assertFalse( FileTypeUtils.isTape( file ) );
 	}
 
 	@Test
@@ -182,6 +193,9 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 
 		file = new File( xml );
+		assertFalse( FileTypeUtils.isLaserdisc( file ) );
+
+		file = new File( ips );
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 	}
 
@@ -213,6 +227,9 @@ public class FileTypeUtilsTest
 
 		file = new File( xml );
 		assertFalse( FileTypeUtils.isZIP( file ) );
+
+		file = new File( ips );
+		assertFalse( FileTypeUtils.isZIP( file ) );
 	}
 
 	@Test
@@ -234,6 +251,33 @@ public class FileTypeUtilsTest
 
 		file = new File( zip );
 		assertFalse( FileTypeUtils.isXML( file ) );
+
+		file = new File( ips );
+		assertFalse( FileTypeUtils.isXML( file ) );
+	}
+
+	@Test
+	public void testIsIPS()
+	{
+		File file;
+		
+		file = null;
+		assertFalse( FileTypeUtils.isIPS( file ) );
+
+		file = new File( "/" );
+		assertFalse( FileTypeUtils.isIPS( file ) );
+
+		file = new File( ips );
+		assertTrue( FileTypeUtils.isIPS( file ) );
+
+		file = new File( tapeCasUpper );
+		assertFalse( FileTypeUtils.isIPS( file ) );
+
+		file = new File( zip );
+		assertFalse( FileTypeUtils.isIPS( file ) );
+
+		file = new File( xml );
+		assertFalse( FileTypeUtils.isIPS( file ) );
 	}
 	
 	@Test
@@ -247,6 +291,7 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 		assertFalse( FileTypeUtils.isZIP( file ) );
 		assertFalse( FileTypeUtils.isXML( file ) );
+		assertFalse( FileTypeUtils.isIPS( file ) );
 	}	
 
 	@Test

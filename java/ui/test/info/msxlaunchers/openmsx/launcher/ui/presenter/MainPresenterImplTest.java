@@ -69,6 +69,7 @@ public class MainPresenterImplTest
 	@Mock Provider<BlueMSXLauncherDatabasesImporterPresenter> blueMSXLauncherImporterPresenterFactory;
 	@Mock DatabaseManagerPresenterFactory databaseManagerPresenterFactory;
 	@Mock Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
+	@Mock Provider<PatcherPresenter> ipsPatcherPresenterFactory;
 	@Mock Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory;
 	@Mock SettingsPersister settingsPersister;
 	@Mock LauncherPersistence launcherPersistence;
@@ -102,7 +103,7 @@ public class MainPresenterImplTest
 
 		presenter = new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, ipsPatcherPresenterFactory );
 	}
 
 	@Test( expected = IOException.class )
@@ -112,7 +113,7 @@ public class MainPresenterImplTest
 
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, ipsPatcherPresenterFactory );
 	}
 
 	@Test
@@ -123,7 +124,7 @@ public class MainPresenterImplTest
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, ipsPatcherPresenterFactory );
 	}
 
 	@Test
@@ -135,7 +136,7 @@ public class MainPresenterImplTest
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, ipsPatcherPresenterFactory );
 	}
 
 	@Test
@@ -147,7 +148,7 @@ public class MainPresenterImplTest
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, ipsPatcherPresenterFactory );
 	}
 
 	@Test

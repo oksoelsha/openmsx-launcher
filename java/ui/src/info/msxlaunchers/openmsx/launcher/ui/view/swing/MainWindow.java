@@ -112,6 +112,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenu toolsMenu;
 	private JMenuItem databaseManager;
 	private JMenuItem activityViewer;
+	private JMenuItem patcher;
 	private JMenu helpMenu;
 	private JMenuItem helpAbout;
 	private JMenuItem helpFile;
@@ -322,6 +323,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         activityViewer = new JMenuItem();
         activityViewer.addActionListener(event -> onRequestActivityViewerScreen());
         toolsMenu.add(activityViewer);
+        toolsMenu.addSeparator();
+
+        patcher = new JMenuItem();
+        patcher.addActionListener(event -> onRequestPatcherScreen());
+        toolsMenu.add(patcher);
 
         //help menu
         helpMenu = new JMenu();
@@ -644,6 +650,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		databaseManager.setMnemonic(KeyStroke.getKeyStroke(messages.get("DATABASE_MANAGER_MNEMONIC")).getKeyCode());
 		activityViewer.setText(messages.get("ACTIVITY_VIEWER"));
 		activityViewer.setMnemonic(KeyStroke.getKeyStroke(messages.get("ACTIVITY_VIEWER_MNEMONIC")).getKeyCode());
+		patcher.setText(messages.get("PATCH_CENTER") + "...");
+		patcher.setMnemonic(KeyStroke.getKeyStroke(messages.get("PATCH_CENTER_MNEMONIC")).getKeyCode());
 		helpMenu.setText(messages.get("HELP"));
 		helpMenu.setMnemonic(KeyStroke.getKeyStroke(messages.get("HELP_MNEMONIC")).getKeyCode());
 		helpFile.setText(messages.get("HELP"));
@@ -1092,7 +1100,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	{
 		try
 		{
-				presenter.onRequestImportBlueMSXLauncherDatabasesScreen();
+			presenter.onRequestImportBlueMSXLauncherDatabasesScreen();
 		}
 		catch(LauncherException le)
 		{
@@ -1123,6 +1131,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private void onRequestActivityViewerScreen()
 	{
 		presenter.onRequestActivityViewerScreen();
+	}
+
+	private void onRequestPatcherScreen()
+	{
+		presenter.onRequestPatcherScreen();
 	}
 
 	private void onRequestHelpFile()

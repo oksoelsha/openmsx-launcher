@@ -38,15 +38,13 @@ public class HashUtilsTest
 	@Test( expected = NullPointerException.class )
 	public void testGetSHA1CodeForNullFile()
 	{
-		File file = null;
-		HashUtils.getSHA1Code( file );
+		HashUtils.getSHA1Code( (File)null );
 	}
 
 	@Test( expected = NullPointerException.class )
 	public void testGetSHA1CodeForNullStream()
 	{
-		FileInputStream fileInputStream = null;
-		HashUtils.getSHA1Code( fileInputStream );
+		HashUtils.getSHA1Code( (FileInputStream)null );
 	}
 
 	@Test
@@ -62,5 +60,27 @@ public class HashUtilsTest
 		Mockito.doThrow( new IOException() ).when( inputStream ).read( (byte[])notNull() );
 
 		assertNull( HashUtils.getSHA1Code(inputStream ) );
+	}
+
+	@Test
+	public void testGetMD5SumForValidFile()
+	{
+		String validFile = getClass().getResource( "files/valid.rom" ).getFile();
+		assertEquals( HashUtils.getMD5Sum( new File( validFile ) ), "cf623b0847e0dc101cb183d7ade3cb27" );
+
+		String emptyFile = getClass().getResource( "files/empty.rom" ).getFile();
+		assertEquals( HashUtils.getMD5Sum( new File( emptyFile ) ), "d41d8cd98f00b204e9800998ecf8427e" );
+	}
+
+	@Test( expected = NullPointerException.class )
+	public void testGetMD5SumForNullFile()
+	{
+		HashUtils.getMD5Sum( (File)null );
+	}
+
+	@Test
+	public void testGetMD5SumForNonExistentFile()
+	{
+		assertNull( HashUtils.getMD5Sum( new File( "/no_file" ) ) );
 	}
 }
