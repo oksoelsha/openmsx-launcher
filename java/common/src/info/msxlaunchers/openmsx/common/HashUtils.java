@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.common;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import java.util.zip.CRC32;
 
 /**
  * Utility class that contains static methods to calculate SHA1 code 
@@ -65,7 +67,6 @@ public final class HashUtils
 		}
 		catch( IOException ioe )
 		{
-			//This should not happen
 			return null;
 		}
 	}
@@ -87,7 +88,33 @@ public final class HashUtils
 		}
 		catch( IOException ioe )
 		{
-			//This should not happen
+			return null;
+		}
+	}
+
+	/**
+	 * Returns CRC32 code of the given file
+	 * 
+	 * @param file File
+	 * @return CRC32 code of the file, or null if the file is not found
+	 * @throws NullPointerException if file is null
+	 */
+	public static String getCRC32Code( File file )
+	{
+		try( InputStream inputStream = new BufferedInputStream( new FileInputStream( file ) ) )
+		{
+			CRC32 crc = new CRC32();
+
+			int count;
+			while( (count = inputStream.read()) != -1 )
+			{
+				crc.update(count);
+			}
+
+			return Long.toHexString( crc.getValue() );
+		}
+		catch( IOException ioe )
+		{
 			return null;
 		}
 	}
@@ -102,7 +129,7 @@ public final class HashUtils
 		catch( NoSuchAlgorithmException e )
 		{
 			//This should not happen
-			throw new RuntimeException();
+			throw new RuntimeException( e );
 		}
 
 		byte[] dataBytes = new byte[1024];

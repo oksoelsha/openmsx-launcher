@@ -83,4 +83,26 @@ public class HashUtilsTest
 	{
 		assertNull( HashUtils.getMD5Sum( new File( "/no_file" ) ) );
 	}
+
+	@Test
+	public void testGetCRC32CodeForValidFile()
+	{
+		String validFile = getClass().getResource( "files/valid.rom" ).getFile();
+		assertEquals( HashUtils.getCRC32Code( new File( validFile ) ), "b1ace0a0" );
+
+		String emptyFile = getClass().getResource( "files/empty.rom" ).getFile();
+		assertEquals( HashUtils.getCRC32Code( new File( emptyFile ) ), "0" );
+	}
+
+	@Test( expected = NullPointerException.class )
+	public void testGetCRC32CodeForNullFile()
+	{
+		HashUtils.getCRC32Code( (File)null );
+	}
+
+	@Test
+	public void testGetCRC32CodeForNonExistentFile()
+	{
+		assertNull( HashUtils.getCRC32Code( new File( "/no_file" ) ) );
+	}
 }

@@ -142,7 +142,7 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 		verifyChecksumPane.add(verifyChecksumCheckBox);
 		checksumTextField = new JTextField();
 		checksumTextField.setColumns(18);
-		checksumTextField.setToolTipText("[ SHA1 , MD5 ]");
+		checksumTextField.setToolTipText("[ SHA1 , MD5 , CRC32 ]");
 		verifyChecksumPane.add(checksumTextField);
 		verifyChecksumPane.setBorder(new EmptyBorder(1, 1, 1, WindowUtils.iconButtonDimension.width + 6));
 
@@ -262,6 +262,10 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 		else if(source == sourceFileButton)
 		{
 			WindowUtils.browseFile(this, sourceFileTextField);
+		}
+		else if(source == targetFileButton)
+		{
+			WindowUtils.browseFile(this, targetFileTextField);
 		}
 		else if(source == verifyChecksumCheckBox)
 		{

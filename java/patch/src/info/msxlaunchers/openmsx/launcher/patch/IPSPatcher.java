@@ -291,14 +291,21 @@ final class IPSPatcher implements Patcher
 			String trimmedChecksum = checksum.trim();
 			String sha1Code = HashUtils.getSHA1Code( fileToPatch.toFile() );
 	
+			//first do the SHA1 check
 			if( !sha1Code.equalsIgnoreCase( trimmedChecksum ) )
 			{
-				//we'll do the additional MD5 check
+				//do the additional MD5 check
 				String md5Sum = HashUtils.getMD5Sum( fileToPatch.toFile() );
 	
 				if( !md5Sum.equalsIgnoreCase( trimmedChecksum ) )
 				{
-					throw new PatchException( PatchExceptionIssue.SOURCE_FILE_CHECKSUM_NOT_MATCH );
+					//at last do the additional CRC32 check
+					String crc32Code = HashUtils.getCRC32Code( fileToPatch.toFile() );
+
+					if( !crc32Code.equalsIgnoreCase( trimmedChecksum ) )
+					{
+						throw new PatchException( PatchExceptionIssue.SOURCE_FILE_CHECKSUM_NOT_MATCH );
+					}
 				}
 			}
 		}
