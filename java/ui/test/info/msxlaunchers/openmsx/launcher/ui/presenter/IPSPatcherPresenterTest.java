@@ -60,6 +60,22 @@ public class IPSPatcherPresenterTest
 	}
 
 	@Test( expected = LauncherException.class )
+	public void givenEmptyPatchFile_whenOnRequestPatchFileAction_thenThrowException() throws LauncherException, IOException
+	{
+		IPSPatcherPresenter presenter = new IPSPatcherPresenter( view, patcher );
+
+		try
+		{
+			presenter.onRequestPatchFileAction( "", tmpFolder.newFile().toString(), false, null, false, null );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			throw le;
+		}
+	}
+
+	@Test( expected = LauncherException.class )
 	public void givenNonExistentFileToPatch_whenOnRequestPatchFileAction_thenThrowException() throws LauncherException, IOException
 	{
 		IPSPatcherPresenter presenter = new IPSPatcherPresenter( view, patcher );
@@ -67,6 +83,22 @@ public class IPSPatcherPresenterTest
 		try
 		{
 			presenter.onRequestPatchFileAction( tmpFolder.newFile().toString(), "non-existent-file-to-patch", false, null, false, null );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			throw le;
+		}
+	}
+
+	@Test( expected = LauncherException.class )
+	public void givenNonEmptyFileToPatch_whenOnRequestPatchFileAction_thenThrowException() throws LauncherException, IOException
+	{
+		IPSPatcherPresenter presenter = new IPSPatcherPresenter( view, patcher );
+
+		try
+		{
+			presenter.onRequestPatchFileAction( tmpFolder.newFile().toString(), "", false, null, false, null );
 		}
 		catch( LauncherException le )
 		{

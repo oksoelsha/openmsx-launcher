@@ -63,10 +63,10 @@ class IPSPatcherPresenter implements PatcherPresenter
 	public boolean onRequestPatchFileAction( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
 			boolean verifyChecksum, String checksum ) throws LauncherException
 	{
-		Path patchFilePath = Paths.get( patchFile );
+		Path patchFilePath = Paths.get( checkIfEmpty( patchFile, LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE ) );
 		validateThatFileExists( patchFilePath );
 
-		Path fileToPatchPath = Paths.get( fileToPatch );
+		Path fileToPatchPath = Paths.get( checkIfEmpty( fileToPatch, LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE ) );
 		validateThatFileExists( fileToPatchPath );
 
 		Path targetFilePath;
@@ -87,7 +87,7 @@ class IPSPatcherPresenter implements PatcherPresenter
 		String checksumValue;
 		if( verifyChecksum )
 		{
-			checksumValue = checkIfEmpty( checksum );
+			checksumValue = checkIfEmpty( checksum, LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
 		}
 		else
 		{
@@ -134,11 +134,11 @@ class IPSPatcherPresenter implements PatcherPresenter
 		}
 	}
 
-	private String checkIfEmpty( String string ) throws LauncherException
+	private String checkIfEmpty( String string, LauncherExceptionCode errorCode ) throws LauncherException
 	{
 		if( Utils.isEmpty( string ) )
 		{
-			throw new LauncherException( LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
+			throw new LauncherException( errorCode );
 		}
 
 		return string;
