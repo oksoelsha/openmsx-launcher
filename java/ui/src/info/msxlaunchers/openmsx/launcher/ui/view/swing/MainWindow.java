@@ -25,6 +25,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewPropertie
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JCompositeLabel;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JMenuItemWithIcon;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextField;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler;
@@ -279,7 +280,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		optionsMenu = new JMenu();
 		menuBar.add(optionsMenu);
 
-		optionsSettings = new JMenuItem();
+		optionsSettings = new JMenuItemWithIcon();
+		optionsSettings.setIcon( Icons.SETTINGS.getImageIcon() );
 		optionsSettings.addActionListener(event -> presenter.onRequestSettingsScreen());
         optionsMenu.add(optionsSettings);
 
@@ -287,15 +289,15 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		actionsMenu = new JMenu();
 		menuBar.add(actionsMenu);
 
-        actionsCreateEmptyDatabase = new JMenuItem();
+        actionsCreateEmptyDatabase = new JMenuItemWithIcon();
         actionsCreateEmptyDatabase.addActionListener(event -> presenter.onRequestCreateEmptyDatabaseScreen());
         actionsMenu.add(actionsCreateEmptyDatabase);
 
-        actionsFillDatabase = new JMenuItem();
+        actionsFillDatabase = new JMenuItemWithIcon();
         actionsFillDatabase.addActionListener(event -> onRequestFillDatabaseScreen());
         actionsMenu.add(actionsFillDatabase);
 
-        actionsUpdateAllDatabase = new JMenuItem();
+        actionsUpdateAllDatabase = new JMenuItemWithIcon();
         //update all databases only appears if added manually to the settings file
         if(showUpdateAllDatabases)
         {
@@ -303,7 +305,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         	actionsMenu.add(actionsUpdateAllDatabase);
         }
 
-        actionsImportBlueMSXLauncherDatabases = new JMenuItem();
+        actionsImportBlueMSXLauncherDatabases = new JMenuItemWithIcon();
         //import blueMSX Launcher databases is only for Windows
         if(OSUtils.isWindows())
         {
@@ -316,16 +318,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         toolsMenu = new JMenu();
         menuBar.add(toolsMenu);
 
-        databaseManager = new JMenuItem();
+        databaseManager = new JMenuItemWithIcon();
         databaseManager.addActionListener(event -> onRequestDatabaseManagerScreen());
         toolsMenu.add(databaseManager);
 
-        activityViewer = new JMenuItem();
+        activityViewer = new JMenuItemWithIcon();
         activityViewer.addActionListener(event -> onRequestActivityViewerScreen());
         toolsMenu.add(activityViewer);
         toolsMenu.addSeparator();
 
-        patcher = new JMenuItem();
+        patcher = new JMenuItemWithIcon();
+        patcher.setIcon( Icons.PATCH.getImageIcon() );
         patcher.addActionListener(event -> onRequestPatcherScreen());
         toolsMenu.add(patcher);
 
@@ -333,16 +336,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         helpMenu = new JMenu();
         menuBar.add(helpMenu);
 
-        helpFile = new JMenuItem();
+        helpFile = new JMenuItemWithIcon();
+        helpFile.setIcon( Icons.HELP.getImageIcon() );
         helpFile.addActionListener(event -> onRequestHelpFile());
         helpMenu.add(helpFile);
 
-        helpCheckForUpdates = new JMenuItem();
+        helpCheckForUpdates = new JMenuItemWithIcon();
         helpCheckForUpdates.addActionListener(event -> onRequestUpdatesChecker());
         helpMenu.add(helpCheckForUpdates);
     	helpMenu.addSeparator();
 
-        helpAbout = new JMenuItem();
+        helpAbout = new JMenuItemWithIcon();
         //don't show the About menu item in Mac - this appears in the Mac application menu
         if(!OSUtils.isMac())
         {
@@ -1513,17 +1517,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	{
 	    contextMenu = new JPopupMenu();
 
-	    moveMenuItem = new JMenuItem();
+	    moveMenuItem = new JMenuItemWithIcon();
 	    moveMenuItem.addActionListener(this);
 	    moveMenuItem.setAccelerator(getCtrl_XKeyStroke());
 	    contextMenu.add(moveMenuItem);
 
-	    locateFileMenuItem = new JMenuItem();
+	    locateFileMenuItem = new JMenuItemWithIcon();
 	    locateFileMenuItem.setAccelerator(getCtrl_Shift_FKeyStroke());
 	    locateFileMenuItem.addActionListener(this);
 	    contextMenu.add(locateFileMenuItem);
 
-	    addFavoriteMenuItem = new JMenuItem();
+	    addFavoriteMenuItem = new JMenuItemWithIcon();
 	    addFavoriteMenuItem.setAccelerator(getCtrl_DKeyStroke());
 	    addFavoriteMenuItem.setIcon(Icons.FAVORITE.getImageIcon());
 	    addFavoriteMenuItem.addActionListener(this);
@@ -1531,12 +1535,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	    contextMenu.addSeparator();
 
-	    infoMenuItem = new JMenuItem();
+	    infoMenuItem = new JMenuItemWithIcon();
 	    infoMenuItem.addActionListener(this);
 	    infoMenuItem.setAccelerator(getF1KeyStroke());
 	    contextMenu.add(infoMenuItem);
 
-	    propertiesMenuItem = new JMenuItem();
+	    propertiesMenuItem = new JMenuItemWithIcon();
 	    propertiesMenuItem.addActionListener(this);
 	    propertiesMenuItem.setAccelerator(getCtrl_F1KeyStroke());
 	    contextMenu.add(propertiesMenuItem);

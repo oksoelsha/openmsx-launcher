@@ -35,6 +35,7 @@ public enum Icons
 	ERROR( "error" ),
 	INFORMATION( "information" ),
 	QUESTION( "question" ),
+	HELP( "help" ),
 
 	LAUNCH( "mainscreen/launch" ),
 	REMOVE( "mainscreen/delete" ),
@@ -45,6 +46,8 @@ public enum Icons
 
 	FAVORITE( "favorite" ),
 	SEARCH( "search" ),
+	SETTINGS( "settings" ),
+	PATCH ( "patch" ),
 
 	ADD_SMALL( "add_small" ),
 	DELETE_SMALL( "delete_small" ),

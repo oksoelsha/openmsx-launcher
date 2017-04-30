@@ -16,10 +16,8 @@
 package info.msxlaunchers.openmsx.launcher.ui.view.platform;
 
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -51,28 +49,29 @@ final class NimbusLookAndFeelSetup
 			laf.getDefaults().put("MenuBar:Menu[Selected].backgroundPainter", new MenuBackgroundColor());
 			laf.getDefaults().put("MenuItem[MouseOver].backgroundPainter", new MenuItemBackgroundColor());
 			laf.getDefaults().put("MenuBar:Menu.contentMargins", new Insets (1, 5, 2, 10));
-			laf.getDefaults().put("MenuItem.contentMargins", new Insets(1, 10, 2, 13));
-			laf.getDefaults().put("MenuItem.textIconGap", 3);
+			laf.getDefaults().put("MenuItem.contentMargins", new Insets(2, 7, 3, 13));
+			laf.getDefaults().put("MenuItem.textIconGap", 6);
+			laf.getDefaults().put("MenuItem[MouseOver].textForeground", new Color(10, 10, 10));
+			laf.getDefaults().put("MenuItem:MenuItemAccelerator[MouseOver].textForeground", new Color(10, 10, 10));
 			laf.getDefaults().put("List[Selected].textBackground", new Color(190, 220, 230));
 			laf.getDefaults().put("List[Selected].textForeground", new Color(30, 30, 30));
 			laf.getDefaults().put("Viewport.background", Color.white);
 			laf.getDefaults().put("Table.alternateRowColor", Color.white);
 			laf.getDefaults().put("FileChooser.background", background);
 			laf.getDefaults().put("FileChooser[Enabled].backgroundPainter",
-                    new Painter<JFileChooser>()
-                    {
-                        @Override
-                        public void paint(Graphics2D g, JFileChooser object, int width, int height)
-                        {
-                            g.setColor(background);
-                            g.draw(object.getBounds());
-
-                        }
-                    });
+					new Painter<JFileChooser>()
+					{
+						@Override
+						public void paint(Graphics2D g, JFileChooser object, int width, int height)
+						{
+							g.setColor(background);
+							g.draw(object.getBounds());
+						}
+					});
 		}
 		catch(UnsupportedLookAndFeelException e)
 		{
-		    //should not happen
+			//should not happen
 			throw new RuntimeException(e);
 		}
 	}
@@ -80,39 +79,27 @@ final class NimbusLookAndFeelSetup
 	private class MenuBackgroundColor implements Painter<JMenu>
 	{
 		private final Color color = new Color(160, 160, 160);
-        @Override
-        public void paint(Graphics2D g, JMenu c, int w, int h)
-        {
-            g.setColor(color);
-            g.fillRect(0, 0, w, h);
-        }
-    }
+		@Override
+		public void paint(Graphics2D g, JMenu c, int w, int h)
+		{
+			g.setColor(color);
+			g.fillRect(0, 0, w, h);
+		}
+	}
 
-	/*
-	 * The following Class implementation and its paint method were taken from the following page:
-	 * http://stackoverflow.com/questions/24379251/change-ui-lookup-for-progressbar-swing-in-nimbus-theme 
-	 */
-	private class MenuItemBackgroundColor implements Painter<JComponent>
+	private static class MenuItemBackgroundColor implements Painter<JComponent>
 	{
-        private final Color light = new Color(190,190,190);
-        private final Color dark = new Color(160,160,160);
-        private final Color outline = new Color(110, 110, 110);
-        private GradientPaint gradPaint;
+		private static final Color insideRight = new Color(195, 225, 235);
+		private static final Color border = new Color(100, 140, 150);
 
-        @Override
-        public void paint(Graphics2D g, JComponent c, int w, int h)
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            gradPaint = new GradientPaint((w / 2.0f), 0, light, (w / 2.0f), (h / 2.0f), dark, true);
-            g.setPaint(gradPaint);
-            g.fillRect(2, 1, (w - 5), (h - 3));
+		@Override
+		public void paint(Graphics2D g, JComponent c, int w, int h)
+		{
+			g.setColor(insideRight);
+			g.fillRect(0, 0, w - 1, h - 1);
 
-            g.setColor(outline);
-            g.drawRect(2, 1, (w - 5), (h - 3));
-
-            Color trans = new Color(outline.getRed(), outline.getGreen(), outline.getBlue(), 100);
-            g.setColor(trans);
-            g.drawRect(1, 0, (w - 3), (h - 1));
-        }
-    }
+			g.setColor(border);
+			g.drawRect(0, 0, w - 1, h - 1);
+		}
+	}
 }
