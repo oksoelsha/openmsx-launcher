@@ -126,9 +126,9 @@ public class PatcherPresenterImplTest
 		String patchFile = tmpFolder.newFile().toString();
 		String fileToPatch = tmpFolder.newFile().toString();
 
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, null );
+		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, null );
 
-		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, null );
+		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, null );
 		Assert.assertTrue( returnValue );
 	}
 
@@ -142,7 +142,7 @@ public class PatcherPresenterImplTest
 
 		boolean returnValue = presenter.onRequestPatchFileActionForUPS( patchFile, fileToPatch, false, null, true );
 
-		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, null );
+		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, null );
 		Assert.assertTrue( returnValue );
 	}
 
@@ -155,9 +155,9 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 		String targetFile = new File( tmpFolder.getRoot(), "tmpFile" ).toString();
 
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, false, null );
+		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 
-		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), false, null );
+		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), true, null );
 		Assert.assertTrue( returnValue );
 	}
 
@@ -171,9 +171,9 @@ public class PatcherPresenterImplTest
 		String targetFile = tmpFolder.newFile().toString();
 
 		when( view.confirmTargetFileReplacement() ).thenReturn( true );
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, false, null );
+		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 
-		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), false, null );
+		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), true, null );
 		Assert.assertTrue( returnValue );
 	}
 
@@ -187,7 +187,7 @@ public class PatcherPresenterImplTest
 		String targetFile = tmpFolder.newFile().toString();
 
 		when( view.confirmTargetFileReplacement() ).thenReturn( false );
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, false, null );
+		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 
 		verifyZeroInteractions( patcherProvider );
 		Assert.assertFalse( returnValue );
@@ -203,7 +203,7 @@ public class PatcherPresenterImplTest
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, null );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, null );
 		}
 		catch( LauncherException le )
 		{
@@ -222,7 +222,7 @@ public class PatcherPresenterImplTest
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, " " );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, " " );
 		}
 		catch( LauncherException le )
 		{
@@ -240,9 +240,9 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 
 		when( view.confirmTargetFileReplacement() ).thenReturn( false );
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, "123456" );
+		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, "123456" );
 
-		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, "123456" );
+		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, "123456" );
 		Assert.assertTrue( returnValue );
 	}
 
@@ -255,11 +255,11 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 
 		Mockito.doThrow( new PatchException( PatchExceptionIssue.FILE_TO_PATCH_NOT_PATCHABLE ) ).when( patcher )
-			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, null );
+			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, null );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, null );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, null );
 		}
 		catch( LauncherException le )
 		{
@@ -277,11 +277,11 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 
 		Mockito.doThrow( new PatchException( PatchExceptionIssue.INVALID_PATCH_FILE ) ).when( patcher )
-			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, null );
+			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, null );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, null );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, null );
 		}
 		catch( LauncherException le )
 		{
@@ -299,11 +299,11 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 
 		Mockito.doThrow( new PatchException( PatchExceptionIssue.SOURCE_FILE_CHECKSUM_NOT_MATCH ) ).when( patcher )
-			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, "1234" );
+			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, "1234" );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, "1234" );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, "1234" );
 		}
 		catch( LauncherException le )
 		{
@@ -321,11 +321,11 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 
 		Mockito.doThrow( new PatchException( PatchExceptionIssue.ZIP_SOURCE_FILE_CANNOT_BE_PATCHED_DIRECTLY ) ).when( patcher )
-			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, null );
+			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, null );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, null );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, null );
 		}
 		catch( LauncherException le )
 		{
@@ -344,11 +344,11 @@ public class PatcherPresenterImplTest
 		String targetFile = new File( tmpFolder.getRoot(), "tmpFile" ).toString();
 
 		Mockito.doThrow( new PatchException( PatchExceptionIssue.TARGET_FILE_CANNOT_WRITE ) ).when( patcher )
-			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), false, null );
+			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), true, null );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, false, null );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 		}
 		catch( LauncherException le )
 		{
@@ -367,11 +367,11 @@ public class PatcherPresenterImplTest
 		String targetFile = new File( tmpFolder.getRoot(), "tmpFile" ).toString();
 
 		Mockito.doThrow( new PatchException( PatchExceptionIssue.IO ) ).when( patcher )
-			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), false, null );
+			.patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), true, null );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, false, null );
+			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 		}
 		catch( LauncherException le )
 		{
