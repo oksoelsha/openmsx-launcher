@@ -67,7 +67,7 @@ public class JSearchTextField extends JTextField
 	private final ActionListener timerListener = new TimerListener();
 	private final Timer fieldUpdateTimer = new Timer(TYPING_DELAY, timerListener);
 
-	private static final int MATCHES_MENU_ITEM_HEIGHT = 18;
+	private static final int MATCHES_MENU_ITEM_HEIGHT = 20;
 
 	private static final String ENTER_MAP_KEY = "Enter-key";
 	private static final String DOWN_MAP_KEY = "Down-key";
@@ -79,7 +79,7 @@ public class JSearchTextField extends JTextField
 
 	private JMatchLabel matchesLabels[];
 
-	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(3, 7, 3, 7);
+	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(7, 7, 7, 7);
 	private static final Border LABEL_LINE = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.gray);
 	private static final Border LABEL_COMPOUND_BORDER = BorderFactory.createCompoundBorder(LABEL_LINE, LABEL_MARGIN);
 	@SuppressWarnings("unchecked")
@@ -255,7 +255,6 @@ public class JSearchTextField extends JTextField
 		void highlight()
 		{
 			mouseInsideLabel = true;
-			setForeground(Color.white);
 			if(gradientResultHighlight)
 			{
 				repaint();
