@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,14 +21,14 @@ public class IPSPatcherTest
 	public TemporaryFolder tmpFolder = new TemporaryFolder();
 
 	@Test( expected = PatchException.class )
-	public void givenNonExistentIPSPatch_whenPatch_thenThrowException() throws IOException, PatchException
+	public void givenNonExistentFileToPatch_whenPatch_thenThrowException() throws IOException, PatchException
 	{
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 7, 0, 3, 1, 2, 3, 'E', 'O', 'F' };
 		IPSPatcher patcher = new IPSPatcher();
 
 		try
 		{
-			patcher.patch( Paths.get( tmpFolder.getRoot().getAbsolutePath(), "non-existent-file-to-patch" ), createPatchFile( patchData ), null, null );
+			patcher.patch( Paths.get( tmpFolder.getRoot().getAbsolutePath(), "non-existent-file-to-patch" ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 		}
 		catch( PatchException pe )
 		{
@@ -39,13 +38,13 @@ public class IPSPatcherTest
 	}
 
 	@Test( expected = PatchException.class )
-	public void givenNonExistentFileToPatch_whenPatch_thenThrowException() throws IOException, PatchException
+	public void givenNonExistentIPSPatch_whenPatch_thenThrowException() throws IOException, PatchException
 	{
 		IPSPatcher patcher = new IPSPatcher();
 
 		try
 		{
-			patcher.patch( createFileToPatch(), Paths.get( tmpFolder.getRoot().getAbsolutePath(), "non-existent-patch-file" ), null, null );
+			patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), Paths.get( tmpFolder.getRoot().getAbsolutePath(), "non-existent-patch-file" ), null, false, null );
 		}
 		catch( PatchException pe )
 		{
@@ -62,7 +61,7 @@ public class IPSPatcherTest
 
 		try
 		{
-			patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+			patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 		}
 		catch( PatchException pe )
 		{
@@ -79,7 +78,7 @@ public class IPSPatcherTest
 
 		try
 		{
-			patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+			patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 		}
 		catch( PatchException pe )
 		{
@@ -94,7 +93,7 @@ public class IPSPatcherTest
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 2, 0, 3, 7, 8, 9, 0, 0, 6, 0, 0, 0, 2, 3, 'E', 'O', 'F' };
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 7, 8, 9, 6, 3, 3, 9 };
 		byte[] actualPatchedFileData = Files.readAllBytes( Paths.get( tmpFolder.getRoot().toString(), "file-to-patch.rom" ) );
@@ -109,7 +108,7 @@ public class IPSPatcherTest
 		Path targetFile = Paths.get( tmpFolder.getRoot().toString(), "target-file.rom" );
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), targetFile, null );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), targetFile, false, null );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 7, 8, 9, 6, 3, 3, 9 };
 		byte[] actualPatchedFileData = Files.readAllBytes( targetFile );
@@ -126,7 +125,7 @@ public class IPSPatcherTest
 
 		try
 		{
-			patcher.patch( createFileToPatch(), createPatchFile( patchData ), targetFile, null );
+			patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), targetFile, false, null );
 		}
 		catch( PatchException pe )
 		{
@@ -141,7 +140,7 @@ public class IPSPatcherTest
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 2, 0, 3, 7, 8, 9, 'E', 'O', 'F', 0, 0, 6 };
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 7, 8, 9, 6 };
 		byte[] actualPatchedFileData = Files.readAllBytes( Paths.get( tmpFolder.getRoot().toString(), "file-to-patch.rom" ) );
@@ -155,7 +154,7 @@ public class IPSPatcherTest
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 2, 0, 3, 7, 8, 9, 'E', 'O', 'F', 0, 0, 9 };
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 7, 8, 9, 6, 7, 8, 9 };
 		byte[] actualPatchedFileData = Files.readAllBytes( Paths.get( tmpFolder.getRoot().toString(), "file-to-patch.rom" ) );
@@ -169,7 +168,7 @@ public class IPSPatcherTest
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 7, 0, 3, 1, 2, 3, 'E', 'O', 'F' };
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 3, 4, 5, 6, 7, 1, 2, 3 };
 		byte[] actualPatchedFileData = Files.readAllBytes( Paths.get( tmpFolder.getRoot().toString(), "file-to-patch.rom" ) );
@@ -183,7 +182,7 @@ public class IPSPatcherTest
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 7, 0, 0, 0, 3, 2, 'E', 'O', 'F' };
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 3, 4, 5, 6, 7, 2, 2, 2 };
 		byte[] actualPatchedFileData = Files.readAllBytes( Paths.get( tmpFolder.getRoot().toString(), "file-to-patch.rom" ) );
@@ -199,7 +198,7 @@ public class IPSPatcherTest
 
 		try
 		{
-			patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+			patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 		}
 		catch( PatchException pe )
 		{
@@ -216,24 +215,7 @@ public class IPSPatcherTest
 
 		try
 		{
-			patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
-		}
-		catch( PatchException pe )
-		{
-			Assert.assertEquals( PatchExceptionIssue.INVALID_PATCH_FILE, pe.getIssue() );
-			throw pe;
-		}
-	}
-
-	@Test( expected = PatchException.class )
-	public void givenIPSPatchWithInvalidHeader_whenPatch_thenThrowException() throws IOException, PatchException
-	{
-		byte[] patchData = new byte[] { 'W', 'R', 'O', 'N', 'G', 0, 0, 2, 1 };
-		IPSPatcher patcher = new IPSPatcher();
-
-		try
-		{
-			patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, null );
+			patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 		}
 		catch( PatchException pe )
 		{
@@ -248,7 +230,7 @@ public class IPSPatcherTest
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 2, 0, 3, 7, 8, 9, 0, 0, 6, 0, 0, 0, 2, 3, 'E', 'O', 'F' };
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, "b6c511873b07a73513161b142d344b7b845cacef" );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, "b6c511873b07a73513161b142d344b7b845cacef" );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 7, 8, 9, 6, 3, 3, 9 };
 		byte[] actualPatchedFileData = Files.readAllBytes( Paths.get( tmpFolder.getRoot().toString(), "file-to-patch.rom" ) );
@@ -262,7 +244,7 @@ public class IPSPatcherTest
 		byte[] patchData = new byte[] { 'P', 'A', 'T', 'C', 'H', 0, 0, 2, 0, 3, 7, 8, 9, 0, 0, 6, 0, 0, 0, 2, 3, 'E', 'O', 'F' };
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, "8596c1af55b14b7b320112944fcb8536" );
+		patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, "8596c1af55b14b7b320112944fcb8536" );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 7, 8, 9, 6, 3, 3, 9 };
 		byte[] actualPatchedFileData = Files.readAllBytes( Paths.get( tmpFolder.getRoot().toString(), "file-to-patch.rom" ) );
@@ -278,7 +260,7 @@ public class IPSPatcherTest
 
 		try
 		{
-			patcher.patch( createFileToPatch(), createPatchFile( patchData ), null, "12345" );
+			patcher.patch( PatchTestUtils.createFileToPatch( tmpFolder ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, "12345" );
 		}
 		catch( PatchException pe )
 		{
@@ -294,7 +276,7 @@ public class IPSPatcherTest
 		Path targetFile = Paths.get( tmpFolder.getRoot().toString(), "target-file.rom" );
 		IPSPatcher patcher = new IPSPatcher();
 
-		patcher.patch( zipFile( createFileToPatch() ), createPatchFile( patchData ), targetFile, null );
+		patcher.patch( zipFile( PatchTestUtils.createFileToPatch( tmpFolder ) ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), targetFile, false, null );
 
 		byte[] expectedPatchedFileData = new byte[] { 1, 2, 7, 8, 9, 6, 3, 3, 9 };
 		byte[] actualPatchedFileData = Files.readAllBytes( targetFile );
@@ -310,35 +292,13 @@ public class IPSPatcherTest
 
 		try
 		{
-			patcher.patch( zipFile( createFileToPatch() ), createPatchFile( patchData ), null, null );
+			patcher.patch( zipFile( PatchTestUtils.createFileToPatch( tmpFolder ) ), PatchTestUtils.createPatchFile( tmpFolder, patchData ), null, false, null );
 		}
 		catch( PatchException pe )
 		{
 			Assert.assertEquals( PatchExceptionIssue.ZIP_SOURCE_FILE_CANNOT_BE_PATCHED_DIRECTLY, pe.getIssue() );
 			throw pe;
 		}
-	}
-
-	private Path createPatchFile( byte[] patchData ) throws IOException
-	{
-		File tmpFile = tmpFolder.newFile( "patch.ips" );
-		PrintWriter writer = new PrintWriter( tmpFile, "UTF-8" );
-		writer.print( new String( patchData ) );
-		writer.close();
-
-		return Paths.get( tmpFile.getAbsolutePath() );
-	}
-
-	private Path createFileToPatch() throws IOException
-	{
-		byte[] fileToPatchData = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-		File tmpFile = tmpFolder.newFile( "file-to-patch.rom" );
-		PrintWriter writer = new PrintWriter( tmpFile, "US-ASCII" );
-		writer.print( new String( fileToPatchData ) );
-		writer.close();
-
-		return Paths.get( tmpFile.getAbsolutePath() );
 	}
 
 	private Path zipFile( Path file ) throws IOException

@@ -15,21 +15,41 @@
  */
 package info.msxlaunchers.openmsx.launcher.patch;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
- * 
  * @since v1.9
  * @author Sam Elsharif
+ *
  */
-public class PatcherModule extends AbstractModule
+public class PatcherProvider
 {
-	@Override 
-	protected void configure()
+	private final Patcher ipsPatcher;
+	private final Patcher upsPatcher;
+
+	@Inject
+	public PatcherProvider( @Named( "IPS" ) Patcher ipsPatcher, @Named( "UPS" ) Patcher upsPatcher )
 	{
-		bind( PatcherProvider.class );
-		bind( Patcher.class ).annotatedWith( Names.named( PatchMethod.IPS.toString() ) ).to( IPSPatcher.class );
-		bind( Patcher.class ).annotatedWith( Names.named( PatchMethod.UPS.toString() ) ).to( UPSPatcher.class );
+		this.ipsPatcher = ipsPatcher;
+		this.upsPatcher = upsPatcher;
+	}
+
+	/**
+	 * Return patcher instance (IPS or UPS)
+	 * 
+	 * @param patchMethod PatchMethod (IPS or UPS)
+	 * @return Patcher instance (IPS or UPS)
+	 */
+	public Patcher get( PatchMethod patchMethod )
+	{
+		if( patchMethod.equals( PatchMethod.IPS ) )
+		{
+			return ipsPatcher;
+		}
+		else
+		{
+			return upsPatcher;
+		}
 	}
 }

@@ -35,17 +35,31 @@ public interface PatcherPresenter
 	void onRequestIPSPatcherScreen( Language currentLanguage, boolean currentRightToLeft );
 
 	/**
-	 * Called when user decides to patch a file
+	 * Called when user decides to patch a file with an IPS patch
 	 *  
 	 * @param fileToPatch Filename to patch
 	 * @param patchFile Patch filename
 	 * @param useTargetFile If true, use targetFile argument
 	 * @param targetFile Target filename to save the patched file. Cannot be null if useTargetFile is true
-	 * @param verifyChecksum If true, verify the given checksum against the source file
-	 * @param checksum Checksum value (SHA1 or MD5)
+	 * @param skipChecksumValidation If true, skip all checksum validation against source file
+	 * @param checksum Checksum value (SHA1, MD5 or CRC32)
 	 * @return True if patching was successful, false if the user interrupted it (because they didn't want to replace an existing target file) 
 	 * @throws LauncherException
 	 */
-	boolean onRequestPatchFileAction( String fileToPatch, String patchFile, boolean useTargetFile, String targetFile,
-			boolean verifyChecksum, String checksum ) throws LauncherException;
+	boolean onRequestPatchFileActionForIPS( String fileToPatch, String patchFile, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation, String checksum ) throws LauncherException;
+
+	/**
+	 * Called when user decides to patch a file with a UPS patch
+	 *  
+	 * @param fileToPatch Filename to patch
+	 * @param patchFile Patch filename
+	 * @param useTargetFile If true, use targetFile argument
+	 * @param targetFile Target filename to save the patched file. Cannot be null if useTargetFile is true
+	 * @param skipChecksumValidation If true, skip all checksum validations
+	 * @return True if patching was successful, false if the user interrupted it (because they didn't want to replace an existing target file) 
+	 * @throws LauncherException
+	 */
+	boolean onRequestPatchFileActionForUPS( String fileToPatch, String patchFile, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation ) throws LauncherException;
 }

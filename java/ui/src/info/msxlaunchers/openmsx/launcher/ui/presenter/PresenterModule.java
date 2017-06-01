@@ -41,6 +41,6 @@ public class PresenterModule extends AbstractModule
 		install( new FactoryModuleBuilder().implement( DraggedAndDroppedGamesPresenter.class, DraggedAndDroppedGamesPresenterImpl.class ).build( DraggedAndDroppedGamesPresenterFactory.class ) );
 		install( new FactoryModuleBuilder().implement( DatabaseBackupsPresenter.class, DatabaseBackupsPresenterImpl.class ).build( DatabaseBackupsPresenterFactory.class ) );
 		bind( ActivityViewerPresenter.class ).to( ActivityViewerPresenterImpl.class );
-		bind( PatcherPresenter.class ).to( IPSPatcherPresenter.class );
+		bind( PatcherPresenter.class ).to( PatcherPresenterImpl.class );
 	}
 }

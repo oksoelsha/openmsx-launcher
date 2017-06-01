@@ -34,17 +34,17 @@ public final class FileTypeUtils
 	private static final Set<String> laserdiscExtensions;
 	private static final Set<String> zipExtensions;
 	private static final Set<String> xmlExtension;
-	private static final Set<String> ipsExtension;
+	private static final Set<String> patchExtensions;
 
 	static
 	{
-		final Set<String> romExtensionsTemp = new HashSet<String>();
+		final Set<String> romExtensionsTemp = new HashSet<>();
 		romExtensionsTemp.add( "ri" );
 		romExtensionsTemp.add( "rom" );
 
 		romExtensions = Collections.unmodifiableSet( romExtensionsTemp );
 
-		final Set<String> diskExtensionsTemp = new HashSet<String>();
+		final Set<String> diskExtensionsTemp = new HashSet<>();
 		diskExtensionsTemp.add( "di1" );
 		diskExtensionsTemp.add( "di2" );
 		diskExtensionsTemp.add( "dmk" );
@@ -53,18 +53,18 @@ public final class FileTypeUtils
 
 		diskExtensions = Collections.unmodifiableSet( diskExtensionsTemp );
 
-		final Set<String> tapeExtensionsTemp = new HashSet<String>();
+		final Set<String> tapeExtensionsTemp = new HashSet<>();
 		tapeExtensionsTemp.add( "cas" );
 		tapeExtensionsTemp.add( "wav" );
 
 		tapeExtensions = Collections.unmodifiableSet( tapeExtensionsTemp );
 
-		final Set<String> laserdiscExtensionsTemp = new HashSet<String>();
+		final Set<String> laserdiscExtensionsTemp = new HashSet<>();
 		laserdiscExtensionsTemp.add( "ogv" );
 
 		laserdiscExtensions = Collections.unmodifiableSet( laserdiscExtensionsTemp );
 
-		final Set<String> zipExtensionsTemp = new HashSet<String>();
+		final Set<String> zipExtensionsTemp = new HashSet<>();
 		zipExtensionsTemp.add( "zip" );
 		zipExtensionsTemp.add( "gz" );
 
@@ -72,7 +72,11 @@ public final class FileTypeUtils
 
 		xmlExtension = Collections.unmodifiableSet( Collections.singleton( "xml" ) );
 
-		ipsExtension = Collections.unmodifiableSet( Collections.singleton( "ips" ) );
+		final Set<String> patchExtensionsTemp = new HashSet<>();
+		patchExtensionsTemp.add( "ips" );
+		patchExtensionsTemp.add( "ups" );
+
+		patchExtensions = Collections.unmodifiableSet( patchExtensionsTemp );
 	}
 
 	public static final long MAX_DISK_FILE_SIZE = 737280;
@@ -144,14 +148,14 @@ public final class FileTypeUtils
 	}
 
 	/**
-	 * Returns if the given file is an IPS file based on its extension
+	 * Returns if the given file is a patch file based on its extension
 	 * 
 	 * @param file File
-	 * @return true if file is an IPS file, false otherwise
+	 * @return true if file is a patch file, false otherwise
 	 */
-	public static boolean isIPS( File file )
+	public static boolean isPatch( File file )
 	{
-		return isType( file, ipsExtension );
+		return isType( file, patchExtensions );
 	}
 
 	/**
@@ -261,13 +265,13 @@ public final class FileTypeUtils
 	}
 
 	/**
-	 * Returns set containing IPS file extensions
+	 * Returns set containing patch file extensions
 	 * 
-	 * @return Non-modifiable set containing IPS file extensions
+	 * @return Non-modifiable set containing patch file extensions
 	 */
-	public static Set<String> getIPSExtensions()
+	public static Set<String> getPatchExtensions()
 	{
-		return ipsExtension;
+		return patchExtensions;
 	}
 
 	private static boolean isType( File file, Set<String> validExtensions )

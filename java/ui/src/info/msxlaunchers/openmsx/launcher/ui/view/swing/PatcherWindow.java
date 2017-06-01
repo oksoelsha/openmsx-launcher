@@ -15,8 +15,10 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +29,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,6 +41,7 @@ import javax.swing.border.EmptyBorder;
 
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.patch.PatchMethod;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JTextFieldDragDrop;
@@ -51,19 +55,22 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplay
  *
  */
 @SuppressWarnings("serial")
-public class IPSPatcherWindow extends JDialog implements ActionListener
+public class PatcherWindow extends JDialog implements ActionListener
 {
 	private final PatcherPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final Component parent;
 
-	private JTextField ipsPatchFileTextField;
-	private JButton ipsPatchFileButton;
+	private JComboBox<PatchMethod> patchMethodComboBox;
+	private JTextField patchFileTextField;
+	private JButton patchFileButton;
 	private JTextField sourceFileTextField;
 	private JButton sourceFileButton;
+	private JPanel verifyChecksumPane;
 	private JCheckBox verifyChecksumCheckBox;
 	private JTextField checksumTextField;
+	private JCheckBox skipCRCVerificationCheckBox;
 	private JLabel targetFileLabel;
 	private JTextField targetFileTextField;
 	private JButton targetFileButton;
@@ -75,7 +82,7 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 	private final FlowLayout LEFT_FLOW_LAYOUT = new FlowLayout(FlowLayout.LEFT);
 	private final FlowLayout RIGHT_FLOW_LAYOUT = new FlowLayout(FlowLayout.RIGHT);
 
-	public IPSPatcherWindow(PatcherPresenter presenter, Language language, boolean rightToLeft)
+	public PatcherWindow(PatcherPresenter presenter, Language language, boolean rightToLeft)
 	{
 		this.presenter = presenter;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
@@ -101,22 +108,36 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 		sourcesPane.setBorder(BorderFactory.createTitledBorder(messages.get("INPUTS")));
 		sourcesPane.setLayout(new BoxLayout(sourcesPane, BoxLayout.Y_AXIS));
 
-		JPanel ipsFilePane = new JPanel();
+		JPanel patchMethodPane = new JPanel();
 
-		JLabel ipsFileLabel = new JLabel("IPS");
-		ipsFilePane.add(ipsFileLabel);
+		JLabel patchMethodLabel = new JLabel(messages.get("METHOD"));
+		patchMethodPane.add(patchMethodLabel);
 
-		ipsPatchFileTextField = new JTextFieldDragDrop();
-		ipsPatchFileTextField.setColumns(25);
-		ipsFilePane.add(ipsPatchFileTextField);
+		patchMethodComboBox = new JComboBox<>();
+		patchMethodComboBox.addItem(PatchMethod.IPS);
+		patchMethodComboBox.addItem(PatchMethod.UPS);
+		patchMethodComboBox.setPreferredSize(new Dimension(patchMethodComboBox.getPreferredSize().width + 20, patchMethodComboBox.getPreferredSize().height));
+		patchMethodComboBox.addActionListener(this);
+		patchMethodPane.add(patchMethodComboBox);
 
-		ipsPatchFileButton = new JButton(Icons.FOLDER.getImageIcon());
-		ipsPatchFileButton.addActionListener(this);
-		ipsPatchFileButton.setToolTipText(messages.get("BROWSE"));
-		ipsPatchFileButton.setPreferredSize(WindowUtils.iconButtonDimension);
-		ipsFilePane.add(ipsPatchFileButton);
+		sourcesPane.add(patchMethodPane);
 
-		sourcesPane.add(ipsFilePane);
+		JPanel patchFilePane = new JPanel();
+
+		JLabel patchFileLabel = new JLabel(messages.get("PATCH"));
+		patchFilePane.add(patchFileLabel);
+
+		patchFileTextField = new JTextFieldDragDrop();
+		patchFileTextField.setColumns(25);
+		patchFilePane.add(patchFileTextField);
+
+		patchFileButton = new JButton(Icons.FOLDER.getImageIcon());
+		patchFileButton.addActionListener(this);
+		patchFileButton.setToolTipText(messages.get("BROWSE"));
+		patchFileButton.setPreferredSize(WindowUtils.iconButtonDimension);
+		patchFilePane.add(patchFileButton);
+
+		sourcesPane.add(patchFilePane);
 
 		JPanel sourceFilePane = new JPanel();
 
@@ -135,18 +156,42 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 
 		sourcesPane.add(sourceFilePane);
 
-		JPanel verifyChecksumPane = new JPanel();
+		verifyChecksumPane = new JPanel();
+		CardLayout cardLayout = new CardLayout();
+		verifyChecksumPane.setLayout(cardLayout);
 
+		JPanel ipsChecksumVerifyPane = new JPanel();
 		verifyChecksumCheckBox = new JCheckBox(messages.get("VERIFY_CHECKSUM"));
 		verifyChecksumCheckBox.addActionListener(this);
-		verifyChecksumPane.add(verifyChecksumCheckBox);
+		ipsChecksumVerifyPane.add(verifyChecksumCheckBox);
 		checksumTextField = new JTextField();
 		checksumTextField.setColumns(18);
 		checksumTextField.setToolTipText("[ SHA1 , MD5 , CRC32 ]");
-		verifyChecksumPane.add(checksumTextField);
-		verifyChecksumPane.setBorder(new EmptyBorder(1, 1, 1, WindowUtils.iconButtonDimension.width + 6));
+		ipsChecksumVerifyPane.add(checksumTextField);
+		ipsChecksumVerifyPane.setBorder(new EmptyBorder(1, 1, 1,
+				WindowUtils.iconButtonDimension.width +
+				6));
+
+		verifyChecksumPane.add(ipsChecksumVerifyPane, PatchMethod.IPS.toString());
+
+		JPanel upsChecksumVerifyPane = new JPanel();
+		skipCRCVerificationCheckBox = new JCheckBox(messages.get("SKIP_CRC"));
+		upsChecksumVerifyPane.add(skipCRCVerificationCheckBox);
+		upsChecksumVerifyPane.setBorder(new EmptyBorder(6, 1, 1,
+				WindowUtils.iconButtonDimension.width +
+				6 +
+				patchFileTextField.getPreferredSize().width -
+				skipCRCVerificationCheckBox.getPreferredSize().width));
+
+		verifyChecksumPane.add(upsChecksumVerifyPane, PatchMethod.UPS.toString());
+
+		cardLayout.show(verifyChecksumPane, PatchMethod.IPS.toString());
 
 		sourcesPane.add(verifyChecksumPane);
+
+		//adjust the alignment of the patch method pane
+		patchMethodPane.setBorder(new EmptyBorder(1, 1, 1,
+				WindowUtils.iconButtonDimension.width + 6 + patchFileTextField.getPreferredSize().width - patchMethodComboBox.getPreferredSize().width));
 
 		contentPane.add(sourcesPane);
 
@@ -162,8 +207,6 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 		targetPane.add(targetPatchedFilePane);
 
 		JPanel targetFilePane = new JPanel();
-		targetFilePane.setLayout(RIGHT_FLOW_LAYOUT);
-
 		targetFileLabel = new JLabel(messages.get("TARGET"));
 		targetFilePane.add(targetFileLabel);
 
@@ -179,7 +222,6 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 		targetPane.add(targetFilePane);
 
 		JPanel patchDirectlyPane = new JPanel();
-		patchDirectlyPane.setLayout(LEFT_FLOW_LAYOUT);
 		patchDirectlyRadioButton = new JRadioButton(messages.get("PATCH_DIRECTLY"));
 		patchDirectlyRadioButton.addActionListener(this);
 		patchDirectlyPane.add(patchDirectlyRadioButton);
@@ -211,32 +253,38 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 
 		if(rightToLeft)
 		{
+			patchMethodPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			sourcesPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			targetPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-			ipsFilePane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-			ipsFilePane.setLayout(LEFT_FLOW_LAYOUT);
+			patchFilePane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+			patchFilePane.setLayout(LEFT_FLOW_LAYOUT);
 			sourceFilePane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			sourceFilePane.setLayout(LEFT_FLOW_LAYOUT);
 			sourceFilePane.setBorder(new EmptyBorder(1, 20, 1, 1));
-			verifyChecksumPane.setLayout(LEFT_FLOW_LAYOUT);
-			verifyChecksumPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+			ipsChecksumVerifyPane.setLayout(LEFT_FLOW_LAYOUT);
+			ipsChecksumVerifyPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			verifyChecksumCheckBox.setHorizontalTextPosition(SwingConstants.LEADING);
+			upsChecksumVerifyPane.setLayout(LEFT_FLOW_LAYOUT);
+			upsChecksumVerifyPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+			skipCRCVerificationCheckBox.setHorizontalTextPosition(SwingConstants.LEADING);
 			targetFilePane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			targetFilePane.setLayout(LEFT_FLOW_LAYOUT);
 			targetPatchedFilePane.setLayout(RIGHT_FLOW_LAYOUT);
+			patchDirectlyPane.setLayout(LEFT_FLOW_LAYOUT);
 			patchDirectlyPane.setLayout(RIGHT_FLOW_LAYOUT);
-			patchDirectlyRadioButton.setHorizontalTextPosition(SwingConstants.LEADING);
 			targetPatchedFileRadioButton.setHorizontalTextPosition(SwingConstants.LEADING);
+			patchDirectlyRadioButton.setHorizontalTextPosition(SwingConstants.LEADING);
 			buttonsPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		}
 		else
 		{
-			ipsFilePane.setLayout(RIGHT_FLOW_LAYOUT);
+			patchMethodPane.setLayout(RIGHT_FLOW_LAYOUT);
+			patchFilePane.setLayout(RIGHT_FLOW_LAYOUT);
 			sourceFilePane.setLayout(RIGHT_FLOW_LAYOUT);
 			sourceFilePane.setBorder(new EmptyBorder(1, 20, 1, 1));
-			verifyChecksumPane.setLayout(RIGHT_FLOW_LAYOUT);
-			targetFilePane.setLayout(RIGHT_FLOW_LAYOUT);
-			
+			ipsChecksumVerifyPane.setLayout(RIGHT_FLOW_LAYOUT);
+			upsChecksumVerifyPane.setLayout(RIGHT_FLOW_LAYOUT);
+			targetFilePane.setLayout(RIGHT_FLOW_LAYOUT);			
 			targetPatchedFilePane.setLayout(LEFT_FLOW_LAYOUT);
 			patchDirectlyPane.setLayout(LEFT_FLOW_LAYOUT);
 		}
@@ -255,9 +303,13 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
-		if(source == ipsPatchFileButton)
+		if(source == patchMethodComboBox)
 		{
-			WindowUtils.browseFile(this, ipsPatchFileTextField, "IPS", FileTypeUtils.getIPSExtensions(), false);
+			((CardLayout)verifyChecksumPane.getLayout()).show(verifyChecksumPane, patchMethodComboBox.getSelectedItem().toString());
+		}
+		else if(source == patchFileButton)
+		{
+			WindowUtils.browseFile(this, patchFileTextField, messages.get("PATCH"), FileTypeUtils.getPatchExtensions(), false);
 		}
 		else if(source == sourceFileButton)
 		{
@@ -295,7 +347,7 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 
 	private void resetFields()
 	{
-		ipsPatchFileTextField.setText(null);
+		patchFileTextField.setText(null);
 		sourceFileTextField.setText(null);
 		verifyChecksumCheckBox.setSelected(false);
 		checksumTextField.setText(null);
@@ -311,9 +363,21 @@ public class IPSPatcherWindow extends JDialog implements ActionListener
 	{
 		try
 		{
-			if (presenter.onRequestPatchFileAction(ipsPatchFileTextField.getText(), sourceFileTextField.getText(),
-					targetPatchedFileRadioButton.isSelected(), targetFileTextField.getText(),
-					verifyChecksumCheckBox.isSelected(), checksumTextField.getText()))
+			boolean successful;
+			if(patchMethodComboBox.getSelectedItem().equals(PatchMethod.IPS))
+			{
+				successful = presenter.onRequestPatchFileActionForIPS(patchFileTextField.getText(), sourceFileTextField.getText(),
+						targetPatchedFileRadioButton.isSelected(), targetFileTextField.getText(),
+						!verifyChecksumCheckBox.isSelected(), checksumTextField.getText());
+			}
+			else
+			{
+				successful = presenter.onRequestPatchFileActionForUPS(patchFileTextField.getText(), sourceFileTextField.getText(),
+						targetPatchedFileRadioButton.isSelected(), targetFileTextField.getText(),
+						skipCRCVerificationCheckBox.isSelected());
+			}
+
+			if(successful)
 			{
 				MessageBoxUtil.showInformationMessageBox(parent, messages.get("FILE_PATCHED_SUCCESSFULLY"), messages, rightToLeft);
 	

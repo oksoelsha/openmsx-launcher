@@ -45,6 +45,7 @@ public class FileTypeUtilsTest
 	private String xml = getClass().getResource("files/xml.Xml").getFile();
 
 	private String ips = getClass().getResource("files/ips.IPS").getFile();
+	private String ups = getClass().getResource("files/ups.ups").getFile();
 
 	private String non = getClass().getResource("files/non.non").getFile();
 
@@ -257,27 +258,30 @@ public class FileTypeUtilsTest
 	}
 
 	@Test
-	public void testIsIPS()
+	public void testIsPatch()
 	{
 		File file;
 		
 		file = null;
-		assertFalse( FileTypeUtils.isIPS( file ) );
+		assertFalse( FileTypeUtils.isPatch( file ) );
 
 		file = new File( "/" );
-		assertFalse( FileTypeUtils.isIPS( file ) );
+		assertFalse( FileTypeUtils.isPatch( file ) );
 
 		file = new File( ips );
-		assertTrue( FileTypeUtils.isIPS( file ) );
+		assertTrue( FileTypeUtils.isPatch( file ) );
+
+		file = new File( ups );
+		assertTrue( FileTypeUtils.isPatch( file ) );
 
 		file = new File( tapeCasUpper );
-		assertFalse( FileTypeUtils.isIPS( file ) );
+		assertFalse( FileTypeUtils.isPatch( file ) );
 
 		file = new File( zip );
-		assertFalse( FileTypeUtils.isIPS( file ) );
+		assertFalse( FileTypeUtils.isPatch( file ) );
 
 		file = new File( xml );
-		assertFalse( FileTypeUtils.isIPS( file ) );
+		assertFalse( FileTypeUtils.isPatch( file ) );
 	}
 	
 	@Test
@@ -291,7 +295,7 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 		assertFalse( FileTypeUtils.isZIP( file ) );
 		assertFalse( FileTypeUtils.isXML( file ) );
-		assertFalse( FileTypeUtils.isIPS( file ) );
+		assertFalse( FileTypeUtils.isPatch( file ) );
 	}	
 
 	@Test

@@ -15,21 +15,12 @@
  */
 package info.msxlaunchers.openmsx.launcher.patch;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
-
 /**
  * 
  * @since v1.9
  * @author Sam Elsharif
+ *
  */
-public class PatcherModule extends AbstractModule
-{
-	@Override 
-	protected void configure()
-	{
-		bind( PatcherProvider.class );
-		bind( Patcher.class ).annotatedWith( Names.named( PatchMethod.IPS.toString() ) ).to( IPSPatcher.class );
-		bind( Patcher.class ).annotatedWith( Names.named( PatchMethod.UPS.toString() ) ).to( UPSPatcher.class );
-	}
+public enum PatchMethod {
+	IPS, UPS;
 }

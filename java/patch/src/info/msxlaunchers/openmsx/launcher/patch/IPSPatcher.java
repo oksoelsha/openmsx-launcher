@@ -16,17 +16,12 @@
 package info.msxlaunchers.openmsx.launcher.patch;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
-import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.HashUtils;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 
 /**
  * IPS Patcher implementation of <code>Patcher</code> interface.
@@ -34,7 +29,7 @@ import info.msxlaunchers.openmsx.common.HashUtils;
  * @author Sam Elsharif
  * @since v1.9
  */
-final class IPSPatcher implements Patcher
+final class IPSPatcher extends AbstractPatcher
 {
 	private final int MINIMUM_IPS_SIZE = 8;
 	private final int MAXIMUM_IPS_SIZE = 16777216;
@@ -45,131 +40,24 @@ final class IPSPatcher implements Patcher
 	private final int RECORD_RLE_SIZE_BYTE_COUNT = 2;
 	private final int IPS_TRUNCATE_BYTE_COUNT = 3;
 	private final byte[] PATCH_EOF = "EOF".getBytes();
-	private final String TEMP_FILENAME = "tempFile.tmp";
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.patch.Patcher#patch(java.nio.file.Path, java.nio.file.Path, java.nio.file.Path, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.patch.AbstractPatcher#performValidation(java.nio.file.Path, java.nio.file.Path, boolean, java.lang.String)
 	 */
 	@Override
-	public void patch( Path fileToPatch, Path patchFile, Path targetFile, String checksum ) throws PatchException
+	protected void performValidation( Path fileToPatch, Path patchFile, boolean skipCheckcum, String checksum ) throws PatchException
 	{
-		Objects.requireNonNull( fileToPatch );
-		Objects.requireNonNull( patchFile );
-
-		Path realFileToPatch = null;
-		try
-		{
-			realFileToPatch = unzipFileToPatchIfNeeded( fileToPatch, targetFile == null );
-			validateFileSize( realFileToPatch, 0, MAXIMUM_SOURCE_SIZE, PatchExceptionIssue.FILE_TO_PATCH_NOT_PATCHABLE );
-			validateFileSize( patchFile, MINIMUM_IPS_SIZE, MAXIMUM_IPS_SIZE, PatchExceptionIssue.INVALID_PATCH_FILE );
-			verifyChecksumIfRequested( realFileToPatch, checksum );
-	
-			byte[] fileToPatchData = readFileData( realFileToPatch );
-			byte[] patchFileData = readFileData( patchFile );
-	
-			byte[] patchedFileData = patchFileData( fileToPatchData, patchFileData );
-	
-			savePatchedData( patchedFileData, realFileToPatch, targetFile );
-		}
-		finally
-		{
-			cleanupTemporaryFile( fileToPatch, realFileToPatch );
-		}
+		validateFileSize( fileToPatch, 0, MAXIMUM_SOURCE_SIZE, PatchExceptionIssue.FILE_TO_PATCH_NOT_PATCHABLE );
+		validateFileSize( patchFile, MINIMUM_IPS_SIZE, MAXIMUM_IPS_SIZE, PatchExceptionIssue.INVALID_PATCH_FILE );
+		verifyChecksumIfRequested( fileToPatch, checksum );
 	}
 
-	private Path unzipFileToPatchIfNeeded( Path fileToPatch, boolean patchSourceDirectly ) throws PatchException
+	@Override
+	protected void patchFileData( Path fileToPatch, Path patchFile, Path targetFile, boolean skipChecksumValidation ) throws PatchException
 	{
-		if( FileTypeUtils.isZIP( fileToPatch.toFile() ) )
-		{
-			if( patchSourceDirectly )
-			{
-				//we don't allow patching the source directly if the file to patch is ZIP
-				throw new PatchException( PatchExceptionIssue.ZIP_SOURCE_FILE_CANNOT_BE_PATCHED_DIRECTLY );
-			}
+		byte[] fileToPatchData = readFileData( fileToPatch );
+		byte[] patchFileData = readFileData( patchFile );
 
-			try
-			{
-				Path tempFile = Files.createTempFile( TEMP_FILENAME, null );
-
-				try( ZipFile zip = new ZipFile( fileToPatch.toFile() ) )
-				{
-					ZipEntry firstZipEntry = zip.entries().nextElement();
-
-					try( InputStream inputStream = zip.getInputStream( firstZipEntry ) )
-					{
-						Files.copy( inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING );
-					}
-				}
-				catch( IOException e )
-				{
-					throw new PatchException( PatchExceptionIssue.IO );
-				}
-
-				return tempFile;
-			}
-			catch( IOException ioe )
-			{
-				throw new PatchException( PatchExceptionIssue.IO );
-			}
-		}
-		else
-		{
-			return fileToPatch;
-		}
-	}
-
-	private void savePatchedData( byte[] patchedFileData, Path fileToPatch, Path targetFile ) throws PatchException
-	{
-		Path fileToWrite;
-		if( targetFile == null )
-		{
-			fileToWrite = fileToPatch;
-		}
-		else
-		{
-			fileToWrite = targetFile;
-		}
-
-		try
-		{
-			Files.write( fileToWrite, patchedFileData );
-		}
-		catch( IOException ioe )
-		{
-			throw new PatchException( PatchExceptionIssue.TARGET_FILE_CANNOT_WRITE );
-		}
-	}
-
-	private void validateFileSize( Path file, int minLimit, int maxLimit, PatchExceptionIssue exceptionIssue ) throws PatchException
-	{
-		try
-		{
-			long size = Files.size( file );
-			if( size < minLimit || size > maxLimit )
-			{
-				throw new PatchException( exceptionIssue );
-			}
-		}
-		catch( IOException ioe )
-		{
-			throw new PatchException( PatchExceptionIssue.IO );
-		}
-	}
-
-	private byte[] readFileData( Path file ) throws PatchException
-	{
-		try
-		{
-			return Files.readAllBytes( file );
-		}
-		catch( IOException ioe )
-		{
-			throw new PatchException( PatchExceptionIssue.IO );
-		}
-	}
-
-	private byte[] patchFileData( byte[] fileToPatchData, byte[] patchFileData ) throws PatchException
-	{
 		if( !isByteSequenceEqualToString( patchFileData, 0, PATCH_HEADER ) )
 		{
 			throw new PatchException( PatchExceptionIssue.INVALID_PATCH_FILE );
@@ -246,12 +134,21 @@ final class IPSPatcher implements Patcher
 			}
 		}
 
-		return patchedBuffer;
+		savePatchedData( patchedBuffer, fileToPatch, targetFile );
 	}
 
-	private boolean isByteSequenceEqualToString( byte[] data, int start, byte[] stringSequence )
+	private byte[] readFileData( Path file ) throws PatchException
 	{
-		return Arrays.equals( Arrays.copyOfRange( data, start, start + stringSequence.length ), stringSequence );
+		try
+		{
+			return Files.readAllBytes( file );
+		}
+		catch( IOException ioe )
+		{
+			LauncherLogger.logException( this, ioe );
+
+			throw new PatchException( PatchExceptionIssue.IO );
+		}
 	}
 
 	private byte[] resizeBuffer( byte[] buffer, int size )
@@ -311,18 +208,25 @@ final class IPSPatcher implements Patcher
 		}
 	}
 
-	private void cleanupTemporaryFile( Path file, Path temporaryUnzippedFile )
+	private void savePatchedData( byte[] patchedFileData, Path fileToPatch, Path targetFile ) throws PatchException
 	{
-		if( FileTypeUtils.isZIP( file.toFile() ) && temporaryUnzippedFile != null )
+		Path fileToWrite;
+		if( targetFile == null )
 		{
-			try
-			{
-				Files.deleteIfExists( temporaryUnzippedFile );
-			}
-			catch( IOException ioe )
-			{
-				//ignore
-			}
+			fileToWrite = fileToPatch;
+		}
+		else
+		{
+			fileToWrite = targetFile;
+		}
+
+		try
+		{
+			Files.write( fileToWrite, patchedFileData );
+		}
+		catch( IOException ioe )
+		{
+			throw new PatchException( PatchExceptionIssue.TARGET_FILE_CANNOT_WRITE );
 		}
 	}
 }

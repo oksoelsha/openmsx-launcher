@@ -19,23 +19,23 @@ import com.google.inject.Inject;
 
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.IPSPatcherWindow;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.PatcherWindow;
 
 /**
- * IPS Swing-based implementation of <code>PatcherView</code>
+ * Swing-based implementation of <code>PatcherView</code>
  * 
  * @since v1.9
  * @author Sam Elsharif
  *
  */
-class IPSPatcherSwingView implements PatcherView
+class PatcherSwingView implements PatcherView
 {
 	private final PatcherPresenter presenter;
 
-	IPSPatcherWindow window = null;
+	PatcherWindow window = null;
 
 	@Inject
-	IPSPatcherSwingView( PatcherPresenter presenter )
+	PatcherSwingView( PatcherPresenter presenter )
 	{
 		this.presenter = presenter;
 	}
@@ -46,7 +46,7 @@ class IPSPatcherSwingView implements PatcherView
 	@Override
 	public void displayScreen( Language language, boolean rightToLeft )
 	{
-		window = new IPSPatcherWindow( presenter, language, rightToLeft );
+		window = new PatcherWindow( presenter, language, rightToLeft );
 
 		window.displayScreen();
 	}

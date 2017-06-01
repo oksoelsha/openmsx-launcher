@@ -108,7 +108,7 @@ public final class HashUtils
 			int count;
 			while( (count = inputStream.read()) != -1 )
 			{
-				crc.update(count);
+				crc.update( count );
 			}
 
 			return Long.toHexString( crc.getValue() );

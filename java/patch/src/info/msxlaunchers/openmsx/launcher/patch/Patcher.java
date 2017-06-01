@@ -32,8 +32,9 @@ public interface Patcher
 	 * @param patchFile Full path to the patch file
 	 * @param targetFile Full path to the target file. If null, the original file will be patched directly. If targetFile exists
 	 *        then it will be overwritten
+	 * @param skipChecksumValidation If true validate checksum. This flag does not depend on the checksum argument
 	 * @param checksum Checksum of the source file to check before patching. Skip if null
 	 * @throws PatchException
 	 */
-	void patch( Path fileToPatch, Path patchFile, Path targetFile, String checksum ) throws PatchException;
+	void patch( Path fileToPatch, Path patchFile, Path targetFile, boolean skipChecksumValidation, String checksum ) throws PatchException;
 }

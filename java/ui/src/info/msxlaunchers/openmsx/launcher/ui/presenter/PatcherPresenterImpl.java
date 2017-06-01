@@ -25,7 +25,8 @@ import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.patch.PatchException;
 import info.msxlaunchers.openmsx.launcher.patch.PatchExceptionIssue;
-import info.msxlaunchers.openmsx.launcher.patch.Patcher;
+import info.msxlaunchers.openmsx.launcher.patch.PatchMethod;
+import info.msxlaunchers.openmsx.launcher.patch.PatcherProvider;
 import info.msxlaunchers.openmsx.launcher.ui.view.PatcherView;
 
 /**
@@ -35,16 +36,16 @@ import info.msxlaunchers.openmsx.launcher.ui.view.PatcherView;
  * @author Sam Elsharif
  *
  */
-class IPSPatcherPresenter implements PatcherPresenter
+class PatcherPresenterImpl implements PatcherPresenter
 {
 	private final PatcherView view;
-	private final Patcher patcher;
+	private final PatcherProvider patcherProvider;
 
 	@Inject
-	public IPSPatcherPresenter( PatcherView view, Patcher patcher )
+	public PatcherPresenterImpl( PatcherView view, PatcherProvider patcherProvider )
 	{
 		this.view = view;
-		this.patcher = patcher;
+		this.patcherProvider = patcherProvider;
 	}
 
 	/* (non-Javadoc)
@@ -57,11 +58,27 @@ class IPSPatcherPresenter implements PatcherPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onRequestPatchFileAction(java.lang.String, java.lang.String, boolean, java.lang.String, boolean, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onRequestPatchFileActionForIPS(java.lang.String, java.lang.String, boolean, java.lang.String, boolean, java.lang.String)
 	 */
 	@Override
-	public boolean onRequestPatchFileAction( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
-			boolean verifyChecksum, String checksum ) throws LauncherException
+	public boolean onRequestPatchFileActionForIPS( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation, String checksum ) throws LauncherException
+	{
+		return patch( patchFile, fileToPatch, useTargetFile, targetFile, skipChecksumValidation, checksum, PatchMethod.IPS );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onRequestPatchFileActionForUPS(java.lang.String, java.lang.String, boolean, java.lang.String, boolean)
+	 */
+	@Override
+	public boolean onRequestPatchFileActionForUPS( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation ) throws LauncherException
+	{
+		return patch( patchFile, fileToPatch, useTargetFile, targetFile, skipChecksumValidation, null, PatchMethod.UPS );
+	}
+
+	private boolean patch( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation, String checksum, PatchMethod patchMethod ) throws LauncherException
 	{
 		Path patchFilePath = Paths.get( checkIfEmpty( patchFile, LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE ) );
 		validateThatFileExists( patchFilePath );
@@ -69,13 +86,20 @@ class IPSPatcherPresenter implements PatcherPresenter
 		Path fileToPatchPath = Paths.get( checkIfEmpty( fileToPatch, LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE ) );
 		validateThatFileExists( fileToPatchPath );
 
+		String checksumValue = null;
+		if( patchMethod == PatchMethod.IPS && !skipChecksumValidation )
+		{
+			checksumValue = checkIfEmpty( checksum, LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
+		}
+
 		Path targetFilePath;
 		if( useTargetFile )
 		{
+			checkIfEmpty( targetFile, LauncherExceptionCode.ERR_IO );
 			targetFilePath = Paths.get( targetFile );
 			if( Files.exists( targetFilePath ) && !view.confirmTargetFileReplacement() )
 			{
-				//the target file exists and the user answered No on replacing the file
+				//the target file exists and the user answered No to replacing the file
 				return false;
 			}
 		}
@@ -84,19 +108,9 @@ class IPSPatcherPresenter implements PatcherPresenter
 			targetFilePath = null;
 		}
 
-		String checksumValue;
-		if( verifyChecksum )
-		{
-			checksumValue = checkIfEmpty( checksum, LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
-		}
-		else
-		{
-			checksumValue = null;
-		}
-
 		try
 		{
-			patcher.patch( fileToPatchPath, patchFilePath, targetFilePath, checksumValue );
+			patcherProvider.get( patchMethod ).patch( fileToPatchPath, patchFilePath, targetFilePath, skipChecksumValidation, checksumValue );
 		} 
 		catch( PatchException pe )
 		{
