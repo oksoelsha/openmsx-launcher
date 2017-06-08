@@ -33,9 +33,10 @@ import java.util.zip.CRC32;
  */
 public final class HashUtils
 {
-	private final static String SHA1 = "SHA1";
-	private final static String MD5 = "MD5";
+	public static final int READ_WRITE_BUFFER_SIZE = 2097152;
 
+	private static final String SHA1 = "SHA1";
+	private static final String MD5 = "MD5";
 	/**
 	 * Returns SHA1 code of data coming from given stream
 	 * 
@@ -61,7 +62,7 @@ public final class HashUtils
 	{
 		Objects.requireNonNull( file );
 
-		try( FileInputStream fis = new FileInputStream( file ) )
+		try( BufferedInputStream fis = new BufferedInputStream( new FileInputStream( file ), READ_WRITE_BUFFER_SIZE ) )
 		{
 			return getSHA1Code( fis );
 		}
@@ -82,7 +83,7 @@ public final class HashUtils
 	{
 		Objects.requireNonNull( file );
 
-		try( FileInputStream fis = new FileInputStream( file ) )
+		try( BufferedInputStream fis = new BufferedInputStream( new FileInputStream( file ), READ_WRITE_BUFFER_SIZE ) )
 		{
 			return getHash( fis, MD5 );
 		}
@@ -101,7 +102,7 @@ public final class HashUtils
 	 */
 	public static String getCRC32Code( File file )
 	{
-		try( InputStream inputStream = new BufferedInputStream( new FileInputStream( file ) ) )
+		try( InputStream inputStream = new BufferedInputStream( new FileInputStream( file ), READ_WRITE_BUFFER_SIZE ) )
 		{
 			CRC32 crc = new CRC32();
 
@@ -132,7 +133,7 @@ public final class HashUtils
 			throw new RuntimeException( e );
 		}
 
-		byte[] dataBytes = new byte[1024];
+		byte[] dataBytes = new byte[0x10000];
 		 
 		int nread = 0; 
 		 

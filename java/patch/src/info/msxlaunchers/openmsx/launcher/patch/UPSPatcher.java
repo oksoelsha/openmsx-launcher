@@ -32,6 +32,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.CRC32;
 
 import info.msxlaunchers.openmsx.common.HashUtils;
 import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
@@ -46,10 +47,9 @@ final class UPSPatcher extends AbstractPatcher
 {
 	private final byte[] PATCH_HEADER = "UPS1".getBytes();
 	private final String tempOutputFile = "tempOutputFile.tmp";
-	private final int READ_WRITE_BUFFER_SIZE = 4194304;
 	private final int CRC_LENGTH = 4;
 	private final int CRC_CHECKS_LENGTH = CRC_LENGTH * 3;
-	private final int XORED_DATA_CHUNK_SIZE= 4096;
+	private final int RANDOM_ACCESS_FILE_BUFFER_SIZE= 4096;
 
 	@Override
 	protected void performValidation( Path fileToPatch, Path patchFile, boolean skipChecksumValidation, String checksum ) throws PatchException
@@ -60,7 +60,7 @@ final class UPSPatcher extends AbstractPatcher
 		{
 			String sourceChecksumFromPatch;
 			String patchChecksumFromPatch;
-			try( RandomAccessFile patchStream = new RandomAccessFile( patchFile.toFile(), "r" ) )
+			try( BufferedRandomAccessFile patchStream = new BufferedRandomAccessFile( patchFile.toFile(), "r" ) )
 			{
 				long patchDataSize = getPatchDataSize( patchFile );
 	
@@ -83,7 +83,12 @@ final class UPSPatcher extends AbstractPatcher
 				throw new PatchException( PatchExceptionIssue.SOURCE_FILE_CHECKSUM_NOT_MATCH );
 			}
 	
-			//TODO check the CRC of the patch file (minus the last 12 bytes of CRC checks)
+			//check the CRC of the patch file (minus the last 4 bytes of patch file CRC)
+			String patchChecksum = getPatchFileCRC( patchFile );
+			if( !patchChecksum.equalsIgnoreCase( patchChecksumFromPatch ) )
+			{
+				throw new PatchException( PatchExceptionIssue.INVALID_PATCH_FILE );
+			}
 		}
 	}
 
@@ -96,7 +101,7 @@ final class UPSPatcher extends AbstractPatcher
 		Path temporaryOutputFile = createTempOutputfile( fileToPatch );
 
 		try( PositionedBufferedInputStream patchStream =  new PositionedBufferedInputStream( new FileInputStream( patchFile.toFile() ) );
-				BufferedRandomAccessFile resultStream = new BufferedRandomAccessFile( temporaryOutputFile.toFile(), "rw", XORED_DATA_CHUNK_SIZE ) )
+				BufferedRandomAccessFile resultStream = new BufferedRandomAccessFile( temporaryOutputFile.toFile(), "rw" ) )
 		{
 			validatePatchHeader( patchStream );
 			long sourceFileSize = getValueFromPatch( patchStream );
@@ -165,7 +170,7 @@ final class UPSPatcher extends AbstractPatcher
 		while( patchStream.getPosition() != patchDataSize )
 		{
 			offset += getValueFromPatch( patchStream );
-			List<Integer> xoredData = new ArrayList<>( XORED_DATA_CHUNK_SIZE );
+			List<Integer> xoredData = new ArrayList<>( RANDOM_ACCESS_FILE_BUFFER_SIZE );
 			try
 			{
 				long writeOffset = offset;
@@ -242,16 +247,17 @@ final class UPSPatcher extends AbstractPatcher
 		if( targetFileSize > sourceFileSize  )
 		{
 			long totalToAdd = targetFileSize - sourceFileSize;
-			long numberOfChunks = totalToAdd / READ_WRITE_BUFFER_SIZE;
-			byte[] bytesToWrite = new byte[READ_WRITE_BUFFER_SIZE];
+			long numberOfChunks = totalToAdd / HashUtils.READ_WRITE_BUFFER_SIZE;
+			byte[] bytesToWrite = new byte[HashUtils.READ_WRITE_BUFFER_SIZE];
 			int index;
 
 			try
 			{
-				for(index = 0; index < numberOfChunks; index++) {
+				for( index = 0; index < numberOfChunks; index++ )
+				{
 					Files.write( temporaryOutputFile, bytesToWrite, StandardOpenOption.APPEND );
 				}
-				int modulo = (int)(totalToAdd % READ_WRITE_BUFFER_SIZE);
+				int modulo = (int)(totalToAdd % HashUtils.READ_WRITE_BUFFER_SIZE);
 				Files.write( temporaryOutputFile, new byte[modulo], StandardOpenOption.APPEND );
 			}
 			catch( IOException ioe )
@@ -267,7 +273,7 @@ final class UPSPatcher extends AbstractPatcher
 	{
 		if( targetFileSize < sourceFileSize  )
 		{
-			try( FileOutputStream os = new FileOutputStream(temporaryOutputFile.toFile(), true); FileChannel outChan = os.getChannel() )
+			try( FileOutputStream os = new FileOutputStream( temporaryOutputFile.toFile(), true ); FileChannel outChan = os.getChannel() )
 			{
 				outChan.truncate( targetFileSize );
 			}
@@ -340,6 +346,29 @@ final class UPSPatcher extends AbstractPatcher
 		}
 	}
 
+
+	private String getPatchFileCRC( Path patchFile ) throws PatchException
+	{
+		try( InputStream inputStream = new BufferedInputStream( new FileInputStream( patchFile.toFile() ),  HashUtils.READ_WRITE_BUFFER_SIZE ) )
+		{
+			long patchDataSizeForCRCChecksum = Files.size( patchFile ) - CRC_LENGTH;
+			CRC32 crc = new CRC32();
+
+			for( long index = 0; index < patchDataSizeForCRCChecksum; index++ )
+			{
+				crc.update( inputStream.read() );
+			}
+
+			return Long.toHexString( crc.getValue() );
+		}
+		catch( IOException ioe )
+		{
+			LauncherLogger.logException( this, ioe );
+
+			throw new PatchException( PatchExceptionIssue.IO );
+		}
+	}
+
 	private void moveToAppropriateTarget( Path temporaryFile, Path fileToPatch, Path targetFile ) throws PatchException
 	{
 		Path finalPatchedFile;
@@ -382,7 +411,7 @@ final class UPSPatcher extends AbstractPatcher
 
 		PositionedBufferedInputStream( InputStream in )
 		{
-			super( in, READ_WRITE_BUFFER_SIZE );
+			super( in, HashUtils.READ_WRITE_BUFFER_SIZE );
 			position = 0L;
 		}
 
@@ -417,10 +446,10 @@ final class UPSPatcher extends AbstractPatcher
 		private byte[] buffer;
 		private int bufferIndex;
 
-		BufferedRandomAccessFile(File file, String mode, int bufferSize ) throws FileNotFoundException
+		BufferedRandomAccessFile(File file, String mode ) throws FileNotFoundException
 		{
 			super( file, mode );
-			this.bufferSize = bufferSize;
+			this.bufferSize = RANDOM_ACCESS_FILE_BUFFER_SIZE;
 			bufferIndex = 0;
 		}
 
