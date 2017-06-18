@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
@@ -23,6 +24,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -36,6 +38,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -363,30 +366,116 @@ public class PatcherWindow extends JDialog implements ActionListener
 	{
 		try
 		{
-			boolean successful;
-			if(patchMethodComboBox.getSelectedItem().equals(PatchMethod.IPS))
+			boolean isIPSPatchMethod = patchMethodComboBox.getSelectedItem().equals(PatchMethod.IPS);
+			if(presenter.onValidate(sourceFileTextField.getText(), patchFileTextField.getText(), targetPatchedFileRadioButton.isSelected(),
+					targetFileTextField.getText(), isIPSPatchMethod, !verifyChecksumCheckBox.isSelected(), checksumTextField.getText()))
 			{
-				successful = presenter.onRequestPatchFileActionForIPS(patchFileTextField.getText(), sourceFileTextField.getText(),
-						targetPatchedFileRadioButton.isSelected(), targetFileTextField.getText(),
-						!verifyChecksumCheckBox.isSelected(), checksumTextField.getText());
-			}
-			else
-			{
-				successful = presenter.onRequestPatchFileActionForUPS(patchFileTextField.getText(), sourceFileTextField.getText(),
-						targetPatchedFileRadioButton.isSelected(), targetFileTextField.getText(),
-						skipCRCVerificationCheckBox.isSelected());
-			}
+				BusyIndicator busyIndicator = new BusyIndicator();
+				busyIndicator.prepareIndicator();
 
-			if(successful)
-			{
+				PatchTask patchTask = new PatchTask(isIPSPatchMethod, busyIndicator);
+				patchTask.execute();
+
+				busyIndicator.showIndicator();
+
+				//here the patching task finished
+				//the next call is meant to throws a LauncherException that may have been thrown in the task
+				patchTask.get();
+
+				//here patching was successful
 				MessageBoxUtil.showInformationMessageBox(parent, messages.get("FILE_PATCHED_SUCCESSFULLY"), messages, rightToLeft);
-	
+				
 				resetFields();
 			}
 		}
 		catch(LauncherException le)
 		{
+			//this can only be thrown from the validation not the patching step
 			MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+		}
+		catch (InterruptedException ie)
+		{
+			//shouldn't happen
+		}
+		catch(ExecutionException ee)
+		{
+			Throwable ex = ee.getCause();
+			if(ex instanceof LauncherException)
+			{
+				MessageBoxUtil.showErrorMessageBox(parent, (LauncherException)ex, messages, rightToLeft);
+			}
+		}
+	}
+
+	private class PatchTask extends SwingWorker<Void, Void>
+	{
+		private final boolean isIPSPatchMethod;
+		private final BusyIndicator busyIndicator;
+
+		PatchTask(boolean isIPSPatchMethod, BusyIndicator busyIndicator)
+		{
+			this.isIPSPatchMethod = isIPSPatchMethod;
+			this.busyIndicator = busyIndicator;
+		}
+
+		@Override
+		protected Void doInBackground() throws LauncherException
+		{
+			if(isIPSPatchMethod)
+			{
+				presenter.onRequestPatchFileActionForIPS(patchFileTextField.getText(), sourceFileTextField.getText(),
+						targetPatchedFileRadioButton.isSelected(), targetFileTextField.getText(),
+						!verifyChecksumCheckBox.isSelected(), checksumTextField.getText());
+			}
+			else
+			{
+				presenter.onRequestPatchFileActionForUPS(patchFileTextField.getText(), sourceFileTextField.getText(),
+						targetPatchedFileRadioButton.isSelected(), targetFileTextField.getText(),
+						skipCRCVerificationCheckBox.isSelected());
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void done()
+		{
+			busyIndicator.dispose();
+        }
+    }
+
+	private class BusyIndicator extends JDialog
+	{
+		void prepareIndicator()
+		{
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			setModalityType(ModalityType.APPLICATION_MODAL);
+			setResizable(false);
+			setUndecorated(true);
+		    JPanel panel = new JPanel();
+		    panel.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+		    setContentPane(panel);
+
+			if(rightToLeft)
+			{
+				panel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+				panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 8, 8));
+			}
+			else
+			{
+				panel.setLayout(new FlowLayout(FlowLayout.LEFT, 8, 8));
+			}
+
+			panel.add(new JLabel(Icons.BUSY_INDICATOR.getImageIcon()));
+			panel.add(new JLabel(messages.get("PATCHING") + "..."));
+
+			pack();
+			setLocationRelativeTo(parent);
+		}
+
+		void showIndicator()
+		{
+			setVisible(true);
 		}
 	}
 }

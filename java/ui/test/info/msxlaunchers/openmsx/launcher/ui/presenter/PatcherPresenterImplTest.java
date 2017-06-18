@@ -45,7 +45,7 @@ public class PatcherPresenterImplTest
 	}
 
 	@Test
-	public void givenLanguageAndOrientation_whenOnRequestIPSPatcherScreen_throwCallView()
+	public void givenLanguageAndOrientation_whenOnRequestIPSPatcherScreen_thenCallView()
 	{
 		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
 
@@ -55,13 +55,13 @@ public class PatcherPresenterImplTest
 	}
 
 	@Test( expected = LauncherException.class )
-	public void givenNonExistentPatchFile_whenOnRequestPatchFileActionForIPS_thenThrowException() throws LauncherException, IOException
+	public void givenNullFileToPatch_whenOnValidate_thenThrowException() throws LauncherException, IOException
 	{
 		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( "non-existent-patch-file", tmpFolder.newFile().toString(), false, null, false, null );
+			presenter.onValidate( null, tmpFolder.newFile().toString(), false, null, false, false, null );
 		}
 		catch( LauncherException le )
 		{
@@ -71,13 +71,13 @@ public class PatcherPresenterImplTest
 	}
 
 	@Test( expected = LauncherException.class )
-	public void givenEmptyPatchFile_whenOnRequestPatchFileActionForIPS_thenThrowException() throws LauncherException, IOException
+	public void givenEmptyFileToPatch_whenOnValidate_thenThrowException() throws LauncherException, IOException
 	{
 		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( "", tmpFolder.newFile().toString(), false, null, false, null );
+			presenter.onValidate( " ", tmpFolder.newFile().toString(), false, null, false, false, null );
 		}
 		catch( LauncherException le )
 		{
@@ -87,13 +87,13 @@ public class PatcherPresenterImplTest
 	}
 
 	@Test( expected = LauncherException.class )
-	public void givenNonExistentFileToPatch_whenOnRequestPatchFileActionForIPS_thenThrowException() throws LauncherException, IOException
+	public void givenNonExitentFileToPatch_whenOnValidate_thenThrowException() throws LauncherException, IOException
 	{
 		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( tmpFolder.newFile().toString(), "non-existent-file-to-patch", false, null, false, null );
+			presenter.onValidate( "/non-existent", tmpFolder.newFile().toString(), false, null, false, false, null );
 		}
 		catch( LauncherException le )
 		{
@@ -103,19 +103,133 @@ public class PatcherPresenterImplTest
 	}
 
 	@Test( expected = LauncherException.class )
-	public void givenNonEmptyFileToPatch_whenOnRequestPatchFileActionForIPS_thenThrowException() throws LauncherException, IOException
+	public void givenNullPatchFile_whenOnValidate_thenThrowException() throws LauncherException, IOException
 	{
 		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
 
 		try
 		{
-			presenter.onRequestPatchFileActionForIPS( tmpFolder.newFile().toString(), "", false, null, false, null );
+			presenter.onValidate( tmpFolder.newFile().toString(), null, false, null, false, false, null );
 		}
 		catch( LauncherException le )
 		{
 			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
 			throw le;
 		}
+	}
+
+	@Test( expected = LauncherException.class )
+	public void givenEmptyPatchFile_whenOnValidate_thenThrowException() throws LauncherException, IOException
+	{
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		try
+		{
+			presenter.onValidate( tmpFolder.newFile().toString(), " ", false, null, false, false, null );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			throw le;
+		}
+	}
+
+	@Test( expected = LauncherException.class )
+	public void givenNonExitentPatchFile_whenOnValidate_thenThrowException() throws LauncherException, IOException
+	{
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		try
+		{
+			presenter.onValidate( tmpFolder.newFile().toString(), "/non-existent", false, null, false, false, null );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			throw le;
+		}
+	}
+
+	@Test( expected = LauncherException.class )
+	public void givenIPSMethodAndNotSkipValidation_whenOnValidate_thenChecksumCannotBeNull() throws LauncherException, IOException
+	{
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		try
+		{
+			presenter.onValidate( tmpFolder.newFile().toString(), tmpFolder.newFile().toString(), false, null, true, false, null );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
+			throw le;
+		}
+	}
+
+	@Test( expected = LauncherException.class )
+	public void givenIPSMethodAndNotSkipValidation_whenOnValidate_thenChecksumCannotBeEmpty() throws LauncherException, IOException
+	{
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		try
+		{
+			presenter.onValidate( tmpFolder.newFile().toString(), tmpFolder.newFile().toString(), false, null, true, false, " " );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
+			throw le;
+		}
+	}
+
+	@Test( expected = LauncherException.class )
+	public void givenUseTargetFile_whenOnValidate_thenTargetFileCannotBeNull() throws LauncherException, IOException
+	{
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		try
+		{
+			presenter.onValidate( tmpFolder.newFile().toString(), tmpFolder.newFile().toString(), true, null, true, false, "1234" );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			throw le;
+		}
+	}
+
+	@Test( expected = LauncherException.class )
+	public void givenUseTargetFile_whenOnValidate_thenTargetFileCannotBeEmpty() throws LauncherException, IOException
+	{
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		try
+		{
+			presenter.onValidate( tmpFolder.newFile().toString(), tmpFolder.newFile().toString(), true, " ", true, false, "1234" );
+		}
+		catch( LauncherException le )
+		{
+			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			throw le;
+		}
+	}
+
+	@Test
+	public void givenExistentTargetFileAndUserNotReplace_whenOnValidate_thenReturnFalse() throws LauncherException, IOException
+	{
+		when( view.confirmTargetFileReplacement() ).thenReturn( false );
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		Assert.assertFalse( presenter.onValidate( tmpFolder.newFile().toString(), tmpFolder.newFile().toString(), true,
+				tmpFolder.newFile().toString(), false, false, "1234" ) );
+	}
+
+	@Test
+	public void givenAllInputValie_whenOnValidate_thenReturnTrue() throws LauncherException, IOException
+	{
+		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
+
+		Assert.assertTrue( presenter.onValidate( tmpFolder.newFile().toString(), tmpFolder.newFile().toString(), false, null, false, false, "1234" ) );
 	}
 
 	@Test
@@ -126,10 +240,9 @@ public class PatcherPresenterImplTest
 		String patchFile = tmpFolder.newFile().toString();
 		String fileToPatch = tmpFolder.newFile().toString();
 
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, null );
+		presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, true, null );
 
 		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, null );
-		Assert.assertTrue( returnValue );
 	}
 
 	@Test
@@ -140,10 +253,9 @@ public class PatcherPresenterImplTest
 		String patchFile = tmpFolder.newFile().toString();
 		String fileToPatch = tmpFolder.newFile().toString();
 
-		boolean returnValue = presenter.onRequestPatchFileActionForUPS( patchFile, fileToPatch, false, null, true );
+		presenter.onRequestPatchFileActionForUPS( patchFile, fileToPatch, false, null, true );
 
 		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, true, null );
-		Assert.assertTrue( returnValue );
 	}
 
 	@Test
@@ -155,10 +267,9 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 		String targetFile = new File( tmpFolder.getRoot(), "tmpFile" ).toString();
 
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
+		presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 
 		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), true, null );
-		Assert.assertTrue( returnValue );
 	}
 
 	@Test
@@ -171,64 +282,9 @@ public class PatcherPresenterImplTest
 		String targetFile = tmpFolder.newFile().toString();
 
 		when( view.confirmTargetFileReplacement() ).thenReturn( true );
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
+		presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 
 		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), true, null );
-		Assert.assertTrue( returnValue );
-	}
-
-	@Test
-	public void givenPatchFileAndFileToPatchAndExistentingTargetFileWithConfirmNotToReplace_whenOnRequestPatchFileActionForIPS_thenSkipPatchAndReturnFalse() throws LauncherException, IOException, PatchException
-	{
-		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
-
-		String patchFile = tmpFolder.newFile().toString();
-		String fileToPatch = tmpFolder.newFile().toString();
-		String targetFile = tmpFolder.newFile().toString();
-
-		when( view.confirmTargetFileReplacement() ).thenReturn( false );
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
-
-		verifyZeroInteractions( patcherProvider );
-		Assert.assertFalse( returnValue );
-	}
-
-	@Test( expected = LauncherException.class )
-	public void givenVerifyChecksumTrueAndNullChecksum_whenOnRequestPatchFileActionForIPS_thenThrowException() throws IOException, LauncherException
-	{
-		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
-
-		String patchFile = tmpFolder.newFile().toString();
-		String fileToPatch = tmpFolder.newFile().toString();
-
-		try
-		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, null );
-		}
-		catch( LauncherException le )
-		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
-			throw le;
-		}
-	}
-
-	@Test( expected = LauncherException.class )
-	public void givenVerifyChecksumTrueAndEmptyChecksum_whenOnRequestPatchFileActionForIPS_thenThrowException() throws IOException, LauncherException
-	{
-		PatcherPresenterImpl presenter = new PatcherPresenterImpl( view, patcherProvider );
-
-		String patchFile = tmpFolder.newFile().toString();
-		String fileToPatch = tmpFolder.newFile().toString();
-
-		try
-		{
-			presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, " " );
-		}
-		catch( LauncherException le )
-		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
-			throw le;
-		}
 	}
 
 	@Test
@@ -240,10 +296,9 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 
 		when( view.confirmTargetFileReplacement() ).thenReturn( false );
-		boolean returnValue = presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, "123456" );
+		presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, "123456" );
 
 		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, "123456" );
-		Assert.assertTrue( returnValue );
 	}
 
 	@Test( expected = LauncherException.class )

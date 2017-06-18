@@ -58,27 +58,11 @@ class PatcherPresenterImpl implements PatcherPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onRequestPatchFileActionForIPS(java.lang.String, java.lang.String, boolean, java.lang.String, boolean, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onValidate(java.lang.String, java.lang.String, boolean, java.lang.String, boolean, boolean, java.lang.String)
 	 */
 	@Override
-	public boolean onRequestPatchFileActionForIPS( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
+	public boolean onValidate( String fileToPatch, String patchFile, boolean useTargetFile, String targetFile, boolean ipsPatchMethod,
 			boolean skipChecksumValidation, String checksum ) throws LauncherException
-	{
-		return patch( patchFile, fileToPatch, useTargetFile, targetFile, skipChecksumValidation, checksum, PatchMethod.IPS );
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onRequestPatchFileActionForUPS(java.lang.String, java.lang.String, boolean, java.lang.String, boolean)
-	 */
-	@Override
-	public boolean onRequestPatchFileActionForUPS( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
-			boolean skipChecksumValidation ) throws LauncherException
-	{
-		return patch( patchFile, fileToPatch, useTargetFile, targetFile, skipChecksumValidation, null, PatchMethod.UPS );
-	}
-
-	private boolean patch( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
-			boolean skipChecksumValidation, String checksum, PatchMethod patchMethod ) throws LauncherException
 	{
 		Path patchFilePath = Paths.get( checkIfEmpty( patchFile, LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE ) );
 		validateThatFileExists( patchFilePath );
@@ -86,22 +70,53 @@ class PatcherPresenterImpl implements PatcherPresenter
 		Path fileToPatchPath = Paths.get( checkIfEmpty( fileToPatch, LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE ) );
 		validateThatFileExists( fileToPatchPath );
 
-		String checksumValue = null;
-		if( patchMethod == PatchMethod.IPS && !skipChecksumValidation )
+		if( ipsPatchMethod && !skipChecksumValidation )
 		{
-			checksumValue = checkIfEmpty( checksum, LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
+			checkIfEmpty( checksum, LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
 		}
 
-		Path targetFilePath;
 		if( useTargetFile )
 		{
 			checkIfEmpty( targetFile, LauncherExceptionCode.ERR_IO );
-			targetFilePath = Paths.get( targetFile );
-			if( Files.exists( targetFilePath ) && !view.confirmTargetFileReplacement() )
+			if( Files.exists( Paths.get( targetFile ) ) && !view.confirmTargetFileReplacement() )
 			{
 				//the target file exists and the user answered No to replacing the file
 				return false;
 			}
+		}
+
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onRequestPatchFileActionForIPS(java.lang.String, java.lang.String, boolean, java.lang.String, boolean, java.lang.String)
+	 */
+	@Override
+	public void onRequestPatchFileActionForIPS( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation, String checksum ) throws LauncherException
+	{
+		patch( patchFile, fileToPatch, useTargetFile, targetFile, skipChecksumValidation, checksum, PatchMethod.IPS );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.PatcherPresenter#onRequestPatchFileActionForUPS(java.lang.String, java.lang.String, boolean, java.lang.String, boolean)
+	 */
+	@Override
+	public void onRequestPatchFileActionForUPS( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation ) throws LauncherException
+	{
+		patch( patchFile, fileToPatch, useTargetFile, targetFile, skipChecksumValidation, null, PatchMethod.UPS );
+	}
+
+	private void patch( String patchFile, String fileToPatch, boolean useTargetFile, String targetFile,
+			boolean skipChecksumValidation, String checksum, PatchMethod patchMethod ) throws LauncherException
+	{
+		Path patchFilePath = Paths.get( patchFile );
+		Path fileToPatchPath = Paths.get( fileToPatch );
+		Path targetFilePath;
+		if( useTargetFile )
+		{
+			targetFilePath = Paths.get( targetFile );
 		}
 		else
 		{
@@ -110,7 +125,7 @@ class PatcherPresenterImpl implements PatcherPresenter
 
 		try
 		{
-			patcherProvider.get( patchMethod ).patch( fileToPatchPath, patchFilePath, targetFilePath, skipChecksumValidation, checksumValue );
+			patcherProvider.get( patchMethod ).patch( fileToPatchPath, patchFilePath, targetFilePath, skipChecksumValidation, checksum );
 		} 
 		catch( PatchException pe )
 		{
@@ -136,8 +151,6 @@ class PatcherPresenterImpl implements PatcherPresenter
 				throw new LauncherException( LauncherExceptionCode.ERR_IO );
 			}
 		}
-
-		return true;
 	}
 
 	private void validateThatFileExists( Path filePath ) throws LauncherException

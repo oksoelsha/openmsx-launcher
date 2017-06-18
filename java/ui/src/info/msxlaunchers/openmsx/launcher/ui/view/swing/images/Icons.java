@@ -100,14 +100,21 @@ public enum Icons
 	GENERATION_MSX( "generation/msx" ),
 	GENERATION_MSX2( "generation/msx2" ),
 	GENERATION_MSX2P( "generation/msx2p" ),
-	GENERATION_TURBO_R( "generation/msxturbor" )
+	GENERATION_TURBO_R( "generation/msxturbor" ),
+
+	BUSY_INDICATOR( "busy", "gif" )
 	;
 
 	private final ImageIcon imageIcon;
 
 	Icons( String iconFile )
 	{
-		this.imageIcon = new ImageIcon(getClass().getResource(iconFile + ".png"));
+		this( iconFile, "png" );
+	}
+
+	Icons( String iconFile, String ext )
+	{
+		this.imageIcon = new ImageIcon( getClass().getResource( iconFile + "." + ext ) );
 	}
 
 	public ImageIcon getImageIcon()
