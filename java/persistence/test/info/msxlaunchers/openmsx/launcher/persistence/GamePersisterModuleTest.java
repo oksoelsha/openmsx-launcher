@@ -5,7 +5,7 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 public class GamePersisterModuleTest
 {
@@ -20,6 +20,6 @@ public class GamePersisterModuleTest
 		LauncherPersistence instance1 = injector.getInstance( LauncherPersistence.class );
 		LauncherPersistence instance2 = injector.getInstance( LauncherPersistence.class );
 
-		assertTrue( instance1 == instance2 );
+		assertSame( instance1, instance2 );
 	}
 }

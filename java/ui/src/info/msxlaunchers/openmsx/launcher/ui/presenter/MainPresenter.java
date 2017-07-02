@@ -345,6 +345,11 @@ public interface MainPresenter
 	void onRequestPatcherScreen();
 
 	/**
+	 * Called when user requests the machine update screen
+	 */
+	void onRequestMachineUpdateScreen() throws LauncherException;
+
+	/**
 	 * Called when application closes down
 	 */
 	void onRequestExit();

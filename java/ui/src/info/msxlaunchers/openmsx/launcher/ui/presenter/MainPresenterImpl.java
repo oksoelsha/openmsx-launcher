@@ -90,6 +90,7 @@ final class MainPresenterImpl implements MainPresenter
 	private final DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory;
 	private final Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	private final Provider<PatcherPresenter> patcherPresenterFactory;
+	private final MachineUpdatePresenterFactory machineUpdatePresenterFactory;
 
 	private static final String SCREENSHOT_EXT = ".png";
 	private static final String SCREENSHOT1_SUFFIX = "a";
@@ -135,7 +136,8 @@ final class MainPresenterImpl implements MainPresenter
 			RepositoryData repositoryData,
 			FileLocator fileLocator,
 			DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory,
-			Provider<PatcherPresenter> patcherPresenterFactory ) throws IOException
+			Provider<PatcherPresenter> patcherPresenterFactory,
+			MachineUpdatePresenterFactory machineUpdatePresenterFactory ) throws IOException
 	{
 		this.view = Objects.requireNonNull( view );
 		this.settingsPresenterFactory = Objects.requireNonNull( settingsPresenterFactory );
@@ -155,6 +157,7 @@ final class MainPresenterImpl implements MainPresenter
 		this.draggedAndDroppedGamesPresenterFactory = Objects.requireNonNull( draggedAndDroppedGamesPresenterFactory );
 		this.activityViewerPresenterFactory = Objects.requireNonNull( activityViewerPresenterFactory );
 		this.patcherPresenterFactory = Objects.requireNonNull( patcherPresenterFactory );
+		this.machineUpdatePresenterFactory = Objects.requireNonNull( machineUpdatePresenterFactory );
 
 		try
 		{
@@ -1092,6 +1095,15 @@ final class MainPresenterImpl implements MainPresenter
 	public void onRequestPatcherScreen()
 	{
 		patcherPresenterFactory.get().onRequestIPSPatcherScreen( currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestMachineUpdateScreen()
+	 */
+	@Override
+	public void onRequestMachineUpdateScreen() throws LauncherException
+	{
+		machineUpdatePresenterFactory.create( currentDatabase ).onRequestMachineUpdateScreen( currentLanguage, currentRightToLeft );
 	}
 
 	/* (non-Javadoc)

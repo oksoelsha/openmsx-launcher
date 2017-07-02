@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.persistence;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersister;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
+import info.msxlaunchers.openmsx.launcher.persistence.machine.MachineUpdatePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 
@@ -80,4 +81,11 @@ public interface LauncherPersistence
 	 * @return Reference to the GameFinder
 	 */
 	GameFinder getGameFinder();
+
+	/**
+	 * Returns the machne update persister
+	 * 
+	 * @return Reference to the MachineUpdatePersister
+	 */
+	MachineUpdatePersister getMachineUpdatePersister();
 }

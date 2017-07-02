@@ -108,6 +108,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenu actionsMenu;
 	private JMenuItem actionsCreateEmptyDatabase;
 	private JMenuItem actionsFillDatabase;
+	private JMenuItem actionsChangeMachine;
 	private JMenuItem actionsUpdateAllDatabase;
 	private JMenuItem actionsImportBlueMSXLauncherDatabases;
 	private JMenu toolsMenu;
@@ -294,8 +295,13 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         actionsMenu.add(actionsCreateEmptyDatabase);
 
         actionsFillDatabase = new JMenuItemWithIcon();
+        actionsFillDatabase.setIcon( Icons.FILL_DB.getImageIcon() );
         actionsFillDatabase.addActionListener(event -> onRequestFillDatabaseScreen());
         actionsMenu.add(actionsFillDatabase);
+
+        actionsChangeMachine = new JMenuItemWithIcon();
+        actionsChangeMachine.addActionListener(event -> onRequestChangeMachineScreen());
+        actionsMenu.add(actionsChangeMachine);
 
         actionsUpdateAllDatabase = new JMenuItemWithIcon();
         //update all databases only appears if added manually to the settings file
@@ -644,6 +650,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		actionsCreateEmptyDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("CREATE_EMPTY_DATABASE_MNEMONIC")).getKeyCode());
 		actionsFillDatabase.setText(messages.get("FILL_DATABASE") + "...");
 		actionsFillDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("FILL_DATABASE_MNEMONIC")).getKeyCode());
+		actionsChangeMachine.setText(messages.get("CHANGE_MACHINE") + "...");
+		actionsChangeMachine.setMnemonic(KeyStroke.getKeyStroke(messages.get("CHANGE_MACHINE_MNEMONIC")).getKeyCode());
 		actionsUpdateAllDatabase.setText(messages.get("UPDATE_ALL_DATABASES"));
 		actionsUpdateAllDatabase.setMnemonic(KeyStroke.getKeyStroke(messages.get("UPDATE_ALL_DATABASES_MNEMONIC")).getKeyCode());
 		actionsImportBlueMSXLauncherDatabases.setText(messages.get("IMPORT_BLUEMSXLAUNCHER_DATABASES"));
@@ -1074,6 +1082,18 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		try
 		{
 			presenter.onRequestFillDatabaseScreen();
+		}
+		catch(LauncherException le)
+		{
+			MessageBoxUtil.showErrorMessageBox(ref, le, messages, orientation);
+		}
+	}
+
+	private void onRequestChangeMachineScreen()
+	{
+		try
+		{
+			presenter.onRequestMachineUpdateScreen();
 		}
 		catch(LauncherException le)
 		{

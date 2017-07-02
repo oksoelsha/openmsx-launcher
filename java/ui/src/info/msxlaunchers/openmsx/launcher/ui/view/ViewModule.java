@@ -42,6 +42,7 @@ public class ViewModule extends AbstractModule
 		bind( DatabaseBackupsView.class ).to( DatabaseBackupsSwingView.class );
 		bind( ActivityViewerView.class ).to( ActivityViewerSwingView.class );
 		bind( PatcherView.class ).to( PatcherSwingView.class );
+		bind( MachineUpdateView.class ).to( MachineUpdateSwingView.class );
 
 		install( new ViewPlatformModule() );
 	}

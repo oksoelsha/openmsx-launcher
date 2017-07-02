@@ -3,78 +3,28 @@ package info.msxlaunchers.openmsx.launcher.persistence.favorite;
 import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
-import info.msxlaunchers.openmsx.launcher.persistence.BasicTestModule;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceModule;
+import info.msxlaunchers.openmsx.launcher.persistence.DatabaseTest;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceExceptionIssue;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith( MockitoJUnitRunner.class )
-public class EmbeddedDatabaseFavoritePersisterTest
+public class EmbeddedDatabaseFavoritePersisterTest extends DatabaseTest
 {
 	@Mock GameBuilder gameBuilder;
 
-	@ClassRule
-	public static TemporaryFolder tmpFolder = new TemporaryFolder();
-
-	static private String dbLocation;
-	static private String dbURL;
-
-	static LauncherPersistence launcherPersistence;
-
 	private static final String database1 = "database1";
 	private static final String database2 = "database2";
-
-	@BeforeClass
-	public static void createDatabaseOnce() throws SQLException, LauncherPersistenceException
-	{
-		dbLocation = new File( new File( tmpFolder.getRoot().toString(), "databases" ), "launcherdb" ).toString();
-		dbURL = "jdbc:derby:" + dbLocation;
-
-		Injector injector = Guice.createInjector(
-				new BasicTestModule( tmpFolder.getRoot().toString() ),
-	    		new LauncherPersistenceModule()
-				);
-
-		launcherPersistence = injector.getInstance( LauncherPersistence.class );
-		launcherPersistence.initialize();
-	}
-
-	@Before
-	public void cleanupDatabase() throws SQLException
-	{
-		try( Connection connection = DriverManager.getConnection( dbURL ) )
-		{
-			try( PreparedStatement statement = connection.prepareStatement( "DELETE FROM database" ) )
-			{
-				statement.executeUpdate();
-			}
-		}
-	}
 
 	@Test
 	public void test_whenAddFavorite_thenGetFavoritesContainsAddedOnes() throws GamePersistenceException, FavoritePersistenceException

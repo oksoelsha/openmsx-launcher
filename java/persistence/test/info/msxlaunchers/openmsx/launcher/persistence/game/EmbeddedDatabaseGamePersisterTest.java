@@ -6,12 +6,8 @@ import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
-import info.msxlaunchers.openmsx.launcher.persistence.BasicTestModule;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceModule;
+import info.msxlaunchers.openmsx.launcher.persistence.DatabaseTest;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,17 +19,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -46,43 +35,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith( MockitoJUnitRunner.class )
-public class EmbeddedDatabaseGamePersisterTest
+public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 {
 	@Mock GameBuilder gameBuilder;
 	@Mock ActionDecider actionDecider;
-
-	@ClassRule
-	public static TemporaryFolder tmpFolder = new TemporaryFolder();
-
-	static private String dbLocation;
-	static private String dbURL;
-
-	@BeforeClass
-	public static void createDatabaseOnce() throws SQLException, LauncherPersistenceException
-	{
-		dbLocation = new File( new File( tmpFolder.getRoot().toString(), "databases" ), "launcherdb" ).toString();
-		dbURL = "jdbc:derby:" + dbLocation;
-
-		Injector injector = Guice.createInjector(
-				new BasicTestModule( tmpFolder.getRoot().toString() ),
-	    		new LauncherPersistenceModule()
-				);
-
-		LauncherPersistence launcherPersistence = injector.getInstance( LauncherPersistence.class );
-		launcherPersistence.initialize();
-	}
-
-	@Before
-	public void cleanupDatabase() throws SQLException
-	{
-		try( Connection connection = DriverManager.getConnection( dbURL ) )
-		{
-			try( PreparedStatement statement = connection.prepareStatement( "DELETE FROM database" ) )
-			{
-				statement.executeUpdate();
-			}
-		}
-	}
 
 	private static final String database1 = "database1";
 	private static final String database2 = "database2";

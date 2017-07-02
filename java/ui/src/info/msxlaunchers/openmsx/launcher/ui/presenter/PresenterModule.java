@@ -42,5 +42,6 @@ public class PresenterModule extends AbstractModule
 		install( new FactoryModuleBuilder().implement( DatabaseBackupsPresenter.class, DatabaseBackupsPresenterImpl.class ).build( DatabaseBackupsPresenterFactory.class ) );
 		bind( ActivityViewerPresenter.class ).to( ActivityViewerPresenterImpl.class );
 		bind( PatcherPresenter.class ).to( PatcherPresenterImpl.class );
+		install( new FactoryModuleBuilder().implement( MachineUpdatePresenter.class, MachineUpdatePresenterImpl.class ).build( MachineUpdatePresenterFactory.class ) );
 	}
 }

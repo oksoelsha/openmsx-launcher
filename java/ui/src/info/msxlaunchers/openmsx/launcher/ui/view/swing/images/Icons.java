@@ -48,6 +48,7 @@ public enum Icons
 	SEARCH( "search" ),
 	SETTINGS( "settings" ),
 	PATCH ( "patch" ),
+	FILL_DB ( "fill-db" ),
 
 	ADD_SMALL( "add_small" ),
 	DELETE_SMALL( "delete_small" ),
