@@ -2,7 +2,6 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.File;

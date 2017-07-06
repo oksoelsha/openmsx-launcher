@@ -40,8 +40,9 @@ public interface MachineUpdatePresenter
 	 * @param machineTo Machine to update to. Cannot be null
 	 * @param machineFrom Machine to update from. Can be null
 	 * @param database Database name. Can be null
+	 * @param backDatabases If true, backup affected databases before updating the machines
 	 * @return Number of updated profiles
 	 * @throws LauncherException
 	 */
-	int onRequestMachineUpdateAction( String machineTo, String machineFrom, String database ) throws LauncherException;
+	int onRequestMachineUpdateAction( String machineTo, String machineFrom, String database, boolean backupDatabases ) throws LauncherException;
 }

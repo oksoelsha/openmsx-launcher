@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.persistence.machine;
+package info.msxlaunchers.openmsx.launcher.persistence.game;
 
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.TransactionalDatabaseOperation;
@@ -21,6 +21,8 @@ import info.msxlaunchers.openmsx.launcher.persistence.TransactionalDatabaseOpera
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * Class to update machines
@@ -36,12 +38,14 @@ final class UpdateMachineAction extends TransactionalDatabaseOperation<Integer>
 	private final String to;
 	private final String from;
 	private final String database;
+	private final boolean backupAffectedDatabases;
 
-	UpdateMachineAction( String to, String from, String database )
+	UpdateMachineAction( String to, String from, String database, boolean backupAffectedDatabases )
 	{
 		this.to = to;
 		this.from = from;
 		this.database = database;
+		this.backupAffectedDatabases = backupAffectedDatabases;
 	}
 
 	/* (non-Javadoc)
@@ -50,6 +54,17 @@ final class UpdateMachineAction extends TransactionalDatabaseOperation<Integer>
 	@Override
 	public UpdateMachineResponse executeTransactionalOperation( Connection connection ) throws LauncherPersistenceException
 	{
+		//backup databases(s) if requested
+		if( backupAffectedDatabases )
+		{
+			Set<String> databasesToBackups = getDatabasesToBackup( connection );
+	
+			for( String databaseToBackup: databasesToBackups )
+			{
+				new BackupDatabaseAction( databaseToBackup ).executeTransactionalOperation( connection );
+			}
+		}
+
 		String statementString = getStatementString();
 		int totalUpdated = 0;
 
@@ -61,10 +76,22 @@ final class UpdateMachineAction extends TransactionalDatabaseOperation<Integer>
 		}
 		catch( SQLException se )
 		{
-			throwEncapsulatingException( new MachineUpdatePersistenceException( MachineUpdatePersistenceExceptionIssue.IO ) );
+			throwEncapsulatingException( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) );
 		}
 
 		return new UpdateMachineResponse( totalUpdated );
+	}
+
+	private Set<String> getDatabasesToBackup( Connection connection )
+	{
+		if( database == null )
+		{
+			return new GetDatabasesAction().executeNonTransactionalOperation( connection ).getResult();
+		}
+		else
+		{
+			return Collections.singleton( database );
+		}
 	}
 
 	private String getStatementString()

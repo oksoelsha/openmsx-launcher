@@ -352,4 +352,22 @@ final class EmbeddedDatabaseGamePersister implements GamePersister
 			throw (GamePersistenceException)lpe.getException();
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister#updateMachine(java.lang.String, java.lang.String, java.lang.String, boolean)
+	 */
+	@Override
+	public int updateMachine( String to, String from, String database, boolean backupDatabases ) throws GamePersistenceException
+	{
+		Objects.requireNonNull( to );
+
+		try
+		{
+			return new UpdateMachineAction( to, from, database, backupDatabases ).execute( databaseFullPath ).getResult();
+		}
+		catch( LauncherPersistenceException lpe )
+		{
+			throw (GamePersistenceException)lpe.getException();
+		}
+	}
 }

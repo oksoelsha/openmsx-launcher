@@ -9,7 +9,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersister;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
-import info.msxlaunchers.openmsx.launcher.persistence.machine.MachineUpdatePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 
@@ -23,7 +22,6 @@ public class EmbeddedDatabaseLauncherPersistenceTest
 	@Mock FilterPersister filterPersister;
 	@Mock SettingsPersister settingsPersister;
 	@Mock GameFinder gameFinder;
-	@Mock MachineUpdatePersister machineUpdatePersister;
 
 	private String userDataDirectory;
 	private String databasesDirectoryName;
@@ -39,7 +37,7 @@ public class EmbeddedDatabaseLauncherPersistenceTest
 		databaseFullPath = "databaseFullPath";
 
 		launcherPersistence = new EmbeddedDatabaseLauncherPersistence( gamePersister, favoritePersister, filterPersister,
-				settingsPersister, gameFinder, machineUpdatePersister, userDataDirectory, databasesDirectoryName, databaseFullPath );
+				settingsPersister, gameFinder, userDataDirectory, databasesDirectoryName, databaseFullPath );
 	}
 
 	@Test
@@ -70,11 +68,5 @@ public class EmbeddedDatabaseLauncherPersistenceTest
 	public void test_whenGetGameFinder_thenReturnGameFinder()
 	{
 		assertSame( gameFinder, launcherPersistence.getGameFinder() );
-	}
-
-	@Test
-	public void test_whenGetMachineUpdatePersister_thenReturnMachineUpdatePersister()
-	{
-		assertSame( machineUpdatePersister, launcherPersistence.getMachineUpdatePersister() );
 	}
 }

@@ -180,4 +180,16 @@ public interface GamePersister
 	 * @throws GamePersistenceException
 	 */
 	Set<Game> moveGames( Set<Game> games, String oldDatabase, String newDatabase, ActionDecider actionDecider ) throws GamePersistenceException;
+
+	/**
+	 * Update machine name in the database from the given value to the given value
+	 * 
+	 * @param to Machine name to change to. Cannot be null
+	 * @param from Machine name to change from. If null, change all machine to the to value
+	 * @param database Database name. If null, change machines in all databases
+	 * @param backupDatabases If true, backup affected databases before updating the machines
+	 * @return Total number of updated machines
+	 * @throws GamePersistenceException
+	 */
+	int updateMachine( String to, String from, String database, boolean backupDatabases ) throws GamePersistenceException;
 }

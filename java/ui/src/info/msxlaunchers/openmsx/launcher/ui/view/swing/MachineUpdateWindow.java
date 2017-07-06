@@ -38,6 +38,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -69,6 +70,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 	private JRadioButton changeFromToMachineRadioButton;
 	private JComboBox<String> changeFromMachineComboBox;
 	private JComboBox<String> changeToMachineComboBox;
+	private JCheckBox backupAffectedDatabasesCheckBox;
 	private JButton okButton;
 	private JButton cancelButton;
 
@@ -167,9 +169,16 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 
 		contentPane.add(machinesPane);
 
+		JPanel backupPane = new JPanel();
+		backupAffectedDatabasesCheckBox = new JCheckBox(messages.get("BACKUP_AFFECTED_DATABASES"));
+		backupAffectedDatabasesCheckBox.setSelected(true);
+		backupPane.add(backupAffectedDatabasesCheckBox);
+
+		contentPane.add(backupPane);
+
 		//buttons
 		JPanel buttonsPane = new JPanel();
-		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		buttonsPane.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 8));
 
 		okButton = new JButton(messages.get("OK"));
 		okButton.addActionListener(this);
@@ -195,7 +204,13 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 			changeAllMachinesRadioButton.setHorizontalTextPosition(SwingConstants.TRAILING);
 			changeFromToMachineRadioButton.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			changeFromToMachineRadioButton.setHorizontalTextPosition(SwingConstants.TRAILING);
+			backupPane.setLayout(new FlowLayout(FlowLayout.RIGHT, 18, 12));
+			backupAffectedDatabasesCheckBox.setHorizontalTextPosition(SwingConstants.LEADING);
 			buttonsPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		}
+		else
+		{
+			backupPane.setLayout(new FlowLayout(FlowLayout.LEFT, 18, 12));
 		}
 
 		pack();
@@ -233,7 +248,8 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 	{
 		try
 		{
-			int totalUpdated = presenter.onRequestMachineUpdateAction(getToMachine(), getFromMachine(), getDatabase());
+			int totalUpdated = presenter.onRequestMachineUpdateAction(getToMachine(), getFromMachine(), getDatabase(),
+					backupAffectedDatabasesCheckBox.isSelected());
 
 			dispose();
 			

@@ -30,7 +30,6 @@ import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersister
 import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterPersister;
 import info.msxlaunchers.openmsx.launcher.persistence.game.DerbyLogSuppressor;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
-import info.msxlaunchers.openmsx.launcher.persistence.machine.MachineUpdatePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 
@@ -78,7 +77,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 	private final FilterPersister filterPersister;
 	private final SettingsPersister settingsPersister;
 	private final GameFinder gameFinder;
-	private final MachineUpdatePersister machineUpdatePersister;
 	private final File databasesDirectory;
 	private final String databaseFullPath;
 
@@ -88,7 +86,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			FilterPersister filterPersister,
 			SettingsPersister settingsPersister,
 			GameFinder gameFinder,
-			MachineUpdatePersister machineUpdatePersiste,
 			@Named("UserDataDirectory") String userDataDirectory,
 			@Named("DatabasesDirectoryName") String databasesDirectoryName,
 			@Named("EmbeddedDatabaseFullPath") String databaseFullPath )
@@ -98,7 +95,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 		this.filterPersister = filterPersister;
 		this.settingsPersister = settingsPersister;
 		this.gameFinder = gameFinder;
-		this.machineUpdatePersister = machineUpdatePersiste;
 		this.databasesDirectory = new File( userDataDirectory, databasesDirectoryName );
 		this.databaseFullPath = databaseFullPath;
 	}
@@ -207,15 +203,6 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 	public GameFinder getGameFinder()
 	{
 		return gameFinder;
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence#getMachineUpdatePersister()
-	 */
-	@Override
-	public MachineUpdatePersister getMachineUpdatePersister()
-	{
-		return machineUpdatePersister;
 	}
 
 	private void createTables( Connection connection ) throws SQLException

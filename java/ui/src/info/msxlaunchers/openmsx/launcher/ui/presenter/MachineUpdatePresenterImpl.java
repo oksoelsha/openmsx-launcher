@@ -16,8 +16,9 @@
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.persistence.machine.MachineUpdatePersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.machine.MachineUpdatePersister;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceExceptionIssue;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
 import info.msxlaunchers.openmsx.launcher.ui.view.MachineUpdateView;
 import info.msxlaunchers.openmsx.machine.InvalidMachinesDirectoryException;
 import info.msxlaunchers.openmsx.machine.MachineLister;
@@ -40,17 +41,17 @@ final class MachineUpdatePresenterImpl implements MachineUpdatePresenter
 	private final MainPresenter mainPresenter;
 	private final MachineLister machineLister;
 	private final MachineUpdateView view;
-	private final MachineUpdatePersister machineUpdatePersister;
+	private final GamePersister gamePersister;
 	private final String currentDatabase;
 
 	@Inject
 	MachineUpdatePresenterImpl( MainPresenter mainPresenter, MachineLister machineLister, MachineUpdateView view,
-			MachineUpdatePersister machineUpdatePersister, @Assisted String currentDatabase )
+			GamePersister gamePersister, @Assisted String currentDatabase )
 	{
 		this.mainPresenter = Objects.requireNonNull( mainPresenter );
 		this.machineLister = Objects.requireNonNull( machineLister );
 		this.view = Objects.requireNonNull( view );
-		this.machineUpdatePersister = Objects.requireNonNull( machineUpdatePersister );
+		this.gamePersister = Objects.requireNonNull( gamePersister );
 		this.currentDatabase = Objects.requireNonNull( currentDatabase );
 	}
 
@@ -75,21 +76,29 @@ final class MachineUpdatePresenterImpl implements MachineUpdatePresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MachineUpdatePresenter#onRequestMachineUpdateAction(java.lang.String, java.lang.String, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MachineUpdatePresenter#onRequestMachineUpdateAction(java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	@Override
-	public int onRequestMachineUpdateAction( String machineTo, String machineFrom, String database ) throws LauncherException
+	public int onRequestMachineUpdateAction( String machineTo, String machineFrom, String database, boolean backupDatabases ) throws LauncherException
 	{
 		try
 		{
-			int totalUpdated = machineUpdatePersister.update( machineTo, machineFrom, database );
+			int totalUpdated = gamePersister.updateMachine( machineTo, machineFrom, database, backupDatabases );
+
 			mainPresenter.onViewUpdatedDatabase( database );
 
 			return totalUpdated;
 		}
-		catch ( MachineUpdatePersistenceException mupe )
+		catch ( GamePersistenceException gpe )
 		{
-			throw new LauncherException( LauncherExceptionCode.ERR_IO );
+			if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_MAX_BACKUPS_REACHED ) )
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_MAX_BACKUPS_REACHED, gpe.getaffectedObject() );
+			}
+			else
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_IO );
+			}
 		}
 	}
 }

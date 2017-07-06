@@ -13,28 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.persistence.machine;
+package info.msxlaunchers.openmsx.launcher.persistence.game;
 
-import java.util.Objects;
+import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 
 /**
+ * Class to contain result of <code>UpdateMachineAction</code> operation
+ * 
  * @since v1.9
  * @author Sam Elsharif
  *
  */
-public class MachineUpdatePersistenceException extends Exception
+final class UpdateMachineResponse implements DatabaseResponse<Integer>
 {
-	private static final long serialVersionUID = 1L;
+	private final int updatedMachinesNumber;
 
-	private final MachineUpdatePersistenceExceptionIssue issue;
-
-	public MachineUpdatePersistenceException( MachineUpdatePersistenceExceptionIssue issue )
+	UpdateMachineResponse( int updatedMachinesNumber )
 	{
-		this.issue = Objects.requireNonNull( issue );
+		this.updatedMachinesNumber = updatedMachinesNumber;
 	}
 
-	public MachineUpdatePersistenceExceptionIssue getIssue()
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse#getResult()
+	 */
+	@Override
+	public Integer getResult()
 	{
-		return issue;
+		return updatedMachinesNumber;
 	}
 }
