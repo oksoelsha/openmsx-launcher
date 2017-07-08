@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
+import info.msxlaunchers.openmsx.common.Nullable;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceExceptionIssue;
@@ -46,13 +47,13 @@ final class MachineUpdatePresenterImpl implements MachineUpdatePresenter
 
 	@Inject
 	MachineUpdatePresenterImpl( MainPresenter mainPresenter, MachineLister machineLister, MachineUpdateView view,
-			GamePersister gamePersister, @Assisted String currentDatabase )
+			GamePersister gamePersister, @Nullable @Assisted String currentDatabase )
 	{
 		this.mainPresenter = Objects.requireNonNull( mainPresenter );
 		this.machineLister = Objects.requireNonNull( machineLister );
 		this.view = Objects.requireNonNull( view );
 		this.gamePersister = Objects.requireNonNull( gamePersister );
-		this.currentDatabase = Objects.requireNonNull( currentDatabase );
+		this.currentDatabase = currentDatabase;
 	}
 
 	/* (non-Javadoc)
@@ -61,6 +62,11 @@ final class MachineUpdatePresenterImpl implements MachineUpdatePresenter
 	@Override
 	public void onRequestMachineUpdateScreen( Language currentLanguage, boolean currentRightToLeft ) throws LauncherException
 	{
+		if( currentDatabase == null )
+		{
+			throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND );
+		}
+
 		try
 		{
 			view.displayScreen( this, currentDatabase, currentLanguage, currentRightToLeft, machineLister.get() );
