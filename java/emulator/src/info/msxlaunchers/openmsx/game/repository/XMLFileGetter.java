@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Sam Elsharif
+ * Copyright 2017 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,22 @@
  */
 package info.msxlaunchers.openmsx.game.repository;
 
-import info.msxlaunchers.openmsx.game.repository.processor.XMLProcessorModule;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.multibindings.Multibinder;
+import java.io.File;
+import java.io.IOException;
 
 /**
- * @since v1.0
+ * Interface to return the XML file that contains game data (e.g. databases from openMSX or blueMSX)
+ * 
+ * @since v1.10
  * @author Sam Elsharif
- *
  */
-public class RepositoryDataModule extends AbstractModule
+interface XMLFileGetter
 {
-	@Override 
-	protected void configure()
-	{
-		bind( RepositoryData.class ).to( XMLRepositoryData.class );
-
-		install( new XMLProcessorModule() );
-
-		Multibinder<XMLFileGetter> multibinder = Multibinder.newSetBinder( binder(), XMLFileGetter.class );
-		multibinder.addBinding().to( ROMXMLFileGetter.class );
-		multibinder.addBinding().to( TapeXMLFileGetter.class );
-	}
+	/**
+	 * Return the full path of the XML file
+	 * 
+	 * @return Full path of the XML file, or null if none was found
+	 * @throws IOException
+	 */
+	File get() throws IOException;
 }

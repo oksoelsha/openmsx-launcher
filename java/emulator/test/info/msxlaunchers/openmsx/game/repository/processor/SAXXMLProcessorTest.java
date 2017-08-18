@@ -3,6 +3,7 @@ package info.msxlaunchers.openmsx.game.repository.processor;
 import info.msxlaunchers.openmsx.game.repository.processor.SAXXMLProcessor;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class SAXXMLProcessorTest
 {
-	private final String softwareXML = getClass().getResource( "softwaredb.xml" ).getFile();
+	private final File softwareXML = new File( getClass().getResource( "softwaredb.xml" ).getFile() );
 
 	@Test
 	public void testGetValidRepositoryInfo() throws IOException
@@ -32,7 +33,7 @@ public class SAXXMLProcessorTest
 	{
 		SAXXMLProcessor saxXMLProcessor = new SAXXMLProcessor();
 
-		saxXMLProcessor.getRepositoryInfo( "/non existent/softwaredb.xml" );
+		saxXMLProcessor.getRepositoryInfo( new File( "/non existent/softwaredb.xml" ) );
 	}
 
 	@Test
@@ -65,7 +66,7 @@ public class SAXXMLProcessorTest
 	{
 		SAXXMLProcessor saxXMLProcessor = new SAXXMLProcessor();
 
-		saxXMLProcessor.getDumpCodes( "/non existent/softwaredb.xml", "code" );
+		saxXMLProcessor.getDumpCodes( new File( "/non existent/softwaredb.xml" ), "code" );
 	}
 
 	@Test

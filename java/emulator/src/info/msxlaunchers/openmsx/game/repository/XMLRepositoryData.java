@@ -15,19 +15,18 @@
  */
 package info.msxlaunchers.openmsx.game.repository;
 
-import info.msxlaunchers.openmsx.common.Nullable;
 import info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
-import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 /**
  * XML implementation of <code>RepositoryData</code>
@@ -38,16 +37,14 @@ import com.google.inject.name.Named;
  */
 final class XMLRepositoryData implements RepositoryData
 {
-	private final SettingsPersister settingsPersister;
 	private final XMLProcessor xmlProcessor;
-	private final String baseDirectory;
+	private final Set<XMLFileGetter> xmlFileGetters;
 
 	@Inject
-	XMLRepositoryData( SettingsPersister settingsPersister, XMLProcessor xmlProcessor, @Nullable @Named("BaseDirectory") String baseDirectory )
+	XMLRepositoryData( XMLProcessor xmlProcessor, Set<XMLFileGetter> xmlFileGetters )
 	{
-		this.settingsPersister = Objects.requireNonNull( settingsPersister );
 		this.xmlProcessor = Objects.requireNonNull( xmlProcessor );
-		this.baseDirectory = baseDirectory;
+		this.xmlFileGetters = Objects.requireNonNull( xmlFileGetters );
 	}
 
 	/* (non-Javadoc)
@@ -56,16 +53,23 @@ final class XMLRepositoryData implements RepositoryData
 	@Override
 	public Map<String, RepositoryGame> getRepositoryInfo() throws IOException
 	{
-		String xmlFile = getXMLFile();
+		Map<String, RepositoryGame> repositoryInfo = null;
 
-		if( xmlFile == null )
+		for( XMLFileGetter xmlFileGetter: xmlFileGetters )
 		{
-			return null;
+			File xmlFile = xmlFileGetter.get();
+
+			if( xmlFile != null && xmlFile.exists() )
+			{
+				if( repositoryInfo == null )
+				{
+					repositoryInfo = new HashMap<>();
+				}
+				repositoryInfo.putAll( xmlProcessor.getRepositoryInfo( xmlFile ) );
+			}
 		}
-		else
-		{
-			return xmlProcessor.getRepositoryInfo( xmlFile );
-		}
+
+		return repositoryInfo;
 	}
 
 	/* (non-Javadoc)
@@ -76,7 +80,19 @@ final class XMLRepositoryData implements RepositoryData
 	{
 		Objects.requireNonNull( code );
 
-		return xmlProcessor.getDumpCodes( getXMLFile(), code );
+		for( XMLFileGetter xmlFileGetter: xmlFileGetters )
+		{
+			Set<String> dumpCodes = xmlProcessor.getDumpCodes( xmlFileGetter.get(), code );
+
+			if( !dumpCodes.isEmpty() )
+			{
+				//dumps should only be in one of the XML files. If we found some in any of them, just return the set
+				return dumpCodes;
+			}
+		}
+
+		//at this point nothing was found so return an empty Set
+		return Collections.emptySet();
 	}
 
 	/* (non-Javadoc)
@@ -87,36 +103,17 @@ final class XMLRepositoryData implements RepositoryData
 	{
 		Objects.requireNonNull( code );
 
-		return xmlProcessor.getGameInfo( getXMLFile(), code );
-	}
-
-	private String getXMLFile() throws IOException
-	{
-		String openMSXMachinesFullPath = null;
-
-		openMSXMachinesFullPath = settingsPersister.getSettings().getOpenMSXMachinesFullPath();
-
-		String xmlFile;
-
-		if( openMSXMachinesFullPath != null )
+		for( XMLFileGetter xmlFileGetter: xmlFileGetters )
 		{
-			File openMSXMachinesFullPathWithBase;
-			if( baseDirectory == null )
-			{
-				openMSXMachinesFullPathWithBase = new File( openMSXMachinesFullPath );
-			}
-			else
-			{
-				openMSXMachinesFullPathWithBase = new File( baseDirectory, openMSXMachinesFullPath );
-			}
+			RepositoryGame repositoryGame = xmlProcessor.getGameInfo( xmlFileGetter.get(), code );
 
-			xmlFile = new File( openMSXMachinesFullPathWithBase.getParentFile(), "softwaredb.xml" ).getAbsolutePath();
-		}
-		else
-		{
-			xmlFile = null;
+			if( repositoryGame != null )
+			{
+				return repositoryGame;
+			}
 		}
 
-		return xmlFile;
+		//at this point nothing was found so just return null
+		return null;
 	}
 }

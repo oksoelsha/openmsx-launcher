@@ -2,148 +2,146 @@ package info.msxlaunchers.openmsx.game.repository;
 
 import info.msxlaunchers.openmsx.game.repository.XMLRepositoryData;
 import info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor;
-import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
-import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
+import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 
 @RunWith( MockitoJUnitRunner.class )
 public class XMLRepositoryDataTest
 {
 	@Mock XMLProcessor xmlProcessor;
-	@Mock SettingsPersister settingsPersister;
+	@Mock XMLFileGetter xmlFileGetter1;
+	@Mock XMLFileGetter xmlFileGetter2;
 
 	@Test( expected = NullPointerException.class )
-	public void testForNullConditionsConstructorArg1() throws IOException
+	public void testForNullConditionsConstructorArg1()
 	{
-		new XMLRepositoryData( null, xmlProcessor, null );
-	}
-
-	@Test( expected = NullPointerException.class )
-	public void testForNullConditionsConstructorArg2() throws IOException
-	{
-		new XMLRepositoryData( settingsPersister, null, null );
-	}
-
-	@Test
-	public void testGetRepositoryInfoValidXML() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "path-will-make-xml-file-valid", null, null, null, false ) );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getRepositoryInfo();
-
-		verify( xmlProcessor, times( 1 ) ).getRepositoryInfo( anyString() );
-	}
-
-	@Test
-	public void testGetRepositoryInfoInvalidXML() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getRepositoryInfo();
-
-		verify( xmlProcessor, never() ).getRepositoryInfo( anyString() );
-	}
-
-	@Test( expected = IOException.class )
-	public void testGetRepositoryInfoIOException() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenThrow( new IOException() );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getRepositoryInfo();
-	}
-
-	@Test
-	public void testGetGameInfo() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "machines-path", null, null, null, false ) );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getGameInfo( "123" );
-
-		verify( xmlProcessor, times( 1 ) ).getGameInfo( anyString(), eq( "123" ) );
-	}
-
-	@Test( expected = IOException.class )
-	public void testGetGameInfoIOException() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenThrow( new IOException() );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getGameInfo( "123" );
-	}
-
-	@Test
-	public void testGetAllDumpCodes() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getDumpCodes( "123" );
-
-		verify( xmlProcessor, times( 1 ) ).getDumpCodes( anyString(), eq( "123" ) );
-	}
-
-	@Test( expected = IOException.class )
-	public void testGetAllDumpCodesIOException() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenThrow( new IOException() );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getDumpCodes( "123" );
+		new XMLRepositoryData( null, Collections.emptySet() );
 	}
 
 	@Test( expected = NullPointerException.class )
-	public void testGetGameInfoNullArgument() throws IOException
+	public void testForNullConditionsConstructorArg2()
 	{
-		when( settingsPersister.getSettings() )
-		.thenReturn( new Settings( "openMSXFullPath",
-				"openMSXMachinesFullPath",
-				"screenshotsFullPath",
-				"defaultDatabase",
-				null,
-				false ) );
-
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
-
-		xmlRepositoryData.getGameInfo( null );
+		new XMLRepositoryData( xmlProcessor, null );
 	}
 
-	@Test( expected = NullPointerException.class )
-	public void testGetAllDumpCodesNullArgument() throws IOException
+	@Test
+	public void givenNoXMLFiles_whenGetRepositoryInfo_thenReturnNull() throws IOException
 	{
-		when( settingsPersister.getSettings() )
-		.thenReturn( new Settings( "openMSXFullPath",
-				"openMSXMachinesFullPath",
-				"screenshotsFullPath",
-				"defaultDatabase",
-				null,
-				false ) );
+		Set<XMLFileGetter> xmlFileGetters = Collections.singleton( xmlFileGetter1 );
 
-		XMLRepositoryData xmlRepositoryData = new XMLRepositoryData( settingsPersister, xmlProcessor, null );
+		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
 
-		xmlRepositoryData.getDumpCodes( null );
+		Assert.assertNull( repositoryData.getRepositoryInfo() );
+	}
+
+	@Test
+	public void givenTwoExistingXMLFilesAndOneNonExistingXMLFile_whenGetRepositoryInfo_thenMapOfAllXMLDataInTwoFiles() throws IOException
+	{
+		XMLFileGetter xmlFileGetter3 = Mockito.mock( XMLFileGetter.class );
+		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2, xmlFileGetter3 ).collect( Collectors.toSet() );
+
+		File xmlFile1 = File.createTempFile( "temp1", null );
+		xmlFile1.deleteOnExit();
+		File xmlFile2 = File.createTempFile( "temp2", null );
+		xmlFile2.deleteOnExit();
+		File xmlFile3 = new File( "non-existing-file" );
+
+		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
+		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
+		Mockito.when( xmlFileGetter3.get() ).thenReturn( xmlFile3 );
+
+		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
+		Assert.assertNotNull( repositoryData.getRepositoryInfo() );
+
+		Mockito.verify( xmlProcessor, Mockito.times( 1 ) ).getRepositoryInfo( xmlFile1 );
+		Mockito.verify( xmlProcessor, Mockito.times( 1 ) ).getRepositoryInfo( xmlFile2 );
+		Mockito.verify( xmlProcessor, Mockito.never() ).getRepositoryInfo( xmlFile3 );
+	}
+
+	@Test
+	public void givenTwoExistingXMLFilesWithNoMatchingCode_whenGetDumps_thenReturnEmptySet() throws IOException
+	{
+		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2 ).collect( Collectors.toSet() );
+
+		File xmlFile1 = new File( "file1" );
+		File xmlFile2 = new File( "file2" );
+
+		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
+		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
+
+		Mockito.when( xmlProcessor.getDumpCodes( xmlFile1, "code" ) ).thenReturn( Collections.emptySet() );
+		Mockito.when( xmlProcessor.getDumpCodes( xmlFile2, "code" ) ).thenReturn( Collections.emptySet() );
+
+		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
+
+		Assert.assertTrue( repositoryData.getDumpCodes( "code" ).size() == 0 );
+	}
+
+	@Test
+	public void givenTwoExistingXMLFilesWithMatchingCode_whenGetDumps_thenReturnDumpCodes() throws IOException
+	{
+		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2 ).collect( Collectors.toSet() );
+
+		File xmlFile1 = new File( "file1" );
+		File xmlFile2 = new File( "file2" );
+
+		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
+		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
+
+		Set<String> dumpCodes = Stream.of( "code1", "code2" ).collect( Collectors.toSet() );
+		Mockito.when( xmlProcessor.getDumpCodes( xmlFile1, "code" ) ).thenReturn( dumpCodes );
+		Mockito.when( xmlProcessor.getDumpCodes( xmlFile2, "code" ) ).thenReturn( Collections.emptySet() );
+
+		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
+
+		Assert.assertTrue( repositoryData.getDumpCodes( "code" ).size() == 2 );
+	}
+
+	@Test
+	public void givenTwoExistingXMLFilesWithNoMatchingCode_whenGetGameInfo_thenReturnNull() throws IOException
+	{
+		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2 ).collect( Collectors.toSet() );
+
+		File xmlFile1 = new File( "file1" );
+		File xmlFile2 = new File( "file2" );
+
+		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
+		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
+
+		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
+
+		Assert.assertNull( repositoryData.getGameInfo( "code" ) );
+	}
+
+	@Test
+	public void givenTwoExistingXMLFilesWithMatchingCode_whenGetGameInfo_thenReturnGameRepository() throws IOException
+	{
+		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2 ).collect( Collectors.toSet() );
+
+		File xmlFile1 = new File( "file1" );
+		File xmlFile2 = new File( "file2" );
+
+		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
+		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
+
+		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "year", "country" );
+		Mockito.when( xmlProcessor.getGameInfo( xmlFile1, "code" ) ).thenReturn( repositoryGame );
+
+		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
+
+		Assert.assertSame( repositoryGame, repositoryData.getGameInfo( "code" ) );
 	}
 }

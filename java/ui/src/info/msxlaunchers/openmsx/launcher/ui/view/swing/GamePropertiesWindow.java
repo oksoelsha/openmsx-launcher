@@ -135,7 +135,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
         		game.getTape(), game.getHarddisk(), game.getLaserdisc(), game.getTclScript()));
         addPropertyToDisplay(messages.get("FILE"), mainFile.getAbsolutePath());
         addPropertyToDisplay(messages.get("MEDIUM"), messages.get(getMedium(game)));
-        if(game.isROM() && repositoryGame != null)
+        if(repositoryGame != null)
         {
             addPropertyToDisplay(messages.get("KNOWN_DUMPS"), String.valueOf(knownDumps));
         }
@@ -144,7 +144,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
         	addPropertyToDisplay(messages.get("SIZE"), Utils.getString(game.getSize() / 1024) + " KB");
         }
         addPropertyToDisplay("SHA1", game.getSha1Code(), true);
-        if(game.isROM() && repositoryGame != null)
+        if(repositoryGame != null)
         {
             addPropertyToDisplay(messages.get("COMPANY"), repositoryGame.getCompany());
             addPropertyToDisplay(messages.get("YEAR"), repositoryGame.getYear());

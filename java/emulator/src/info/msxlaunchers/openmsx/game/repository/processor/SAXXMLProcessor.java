@@ -46,10 +46,10 @@ import org.xml.sax.helpers.DefaultHandler;
 final class SAXXMLProcessor implements XMLProcessor
 {
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor#getRepositoryInfo(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor#getRepositoryInfo(java.io.File)
 	 */
 	@Override
-	public Map<String,RepositoryGame> getRepositoryInfo( String xmlFile ) throws IOException
+	public Map<String,RepositoryGame> getRepositoryInfo( File xmlFile ) throws IOException
 	{
 		RepositoryInfoParseHandler handler = new RepositoryInfoParseHandler();
 
@@ -59,10 +59,10 @@ final class SAXXMLProcessor implements XMLProcessor
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor#getDumpCodes(java.lang.String, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor#getDumpCodes(java.io.File, java.lang.String)
 	 */
 	@Override
-	public Set<String> getDumpCodes( String xmlFile, String code ) throws IOException
+	public Set<String> getDumpCodes( File xmlFile, String code ) throws IOException
 	{
 		AllDumpCodesParseHandler handler = new AllDumpCodesParseHandler( code );
 
@@ -72,10 +72,10 @@ final class SAXXMLProcessor implements XMLProcessor
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor#getGameInfo(java.lang.String, java.lang.String)
+	 * @see info.msxlaunchers.openmsx.game.repository.processor.XMLProcessor#getGameInfo(java.io.File, java.lang.String)
 	 */
 	@Override
-	public RepositoryGame getGameInfo( String xmlFile, String code ) throws IOException
+	public RepositoryGame getGameInfo( File xmlFile, String code ) throws IOException
 	{
 		GameInfoParseHandler handler = new GameInfoParseHandler( code );
 
@@ -84,7 +84,7 @@ final class SAXXMLProcessor implements XMLProcessor
 		return handler.getGameInfo();
 	}
 
-	private static void parse( String xmlFile, DefaultHandler handler ) throws IOException
+	private static void parse( File xmlFile, DefaultHandler handler ) throws IOException
 	{
 		SAXParserFactory spfac = SAXParserFactory.newInstance();
 		try
@@ -98,21 +98,21 @@ final class SAXXMLProcessor implements XMLProcessor
 		}
 
 		try
-        {
+		{
 			SAXParser parser = spfac.newSAXParser();
-			InputStream inputStream = new FileInputStream( new File( xmlFile ) );
+			InputStream inputStream = new FileInputStream( xmlFile );
 			Reader reader = new InputStreamReader( inputStream, "UTF-8" );
 			InputSource is = new InputSource( reader );
 			is.setEncoding( "UTF-8" );
 			parser.parse( is, handler );
-        }
-		catch( StopSAXParsingException e )
+		}
+		catch( StopSAXParsingException sspe )
 		{
 			//this exception means that parsing was stopped deliberately (e.g. data was found)
 		}
-        catch( ParserConfigurationException | SAXException e )
-        {
-        	throw new IOException();
-        }
+		catch( ParserConfigurationException | SAXException e )
+		{
+			throw new IOException();
+		}
 	}
 }
