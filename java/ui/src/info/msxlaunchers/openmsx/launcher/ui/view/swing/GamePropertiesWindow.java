@@ -127,9 +127,9 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
         labelConstraints.gridwidth = 1;
 
         addPropertyToDisplay(messages.get("NAME"), game.getName());
-        if(game.isROM() && repositoryGame != null)
+        if(repositoryGame != null)
         {
-            addPropertyToDisplay(messages.get("NAME") + " (openMSX)", repositoryGame.getTitle());
+            addPropertyToDisplay(messages.get("COMMON_NAME"), repositoryGame.getTitle());
         }
         File mainFile = new File(FileTypeUtils.getMainFile(game.getRomA(), game.getRomB(), game.getDiskA(), game.getDiskB(),
         		game.getTape(), game.getHarddisk(), game.getLaserdisc(), game.getTclScript()));
@@ -149,7 +149,10 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
             addPropertyToDisplay(messages.get("COMPANY"), repositoryGame.getCompany());
             addPropertyToDisplay(messages.get("YEAR"), repositoryGame.getYear());
             addPropertyToDisplay(messages.get("COUNTRY"), messages.get(repositoryGame.getCountry()));
-            addPropertyToDisplay(messages.get("MAPPER"), repositoryGame.getMapper());
+            if(game.isROM())
+            {
+            	addPropertyToDisplay(messages.get("MAPPER"), repositoryGame.getMapper());
+            }
             addPropertyToDisplay(messages.get("START"), repositoryGame.getStart());
             addPropertyToDisplay(messages.get("DUMP"), repositoryGame.getOriginalText());
             addPropertyToDisplay(messages.get("REMARK"), repositoryGame.getRemark());

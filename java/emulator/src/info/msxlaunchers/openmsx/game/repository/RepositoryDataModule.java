@@ -36,6 +36,7 @@ public class RepositoryDataModule extends AbstractModule
 
 		Multibinder<XMLFileGetter> multibinder = Multibinder.newSetBinder( binder(), XMLFileGetter.class );
 		multibinder.addBinding().to( ROMXMLFileGetter.class );
+		multibinder.addBinding().to( DiskXMLFileGetter.class );
 		multibinder.addBinding().to( TapeXMLFileGetter.class );
 	}
 }

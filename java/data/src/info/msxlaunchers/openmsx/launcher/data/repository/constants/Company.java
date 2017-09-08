@@ -28,6 +28,7 @@ public enum Company implements EnumWithDisplayName
 {
 	ACTIVISION( "Activision" ),
 	AL_ALAMIAH( "Al Alamiah" ),
+	ANMA( "Anma" ),
 	ASCII( "ASCII" ),
 	BOTHTEC( "Bothtec" ),
 	BYTE_BUSTERS( "The Bytebusters" ),
@@ -47,6 +48,7 @@ public enum Company implements EnumWithDisplayName
 	NAMCO( "NAMCO" ),
 	NIPPON_COLPAX_UNIV( "Nippon Columbia / Colpax / Universal" ),
 	PACK_IN_VIDEO( "Pack-In-Video" ),
+	PARALLAX( "Parallax" ),
 	PAXANGA_SOFT( "Paxanga Soft" ),
 	PONY_CANYON( "Pony Canyon" ),
 	SEGA( "Sega" ),
