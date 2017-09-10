@@ -1155,6 +1155,17 @@ final class MainPresenterImpl implements MainPresenter
 		return matchesAsString;
 	}
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onUpdateExtraData()
+	 */
+	@Override
+	public void onUpdateExtraData() throws LauncherException
+	{
+		initializeRepositoryInfoMap();
+
+		onViewUpdatedDatabase( null );
+	}
+
 	private static void startBrowser( String uriString, LauncherExceptionCode errCodeIfNotFound ) throws LauncherException
 	{
 		URI uri;

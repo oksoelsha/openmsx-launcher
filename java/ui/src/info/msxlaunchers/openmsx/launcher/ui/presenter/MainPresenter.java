@@ -365,4 +365,11 @@ public interface MainPresenter
 	 * @param searchString String to search partially for
 	 */
 	Set<String> onRequestSearchMatches( String searchString );
+
+	/**
+	 * Called when update extra data operation is finished successfully
+	 * 
+	 * @throws LauncherException
+	 */
+	void onUpdateExtraData() throws LauncherException;
 }

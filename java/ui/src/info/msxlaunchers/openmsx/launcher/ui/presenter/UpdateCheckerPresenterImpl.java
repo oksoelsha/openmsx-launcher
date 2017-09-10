@@ -214,7 +214,7 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 			throw new LauncherException( LauncherExceptionCode.ERR_IO );
 		}
 
-		mainPresenter.onViewUpdatedDatabase( null );
+		mainPresenter.onUpdateExtraData();
 	}
 
 	/* (non-Javadoc)

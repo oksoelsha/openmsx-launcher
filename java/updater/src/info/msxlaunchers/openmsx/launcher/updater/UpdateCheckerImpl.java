@@ -53,6 +53,7 @@ final class UpdateCheckerImpl implements UpdateChecker
 	private final String VERSIONS_RESOURCE = "/versions";
 	private final String NEW_LAUNCHER_RESOURCE = "/new/launcher";
 	private final String NEW_EXTRADATA_RESOURCE = "/new/extra-data";
+	private final String NEW_DSK_XML_DB_RESOURCE = "/new/dsk-xml-db";
 
 	private boolean isDownloadedNewOpenLauncher = false;
 
@@ -135,8 +136,10 @@ final class UpdateCheckerImpl implements UpdateChecker
 	public void getNewExtraDataFile() throws IOException
 	{
         HttpURLConnection conn = getWebServiceConnection( MAIN_URL + NEW_EXTRADATA_RESOURCE );
-
         writeDownloadedFile( conn, new File( extraDataDirectory, "extra-data.dat" ) );
+
+        conn = getWebServiceConnection( MAIN_URL + NEW_DSK_XML_DB_RESOURCE );
+        writeDownloadedFile( conn, new File( extraDataDirectory, "msxdskdb.xml" ) );
 	}
 
 	private HttpURLConnection getWebServiceConnection( String urlString ) throws IOException
