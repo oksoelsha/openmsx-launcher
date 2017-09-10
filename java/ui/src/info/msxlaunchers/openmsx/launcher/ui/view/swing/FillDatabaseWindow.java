@@ -246,7 +246,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		String addModes[] = {messages.get("APPEND_TO_DATABASE"), messages.get("OVERWRITE_DATABASE")};
 		addModesComboBox = new JComboBox<String>(addModes);
 
-		String profileNames[] = {messages.get("USE_FILENAME"), messages.get("GET_FROM_OPENMSX")};
+		String profileNames[] = {messages.get("USE_FILENAME"), messages.get("USE_COMMON_NAME")};
 		profileNamesComboBox = new JComboBox<String>(profileNames);
 
 		backupDatabaseCheckBox = new JCheckBox(messages.get("BACKUP_EXISTING_DATABASE"));

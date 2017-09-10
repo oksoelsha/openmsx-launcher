@@ -127,7 +127,7 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 		JLabel lblProfileNameIn = new JLabel(messages.get("PROFILE_NAME"));
 		profileNamePane.add(lblProfileNameIn);
 
-		String profileNames[] = {messages.get("USE_FILENAME"), messages.get("GET_FROM_OPENMSX")};
+		String profileNames[] = {messages.get("USE_FILENAME"), messages.get("USE_COMMON_NAME")};
 		profileNamesComboBox = new JComboBox<String>(profileNames);
 		profileNamePane.add(profileNamesComboBox);
 
