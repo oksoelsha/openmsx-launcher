@@ -1,0 +1,1286 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ The msxdskdb.xml file contains information about MSX games and applications on disk. 
+																			 	
+	Aug 2017 Sam Elsharif		Initial database
+-->
+<softwaredb>
+	<software>
+		<title>3 Square</title>
+		<company>Emphasys</company>
+		<year>1993</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8634eb51b318b36354f7e92fbd0e49ce5f291696</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Akanbe Dragon</title>
+		<company>Winky Soft</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b97b17acd1b603ff90caf95f348625a22e50a4e3</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2a39e835b942ab4232c714e5cbce80615becf7cd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">db405dfd53f26b7dd459423269f81b726cda1336</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Aleste 2</title>
+		<company>Compile</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">224260bac42b56195a428fee85fad7fab5bf74b9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">08d59aa5a950e1ddd7aedd789d632def2c05c79e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8455db2705020b50f2226f58e6a4defd49e6dd76</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1cf0bac6352a637ba7b13501dc9c44c73bce1096</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Aleste Bio Challenge</title>
+		<company>Compile</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">83d27283a9b52ce0bf134d63bf9dc76c56af6109</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d8150e889b32275e7dd2b0e42d2a2769c6e57053</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Algo Wars</title>
+		<company>MSX Magazine</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4e21ef0646a0fa1c8b1132afce3d77a28cf0270e</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Alien's Slime</title>
+		<company>Raketto &amp; Co &amp; Ax-Alex </company>
+		<year>1990</year>
+		<country>DE</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a83e94a9ff091afec8211ff15a6bcd888512ef3a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">48eaaeff9ed3c7fe06db760797ec1831cc6662e3</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e8d97ae50278d386bfb40976b280831e5dd30e43</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Amazing Cash</title>
+		<company>Experience Soft</company>
+		<year>1990</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">be336d983edcf72ecee6c1dfde3a37e166cc0eef</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Andorogynus</title>
+		<company>Telenet Japan</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">32d90309b020d0fb3f1b64fb5991c2816008c5dc</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Anma's Amusement Disk</title>
+		<company>Anma</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">52afb44c02c02fad7ce8cbdca90875599ae1616f</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Balance of Power</title>
+		<company>ASCII</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1c4ba0690ae49c82f0dba84b1e99c7a423c9d1ad</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">fb858b036fc0ec46dc1af7980a04ab1ac676b438</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Ball Out</title>
+		<company>MSX Magazine</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f693d1b59a6e2bfcc7e42ca83abf3d39671fb4b3</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Barnuba</title>
+		<company>NAMCO</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2a86772d933bf6f073cc9002ccfc7ed8507036a2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7a0d2c7994f23cf5371aec831d7f1f60088dd7e8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5f2c8dcb07639ef65b188c9067bdeca94cbce8a4</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Bastard</title>
+		<company>Xain</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f8334e234ac5c6b197aedc6dfbf45f27bf765426</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b2c5f2c23374afcab770fe965892c3cb0395527c</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Be-Bop Bout</title>
+		<company>MAR'Z Project</company>
+		<year>1994</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8c4cc1fc4d60f27785afcbfddcd978f6027a6412</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Beach Story of Tako - Part I</title>
+		<company>Komeya</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b8bc103c32af7b26b0bf67190c0b125a425a0675</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Beach Story of Tako - Part II</title>
+		<company>Komeya</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">570f59bd2825d1b14ea0ee774b8e9b9ff977f259</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Beach Story of Tako - Part III</title>
+		<company>Komeya</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">485631e2aafe305d31df2e88d7883effded8f22b</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Black Cyclon</title>
+		<company>Parallax</company>
+		<year>1993</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">fb76554382dd36025eeda7f96c7dbe218cc91a9f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">50de1a780deda933e2798c6fc36c1ae0632df118</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1c991d46d307978253002855acce85c556af74df</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8a4be36a543e16149b2615df6b6f09950c226ec4</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Blade Lords</title>
+		<company>Parallax</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">536e7263a6a5b16ff6334fcf05d6e28cc88ffabd</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Blue Warrior</title>
+		<company>Moai-Tech</company>
+		<year>2000</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">acb5321732199ed06bb741acb7673f94bacabd4d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a9ba5f5b13da8cb7645dd3bbadb2c48b2151bd03</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Bombaman</title>
+		<company>TeamBomba</company>
+		<year>2004</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1a90c2745792a0a57dc23955693cc144e0e14354</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Bomberman 2</title>
+		<company>Paragon Productions</company>
+		<year>1997</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7ab3f25373bfc6f08835e4e8c33d9c78b2b97a24</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Bozo's Big Adventure</title>
+		<company>Cain</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c34c785e70c09715311cf7df9d860094534f78eb</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Breaker</title>
+		<company>Radarsoft</company>
+		<year>1987</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b38b509e70c7e48a280fd8e7c6026fdca6deb1d8</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Brisk</title>
+		<company>Triple Soft</company>
+		<year>1993</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7436fe06ff763639c9135fd58f459f61b28262e4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b9cc374d734cbb275b490f253fac724dd5d2072b</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Bubble Rain</title>
+		<company>Imanok</company>
+		<year>2001</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">508df8781a4463ad345b888bcc0dc309b8de0cc5</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bca8592b98525c7e122affc19623a5f15d86fc69</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Chiller</title>
+		<company>Mastertronic</company>
+		<year>1985</year>
+		<country>UK</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1e15c9405cbfd8181b669a1683a0a82eba4e1926</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Cloud Master</title>
+		<company>TAITO</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b8056cd9fe89b0252b51f690cfe7aeff2f5cc39e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">49f15ca4541883298b1380c729b02d6247fdeaa8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e00d8a19cb62f2192ceba27a42165830884a9fd6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ff4ec1cb12caaa8ac08ba3aa98461ae0386897f0</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Columns</title>
+		<company>Telenet Japan</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2c9eb82993ae4406013d945db9643a290f1d491f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">cf6b89dabc4ee2ad697caa36980f969d608f3f5e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">440bf3625f39ce831ac8a2cbe8736d46abc27223</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Construction Craze</title>
+		<company>Paragon Productions</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">412020648f6905cfcfebb973a87545102a2e08de</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">690c8aceb5091249b87937bf573cc53dbf64da80</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Cosmic Soldier</title>
+		<company>Kogado Studio</company>
+		<year>1985</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6424561974dbd8cf20ffc4f5ed830fca5ab63b7c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">900408dc9a71b9a58d2c5d5bd13ce964db1b3414</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Cosmo Traveler</title>
+		<company>Apollo Technica</company>
+		<year>1984</year>
+		<country>UK</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">42edde03d12d36e4a4d86449a264957575f6f0d8</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Cytron</title>
+		<company>N. Gilissen</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">929c12a6df8dc53f3e68df5b0c57cab6674c859c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a18559d8779534dce83dc3f5b394019256f8eeda</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>D-Dash</title>
+		<company>Tecno Soft</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">264fc719460e130b22361ce3b702e53e601f35a1</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a4172999d9bca1591599207d9cd78fe9c16c16bd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">15fe30aef27110fcf517a54d4c07b5883997eeea</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d7f3b67fe3c0c395bbef7b2b0cfb16732cb53260</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Dahku - Furcht vor der Dunkelheit</title>
+		<company>Kralizec</company>
+		<year>2005</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bc9f8caba79937eff4697e5349122f0c1f9a8128</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Daisenryaku</title>
+		<company>Microcabin</company>
+		<year>1986</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">10c38f91d8f5db2438414ea58f26dcac78352088</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">92dc00bf437935e6270d53fa4017eb13f2aaf577</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9347b1f7b98e9b44c2b576d59e3923b402154a80</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">286c5880eb89d10a954b245a18efc70d75caa560</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">deff5e055d32f8e08de09e7fbd3bb7ae12525426</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Daisenryaku II - Campaign Version</title>
+		<company>Microcabin</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f3acd477ec6ab087c3e2ff910694c1e9193d1bdd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">29ab8cd212ba5263b6ef8f3370ea0445c30a96de</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f7fac49b4ef199a6350eb9ff33cbb2a644621e92</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">abaaf9e6c00fe7a9647eb309e889451dc1a0c7e9</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Daiva Story 5 - The Cup of Soma</title>
+		<company>T&amp;ESOFT</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c68acf155b1245dd341641fb0ebcfcd90a3cf16c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bc4cfc1872463fdf5d1c273bc2234f552705cc0c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e49e98ec64dea296a7df95a7691c04ccbb7f383e</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>DIX</title>
+		<company>MSX Engine</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">66d502127185cb9af68ae0cdebe02cd7715f3a42</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">941434301e9c086158b36a9e6b69321e0c6fa472</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Dragon Quiz</title>
+		<company>Compile</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ee41f68aef2de5aee603e8723c1d1012431abd33</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">50031b0918507864b6904bca225c69287b398052</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9b0f9c7cb3eff874ecb9795a43d6911884f74464</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Dragon Slayer VI - The Legend of Heroes</title>
+		<company>Falcom</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">87a4570ab486e87b81016d9ba18040ada41041fa</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3b6ade05b2820fa9f990329812e16d1460b23495</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">494ece5e576343f24f5203ada6f5cc65eabcab3b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">278a012c211b75fb428bb27eef11851ce3f2fa0f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">aafec82b03626bf42cbebaa62a3cd065d5c812a1</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7c9c5d66f5668b227b8214ccb1b84831d5731a3b</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Eggbert</title>
+		<company>Fony</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ae244126c8987d530ed2461d2371ecc4addc7244</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>F-Nano 2' - 3D Car Action</title>
+		<company>XRay</company>
+		<year>1997</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">031f9dcc4ae1832dd3e0252c2988a7c7a13b90a7</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>F1 Douchuuki</title>
+		<company>NAMCO</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f892df4f43cfadbff44ea2863d91051fc1a8d51c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a328be358b82a1669dfcad2bcca88d8f9ca96c5a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ea478ec97424b5a8e896f8ec5464129788629ac1</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">264e4d5d65d43dcd3ee073ef8aab00c9dffd48a4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dcda317d75096e1871d37c3f49756f701f7ac756</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">126015f4020e09d20610fb6637596ee9a52b24ff</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>F1 Spirit - 3D Special</title>
+		<company>Konami</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4d4fbbf563769e315a134adfddc5987da835decb</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">155702d3d41b8f8b3d4659d42aa474ce12f4d3c9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f3b1dafa72bdc5affaf49bac3481ad5276a51375</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">653c4522fa04a02efefdb7eb55a7678edbb5d9ad</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2b8fb57c3d26d9f1c0b5ef8330482a0d0d4caa7c</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Famicle Parodic 2</title>
+		<company>Bit2</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ea7f839ecc5bb8ed262f744bee2f325b5399d7b3</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8a08b1503d5896f355f226f269ab2cd9a63bdcb6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">70b2ec99236e4201671d5deccc449a452708497a</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Family Stadium Professional Baseball Homerun Contest</title>
+		<company>NAMCO</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ebcabafe5936317f19b7db957f448a4952a17011</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">53d1c26f5d87c53f8fa26154c2c568c657d314f6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">293c297cdac4b255e82453f45301eebf9eed9229</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Fantasm Soldier Valis II</title>
+		<company>Telenet Japan</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f9523acb436548cb28816975f4420d79348e6085</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9c5d477304c6f67cb9e4b2007834049c577ceb91</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8df1518af54ae91d54b2039e750d212d970ced90</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Feedback</title>
+		<company>Tecno Soft</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3c638f89bcd35739f10e6f0271d9a2828b2acce9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bfcaf87aba1c94037f9cd1d92fbbe4435eee6c6a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4eed2980fe391870cfd16bfcdf579eda766e281a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6b84983cbf68800bd66e0744d0bbac22f6ea3411</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b8960a5a7dacddbf68aeff0efd31442f7661006c</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Final Fantasy</title>
+		<company>Square</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">88313a53a1301d030317d5d1b76c16fcf4ae1a21</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6608af878b95aa97b489ff9279698d9ad590e124</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7a90593367351303ec95f3ddc5da4ebbadebe00c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b871923a7c693bd7fa75684bcec08c7c8800ea53</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Find it Replayer</title>
+		<company>Delta Soft</company>
+		<year>2003</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7e0083579f59e26311b7e2f65459caeb0bf46242</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Fire Hawk Thexder II</title>
+		<company>Game Arts</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5ba7b197d32a153624252e74e7f1ff2f8371d0ea</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4d50a93c86911c42ccc63311c9b02cc6d38d629f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">43713c7eb2fcef99f1014328ebfa0f89671bab2b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a36c97d07634fced1e65a7a67e9df6b89e6f5f28</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">35824d2921cb73f63d2d76c61f7e9a5145865951</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f33c8ba154804206d0c9b740a3c4464eb118e2c7</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>For The Day II</title>
+		<company>Mirinae Soft Co.</company>
+		<year>1990</year>
+		<country>KR</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">af379c6bfcc31be3e7db80ce17a447ab456ee22c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0252990148465bca949e3c9fc277191dc052fcbd</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Fray - In Magical Adventure</title>
+		<company>Microcabin</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">152492bbe74c98945b5f228349fdb71cf11faa1b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d709e9c51c1789a1fe528ac28651d61f1b42e4f4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">10c6b18cca9b25f179254ff4a9d3d6ff7a2b9959</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ce502cec68d3f4b5d7bd1304d091ab2c4af98d67</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">daab2dfb224957e4195255e0507f8f44d42d25d7</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Frantic</title>
+		<company>Anma</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">066fd0e055112954b394424aa1a00716900e6ba8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d5c83fb938f0a8921a3dfdff6ecc61c081785823</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Gorby's Pipeline</title>
+		<company>Compile</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b42d7acbf3c7b563eb4b56ab314d59e81438fe83</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7e8fd49d81b55858de5b08677e35ec3821290428</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">311b8826739b394d994d47ea256dfd9b283d6880</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Great Gianna Sisters, The</title>
+		<company>MGF</company>
+		<year>1993</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6d017d34ee300d0a7ad601a73fc6aaca1463777f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">60f0b3a7db82516d550bb7a2d13a2b5599a67843</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Greatest Driver</title>
+		<company>T&amp;ESOFT</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c7e78145713758956e5d5627016cdec764f53315</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">64682288e8b75f0213814668a1747d5c6f6da6f1</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9417b3fd76b1395d5a742d3646069fe9869e077f</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Herzog</title>
+		<company>Tecno Soft</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7ad397de076027d1280754a6c6e9934d5653a320</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a94e47f7cf9c2e00a60e94a63a3ee8cf27ca98e8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2cb956309fc4ce304c43972912ae6455b06d6005</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">da46a811e56104825991d1ddcd779e4a38be758c</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Harajuku After Dark</title>
+		<company>Kogado Studio</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7d2d9579bc02c0170295e04a92ae4ce8fb269939</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">86c49a6f3bb72d0d848c03d99efb99ceb14ee8f6</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Hitomi Kobayashi - Puzzle in London</title>
+		<company>Informercial</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9f60ad6db805826da0d1db6833b1e53cc81a8844</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3a550b113228a8ed2c1f0ffcd310d5731e576637</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9e373a82d89a7ac8347c3a519be96e52a4ffd76d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5baf46cec0787e66956c212eb7b75ede25c17b2f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">fa542b38584249dc372e5fd2cef5dadd824036d4</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Hydefos</title>
+		<company>Hertz</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3520ce1db4185f3debddaf6de380c2320b012e16</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bb8ca0aa7f24b1e6c27546bb198d2aefe315fbff</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9258060e82027d93b0ac5cbe53f31f7c33b46c3f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6336a5f6fced9befc647bf45403c576b238449fe</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3f442c59e11b2e71dcdba7de158bcb35a2a7a0b3</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Hydlide</title>
+		<company>T&amp;ESOFT</company>
+		<year>1985</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dab500c63bf9243bdf9a283800bb4f53df967909</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">01f317f14363b42537f743f2f48fad8d97b5dc5b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2c6d9d6e8573af2aaba55d687bf5a4b84cb505d1</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Illusion City</title>
+		<company>Microcabin</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">46feaa39a80b35bca3243871a6770ddcc783b1ad</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f1cebd02bb01238b1d346838b162858ad1356d5b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9e9946536f3cb6d90e2433ff19376cb9f9818290</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">94258658039f76d22bc79ec02b7b78e9b4a7ac13</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>International Karate</title>
+		<company>Endurance</company>
+		<year>1986</year>
+		<country>UK</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a20463e9f400460283608ed4162a8d4d2631ff9d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">60167714d4ab3599d6d0f1fa3d869bd837655d69</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f5b0b32b5765e23c710c3c9ce431e84a5e97123d</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Ishido - The Way Of Stones</title>
+		<company>ASCII</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a90b6bb34673d89dadecdf21da5188d8b0e492ae</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c315baab5c254758b01b65e0f9a34ae28d7f1d5d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ca080742d4af491721ff25d4419c22f1582f1df5</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Kinetic Connection</title>
+		<company>Sadato Taneda</company>
+		<year>1986</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9e6393ed395b5c60df1f1f07e885e41af0e3a844</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>King's Valley Plus</title>
+		<company>Konami</company>
+		<year>1985</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5588dfcff4938b0740b4c13616850a6df5062d52</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Knightmare Gold</title>
+		<company>Amusement Factory</company>
+		<year>2006</year>
+		<country>BR</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">76bbabe16db07a7c8e6477f7d97d85d897508864</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a74400276377c736d4f1f9d970e35c78c8c569c4</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>L'Affaire...</title>
+		<company>Infogrames</company>
+		<year>1986</year>
+		<country>FR</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">074c04ca2adadf539b5ddde0fb6be278d059b138</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ab2587b5ce258f15b4d606a3d0506e2790f02557</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a4e7568ebb1c421bae584d94b6c2c9f292fa26d3</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>La Abadía del Crimen</title>
+		<company>Opera Soft</company>
+		<year>1988</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">41fbf187b38519ae3d93e5ab50c88f593d559dca</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">086f2af5b4cb1cfb0e1c3ba3d69b9f0abdf5200d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2831f16bbd62d0a51d7644fc3c337171ee261450</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3199bc44c210dc8888c88155b9df46d924e7c99c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">76614dbf525e128cbd709a1846986bfaedce0e4b</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>La Abadía del Crimen</title>
+		<company>Manuel Pazos</company>
+		<year>2001</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e5181387139eb0563d908a5a29cec10aab2410d4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">898f1e922ab3b232e130be04da38546fe0016613</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Last Mission, The</title>
+		<company>Opera Soft</company>
+		<year>1987</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c80a8ba28f232ff0727aea0e2c103490f33d7bc0</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">892e7d1737ab119cafe6b76988669c0095f98132</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Laydock</title>
+		<company>T&amp;ESOFT</company>
+		<year>1986</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b6566f414ea653532fbbf2b90b05a375c1131994</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d504ff2e64486eac90c222856bc5dd2910b055d3</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1bdd0ff72cd6005ed2139b615c2d9fd22f73d02d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">46f1fbd18ec6d5be27f56dbfd151e620dd39ebf7</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Laydock 2 - Last Attack</title>
+		<company>T&amp;ESOFT</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">db7cf4672f46017b69b02eb175b4a446a948c601</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b3db4708d676420d8bba39b0eadb76ccc45caa98</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c4217c7f0371e9c6f830d8a76f731123548c9719</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Livingstone Supongo</title>
+		<company>Opera Soft</company>
+		<year>1986</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">429605bb0ec6285aaaeecc762c31fe234b9e269b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">722e8137d5c1bd60307c1fa3731da6bd7c7c5f36</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Lübeck</title>
+		<company>MSX Magazine</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b143989e8c0a7826a21373b4271713a0465bbcac</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8b41aac1d940fe06b2ae806eba1e5d3cebaf5134</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Magnar</title>
+		<company>Parallax</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8ce8d398af27c4ef2c410b11c639a066e07c7f61</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">920bbfc34dd9c6cee490ead1e29cfbc2c8e5f2d3</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Masashi Tashiro Has So Many Princesses</title>
+		<company>CBS/SONY</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">82dad94dc461577db19c6229da88a2499f9c65c3</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7d0b1588d9450aaf57cb381d02b3deabf5ca7ebd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">64aa67740c5da734721419e29047b40d01e739be</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">06dac1960baba43b225bb53d819c0830d5bea30e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d37c06d798aa2b208c0dcc009682c37d97ffcc75</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Moon Light Saga</title>
+		<company>Maple Yard</company>
+		<year>1996</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e2be3e65395fa96d09f90bd700769b69edf69ba4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c6e339c992562800ded94b29cd910cfe7d656cea</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Moskow 2024</title>
+		<company>Matra</company>
+		<year>2000</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2873db5582447ef8fffe94f54de4110b59b136ec</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>New Devil Golvellius</title>
+		<company>Compile</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ea7288c5badc96364b63c786a8914567ca852f58</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">35cac8a3f45d2b21faa6219e2d5949f2959ab405</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e7f2dae1e5b927905027b8aea245994f9fb36b19</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">839fe87d070f4b13ea8466bd56c0f83003e351a5</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Niko2</title>
+		<company>Wolfteam</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4c921d0722a6278abfc415d846563503743958e6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a5b07b1b46c3a72237a40dc94764fcee88f9ec06</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>No Fuss</title>
+		<company>Anma</company>
+		<year>1991</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">eb41f58c15ff658db5c13ed4a21155edf185723c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d95e0d3b86aa63747bbd6a9aa1ff845f49847c79</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>No Name</title>
+		<company>Kai Magazine</company>
+		<year>1995</year>
+		<country>SP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">774217036639a20faceb5469fbf1dda3a34c93d7</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Nosh</title>
+		<company>Anma</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">fb8b86fb30ad1aa2e479bc61375c937973efeeb4</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Not Again</title>
+		<company>Flying Bytes</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">375d4867494b1be17c4bc15a86c36dc973113327</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Nyancle Racing</title>
+		<company>Bit2</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1ed7015ecd3f60c77638a0af7c161a3bce4bc737</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f04abb4b149db20a860984062fc66d207e852538</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">cb2ef6028e50eb10cfda676224f8a86fc4e83151</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Palamedes</title>
+		<company>HOT-B</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">00d71eed90dc8bc7b4fabde9477c4df98fe70b6b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d86a678ffbc4fb61e31f3be56f2d2aef1a165f70</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>PaRaDream</title>
+		<company>RAC House</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">28d9dc71c80a05059ab21f3081e3f16a9ff6bc06</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Playball III</title>
+		<company>Sony</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">45ffe0ce66df5c6fdc9fbb39e6d32d11adf341cf</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">25c1f8f63ddb9423fadf854efab7a39dac117705</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ae5ba99a9516b08f22935feeea4103c174b0db81</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Pleasure Hearts</title>
+		<company>M-Kai</company>
+		<year>1999</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">83646e9e2bd7451f2b45b9c8cbc15531dad51cb2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">262b4a3078069ad9b2bf774acea838b7c2a24f72</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Princess Maker</title>
+		<company>Microcabin</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7febf6995d6af4ec88a205f8f143f98055c581f0</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8ad1671c50fb3071a13f6edf4934cdf30270767a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6c5941e6471564cc8783892194b692b275e164ea</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">475fd7261c660a0fb22bc2ac6d8f13623e9decb5</hash></format><remark><text>English Translation</text></remark></dsk></dump>
+	</software>
+	<software>
+		<title>Psycho World</title>
+		<company>Hertz</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1fd311f6736f988edc85669f8faf30b1499c0e88</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9ff88afad4b79748865b7e46861b14d5745c313f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">105317da4cad0b47b55389eba099384f39606720</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9482eda5ebbbaf6e3ef3e992c5e00882a48a9730</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">55b6d124c7ca3ebd1fdc537fc596532090164a55</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Pumpkin Adventure I - The Quest for the Holy Grail</title>
+		<company>Umax</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3249c64ed97219ffc7401ed278deccedf33a8cfc</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d697124c321770b45900c4b7c430279109ab24ca</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">219e632f414875411760ed9bd9017388090b89d1</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Pumpkin Adventure III - Hunt for the Unknown</title>
+		<company>Umax</company>
+		<year>1995</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">18b6373f06c0fad64df18a1e5c9249b3386e77e7</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">94ad9d6354e8d1fdcbf240621e5bcf8da842a838</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Puyo Puyo</title>
+		<company>Compile</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5a105f111b744dfbf847adc4fb0f639c41496c30</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2aa78778bd77c4cb26f93ec5359693ceadc527a0</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e4e53ad306bdac080783a9a433d5d055ccac18b2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7e2dc0e605f1fe09c8bc8161f60ba78bf98cb28e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d5772c0e9c7c091d04ac312457836d4ad0d6c8c6</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Rick Dangerous</title>
+		<company>Paragon Productions</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">320bc2751c9cfde34452bec8b9ed32f0abb6322a</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Rick Dangerous - Extra Levels</title>
+		<company>Paragon Productions</company>
+		<year>1993</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">815837ce39530d56d53453eda716bdc49fe867d3</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Robo Crush</title>
+		<company>System Soft</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a6d7b2769f510f4095111ec11f990537527eb931</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">99dd2358fd1e1c425ab24bdf6e04a8f445f91289</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">476cdafcd0c97b452b3fd9515ac8dff85dd7aaf4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8148c2026a8c512ee45ffca2a84d6c41e364d757</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Rona</title>
+		<company>Dixie</company>
+		<year>1994</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">cc2575e3cf7b5240ec5a8e88ffc2d29b993adaa6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6d916be776c7479bfff313c5dfbc478efb9c1885</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Rune Master II</title>
+		<company>Compile</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7d6cbade94b372a5946ec90af9d70754e7c02360</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ca1c181d5a004adacf008c738f97cd38778f42a6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">774daa0dbc85d82df50543910c518f00660046cf</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Rune Master III</title>
+		<company>Compile</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">de2e239261db4d256165bfafd34c5d0f3c214dbd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c19a5dcc4f284321bc419c2c913dfd8e4e3220d7</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">42b13059b39d948923e92394f7953b0ceb2666e8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ab23b954f84d7a16dcb299458813901dd67f30ae</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4db7af263a2981a9b47859de27c2e9a9a37ee93d</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Rune Worth - The Black Clad Young Noble</title>
+		<company>T&amp;ESOFT</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">94b75c6dcbb2e58e6c932509ccd810e1bfb90786</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Ryukyu</title>
+		<company>ASCII</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">da020e18530f2b1c20b2c1b6e84f58f950d54546</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3178ed0fa895f706d3a3d7a25573110ad09bfb30</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>SD Snatcher</title>
+		<company>Konami</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8134d72f38380c5ff4d01a693096cb2a52fdfbf7</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6c4635c71eba558f918aa69fb4612aa53a391ce2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dec7f2195ab948cf39401cb2104d625b451161e5</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ab30a21ae60f7f5ff2a7383ac69b2073ed55e891</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b7b8b50fe05d446741cd39918dbc2577787a48cb</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c31d2a7ac9077ae3884498d591dafd0fb30c5b12</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1f22ff8c56c8d3a22348aaeb73294ea0ce4a6b6e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4cef12ae13334ed4f3f890311b641c1ad2bdc408</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3fe3cb265a52d5a1a79679c82b6bc3b239ba2f5f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">61d4be0b36466e0e40a6d6af25ae422d2fdb9b70</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">72eb604676bc37d2f0b78c3b1f725fc0e9a6e374</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1e8334aa3cb826cc45a3e3d0b46b9cdc228725d6</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Sea Sardine</title>
+		<company>MSX Magazine</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">be457095238dbcac7b66103185c1a702b60e2255</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Sex Bomb Bunny</title>
+		<company>Matra</company>
+		<year>1999</year>
+		<country>ES</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9eb6e637c0aa8ac4dcd2bda0cc8e3307c7b10758</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Shrines of Enigma</title>
+		<company>Element</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">95006f046f328f76a606d341aa46e0acaec499b2</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Snatcher</title>
+		<company>Konami</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4a3784c173b300d7e64d7ae8c6291a08aeeb175c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">30fec248e6329493cec21a1258101f565fd20996</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">db007bfcff567d3c352946c870287f5309ec97fd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0e42f56dcc575dcce06a02667ab5dee7a6a569e6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8d6bd3db9e6f29a34674672c41c4a676c46ea276</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">fc08624f1a85f44e333f13304069def6889b4898</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Soldier of Fisla</title>
+		<company>Compile</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9e558953e5b4dcf5a087c80da00cde7818248815</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Solitaire</title>
+		<company>Gohsoft</company>
+		<year>1990</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dcd3bc4716361cacd5c6e3d990ea67c4bba600fd</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Solitaire Royale</title>
+		<company>Game Arts</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e63f6d8dc710ffe318b899589767adfc86028da9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8abc7958a6e92d6e6f622cba28b1b9d2170600e6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">49c94b80c1cf00769a747f506b7def2874c2be4a</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Sonyc</title>
+		<company>Analogy</company>
+		<year>1995</year>
+		<country>UK</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">eb49ada017dcc5b807b6ee15ee2e5e8026535edc</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Sorcerian</title>
+		<company>Falcom</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">768fee7c5a044f457fddc63a2c3339729505cb14</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">40fd7b0a72a9344b33f5e5f6d0b4c621e9ad9435</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d61b45d5c9acd4ab956a96cd29f8cd193ff7be08</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c0a8622643153a88328fd9a6e6642b0a7198497a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0091a96c33cade4a2c2664b843baba65414354d9</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Space Manbow</title>
+		<company>Konami</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">edcff92a6f4928a15c532554b2734eff6e381adc</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Squeek</title>
+		<company>Anma</company>
+		<year>1991</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6729f76cc1d6047937090f894c348c36c2fae654</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">588ea2e54e5716847c38cd53a6e586167665f64d</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Starship Rendezvous</title>
+		<company>Scaptrust</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">83de15cd109f3cb3b15ac5e92c2a7e9020fcf23e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">afc6d724b8573a01b8fa632cb250861dc427625c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bf1b8ccd5a6273e7b89ae20a5f32ca55c33269a5</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5edb7a8dc8cd889ac8286e2e73cfdd5f68607d6c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4dff8ab37313659a4c0830131fa50d8b12824289</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">97c591b6e4dc964b9c7d045ff8dc0982c9b14eb9</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Super Chess</title>
+		<company>Kuma Computers</company>
+		<year>1984</year>
+		<country>UK</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ed646f8311d4f247f2ea5f61a36ba09dca56da39</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Super Cooks</title>
+		<company>Compile</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1f465217109ce71ecb81c30841ed69514dd8ffd8</hash></format><remark><text>Disc Station Special 2 - Summer Edition</text></remark></dsk></dump>
+	</software>
+	<software>
+		<title>Super Daisenryaku</title>
+		<company>System Soft</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d1cc2a77fb17608d542c50e2a1404cf5b4231521</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">cfe8b3ad2b58ae45b0f75eff3051ba971f936e87</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a5c7fbfb22ddc9fb39b9c01810d27ddf96e9c17f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7c4a2236240bff12bf0dfeee7ca046646a7e4913</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2991c94373e7162c0da4cc7b2ca7900e82dcd7cf</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>T.N.T.</title>
+		<company>Infogrames</company>
+		<year>1987</year>
+		<country>FR</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">eea1d25eecf9c209dc1e1f62a61028b40d84afc4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1244ba7bb1d4aad606216314ef11cf91f9120523</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e53de8fba9c25cd61e804d05a0fde67712591c25</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Teachers Terror</title>
+		<company>BPS</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">af310ee21b5534f32ea92c0ae34a44d828d157a7</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6641aa6bbdc456e5bd2004a47172b9a5ddfa7032</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e23259d6d941db9e0ff62da503a3a8087e9ed36e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">662a3bb5cb9ea41352d49248aa604a33065fa855</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Tetris</title>
+		<company>Hegega</company>
+		<year>1993</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">34e6c8e5c332cf458b21351e580dbeefdcb6ff6f</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Time Bandits</title>
+		<company>PSS</company>
+		<year>1984</year>
+		<country>UK</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8bd73f6a51a4462bc905e8d7e2fea0223b36792d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4aafd87c8a7c8314dd81cd035325140830b9188a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3f67411b0049ad1a9780aececa425b1ff60c49d5</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">235f0c53ca3ef765dfb80c3acdc611f734b49da2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2adaf901f9b759e222cdb3df03795dd54becea77</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d11153b79852a14ccd8682ca48697bfbd5a9d676</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Trojka</title>
+		<company>BCF</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e09aa778807e59313cf7dbbb86cfa7f7cbc4b5de</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">83c81ae2511b5ba96718b658609e76bf0ba68013</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Troxx</title>
+		<company>Anma</company>
+		<year>1993</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">aaec8c3960cd7db8cb62116f563705fe80eaa394</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4a5ed7da568128295edb8c9967a7f7dead1e2838</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Undeadline</title>
+		<company>T&amp;ESOFT</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b38aeead33dceaa50b175efd8d81a758a5cfbb68</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">476a2bddf1f428f4edbd6f06b0aeae7dd41f2cf3</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">64a79efb84d42248666a53ae80b8d267fdc7bb4f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f20f0eb375b5778f40d680486151a7332b7a0a07</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b980f2cc0601a8a1d8f30673b7819423205b1fea</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9eff907fab1ba3c3c24c297d5d23f5b7c0083466</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7ac6de3934dd761dd4e3027c4cefacca70d5fa7e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f05b0b58f9ff8c64c4797c7c30183672524ace42</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Vectron</title>
+		<company>Parallax</company>
+		<year>1989</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1218d1446a72cc6b0023e900ba52fb21a08669df</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dcc2e551c0017e81e275c4d3d01e21d644dd9eb4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7456e64aeae5c7e5efe74665a9c79d5ede3fd17d</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Vicious Viper</title>
+		<company>Knights Computers</company>
+		<year>1989</year>
+		<country>UK</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">178ea1e96dfb1aa78281f1b03403e53eced37484</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Xak I - The Art of Visual Stage</title>
+		<company>Microcabin</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3b491035b2b85c6619d1133f0c31e9a973ea8c1e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9de24f9379e9b249a84cb8ff583ac4629970388a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f98253b7527ef63668c9ff3990ba4acc86943925</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b78fe840343e83f4f3d56de71140dbf608af8f1c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">445f1e45dc81cb409a1b9d191f10121e5577c545</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Xak II - Rising of the Red Moon</title>
+		<company>Microcabin</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e726fef048762edf063a94bd9b87dceab3a573e9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a4981da3aaeaee5a5fb65a5c63331094369557d2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6c5de489b4b07d5ddf993f254e99bee23e24e16d</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">aedca9ab891b4727aa94755012718cde83d97718</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bc69766267fac88aa57d81d2ab3693cf7f97fc41</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ba4932fef71b80984a8aec76a5b7084585101071</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8d0baad6e564452a8471208577b0c16acabb1491</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0e7764b421a15bfc2b321b093a8724e0ed564573</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">286767837221ed918516002f7a4c24c3e51731fd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">db1aa533f808bdec374dee335a7f98b8bbe1fcfa</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">677f5989b53b72564d0ab8d5ee1bfb8f35d4f3d8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4afbe7a103a1a1956ce653762be9b532e7aabc5f</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Xak III - The Tower of Gazzel</title>
+		<company>Microcabin</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">06042ce12d2b4c16357ea6385335c232698d02d1</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9cf6e2f5871fec8d95f5fa5751a83b1788faa95c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1b3f13fb41488f40d4f3408aa3fac8c4b35d89a9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0d9597939785ae43c9119792954dea52a16de719</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e20de4cddb47c22c1e2446877ed88cee53d19557</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">570819396c461bd40d9dbbdb18a46952ff940a86</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f3d3dc8d20ade551a25bf1145ff35b844dfdcd3b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2c7b7bac3e398ed9a351e52f51f2e287977b3926</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8f5a13d679d2c5cc0bbb0aeaf55468b1f1fe5f28</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b73d02f16a2b0b87f7ccb4822496f310fe49a8bf</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ccaaa5671b81e2b873bc20d1c381e1c239a2f490</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Xanadu</title>
+		<company>Falcom</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8ef34cbe7afc425772b0e26b0b9385ec069d8b22</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">cebabb7683949c16179406b21a2d873e9c35c8b6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f18237a4986e829a693f541248ab6859d6f6b1a2</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>XZR</title>
+		<company>Telenet Japan</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c03dcb5b7d24313ecdfee7aff3a231355c57748a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e33a61f8c99f3558c198e6e55b6b8ac860b9ce69</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d9838f6bd55c1eec6072636a68a61cc32aa5d787</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>XZR II</title>
+		<company>Telenet Japan</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dde91e84e18ca8a98259c86f9ea0610e6d514bfb</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">57a194bd697fca48139b8751827a811e1c28e778</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6d47126ff409e151c0b4b4ec40fe3085de1e45a7</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e4db8c715963e4de5f6eba201c4cd4876a511bac</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b9c531646f98cab2ab84dfac4549d9adb08d65d8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0d82652247bbfca902db22a6f366672700b14b52</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Yoshida Koumuten Data Library</title>
+		<company>MSX Magazine</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">2f557024ab15d02e753f56bda30ec529515eedb2</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Ys: Ancient Ys Vanished</title>
+		<company>Falcom</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f2071f6f7e8fb96a7fb3a3daa69a46be82347255</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c4649b88e1b44990c0110e570fdcda473b221fe2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6c7672ba7602e2e1c7e09309b7fa8776b1b5a904</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">648a260c492b3278d687d010072d9e90e583f459</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">39fba8282b36ba1247aea586740d30c0ee6123de</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Ys-II: Ancient Ys Vanished - The Final Chapter</title>
+		<company>Falcom</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">cc099603229873011c7eb5729ee0c6c70f5a6f81</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">71841f8396d6df8d713c3d9caf371a296920cc1a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d37393750c36366ed3b0cf93c6b7da4916916107</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b7e599faeafc9735e2f73933ec0589771616fff0</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">358082ce9dd1312491cd15019ff42d99dfa4c09b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">02b1c9386d811ca899e3233871f6b86192e5ad52</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Ys-III: Wanderers from Ys</title>
+		<company>Falcom</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f7b5aa0db294f6194a93e7db7e54e94721571b00</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">57a9a9f4f03fe6f8d443fc18170a67ee211e0ae6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4b840f5bff7dfd42144b5a34d59a410999f953be</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6efdbec948473f1f3e85038e1a4593cd93ec47fc</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a61ae8912e21c0fbf7c9a9d558ccdb193b3a6876</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Zanac-Ex</title>
+		<company>Compile</company>
+		<year>1986</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">eaae0d1e0d9162a8798061fea822e5cbcccac688</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Zone Terra</title>
+		<company>Quadrivium</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">64fc7b9c6757df45e299edbf9c1af9e08403f2ec</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a5362453c06ac6b6c0ffed0c378b2b2da871b508</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">cd631425a0fb7e7cf043c8f69281fd8255ce2c4f</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Zoo (Icon-venture)</title>
+		<company>Radarsoft</company>
+		<year>1987</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">db9f4cbb343e45e80a6a0f09a8029aa8c604973b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c2fc677385c14c86acf766a8bb25346e465ef236</hash></format><remark><text>French Translation</text></remark></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">528288874f2daeaba956258285d2e055a5468523</hash></format><remark><text>English Translation</text></remark></dsk></dump>
+	</software>
+	<software>
+		<title>Zowazo World</title>
+		<company>MSX Magazine</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">fc69cee5c74ac3dd1403047b7b0bc08be3510ab1</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b2927b3c74cb624260d539a0183d709a95489553</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c57b72ee076b07b4879d432d4123bf2fe13f8b1d</hash></format></dsk></dump>
+	</software>
+</softwaredb>
