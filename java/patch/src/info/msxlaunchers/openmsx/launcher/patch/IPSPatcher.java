@@ -49,7 +49,7 @@ final class IPSPatcher extends AbstractPatcher
 	{
 		validateFileSize( fileToPatch, 0, MAXIMUM_SOURCE_SIZE, PatchExceptionIssue.FILE_TO_PATCH_NOT_PATCHABLE );
 		validateFileSize( patchFile, MINIMUM_IPS_SIZE, MAXIMUM_IPS_SIZE, PatchExceptionIssue.INVALID_PATCH_FILE );
-		verifyChecksumIfRequested( fileToPatch, checksum );
+		verifyChecksumIfRequested( fileToPatch, skipCheckcum, checksum );
 	}
 
 	@Override
@@ -181,9 +181,9 @@ final class IPSPatcher extends AbstractPatcher
 		}
 	}
 
-	private void verifyChecksumIfRequested( Path fileToPatch, String checksum ) throws PatchException
+	private void verifyChecksumIfRequested( Path fileToPatch, boolean skipCheckcum, String checksum ) throws PatchException
 	{
-		if( checksum != null )
+		if( skipCheckcum == false && checksum != null )
 		{
 			String trimmedChecksum = checksum.trim();
 			String sha1Code = HashUtils.getSHA1Code( fileToPatch.toFile() );
