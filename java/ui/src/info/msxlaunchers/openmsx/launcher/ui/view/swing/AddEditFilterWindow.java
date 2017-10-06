@@ -46,6 +46,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -820,6 +821,8 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		{  
 			comboBoxItems[index++] = new ComboBoxWithDisplayNameItem(((EnumWithDisplayName)enumVal).getDisplayName(), enumVal.toString());
         }
+
+		Arrays.sort( comboBoxItems, ( c1, c2 ) -> c1.label.compareToIgnoreCase( c2.label ) );
 
 		return new JComboBox<ComboBoxWithDisplayNameItem>(comboBoxItems);
 	}
