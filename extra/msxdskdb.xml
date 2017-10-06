@@ -8,6 +8,7 @@
 <softwaredb>
 	<software>
 		<title>3 Square</title>
+		<system>MSX</system>
 		<company>Emphasys</company>
 		<year>1993</year>
 		<country>NL</country>
@@ -15,6 +16,7 @@
 	</software>
 	<software>
 		<title>Akanbe Dragon</title>
+		<system>MSX</system>
 		<company>Winky Soft</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -24,6 +26,7 @@
 	</software>
 	<software>
 		<title>Aleste 2</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -34,6 +37,7 @@
 	</software>
 	<software>
 		<title>Aleste Bio Challenge</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -42,6 +46,7 @@
 	</software>
 	<software>
 		<title>Algo Wars</title>
+		<system>MSX</system>
 		<company>MSX Magazine</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -49,6 +54,7 @@
 	</software>
 	<software>
 		<title>Alien's Slime</title>
+		<system>MSX</system>
 		<company>Raketto &amp; Co &amp; Ax-Alex </company>
 		<year>1990</year>
 		<country>DE</country>
@@ -58,6 +64,7 @@
 	</software>
 	<software>
 		<title>Amazing Cash</title>
+		<system>MSX</system>
 		<company>Experience Soft</company>
 		<year>1990</year>
 		<country>NL</country>
@@ -65,6 +72,7 @@
 	</software>
 	<software>
 		<title>Andorogynus</title>
+		<system>MSX</system>
 		<company>Telenet Japan</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -72,6 +80,7 @@
 	</software>
 	<software>
 		<title>Anma's Amusement Disk</title>
+		<system>MSX</system>
 		<company>Anma</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -79,6 +88,7 @@
 	</software>
 	<software>
 		<title>Balance of Power</title>
+		<system>MSX</system>
 		<company>ASCII</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -87,6 +97,7 @@
 	</software>
 	<software>
 		<title>Ball Out</title>
+		<system>MSX</system>
 		<company>MSX Magazine</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -94,6 +105,7 @@
 	</software>
 	<software>
 		<title>Barnuba</title>
+		<system>MSX</system>
 		<company>NAMCO</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -103,6 +115,7 @@
 	</software>
 	<software>
 		<title>Bastard</title>
+		<system>MSX</system>
 		<company>Xain</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -111,6 +124,7 @@
 	</software>
 	<software>
 		<title>Be-Bop Bout</title>
+		<system>MSX</system>
 		<company>MAR'Z Project</company>
 		<year>1994</year>
 		<country>JP</country>
@@ -118,6 +132,7 @@
 	</software>
 	<software>
 		<title>Beach Story of Tako - Part I</title>
+		<system>MSX</system>
 		<company>Komeya</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -125,6 +140,7 @@
 	</software>
 	<software>
 		<title>Beach Story of Tako - Part II</title>
+		<system>MSX</system>
 		<company>Komeya</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -132,6 +148,7 @@
 	</software>
 	<software>
 		<title>Beach Story of Tako - Part III</title>
+		<system>MSX</system>
 		<company>Komeya</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -139,6 +156,7 @@
 	</software>
 	<software>
 		<title>Black Cyclon</title>
+		<system>MSX</system>
 		<company>Parallax</company>
 		<year>1993</year>
 		<country>NL</country>
@@ -149,6 +167,7 @@
 	</software>
 	<software>
 		<title>Blade Lords</title>
+		<system>MSX</system>
 		<company>Parallax</company>
 		<year>1994</year>
 		<country>NL</country>
@@ -156,14 +175,16 @@
 	</software>
 	<software>
 		<title>Blue Warrior</title>
+		<system>MSX</system>
 		<company>Moai-Tech</company>
 		<year>2000</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">acb5321732199ed06bb741acb7673f94bacabd4d</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">a9ba5f5b13da8cb7645dd3bbadb2c48b2151bd03</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Bombaman</title>
+		<system>MSX</system>
 		<company>TeamBomba</company>
 		<year>2004</year>
 		<country>NL</country>
@@ -171,6 +192,7 @@
 	</software>
 	<software>
 		<title>Bomberman 2</title>
+		<system>MSX</system>
 		<company>Paragon Productions</company>
 		<year>1997</year>
 		<country>NL</country>
@@ -178,6 +200,7 @@
 	</software>
 	<software>
 		<title>Bozo's Big Adventure</title>
+		<system>MSX</system>
 		<company>Cain</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -185,6 +208,7 @@
 	</software>
 	<software>
 		<title>Breaker</title>
+		<system>MSX</system>
 		<company>Radarsoft</company>
 		<year>1987</year>
 		<country>NL</country>
@@ -192,6 +216,7 @@
 	</software>
 	<software>
 		<title>Brisk</title>
+		<system>MSX</system>
 		<company>Triple Soft</company>
 		<year>1993</year>
 		<country>NL</country>
@@ -200,14 +225,16 @@
 	</software>
 	<software>
 		<title>Bubble Rain</title>
+		<system>MSX</system>
 		<company>Imanok</company>
 		<year>2001</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">508df8781a4463ad345b888bcc0dc309b8de0cc5</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">bca8592b98525c7e122affc19623a5f15d86fc69</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Chiller</title>
+		<system>MSX</system>
 		<company>Mastertronic</company>
 		<year>1985</year>
 		<country>UK</country>
@@ -215,6 +242,7 @@
 	</software>
 	<software>
 		<title>Cloud Master</title>
+		<system>MSX</system>
 		<company>TAITO</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -225,6 +253,7 @@
 	</software>
 	<software>
 		<title>Columns</title>
+		<system>MSX</system>
 		<company>Telenet Japan</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -234,6 +263,7 @@
 	</software>
 	<software>
 		<title>Construction Craze</title>
+		<system>MSX</system>
 		<company>Paragon Productions</company>
 		<year>1994</year>
 		<country>NL</country>
@@ -242,6 +272,7 @@
 	</software>
 	<software>
 		<title>Cosmic Soldier</title>
+		<system>MSX</system>
 		<company>Kogado Studio</company>
 		<year>1985</year>
 		<country>JP</country>
@@ -250,6 +281,7 @@
 	</software>
 	<software>
 		<title>Cosmo Traveler</title>
+		<system>MSX</system>
 		<company>Apollo Technica</company>
 		<year>1984</year>
 		<country>UK</country>
@@ -257,6 +289,7 @@
 	</software>
 	<software>
 		<title>Cytron</title>
+		<system>MSX</system>
 		<company>N. Gilissen</company>
 		<year>1994</year>
 		<country>NL</country>
@@ -265,6 +298,7 @@
 	</software>
 	<software>
 		<title>D-Dash</title>
+		<system>MSX</system>
 		<company>Tecno Soft</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -275,13 +309,15 @@
 	</software>
 	<software>
 		<title>Dahku - Furcht vor der Dunkelheit</title>
+		<system>MSX</system>
 		<company>Kralizec</company>
 		<year>2005</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">bc9f8caba79937eff4697e5349122f0c1f9a8128</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Daisenryaku</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1986</year>
 		<country>JP</country>
@@ -293,6 +329,7 @@
 	</software>
 	<software>
 		<title>Daisenryaku II - Campaign Version</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1992</year>
 		<country>JP</country>
@@ -303,6 +340,7 @@
 	</software>
 	<software>
 		<title>Daiva Story 5 - The Cup of Soma</title>
+		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -312,6 +350,7 @@
 	</software>
 	<software>
 		<title>DIX</title>
+		<system>MSX</system>
 		<company>MSX Engine</company>
 		<year>1992</year>
 		<country>JP</country>
@@ -320,6 +359,7 @@
 	</software>
 	<software>
 		<title>Dragon Quiz</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -329,6 +369,7 @@
 	</software>
 	<software>
 		<title>Dragon Slayer VI - The Legend of Heroes</title>
+		<system>MSX</system>
 		<company>Falcom</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -341,6 +382,7 @@
 	</software>
 	<software>
 		<title>Eggbert</title>
+		<system>MSX</system>
 		<company>Fony</company>
 		<year>1994</year>
 		<country>NL</country>
@@ -348,6 +390,7 @@
 	</software>
 	<software>
 		<title>F-Nano 2' - 3D Car Action</title>
+		<system>MSX</system>
 		<company>XRay</company>
 		<year>1997</year>
 		<country>JP</country>
@@ -355,6 +398,7 @@
 	</software>
 	<software>
 		<title>F1 Douchuuki</title>
+		<system>MSX</system>
 		<company>NAMCO</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -367,6 +411,7 @@
 	</software>
 	<software>
 		<title>F1 Spirit - 3D Special</title>
+		<system>MSX</system>
 		<company>Konami</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -378,6 +423,7 @@
 	</software>
 	<software>
 		<title>Famicle Parodic 2</title>
+		<system>MSX</system>
 		<company>Bit2</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -387,6 +433,7 @@
 	</software>
 	<software>
 		<title>Family Stadium Professional Baseball Homerun Contest</title>
+		<system>MSX</system>
 		<company>NAMCO</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -396,6 +443,7 @@
 	</software>
 	<software>
 		<title>Fantasm Soldier Valis II</title>
+		<system>MSX</system>
 		<company>Telenet Japan</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -405,6 +453,7 @@
 	</software>
 	<software>
 		<title>Feedback</title>
+		<system>MSX</system>
 		<company>Tecno Soft</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -416,6 +465,7 @@
 	</software>
 	<software>
 		<title>Final Fantasy</title>
+		<system>MSX</system>
 		<company>Square</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -426,6 +476,7 @@
 	</software>
 	<software>
 		<title>Find it Replayer</title>
+		<system>MSX</system>
 		<company>Delta Soft</company>
 		<year>2003</year>
 		<country>NL</country>
@@ -433,6 +484,7 @@
 	</software>
 	<software>
 		<title>Fire Hawk Thexder II</title>
+		<system>MSX</system>
 		<company>Game Arts</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -445,6 +497,7 @@
 	</software>
 	<software>
 		<title>For The Day II</title>
+		<system>MSX</system>
 		<company>Mirinae Soft Co.</company>
 		<year>1990</year>
 		<country>KR</country>
@@ -453,6 +506,7 @@
 	</software>
 	<software>
 		<title>Fray - In Magical Adventure</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -464,6 +518,7 @@
 	</software>
 	<software>
 		<title>Frantic</title>
+		<system>MSX</system>
 		<company>Anma</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -472,6 +527,7 @@
 	</software>
 	<software>
 		<title>Gorby's Pipeline</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -481,6 +537,7 @@
 	</software>
 	<software>
 		<title>Great Gianna Sisters, The</title>
+		<system>MSX</system>
 		<company>MGF</company>
 		<year>1993</year>
 		<country>NL</country>
@@ -489,6 +546,7 @@
 	</software>
 	<software>
 		<title>Greatest Driver</title>
+		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -498,6 +556,7 @@
 	</software>
 	<software>
 		<title>Herzog</title>
+		<system>MSX</system>
 		<company>Tecno Soft</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -508,6 +567,7 @@
 	</software>
 	<software>
 		<title>Harajuku After Dark</title>
+		<system>MSX</system>
 		<company>Kogado Studio</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -516,6 +576,7 @@
 	</software>
 	<software>
 		<title>Hitomi Kobayashi - Puzzle in London</title>
+		<system>MSX</system>
 		<company>Informercial</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -527,6 +588,7 @@
 	</software>
 	<software>
 		<title>Hydefos</title>
+		<system>MSX</system>
 		<company>Hertz</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -538,6 +600,7 @@
 	</software>
 	<software>
 		<title>Hydlide</title>
+		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
 		<year>1985</year>
 		<country>JP</country>
@@ -547,6 +610,7 @@
 	</software>
 	<software>
 		<title>Illusion City</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -557,6 +621,7 @@
 	</software>
 	<software>
 		<title>International Karate</title>
+		<system>MSX</system>
 		<company>Endurance</company>
 		<year>1986</year>
 		<country>UK</country>
@@ -566,6 +631,7 @@
 	</software>
 	<software>
 		<title>Ishido - The Way Of Stones</title>
+		<system>MSX</system>
 		<company>ASCII</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -575,6 +641,7 @@
 	</software>
 	<software>
 		<title>Kinetic Connection</title>
+		<system>MSX</system>
 		<company>Sadato Taneda</company>
 		<year>1986</year>
 		<country>JP</country>
@@ -582,6 +649,7 @@
 	</software>
 	<software>
 		<title>King's Valley Plus</title>
+		<system>MSX</system>
 		<company>Konami</company>
 		<year>1985</year>
 		<country>JP</country>
@@ -589,6 +657,7 @@
 	</software>
 	<software>
 		<title>Knightmare Gold</title>
+		<system>MSX</system>
 		<company>Amusement Factory</company>
 		<year>2006</year>
 		<country>BR</country>
@@ -597,6 +666,7 @@
 	</software>
 	<software>
 		<title>L'Affaire...</title>
+		<system>MSX</system>
 		<company>Infogrames</company>
 		<year>1986</year>
 		<country>FR</country>
@@ -606,9 +676,10 @@
 	</software>
 	<software>
 		<title>La Abadía del Crimen</title>
+		<system>MSX</system>
 		<company>Opera Soft</company>
 		<year>1988</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">41fbf187b38519ae3d93e5ab50c88f593d559dca</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">086f2af5b4cb1cfb0e1c3ba3d69b9f0abdf5200d</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">2831f16bbd62d0a51d7644fc3c337171ee261450</hash></format></dsk></dump>
@@ -617,22 +688,25 @@
 	</software>
 	<software>
 		<title>La Abadía del Crimen</title>
+		<system>MSX</system>
 		<company>Manuel Pazos</company>
 		<year>2001</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">e5181387139eb0563d908a5a29cec10aab2410d4</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">898f1e922ab3b232e130be04da38546fe0016613</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Last Mission, The</title>
+		<system>MSX</system>
 		<company>Opera Soft</company>
 		<year>1987</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">c80a8ba28f232ff0727aea0e2c103490f33d7bc0</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">892e7d1737ab119cafe6b76988669c0095f98132</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Laydock</title>
+		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
 		<year>1986</year>
 		<country>JP</country>
@@ -643,6 +717,7 @@
 	</software>
 	<software>
 		<title>Laydock 2 - Last Attack</title>
+		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -652,14 +727,16 @@
 	</software>
 	<software>
 		<title>Livingstone Supongo</title>
+		<system>MSX</system>
 		<company>Opera Soft</company>
 		<year>1986</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">429605bb0ec6285aaaeecc762c31fe234b9e269b</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">722e8137d5c1bd60307c1fa3731da6bd7c7c5f36</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Lübeck</title>
+		<system>MSX</system>
 		<company>MSX Magazine</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -668,6 +745,7 @@
 	</software>
 	<software>
 		<title>Magnar</title>
+		<system>MSX</system>
 		<company>Parallax</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -676,6 +754,7 @@
 	</software>
 	<software>
 		<title>Masashi Tashiro Has So Many Princesses</title>
+		<system>MSX</system>
 		<company>CBS/SONY</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -687,6 +766,7 @@
 	</software>
 	<software>
 		<title>Moon Light Saga</title>
+		<system>MSX</system>
 		<company>Maple Yard</company>
 		<year>1996</year>
 		<country>JP</country>
@@ -695,13 +775,15 @@
 	</software>
 	<software>
 		<title>Moskow 2024</title>
+		<system>MSX</system>
 		<company>Matra</company>
 		<year>2000</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">2873db5582447ef8fffe94f54de4110b59b136ec</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>New Devil Golvellius</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -712,6 +794,7 @@
 	</software>
 	<software>
 		<title>Niko2</title>
+		<system>MSX</system>
 		<company>Wolfteam</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -720,6 +803,7 @@
 	</software>
 	<software>
 		<title>No Fuss</title>
+		<system>MSX</system>
 		<company>Anma</company>
 		<year>1991</year>
 		<country>NL</country>
@@ -728,13 +812,15 @@
 	</software>
 	<software>
 		<title>No Name</title>
+		<system>MSX</system>
 		<company>Kai Magazine</company>
 		<year>1995</year>
-		<country>SP</country>
+		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">774217036639a20faceb5469fbf1dda3a34c93d7</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Nosh</title>
+		<system>MSX</system>
 		<company>Anma</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -742,6 +828,7 @@
 	</software>
 	<software>
 		<title>Not Again</title>
+		<system>MSX</system>
 		<company>Flying Bytes</company>
 		<year>1994</year>
 		<country>NL</country>
@@ -749,6 +836,7 @@
 	</software>
 	<software>
 		<title>Nyancle Racing</title>
+		<system>MSX</system>
 		<company>Bit2</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -758,6 +846,7 @@
 	</software>
 	<software>
 		<title>Palamedes</title>
+		<system>MSX</system>
 		<company>HOT-B</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -766,6 +855,7 @@
 	</software>
 	<software>
 		<title>PaRaDream</title>
+		<system>MSX</system>
 		<company>RAC House</company>
 		<year>1992</year>
 		<country>JP</country>
@@ -773,6 +863,7 @@
 	</software>
 	<software>
 		<title>Playball III</title>
+		<system>MSX</system>
 		<company>Sony</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -782,6 +873,7 @@
 	</software>
 	<software>
 		<title>Pleasure Hearts</title>
+		<system>MSX</system>
 		<company>M-Kai</company>
 		<year>1999</year>
 		<country>JP</country>
@@ -790,6 +882,7 @@
 	</software>
 	<software>
 		<title>Princess Maker</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1992</year>
 		<country>JP</country>
@@ -800,6 +893,7 @@
 	</software>
 	<software>
 		<title>Psycho World</title>
+		<system>MSX</system>
 		<company>Hertz</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -811,6 +905,7 @@
 	</software>
 	<software>
 		<title>Pumpkin Adventure I - The Quest for the Holy Grail</title>
+		<system>MSX</system>
 		<company>Umax</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -820,6 +915,7 @@
 	</software>
 	<software>
 		<title>Pumpkin Adventure III - Hunt for the Unknown</title>
+		<system>MSX</system>
 		<company>Umax</company>
 		<year>1995</year>
 		<country>NL</country>
@@ -828,6 +924,7 @@
 	</software>
 	<software>
 		<title>Puyo Puyo</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -839,6 +936,7 @@
 	</software>
 	<software>
 		<title>Rick Dangerous</title>
+		<system>MSX</system>
 		<company>Paragon Productions</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -846,6 +944,7 @@
 	</software>
 	<software>
 		<title>Rick Dangerous - Extra Levels</title>
+		<system>MSX</system>
 		<company>Paragon Productions</company>
 		<year>1993</year>
 		<country>NL</country>
@@ -853,6 +952,7 @@
 	</software>
 	<software>
 		<title>Robo Crush</title>
+		<system>MSX</system>
 		<company>System Soft</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -863,6 +963,7 @@
 	</software>
 	<software>
 		<title>Rona</title>
+		<system>MSX</system>
 		<company>Dixie</company>
 		<year>1994</year>
 		<country>JP</country>
@@ -871,6 +972,7 @@
 	</software>
 	<software>
 		<title>Rune Master II</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -880,6 +982,7 @@
 	</software>
 	<software>
 		<title>Rune Master III</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -891,6 +994,7 @@
 	</software>
 	<software>
 		<title>Rune Worth - The Black Clad Young Noble</title>
+		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -898,6 +1002,7 @@
 	</software>
 	<software>
 		<title>Ryukyu</title>
+		<system>MSX</system>
 		<company>ASCII</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -906,6 +1011,7 @@
 	</software>
 	<software>
 		<title>SD Snatcher</title>
+		<system>MSX</system>
 		<company>Konami</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -924,6 +1030,7 @@
 	</software>
 	<software>
 		<title>Sea Sardine</title>
+		<system>MSX</system>
 		<company>MSX Magazine</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -931,6 +1038,7 @@
 	</software>
 	<software>
 		<title>Sex Bomb Bunny</title>
+		<system>MSX</system>
 		<company>Matra</company>
 		<year>1999</year>
 		<country>ES</country>
@@ -938,6 +1046,7 @@
 	</software>
 	<software>
 		<title>Shrines of Enigma</title>
+		<system>MSX</system>
 		<company>Element</company>
 		<year>1994</year>
 		<country>NL</country>
@@ -945,6 +1054,7 @@
 	</software>
 	<software>
 		<title>Snatcher</title>
+		<system>MSX</system>
 		<company>Konami</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -957,6 +1067,7 @@
 	</software>
 	<software>
 		<title>Soldier of Fisla</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -964,6 +1075,7 @@
 	</software>
 	<software>
 		<title>Solitaire</title>
+		<system>MSX</system>
 		<company>Gohsoft</company>
 		<year>1990</year>
 		<country>NL</country>
@@ -971,6 +1083,7 @@
 	</software>
 	<software>
 		<title>Solitaire Royale</title>
+		<system>MSX</system>
 		<company>Game Arts</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -980,6 +1093,7 @@
 	</software>
 	<software>
 		<title>Sonyc</title>
+		<system>MSX</system>
 		<company>Analogy</company>
 		<year>1995</year>
 		<country>UK</country>
@@ -987,6 +1101,7 @@
 	</software>
 	<software>
 		<title>Sorcerian</title>
+		<system>MSX</system>
 		<company>Falcom</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -998,6 +1113,7 @@
 	</software>
 	<software>
 		<title>Space Manbow</title>
+		<system>MSX</system>
 		<company>Konami</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -1005,6 +1121,7 @@
 	</software>
 	<software>
 		<title>Squeek</title>
+		<system>MSX</system>
 		<company>Anma</company>
 		<year>1991</year>
 		<country>NL</country>
@@ -1013,6 +1130,7 @@
 	</software>
 	<software>
 		<title>Starship Rendezvous</title>
+		<system>MSX</system>
 		<company>Scaptrust</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -1025,6 +1143,7 @@
 	</software>
 	<software>
 		<title>Super Chess</title>
+		<system>MSX</system>
 		<company>Kuma Computers</company>
 		<year>1984</year>
 		<country>UK</country>
@@ -1032,6 +1151,7 @@
 	</software>
 	<software>
 		<title>Super Cooks</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -1039,6 +1159,7 @@
 	</software>
 	<software>
 		<title>Super Daisenryaku</title>
+		<system>MSX</system>
 		<company>System Soft</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -1050,6 +1171,7 @@
 	</software>
 	<software>
 		<title>T.N.T.</title>
+		<system>MSX</system>
 		<company>Infogrames</company>
 		<year>1987</year>
 		<country>FR</country>
@@ -1059,6 +1181,7 @@
 	</software>
 	<software>
 		<title>Teachers Terror</title>
+		<system>MSX</system>
 		<company>BPS</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -1069,6 +1192,7 @@
 	</software>
 	<software>
 		<title>Tetris</title>
+		<system>MSX</system>
 		<company>Hegega</company>
 		<year>1993</year>
 		<country>NL</country>
@@ -1076,6 +1200,7 @@
 	</software>
 	<software>
 		<title>Time Bandits</title>
+		<system>MSX</system>
 		<company>PSS</company>
 		<year>1984</year>
 		<country>UK</country>
@@ -1088,6 +1213,7 @@
 	</software>
 	<software>
 		<title>Trojka</title>
+		<system>MSX</system>
 		<company>BCF</company>
 		<year>1992</year>
 		<country>NL</country>
@@ -1096,6 +1222,7 @@
 	</software>
 	<software>
 		<title>Troxx</title>
+		<system>MSX</system>
 		<company>Anma</company>
 		<year>1993</year>
 		<country>NL</country>
@@ -1104,6 +1231,7 @@
 	</software>
 	<software>
 		<title>Undeadline</title>
+		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -1118,6 +1246,7 @@
 	</software>
 	<software>
 		<title>Vectron</title>
+		<system>MSX</system>
 		<company>Parallax</company>
 		<year>1989</year>
 		<country>NL</country>
@@ -1127,6 +1256,7 @@
 	</software>
 	<software>
 		<title>Vicious Viper</title>
+		<system>MSX</system>
 		<company>Knights Computers</company>
 		<year>1989</year>
 		<country>UK</country>
@@ -1134,6 +1264,7 @@
 	</software>
 	<software>
 		<title>Xak I - The Art of Visual Stage</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -1145,6 +1276,7 @@
 	</software>
 	<software>
 		<title>Xak II - Rising of the Red Moon</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -1163,6 +1295,7 @@
 	</software>
 	<software>
 		<title>Xak III - The Tower of Gazzel</title>
+		<system>MSX</system>
 		<company>Microcabin</company>
 		<year>1991</year>
 		<country>JP</country>
@@ -1180,6 +1313,7 @@
 	</software>
 	<software>
 		<title>Xanadu</title>
+		<system>MSX</system>
 		<company>Falcom</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -1189,6 +1323,7 @@
 	</software>
 	<software>
 		<title>XZR</title>
+		<system>MSX</system>
 		<company>Telenet Japan</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -1198,6 +1333,7 @@
 	</software>
 	<software>
 		<title>XZR II</title>
+		<system>MSX</system>
 		<company>Telenet Japan</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -1210,6 +1346,7 @@
 	</software>
 	<software>
 		<title>Yoshida Koumuten Data Library</title>
+		<system>MSX</system>
 		<company>MSX Magazine</company>
 		<year>1990</year>
 		<country>JP</country>
@@ -1217,6 +1354,7 @@
 	</software>
 	<software>
 		<title>Ys: Ancient Ys Vanished</title>
+		<system>MSX</system>
 		<company>Falcom</company>
 		<year>1987</year>
 		<country>JP</country>
@@ -1228,6 +1366,7 @@
 	</software>
 	<software>
 		<title>Ys-II: Ancient Ys Vanished - The Final Chapter</title>
+		<system>MSX</system>
 		<company>Falcom</company>
 		<year>1988</year>
 		<country>JP</country>
@@ -1240,6 +1379,7 @@
 	</software>
 	<software>
 		<title>Ys-III: Wanderers from Ys</title>
+		<system>MSX</system>
 		<company>Falcom</company>
 		<year>1989</year>
 		<country>JP</country>
@@ -1251,6 +1391,7 @@
 	</software>
 	<software>
 		<title>Zanac-Ex</title>
+		<system>MSX</system>
 		<company>Compile</company>
 		<year>1986</year>
 		<country>JP</country>
@@ -1258,6 +1399,7 @@
 	</software>
 	<software>
 		<title>Zone Terra</title>
+		<system>MSX</system>
 		<company>Quadrivium</company>
 		<year>1994</year>
 		<country>NL</country>
@@ -1267,6 +1409,7 @@
 	</software>
 	<software>
 		<title>Zoo (Icon-venture)</title>
+		<system>MSX</system>
 		<company>Radarsoft</company>
 		<year>1987</year>
 		<country>NL</country>
@@ -1276,6 +1419,7 @@
 	</software>
 	<software>
 		<title>Zowazo World</title>
+		<system>MSX</system>
 		<company>MSX Magazine</company>
 		<year>1988</year>
 		<country>JP</country>
