@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -43,10 +44,12 @@ public class JSONFilterPersisterTest
 
 		Set<String> filterNames = filterPersister.getFilterNames();
 
-		assertEquals( 3, filterNames.size() );
-		assertTrue( filterNames.contains( "Konami MSX SCC 1987 128<256" ) );
-		assertTrue( filterNames.contains( "MSX-Music >1988" ) );
-		assertTrue( filterNames.contains( "Scripts" ) );
+		assertEquals( 4, filterNames.size() );
+		Iterator<String> iterator = filterNames.iterator();
+		assertEquals( "action Games", iterator.next() );
+		assertEquals( "Konami MSX SCC 1987 128<256", iterator.next() );
+		assertEquals( "MSX-Music >1988", iterator.next() );
+		assertEquals( "Scripts", iterator.next() );
 
 		//---
 		//filter set by the name "Konami MSX SCC 1987 128<256"

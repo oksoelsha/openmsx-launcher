@@ -145,7 +145,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-		final JComboBox<ComboBoxWithDisplayNameItem> filterTypesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterType.class);
+		final JComboBox<ComboBoxWithDisplayNameItem> filterTypesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterType.class, false);
 		filterTypesComboBox.addActionListener(event -> showCorrespondingSelector(FilterType.valueOf(((ComboBoxWithDisplayNameItem)filterTypesComboBox.getSelectedItem()).value)));
 
 		filterItemsPanel = new JPanel();
@@ -424,7 +424,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 	private class CompaniesLayer extends AbstractLayer
     {
 		private final CompaniesLayer instance = this;
-		private final JComboBox<ComboBoxWithDisplayNameItem> companiesComboBox = getComboBoxWithDisplayValuesLocalizedInternally(Company.class);
+		private final JComboBox<ComboBoxWithDisplayNameItem> companiesComboBox = getComboBoxWithDisplayValuesLocalizedInternally(Company.class, true);
 
     	@Override
     	public Component getLayer()
@@ -448,7 +448,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
     private class CountriesLayer extends AbstractLayer
     {
     	private final CountriesLayer instance = this;
-    	private final JComboBox<ComboBoxWithDisplayNameItem> countriesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(Country.class);
+    	private final JComboBox<ComboBoxWithDisplayNameItem> countriesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(Country.class, true);
 
 		@Override
     	public Component getLayer()
@@ -472,7 +472,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
     private class GenerationsLayer extends AbstractLayer
     {
     	private final GenerationsLayer instance = this;
-    	private final JComboBox<ComboBoxWithDisplayNameItem> generationsComboBox = getComboBoxWithDisplayValuesLocalizedInternally(MSXGeneration.class);
+    	private final JComboBox<ComboBoxWithDisplayNameItem> generationsComboBox = getComboBoxWithDisplayValuesLocalizedInternally(MSXGeneration.class, false);
 
 		@Override
     	public Component getLayer()
@@ -504,6 +504,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
     		JPanel genresPanel = getFilterLayerPanel();
 
     		Genre[] genres = Genre.values();
+    		Arrays.sort( genres, (g1, g2) -> g1.getDisplayName().compareTo( g2.getDisplayName() ) );
     		for(int index = 1; index < genres.length; index++)
     		{
     			genresComboBox.addItem(new ComboBoxWithDisplayNameItem(genres[index].getDisplayName(), genres[index].toString()));
@@ -526,7 +527,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
     private class MediaLayer extends AbstractLayer
     {
     	private final MediaLayer instance = this;
-    	private final JComboBox<ComboBoxWithDisplayNameItem> mediaComboBox = getComboBoxWithDisplayValuesLocalizedExternally(Medium.class);
+    	private final JComboBox<ComboBoxWithDisplayNameItem> mediaComboBox = getComboBoxWithDisplayValuesLocalizedExternally(Medium.class, false);
 
 		@Override
     	public Component getLayer()
@@ -551,7 +552,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
     {
     	private final SizesLayer instance = this;
 		private final JComboBox<ComboBoxWithDisplayNameItem> sizesComboBox = new JComboBox<ComboBoxWithDisplayNameItem>(getSizesModel());
-		private final JComboBox<ComboBoxWithDisplayNameItem> parametersComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterParameter.class);
+		private final JComboBox<ComboBoxWithDisplayNameItem> parametersComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterParameter.class, false);
 		private final JComboBox<ComboBoxWithDisplayNameItem> secondSizesComboBox = new JComboBox<ComboBoxWithDisplayNameItem>(getSizesModel());
 
 		private final static String KB = " KB";
@@ -626,7 +627,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
     private class SoundChipsLayer extends AbstractLayer
     {
     	private final SoundChipsLayer instance = this;
-    	private final JComboBox<ComboBoxWithDisplayNameItem> soundChipsComboBox = getComboBoxWithDisplayValuesLocalizedInternally(Sound.class);
+    	private final JComboBox<ComboBoxWithDisplayNameItem> soundChipsComboBox = getComboBoxWithDisplayValuesLocalizedInternally(Sound.class, false);
 
 		@Override
     	public Component getLayer()
@@ -651,7 +652,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
     {
     	private final YearsLayer instance = this;
 		private final JComboBox<String> yearsComboBox = new JComboBox<String>(getYears());
-		private final JComboBox<ComboBoxWithDisplayNameItem> parametersComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterParameter.class);
+		private final JComboBox<ComboBoxWithDisplayNameItem> parametersComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterParameter.class, false);
 		private final JComboBox<String> secondYearsComboBox = new JComboBox<String>(getYears());
 
 		private final static int FIRST_YEAR = 1982;
@@ -792,7 +793,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		return buffer.toString();
     }
 
-    private <E extends Enum<E>> JComboBox<ComboBoxWithDisplayNameItem> getComboBoxWithDisplayValuesLocalizedExternally(Class<E> enumClass)
+    private <E extends Enum<E>> JComboBox<ComboBoxWithDisplayNameItem> getComboBoxWithDisplayValuesLocalizedExternally(Class<E> enumClass, boolean sort)
 	{
 		ComboBoxWithDisplayNameItem[] comboBoxItems = new ComboBoxWithDisplayNameItem[enumClass.getEnumConstants().length];
 
@@ -801,6 +802,11 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		{  
 			comboBoxItems[index++] = new ComboBoxWithDisplayNameItem(messages.get(enumVal.toString()), enumVal.toString());
         }
+
+		if(sort)
+		{
+			Arrays.sort( comboBoxItems, ( c1, c2 ) -> c1.label.compareToIgnoreCase( c2.label ) );
+		}
 
 		JComboBox<ComboBoxWithDisplayNameItem> comboBox = new JComboBox<ComboBoxWithDisplayNameItem>(comboBoxItems);
 		if(rightToLeft)
@@ -812,7 +818,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		return comboBox;
 	}
 
-	private <E extends Enum<E>> JComboBox<ComboBoxWithDisplayNameItem> getComboBoxWithDisplayValuesLocalizedInternally(Class<E> enumClass)
+	private <E extends Enum<E>> JComboBox<ComboBoxWithDisplayNameItem> getComboBoxWithDisplayValuesLocalizedInternally(Class<E> enumClass, boolean sort)
 	{
 		ComboBoxWithDisplayNameItem[] comboBoxItems = new ComboBoxWithDisplayNameItem[enumClass.getEnumConstants().length];
 
@@ -822,7 +828,10 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 			comboBoxItems[index++] = new ComboBoxWithDisplayNameItem(((EnumWithDisplayName)enumVal).getDisplayName(), enumVal.toString());
         }
 
-		Arrays.sort( comboBoxItems, ( c1, c2 ) -> c1.label.compareToIgnoreCase( c2.label ) );
+		if(sort)
+		{
+			Arrays.sort( comboBoxItems, ( c1, c2 ) -> c1.label.compareToIgnoreCase( c2.label ) );
+		}
 
 		return new JComboBox<ComboBoxWithDisplayNameItem>(comboBoxItems);
 	}

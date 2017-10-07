@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -140,7 +141,10 @@ final class JSONFilterPersister implements FilterPersister
 	{
 		initializeFiltersMapIfNecessary();
 
-		return Collections.unmodifiableSet( filtersMap.keySet() );
+		Set<String> sortedFilterNames = new TreeSet<>( String.CASE_INSENSITIVE_ORDER );
+		sortedFilterNames.addAll( filtersMap.keySet() );
+
+		return Collections.unmodifiableSet( sortedFilterNames );
 	}
 
 	private void initializeFiltersMapIfNecessary()

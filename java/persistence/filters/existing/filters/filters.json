@@ -54,6 +54,15 @@
         ]
     },
     {
+        "name": "action Games",
+        "filters": [
+            {
+                "value1" :"ACTION",
+                "type": "GENRE"
+            }
+        ]
+    },
+    {
         "name": "Scripts",
         "filters": [
             {

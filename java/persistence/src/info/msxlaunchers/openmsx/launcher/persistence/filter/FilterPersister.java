@@ -57,9 +57,9 @@ public interface FilterPersister
 	Set<Filter> getFilter( String name ) throws FilterSetNotFoundException;
 
 	/**
-	 * Returns a Set containing names of saved filter sets
+	 * Returns a case-insensitive ordered and unmodified set containing names of saved filter sets
 	 * 
-	 * @return Unmodifiable Set containing filter set names
+	 * @return Case-insensitive ordered and unmodifiable set containing filter set names
 	 */
 	Set<String> getFilterNames();
 }
