@@ -40,6 +40,7 @@ public class LinuxBSDStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
@@ -76,6 +77,7 @@ public class LinuxBSDStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
@@ -123,6 +125,7 @@ public class LinuxBSDStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
@@ -170,6 +173,7 @@ public class LinuxBSDStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );

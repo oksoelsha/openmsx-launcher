@@ -99,5 +99,6 @@
 		<module>../ui</module>
 		<module>../updater</module>
 		<module>../patch</module>
+		<module>../feed</module>
 	</modules>
 </project>

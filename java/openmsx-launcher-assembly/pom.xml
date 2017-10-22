@@ -94,5 +94,10 @@
 			<artifactId>patch</artifactId>
 			<version>${version}</version>
 		</dependency>
+		<dependency>
+			<groupId>info.msxlaunchers.openmsx</groupId>
+			<artifactId>feed</artifactId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 </project>

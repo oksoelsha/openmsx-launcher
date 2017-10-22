@@ -18,6 +18,7 @@ public class SettingsTest
 	private String defaultDatabase = "default Database";
 	private Language language = Language.CATALAN;
 	private boolean showUpdateAllDatabases = true;
+	private boolean enableFeedService = true;
 
 	@Test
 	public void testSettings()
@@ -25,7 +26,7 @@ public class SettingsTest
 		Settings settings;
 		
 		//test that all fields can be set
-		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
+		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases, enableFeedService );
 
 		assertEquals( settings.getOpenMSXFullPath(), openMSXFullPath );
 		assertEquals( settings.getOpenMSXMachinesFullPath(), openMSXMachinesFullPath );
@@ -33,9 +34,10 @@ public class SettingsTest
 		assertEquals( settings.getDefaultDatabase(), defaultDatabase );
 		assertEquals( settings.getLanguage(), language );
 		assertEquals( settings.isShowUpdateAllDatabases(), true );
+		assertEquals( settings.isEnableFeedService(), true );
 		
 		//test that all fields can null
-		settings = new Settings( null, null, null, null, null, false );
+		settings = new Settings( null, null, null, null, null, false, false );
 
 		assertEquals( settings.getOpenMSXFullPath(), null );
 		assertEquals( settings.getOpenMSXMachinesFullPath(), null );
@@ -43,21 +45,22 @@ public class SettingsTest
 		assertEquals( settings.getDefaultDatabase(), null );
 		assertEquals( settings.getLanguage(), null );
 		assertEquals( settings.isShowUpdateAllDatabases(), false );
+		assertEquals( settings.isEnableFeedService(), false );
 	}
 
 	@Test
 	public void testEquals()
 	{
-		Settings settings1 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
-		Settings settings2 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
-		Settings settings3 = new Settings( null, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
-		Settings settings4 = new Settings( null, null, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases );
-		Settings settings5 = new Settings( null, null, null, defaultDatabase, language, showUpdateAllDatabases );
-		Settings settings6 = new Settings( null, null, null, null, language, showUpdateAllDatabases );
-		Settings settings7 = new Settings( null, null, null, null, null, false );
-		Settings settings8 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, Language.KOREAN, showUpdateAllDatabases );
-		Settings settings9 = new Settings( openMSXFullPath, openMSXMachinesFullPath, "screenshotsFullPath2", defaultDatabase, language, showUpdateAllDatabases );
-		Settings settings10 = new Settings( openMSXFullPath, openMSXMachinesFullPath, "screenshotsFullPath2", defaultDatabase, language, false );
+		Settings settings1 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases, enableFeedService );
+		Settings settings2 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases, enableFeedService );
+		Settings settings3 = new Settings( null, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases, enableFeedService );
+		Settings settings4 = new Settings( null, null, screenshotsFullPath, defaultDatabase, language, showUpdateAllDatabases, enableFeedService );
+		Settings settings5 = new Settings( null, null, null, defaultDatabase, language, showUpdateAllDatabases, enableFeedService );
+		Settings settings6 = new Settings( null, null, null, null, language, showUpdateAllDatabases, enableFeedService );
+		Settings settings7 = new Settings( null, null, null, null, null, false, false );
+		Settings settings8 = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, Language.KOREAN, showUpdateAllDatabases, enableFeedService );
+		Settings settings9 = new Settings( openMSXFullPath, openMSXMachinesFullPath, "screenshotsFullPath2", defaultDatabase, language, showUpdateAllDatabases, enableFeedService );
+		Settings settings10 = new Settings( openMSXFullPath, openMSXMachinesFullPath, "screenshotsFullPath2", defaultDatabase, language, false, false );
 
 		assertTrue( settings1.equals( settings2 ) );
 		assertEquals( settings1.hashCode(), settings2.hashCode() );
@@ -83,7 +86,7 @@ public class SettingsTest
 	@Test
 	public void testEmptyStringsShouldReturnNullOrFalse()
 	{
-		Settings settings = new Settings( " ", " ", " ", " ", null, false );
+		Settings settings = new Settings( " ", " ", " ", " ", null, false, false );
 
 		assertNull( settings.getOpenMSXFullPath() );
 		assertNull( settings.getOpenMSXMachinesFullPath() );

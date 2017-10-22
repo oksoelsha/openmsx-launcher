@@ -15,14 +15,18 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
-import info.msxlaunchers.openmsx.common.Utils;
-
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.swing.JLabel;
+
+import info.msxlaunchers.openmsx.common.Utils;
 
 /**
  * @since v1.2
@@ -32,38 +36,109 @@ import javax.swing.JLabel;
 @SuppressWarnings("serial")
 public class HyperLink extends JLabel
 {
+	private static final Color DEFAULT_LINK_COLOR = new Color(0, 0, 0x99);
 	private static final Cursor HAND_CURSOR = new Cursor(Cursor.HAND_CURSOR);
 
-	public HyperLink(final String label, final String address)
-	{
-		super("<HTML><FONT color=\"#000099\">" + label + "</FONT></HTML>");
+	private final Font font = getFont();
+	@SuppressWarnings("rawtypes")
+	private Map attributes = font.getAttributes();
 
+	private final boolean noUnderline;
+
+	public static class HyperLinkParam
+	{
+		private String label;
+		private String address;
+		private Color linkColor;
+		private boolean noUnderline;
+		private boolean bold;
+		private int size;
+
+		public HyperLinkParam label(String label) { this.label = label; return this; }
+		public HyperLinkParam address(String address) { this.address = address; return this; }
+		public HyperLinkParam linkColor(Color linkColor) { this.linkColor = linkColor; return this; }
+		public HyperLinkParam noUnderline() { this.noUnderline = true; return this; }
+		public HyperLinkParam bold() { this.bold = true; return this; }
+		public HyperLinkParam size(int size) { this.size = size; return this; }
+
+		public HyperLink build()
+		{
+			return new HyperLink(this);
+		}
+	}
+
+	public static HyperLinkParam label(String label) { return new HyperLinkParam().label(label); };
+	public static HyperLinkParam address(String address) { return new HyperLinkParam().address(address); };
+	public static HyperLinkParam linkColor(Color linkColor) { return new HyperLinkParam().linkColor(linkColor); };
+	public static HyperLinkParam noUnderline() { return new HyperLinkParam().noUnderline(); };
+	public static HyperLinkParam bold() { return new HyperLinkParam().noUnderline(); };
+	public static HyperLinkParam size(int size) { return new HyperLinkParam().size(size); };
+
+	@SuppressWarnings("unchecked")
+	private HyperLink(HyperLinkParam param)
+	{
+		super(param.label);
 		setCursor(HAND_CURSOR);
 
-	    addMouseListener(new MouseListener() {
-			
+		if(param.bold)
+		{
+			attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
+			setFont(font.deriveFont(attributes));
+		}
+
+		if(param.linkColor == null)
+		{
+			setForeground(DEFAULT_LINK_COLOR);
+		}
+		else
+		{
+			setForeground(param.linkColor);
+		}
+
+		this.noUnderline = param.noUnderline;
+
+		if(param.size > 0)
+		{
+			attributes.put(TextAttribute.SIZE, param.size);
+			setFont(font.deriveFont(attributes));
+		}
+
+		addMouseListener(new MouseListener() {
+
 			@Override
 			public void mouseReleased(MouseEvent me) {}
-			
+
 			@Override
 			public void mousePressed(MouseEvent me) {}
-			
+
 			@Override
-			public void mouseExited(MouseEvent me) {}
-			
+			public void mouseExited(MouseEvent me) {
+				if(!noUnderline)
+				{
+					attributes.put(TextAttribute.UNDERLINE, -1);
+					setFont(font.deriveFont(attributes));
+				}
+			}
+
 			@Override
-			public void mouseEntered(MouseEvent me) {}
-			
+			public void mouseEntered(MouseEvent me) {
+				if(!noUnderline)
+				{
+					attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+					setFont(font.deriveFont(attributes));
+				}
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent me)
 			{
 				try
 				{
-					Utils.startBrowser( address );
+					Utils.startBrowser(param.address);
 				}
-				catch( IOException ioe )
+				catch(IOException ioe)
 				{
-					//what to do?
+					//TODO log it
 				}
 			}
 	    });

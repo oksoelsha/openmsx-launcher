@@ -43,6 +43,7 @@ import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -81,6 +82,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 	private JButton screenshotsFullPathBrowseButton;
 	private JComboBox<String> defaultDatabaseComboBox;
 	private JComboBoxWithImages languageComboBox;
+	private JCheckBox enableFeedServiceCheckBox;
 	private JButton okButton;
 	private JButton cancelButton;
 	
@@ -315,7 +317,8 @@ public class SettingsWindow  extends JDialog implements ActionListener
 						screenshotsFullPathTextField.getText(),
 						defaultDatabase,
 						languageComboBox.getSelectedCode(),
-						settings.isShowUpdateAllDatabases());
+						settings.isShowUpdateAllDatabases(),
+						enableFeedServiceCheckBox.isSelected());
 				dispose();
 			}
 			catch(LauncherException le)

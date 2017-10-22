@@ -20,6 +20,7 @@ import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
+import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
 import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
@@ -28,6 +29,7 @@ import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
+import info.msxlaunchers.openmsx.launcher.feed.FeedService;
 import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.log.LogEvent;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
@@ -49,6 +51,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -91,6 +94,7 @@ final class MainPresenterImpl implements MainPresenter
 	private final Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	private final Provider<PatcherPresenter> patcherPresenterFactory;
 	private final MachineUpdatePresenterFactory machineUpdatePresenterFactory;
+	private final FeedService feedService;
 
 	private static final String SCREENSHOT_EXT = ".png";
 	private static final String SCREENSHOT1_SUFFIX = "a";
@@ -137,7 +141,8 @@ final class MainPresenterImpl implements MainPresenter
 			FileLocator fileLocator,
 			DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory,
 			Provider<PatcherPresenter> patcherPresenterFactory,
-			MachineUpdatePresenterFactory machineUpdatePresenterFactory ) throws IOException
+			MachineUpdatePresenterFactory machineUpdatePresenterFactory,
+			FeedService feedService ) throws IOException
 	{
 		this.view = Objects.requireNonNull( view );
 		this.settingsPresenterFactory = Objects.requireNonNull( settingsPresenterFactory );
@@ -158,6 +163,7 @@ final class MainPresenterImpl implements MainPresenter
 		this.activityViewerPresenterFactory = Objects.requireNonNull( activityViewerPresenterFactory );
 		this.patcherPresenterFactory = Objects.requireNonNull( patcherPresenterFactory );
 		this.machineUpdatePresenterFactory = Objects.requireNonNull( machineUpdatePresenterFactory );
+		this.feedService = Objects.requireNonNull( feedService );
 
 		try
 		{
@@ -185,9 +191,8 @@ final class MainPresenterImpl implements MainPresenter
 
 		setLanguageParameters( settings.getLanguage() );
 
-		databases = launcherPersistence.getGamePersister().getDatabases();
-
-		databases = databases.stream().collect( Collectors.toCollection( () -> new TreeSet<String>( (db1, db2) -> db1.compareToIgnoreCase( db2 ) ) ) );
+		databases = launcherPersistence.getGamePersister().getDatabases().stream()
+				.collect( Collectors.toCollection( () -> new TreeSet<String>( (db1, db2) -> db1.compareToIgnoreCase( db2 ) ) ) );
 
 		String defaultDatabase = settings.getDefaultDatabase();
 		if( defaultDatabase == null )
@@ -223,6 +228,11 @@ final class MainPresenterImpl implements MainPresenter
 		}
 
 		this.showUpdateAllDatabases = settings.isShowUpdateAllDatabases();
+
+		if( settings.isEnableFeedService() )
+		{
+			this.feedService.start();
+		}
 
 		openMSXMachinesFullPath = settings.getOpenMSXMachinesFullPath();
 		initializeRepositoryInfoMap();
@@ -1164,6 +1174,22 @@ final class MainPresenterImpl implements MainPresenter
 		initializeRepositoryInfoMap();
 
 		onViewUpdatedDatabase( null );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestNewsList()
+	 */
+	@Override
+	public void onRequestNewsList()
+	{
+		try {
+			List<FeedMessage> feedMessages = feedService.getMessages();
+
+			view.showFeedMessagesMenu( feedMessages );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void startBrowser( String uriString, LauncherExceptionCode errCodeIfNotFound ) throws LauncherException

@@ -49,11 +49,13 @@ public interface SettingsPresenter
 	 * @param defaultDatabase Default database
 	 * @param languageChoice String that represents language name in Language enum
 	 * @param showUpdateAllDatabases Flag to show update all databases menu item
+	 * @param enableFeedService Flag to enable RSS feed service
 	 * @throws LauncherException
 	 */
 	void onRequestSettingsAction( String openMSXFullPath,
 			String screenshotsFullPath,
 			String defaultDatabase,
 			String languageChoice,
-			boolean showUpdateAllDatabases ) throws LauncherException;
+			boolean showUpdateAllDatabases,
+			boolean enableFeedService ) throws LauncherException;
 }

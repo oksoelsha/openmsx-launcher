@@ -54,6 +54,7 @@ final class FileSettingsPersister implements SettingsPersister
 	private final static String DEFAULT_DATABASE = "default-database";
 	private final static String LANGUAGE = "language";
 	private final static String SHOW_UPDATE_ALL_DATABASES = "showUpdateAllDatabases";
+	private final static String ENABLE_FEED_SERVICE = "enableFeedService";
 
 	private final File settingsFile;
 
@@ -83,6 +84,7 @@ final class FileSettingsPersister implements SettingsPersister
 		String defaultDatabase = getPropertyValue( settings.getDefaultDatabase() );
 		String language = Utils.getEnumValue( settings.getLanguage() );
 		boolean showUpdateAllDatabases = settings.isShowUpdateAllDatabases();
+		boolean enableFeedService = settings.isEnableFeedService();
 
 		properties.put( OPENMSX_FULL_PATH, openMSXFullPath );
 		properties.put( OPENMSX_MACHINES_FULL_PATH, openMSXMachinesFullPath );
@@ -90,6 +92,7 @@ final class FileSettingsPersister implements SettingsPersister
 		properties.put( DEFAULT_DATABASE, defaultDatabase );
 		properties.put( LANGUAGE, language );
 		properties.put( SHOW_UPDATE_ALL_DATABASES, new Boolean( showUpdateAllDatabases ).toString() );
+		properties.put( ENABLE_FEED_SERVICE, new Boolean( enableFeedService ).toString() );
 
 		try( OutputStream stream = new FileOutputStream( settingsFile ) )
 		{
@@ -99,7 +102,8 @@ final class FileSettingsPersister implements SettingsPersister
 											screenshotsFullPath,
 											defaultDatabase,
 											Language.fromValue( Utils.getNumber( language ) ),
-											showUpdateAllDatabases );
+											showUpdateAllDatabases,
+											enableFeedService );
 		}
 	}
 
@@ -129,7 +133,8 @@ final class FileSettingsPersister implements SettingsPersister
 					properties.getProperty( SCREENSHOTS_FULL_PATH ),
 					properties.getProperty( DEFAULT_DATABASE ) ,
 					Language.fromValue( Utils.getNumber( properties.getProperty( LANGUAGE ) ) ),
-					Boolean.parseBoolean( properties.getProperty( SHOW_UPDATE_ALL_DATABASES, "false" ) ) );
+					Boolean.parseBoolean( properties.getProperty( SHOW_UPDATE_ALL_DATABASES, "false" ) ),
+					Boolean.parseBoolean( properties.getProperty( ENABLE_FEED_SERVICE, "false" ) ) );
 
 			cachedSettings = settings;
 		}

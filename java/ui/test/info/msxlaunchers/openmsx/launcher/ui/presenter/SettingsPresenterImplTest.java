@@ -73,7 +73,7 @@ public class SettingsPresenterImplTest
 		Language language = Language.FRENCH;
 		String languageCode = "FR";
 
-		Settings settings = new Settings( null, null, null, defaultDatabase, null, false );
+		Settings settings = new Settings( null, null, null, defaultDatabase, null, false, false );
 
 		presenter.onRequestSettingsScreen( settings, databases, language, languageCode, false );
 
@@ -94,9 +94,9 @@ public class SettingsPresenterImplTest
 		when( platformViewProperties.isMachinesFolderInsideOpenMSX() ).thenReturn( true );
 		when( platformViewProperties.getOpenMSXMachinesPath() ).thenReturn( machinesPath );
 
-		Settings settings = new Settings( openMSXPath, new File( openMSXPath, machinesPath ).getAbsolutePath(), screenshotsPath, defaultDatabase, Language.valueOf( language ), false );
+		Settings settings = new Settings( openMSXPath, new File( openMSXPath, machinesPath ).getAbsolutePath(), screenshotsPath, defaultDatabase, Language.valueOf( language ), false, false );
 
-		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, language, false );
+		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, language, false, false );
 
 		verify( settingsPersister, times( 1 ) ).saveSettings( settings );
 		verify( mainPresenter, times( 1 ) ).onAcceptSettingsAction( settings );		
@@ -116,9 +116,9 @@ public class SettingsPresenterImplTest
 		when( platformViewProperties.isMachinesFolderInsideOpenMSX() ).thenReturn( false );
 		when( platformViewProperties.getOpenMSXMachinesPath() ).thenReturn( machinesPath );
 
-		Settings settings = new Settings( openMSXPath, machinesPath, screenshotsPath, defaultDatabase, Language.valueOf( language ), false );
+		Settings settings = new Settings( openMSXPath, machinesPath, screenshotsPath, defaultDatabase, Language.valueOf( language ), false, false );
 
-		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, language, false );
+		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, language, false, false );
 
 		verify( settingsPersister, times( 1 ) ).saveSettings( settings );
 		verify( mainPresenter, times( 1 ) ).onAcceptSettingsAction( settings );		
@@ -137,9 +137,9 @@ public class SettingsPresenterImplTest
 		when( platformViewProperties.isMachinesFolderInsideOpenMSX() ).thenReturn( false );
 		when( platformViewProperties.getOpenMSXMachinesPath() ).thenReturn( machinesPath );
 
-		Settings settings = new Settings( openMSXPath, machinesPath, screenshotsPath, defaultDatabase, null, false );
+		Settings settings = new Settings( openMSXPath, machinesPath, screenshotsPath, defaultDatabase, null, false, false );
 
-		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, null, false );
+		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, null, false, false );
 
 		verify( settingsPersister, times( 1 ) ).saveSettings( settings );
 		verify( mainPresenter, times( 1 ) ).onAcceptSettingsAction( settings );		
@@ -156,6 +156,6 @@ public class SettingsPresenterImplTest
 
 		Mockito.doThrow( new IOException() ).when( settingsPersister ).saveSettings( (Settings)any() );
 
-		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, null, false );
+		presenter.onRequestSettingsAction( openMSXPath, screenshotsPath, defaultDatabase, null, false, false );
 	}
 }

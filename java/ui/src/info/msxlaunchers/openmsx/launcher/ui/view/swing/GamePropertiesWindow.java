@@ -250,7 +250,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 
         JPanel linkPanel = new JPanel();
         linkPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
-        linkPanel.add(new HyperLink(label, address));
+        linkPanel.add(HyperLink.label(label).address(address).build());
         tableLayout.setConstraints(linkPanel, valueConstraints);
         tablePane.add(linkPanel);
 

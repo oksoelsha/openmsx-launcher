@@ -36,13 +36,15 @@ public final class Settings
 	private final String defaultDatabase;
 	private final Language language;
 	private final boolean showUpdateAllDatabases;
+	private final boolean enableFeedService;
 
 	public Settings( String openMSXFullPath,
 			String openMSXMachinesFullPath,
 			String screenshotsFullPath,
 			String defaultDatabase,
 			Language language,
-			boolean showUpdateAllDatabases )
+			boolean showUpdateAllDatabases,
+			boolean enableFeedService )
 	{
 		this.openMSXFullPath = openMSXFullPath;
 		this.openMSXMachinesFullPath = openMSXMachinesFullPath;
@@ -50,12 +52,14 @@ public final class Settings
 		this.defaultDatabase = defaultDatabase;
 		this.language = language;
 		this.showUpdateAllDatabases = showUpdateAllDatabases;
+		this.enableFeedService = enableFeedService;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash( defaultDatabase, language, openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, showUpdateAllDatabases );
+		return Objects.hash( defaultDatabase, language, openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath,
+				showUpdateAllDatabases, enableFeedService );
 	}
 
 	@Override
@@ -75,7 +79,8 @@ public final class Settings
             		Objects.equals( openMSXFullPath, other.openMSXFullPath ) &&
             		Objects.equals( openMSXMachinesFullPath, other.openMSXMachinesFullPath ) &&
             		Objects.equals( screenshotsFullPath, other.screenshotsFullPath ) &&
-            		Objects.equals( showUpdateAllDatabases, other.isShowUpdateAllDatabases() );
+            		Objects.equals( showUpdateAllDatabases, other.showUpdateAllDatabases ) &&
+            		Objects.equals( enableFeedService, other.enableFeedService );
         }
 
         return false;
@@ -140,5 +145,10 @@ public final class Settings
 	public boolean isShowUpdateAllDatabases()
 	{
 		return showUpdateAllDatabases;
+	}
+
+	public boolean isEnableFeedService()
+	{
+		return enableFeedService;
 	}
 }

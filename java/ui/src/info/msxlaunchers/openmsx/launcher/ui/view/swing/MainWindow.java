@@ -15,23 +15,6 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
-import info.msxlaunchers.openmsx.common.OSUtils;
-import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
-import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
-import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewProperties;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JCompositeLabel;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JMenuItemWithIcon;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextField;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
-
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
@@ -39,6 +22,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,6 +36,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,6 +46,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -73,9 +59,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -83,6 +68,24 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import info.msxlaunchers.openmsx.common.OSUtils;
+import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
+import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
+import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewProperties;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JCompositeLabel;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JMenuItemWithIcon;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextField;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 import net.iharder.dnd.FileDrop;
 
 /**
@@ -127,6 +130,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JCompositeLabel filtersLabel;
 	private JButton favoritesButton;
 	private JButton searchButton;
+	private JButton feedButton;
 	private JButton launchButton;
 	private JButton removeButton;
 	private JButton addButton;
@@ -185,6 +189,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private static final String SPACES = "                                ";
 	private static final int SEARCH_TEXT_FIELD_COLUMNS = 25;
 
+	private final Dimension NEWS_DATE_DIMENSION = new Dimension(35, 10);
+	private final Color NEWS_SITE_BACKGROUND_COLOR = new Color(50, 200, 50);
+	private final LayoutManager NEWS_PANEL_LAYOUT_MANAGER = new FlowLayout(FlowLayout.LEFT, 5, 1);
+
 	private final MainWindow ref = this;
 
 	public MainWindow(MainPresenter presenter, PlatformViewProperties platformViewProperties)
@@ -225,7 +233,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		contentPane.setLayout(null);
 		setTitle("openMSX Launcher");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		addWindowListener( new WindowCloseAdapter() );
+		addWindowListener(new WindowCloseAdapter());
 		setResizable(false);
 
 		//menus
@@ -282,7 +290,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		menuBar.add(optionsMenu);
 
 		optionsSettings = new JMenuItemWithIcon();
-		optionsSettings.setIcon( Icons.SETTINGS.getImageIcon() );
+		optionsSettings.setIcon(Icons.SETTINGS.getImageIcon());
 		optionsSettings.addActionListener(event -> presenter.onRequestSettingsScreen());
         optionsMenu.add(optionsSettings);
 
@@ -295,7 +303,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         actionsMenu.add(actionsCreateEmptyDatabase);
 
         actionsFillDatabase = new JMenuItemWithIcon();
-        actionsFillDatabase.setIcon( Icons.FILL_DB.getImageIcon() );
+        actionsFillDatabase.setIcon(Icons.FILL_DB.getImageIcon());
         actionsFillDatabase.addActionListener(event -> onRequestFillDatabaseScreen());
         actionsMenu.add(actionsFillDatabase);
 
@@ -334,7 +342,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         toolsMenu.addSeparator();
 
         patcher = new JMenuItemWithIcon();
-        patcher.setIcon( Icons.PATCH.getImageIcon() );
+        patcher.setIcon(Icons.PATCH.getImageIcon());
         patcher.addActionListener(event -> onRequestPatcherScreen());
         toolsMenu.add(patcher);
 
@@ -343,7 +351,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
         menuBar.add(helpMenu);
 
         helpFile = new JMenuItemWithIcon();
-        helpFile.setIcon( Icons.HELP.getImageIcon() );
+        helpFile.setIcon(Icons.HELP.getImageIcon());
         helpFile.addActionListener(event -> onRequestHelpFile());
         helpMenu.add(helpFile);
 
@@ -441,6 +449,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		searchButton.addActionListener(this);
 		searchButton.setFocusable(false);
 
+		feedButton = new JButton();
+		feedButton.setIcon(Icons.FEED.getImageIcon());
+		feedButton.addActionListener(this);
+		feedButton.setFocusable(false);
+
 		Color indicatorsPanelBackground = new Color(187, 187, 187);
 
 		JPanel soundIndicatorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 1));
@@ -496,16 +509,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 							.addComponent(soundIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(28)
 							.addComponent(generationIndicatorsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(14)
+					.addGap(7)
 					.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
 						.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(favoritesButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-								.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+								.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+								.addComponent(feedButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 						.addComponent(launchButtonPanel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 						.addComponent(removeButtonPanel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 						.addComponent(addButtonPanel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 						.addComponent(editButtonPanel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-					.addGap(20)
+					.addGap(13)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(screenshot1Label, GroupLayout.PREFERRED_SIZE, 272, GroupLayout.PREFERRED_SIZE)
 						.addComponent(screenshot2Label, GroupLayout.PREFERRED_SIZE, 272, GroupLayout.PREFERRED_SIZE))
@@ -534,7 +548,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 									.addGap(35)
 									.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
 											.addComponent(favoritesButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-											.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+											.addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+											.addComponent(feedButton, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 									.addGap(115)
 									.addComponent(launchButtonPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
@@ -676,6 +691,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		totalLabel.setTitle(messages.get("COUNT"));
 		favoritesButton.setToolTipText(messages.get("FAVORITES"));
 		searchButton.setToolTipText(messages.get("SEARCH"));
+feedButton.setToolTipText("FEED");
 		filtersLabel.setTitle(messages.get("FILTERS"));
 		launchButton.setToolTipText(messages.get("LAUNCH"));
 		removeButton.setToolTipText(messages.get("REMOVE"));
@@ -799,6 +815,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		else if(source == searchButton)
 		{
 			processShowSearchScreenRequest();
+		}
+		else if(source == feedButton)
+		{
+			processShowNewsListRequest();
 		}
 		else if(source == filtersSelectButton)
 		{
@@ -932,9 +952,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		showButtonMenu(favoritesButton, favoritesContextMenu, 2);
 	}
 
-	public void higlightGame( String gameName )
+	public void higlightGame(String gameName)
 	{
-		gameList.setSelectedValue( gameName );
+		gameList.setSelectedValue(gameName);
 	}
 
 	public void showFiltersMenu(Set<String> filterNames, boolean isFilterSelected, boolean isEditCurrentUntitledFilter)
@@ -1061,6 +1081,37 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		generationIndicatorMSX2.setEnabled(msx2Flag);
 		generationIndicatorMSX2P.setEnabled(msx2pFlag);
 		generationIndicatorTurboR.setEnabled(turboRFlag);
+	}
+
+	public void showFeedMenu(List<FeedMessage> feedMessages)
+	{
+		JPopupMenu feedMessagesContextMenu = new JPopupMenu();
+		feedMessagesContextMenu.setComponentOrientation(orientation);
+
+		for(int index = 0; index < feedMessages.size(); index++)
+		{
+			JPanel newsPanel = new JPanel();
+			newsPanel.setLayout(NEWS_PANEL_LAYOUT_MANAGER);
+
+			FeedMessage feedMessage = feedMessages.get(index);
+
+			JLabel date = new JLabel(feedMessage.getPubDateDisplayName());
+			date.setPreferredSize(NEWS_DATE_DIMENSION);
+			newsPanel.add(date);
+
+			newsPanel.add(HyperLink.label(feedMessage.getTitle()).address(feedMessage.getLink()).build());
+
+			JPanel sitePanel = new JPanel();
+			sitePanel.setBackground(NEWS_SITE_BACKGROUND_COLOR);
+			sitePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
+			sitePanel.add(HyperLink.label(feedMessage.getFeedSiteName()).address(feedMessage.getFeedSiteUrl())
+					.linkColor(Color.white).noUnderline().bold().size(10).build());
+			newsPanel.add(sitePanel);
+
+			feedMessagesContextMenu.insert(newsPanel, index);
+		}
+
+		showButtonMenu(feedButton, feedMessagesContextMenu, 2);
 	}
 
 	private void showButtonMenu(JComponent button, JPopupMenu menu, int xOffset)
@@ -1362,7 +1413,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	{
 		String selectedGame = getSelectedGame();
 
-		if( selectedGame != null )
+		if(selectedGame != null)
 		{
 			//selected game could be null if nothing was highlighted in the game list.
 			//this can happen if Ctrl+F1 was pressed, for example, without selecting a game
@@ -1433,7 +1484,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		searchContextMenu.show(searchButton, x, searchButton.getHeight()-1);
 	}
 
-	private static void addFilterButtonHoverBehavior( final JButton button )
+	private void processShowNewsListRequest()
+	{
+		presenter.onRequestNewsList();
+	}
+
+	private static void addFilterButtonHoverBehavior(final JButton button)
 	{
 	    button.getModel().addChangeListener(new ChangeListener() {
 	        @Override

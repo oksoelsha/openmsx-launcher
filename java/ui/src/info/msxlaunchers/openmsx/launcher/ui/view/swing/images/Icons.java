@@ -46,6 +46,7 @@ public enum Icons
 
 	FAVORITE( "favorite" ),
 	SEARCH( "search" ),
+	FEED( "feed" ),
 	SETTINGS( "settings" ),
 	PATCH ( "patch" ),
 	FILL_DB ( "fill-db" ),

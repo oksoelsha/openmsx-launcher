@@ -22,7 +22,7 @@ public class ROMXMLFileGetterTest
 	@Test
 	public void givenNullMachinesPath_whenGet_returnNull() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false, false ) );
 
 		ROMXMLFileGetter romXmlFileGetter = new ROMXMLFileGetter( settingsPersister, null );
 
@@ -32,7 +32,7 @@ public class ROMXMLFileGetterTest
 	@Test
 	public void givenMachinesPathAndNullBaseDirectory_whenGet_returnValidFileInstance() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "/main/machines-path", null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "/main/machines-path", null, null, null, false, false ) );
 
 		ROMXMLFileGetter romXmlFileGetter = new ROMXMLFileGetter( settingsPersister, null );
 
@@ -42,7 +42,7 @@ public class ROMXMLFileGetterTest
 	@Test
 	public void givenMachinesPathAndBaseDirectory_whenGet_returnValidFileInstance() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "/main/machines-path", null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, "/main/machines-path", null, null, null, false, false ) );
 
 		ROMXMLFileGetter romXmlFileGetter = new ROMXMLFileGetter( settingsPersister, "/base" );
 

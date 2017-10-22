@@ -47,7 +47,7 @@ public class OpenMSXMachineListerTest
 		String machinesDirectory = getClass().getResource( "emptyMachinesDirectory" ).getFile();
 		
 		when( settingsPersister.getSettings() ).thenReturn( new Settings( null,
-				machinesDirectory, null, null, null, false ) );
+				machinesDirectory, null, null, null, false, false ) );
 		
 		OpenMSXMachineLister openMSXMachineLister = new OpenMSXMachineLister( settingsPersister );
 
@@ -63,7 +63,7 @@ public class OpenMSXMachineListerTest
 	{
 		String machinesDirectory = "/non-existent-directory";
 		
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null,	machinesDirectory, null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null,	machinesDirectory, null, null, null, false, false ) );
 		
 		OpenMSXMachineLister openMSXMachineLister = new OpenMSXMachineLister( settingsPersister );
 
@@ -73,7 +73,7 @@ public class OpenMSXMachineListerTest
 	@Test( expected = InvalidMachinesDirectoryException.class )
 	public void testGetNullMachinesDirectory() throws InvalidMachinesDirectoryException, IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null,null, null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null,null, null, null, null, false, false ) );
 		
 		OpenMSXMachineLister openMSXMachineLister = new OpenMSXMachineLister( settingsPersister );
 
@@ -86,7 +86,7 @@ public class OpenMSXMachineListerTest
 		String machinesDirectory = getClass().getResource( "machinesDirectory" ).getFile();
 		
 		when( settingsPersister.getSettings() ).thenReturn( new Settings( null,
-				machinesDirectory, null, null, null, false ) );
+				machinesDirectory, null, null, null, false, false ) );
 		
 		OpenMSXMachineLister openMSXMachineLister = new OpenMSXMachineLister( settingsPersister );
 
@@ -107,7 +107,7 @@ public class OpenMSXMachineListerTest
 		String machinesDirectory = getClass().getResource( "machinesDirectory" ).getFile();
 		
 		when( settingsPersister.getSettings() ).thenReturn( new Settings( null,
-				machinesDirectory, null, null, null, false ) );
+				machinesDirectory, null, null, null, false, false ) );
 		
 		OpenMSXMachineLister openMSXMachineLister = new OpenMSXMachineLister( settingsPersister );
 

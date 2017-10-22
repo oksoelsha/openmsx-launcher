@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view;
 
+import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
@@ -26,6 +27,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.MoveGamesWindow;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -267,6 +269,15 @@ class MainSwingView implements MainView
 	public void setFilterNameLabelUntitled()
 	{
 		mainWindow.setFilterNameLabelUntitled();
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showFeedMessagesMenu(java.util.List)
+	 */
+	@Override
+	public void showFeedMessagesMenu( List<FeedMessage> feedMessages )
+	{
+		mainWindow.showFeedMenu( feedMessages );
 	}
 
 	private class MainWindowStarter implements Runnable

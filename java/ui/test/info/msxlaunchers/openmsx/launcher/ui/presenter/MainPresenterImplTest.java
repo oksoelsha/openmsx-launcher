@@ -6,6 +6,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
+import info.msxlaunchers.openmsx.launcher.feed.FeedService;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceException;
@@ -71,6 +72,7 @@ public class MainPresenterImplTest
 	@Mock Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	@Mock Provider<PatcherPresenter> patcherPresenterFactory;
 	@Mock MachineUpdatePresenterFactory machineUpdatePresenterFactory;
+	@Mock FeedService feedService;
 	@Mock Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory;
 	@Mock SettingsPersister settingsPersister;
 	@Mock LauncherPersistence launcherPersistence;
@@ -83,6 +85,7 @@ public class MainPresenterImplTest
 	@Mock FilterPersister filterPersister;
 	@Mock DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory;
 	@Mock GameFinder gameFinder;
+
 
 	private final String extraDataDirectory = "extraDataDirectory";
 	private final String defaultDatabase = "defaultDatabase";
@@ -97,14 +100,14 @@ public class MainPresenterImplTest
 		when( launcherPersistence.getFiltersPersister() ).thenReturn( filterPersister );
 		when( launcherPersistence.getSettingsPersister() ).thenReturn( settingsPersister );
 		when( launcherPersistence.getGameFinder() ).thenReturn( gameFinder );
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false, false ) );
 		Set<String> databases = new HashSet<>();
 		databases.add( defaultDatabase );
 		when( gamePersister.getDatabases() ).thenReturn( databases );
 
 		presenter = new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
 	}
 
 	@Test( expected = IOException.class )
@@ -114,48 +117,48 @@ public class MainPresenterImplTest
 
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
 	}
 
 	@Test
 	public void testDefaultDatabaseNullInConstructor() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false, false ) );
 
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
 	}
 
 	@Test
 	public void testDatabaseNotFoundWhenRetrieveGamesInConstructor() throws IOException, GamePersistenceException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false, false ) );
 		when( gamePersister.getGames( defaultDatabase ) ).thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND, defaultDatabase ) );
 
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
 	}
 
 	@Test
 	public void testIOExceptionWhenRetrieveGamesInConstructor() throws IOException, GamePersistenceException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false, false ) );
 		when( gamePersister.getGames( defaultDatabase ) ).thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) );
 
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
 	}
 
 	@Test
 	public void testStart() throws IOException
 	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false, false ) );
 
 		presenter.start();
 	}
@@ -660,7 +663,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestAddGameScreen() throws IOException, LauncherException
 	{
-		Settings settings = new Settings( null, null, null, defaultDatabase, null, false );
+		Settings settings = new Settings( null, null, null, defaultDatabase, null, false, false );
 
 		ProfileEditingPresenter profileEditingPresenter = Mockito.mock( ProfileEditingPresenter.class );
 		when( profileEditingPresenterFactory.create( settings, defaultDatabase, null) ).thenReturn( profileEditingPresenter );
@@ -672,7 +675,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestEditGameScreen() throws IOException, LauncherException
 	{
-		Settings settings = new Settings( null, null, null, defaultDatabase, null, false );
+		Settings settings = new Settings( null, null, null, defaultDatabase, null, false, false );
 
 		String gameName = "gameName";
 

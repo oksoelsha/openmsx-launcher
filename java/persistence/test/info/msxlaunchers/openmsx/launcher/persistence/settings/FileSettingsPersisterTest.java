@@ -46,6 +46,7 @@ public class FileSettingsPersisterTest
 				screenshotsFullPath,
 				defaultDatabase,
 				Language.SPANISH,
+				false,
 				false );
 
 		FileSettingsPersister fileSettingsPersister = new FileSettingsPersister( settingsPath );
@@ -71,6 +72,7 @@ public class FileSettingsPersisterTest
 				"/Games/MSX/blueMSX/Launcher/extra-screenshots",
 				"Games db",
 				Language.CHINESE_SIMPLIFIED,
+				false,
 				false );
 
 		assertEquals( correctSettings, savedSettings );
@@ -83,35 +85,35 @@ public class FileSettingsPersisterTest
 		FileSettingsPersister fileSettingsPersister;
 
 		//test that null openMSXFullPath will be returned as null
-		settings = new Settings( null, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, Language.ENGLISH, false );
+		settings = new Settings( null, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, Language.ENGLISH, false, false );
 		fileSettingsPersister = new FileSettingsPersister( settingsPath );
 		fileSettingsPersister.saveSettings( settings );
 		Settings savedSettings = fileSettingsPersister.getSettings();
 		assertNull( savedSettings.getOpenMSXFullPath() );
 
 		//test that null openMSXMachinesFullPath will be returned as null
-		settings = new Settings( openMSXFullPath, null , screenshotsFullPath, defaultDatabase, Language.PORTUGUESE, false );
+		settings = new Settings( openMSXFullPath, null , screenshotsFullPath, defaultDatabase, Language.PORTUGUESE, false, false );
 		fileSettingsPersister = new FileSettingsPersister( settingsPath );
 		fileSettingsPersister.saveSettings( settings );
 		savedSettings = fileSettingsPersister.getSettings();
 		assertNull( savedSettings.getOpenMSXMachinesFullPath() );
 
 		//test that null screenshotsFullPath will be returned as null
-		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, null , defaultDatabase, Language.PORTUGUESE, false );
+		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, null , defaultDatabase, Language.PORTUGUESE, false, false );
 		fileSettingsPersister = new FileSettingsPersister( settingsPath );
 		fileSettingsPersister.saveSettings( settings );
 		savedSettings = fileSettingsPersister.getSettings();
 		assertNull( savedSettings.getScreenshotsFullPath() );
 
 		//test that null defaultDatabase will be returned as null
-		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, null , Language.PORTUGUESE, false );
+		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, null , Language.PORTUGUESE, false, false );
 		fileSettingsPersister = new FileSettingsPersister( settingsPath );
 		fileSettingsPersister.saveSettings( settings );
 		savedSettings = fileSettingsPersister.getSettings();
 		assertNull( savedSettings.getDefaultDatabase() );
 
 		//test that null language will be saved as 0=English
-		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, null, false );
+		settings = new Settings( openMSXFullPath, openMSXMachinesFullPath, screenshotsFullPath, defaultDatabase, null, false, false );
 		fileSettingsPersister = new FileSettingsPersister( settingsPath );
 
 		//here's an interesting problem: I needed to add a delay here to get around memory-mapped files

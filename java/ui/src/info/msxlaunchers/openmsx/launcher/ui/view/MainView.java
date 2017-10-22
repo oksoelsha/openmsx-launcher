@@ -15,9 +15,11 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view;
 
+import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -223,4 +225,9 @@ public interface MainView
 	 * Updates the filter name as 'Untitled' on the main screen
 	 */
 	void setFilterNameLabelUntitled();
+
+	/**
+	 * Shows the feed news menu
+	 */
+	void showFeedMessagesMenu( List<FeedMessage> feedMessages );
 }

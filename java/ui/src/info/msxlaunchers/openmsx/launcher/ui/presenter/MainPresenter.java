@@ -372,4 +372,9 @@ public interface MainPresenter
 	 * @throws LauncherException
 	 */
 	void onUpdateExtraData() throws LauncherException;
+
+	/**
+	 * Called when user requests to view new feed
+	 */
+	void onRequestNewsList();
 }

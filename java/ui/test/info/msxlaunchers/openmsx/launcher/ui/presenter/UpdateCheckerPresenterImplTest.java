@@ -178,7 +178,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister, launcherPersistence, mainPresenter );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false, false ) );
 
 		assertFalse( presenter.isNewScreenshotsVersionAvailable() );
 	}
@@ -198,7 +198,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister, launcherPersistence, mainPresenter );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false, false ) );
 
 		createTempVersionFile( "1.2" );
 
@@ -210,7 +210,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister, launcherPersistence, mainPresenter );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, null, null, false, false ) );
 
 		assertFalse( presenter.isScreenshotsSetInSettings() );
 	}
@@ -220,7 +220,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister, launcherPersistence, mainPresenter );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false, false ) );
 
 		createTempVersionFile( "1.2" );
 
@@ -232,7 +232,7 @@ public class UpdateCheckerPresenterImplTest
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister, launcherPersistence, mainPresenter );
 
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false ) );
+		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, tmpFolder.getRoot().toString(), null, null, false, false ) );
 
 		assertFalse( presenter.isScreenshotsSetInSettings() );
 	}

@@ -39,6 +39,7 @@ public class MacStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
@@ -75,6 +76,7 @@ public class MacStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
@@ -122,6 +124,7 @@ public class MacStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
@@ -169,6 +172,7 @@ public class MacStarterArgumentsTest
 				null,
 				null,
 				null,
+				false,
 				false );
 
 		ArgumentsBuilder argsBuilder = mock( ArgumentsBuilder.class );
