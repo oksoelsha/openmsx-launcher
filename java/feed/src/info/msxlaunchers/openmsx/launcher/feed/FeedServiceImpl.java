@@ -43,11 +43,11 @@ final class FeedServiceImpl implements FeedService
 	};
 
 	private final int MAX_MESSAGES_LIST_SIZE = 15;
-	private final long CHECK_INTERVAL = 5000l;
-	private final long TOTAL_RSS_CHECK_PERIOD = 10*1000;
+	private final long CHECK_INTERVAL = 1000l; //one second
+	private final long TOTAL_RSS_CHECK_PERIOD = 10*60*1000; //ten minutes
 	private final long TOTAL_INTERVAL_CHECKS_PER_RSS_CHECK_PERIOD = TOTAL_RSS_CHECK_PERIOD / CHECK_INTERVAL;
 
-	private final Thread service;
+	private Thread service;
 	private final FeedReader feedReader;
 	private final FeedMessagePersister feedMessagePersister;
 
@@ -59,7 +59,6 @@ final class FeedServiceImpl implements FeedService
 	@Inject
 	FeedServiceImpl( FeedReader feedReader, FeedMessagePersister feedMessagePersister )
 	{
-		this.service = new Thread( this::runService );
 		this.feedReader = feedReader;
 		this.feedMessagePersister = feedMessagePersister;
 
@@ -73,8 +72,12 @@ final class FeedServiceImpl implements FeedService
 	@Override
 	public void start()
 	{
-		running = true;
-		service.start();
+		if( !running )
+		{
+			running = true;
+			service = new Thread( this::runService );
+			service.start();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -119,13 +122,23 @@ final class FeedServiceImpl implements FeedService
 		{
 			try
 			{
-				Thread.sleep( CHECK_INTERVAL );
-
-				checksCounter++;
-				if( checksCounter == TOTAL_INTERVAL_CHECKS_PER_RSS_CHECK_PERIOD )
+				if( checksCounter == 0 )
 				{
-					checksCounter = 0;
 					readFeeds();
+					checksCounter++;
+				}
+				else
+				{
+					if( checksCounter == TOTAL_INTERVAL_CHECKS_PER_RSS_CHECK_PERIOD )
+					{
+						checksCounter = 0;
+					}
+					else
+					{
+						checksCounter++;
+					}
+
+					Thread.sleep( CHECK_INTERVAL );
 				}
 			}
 			catch( InterruptedException ie )
@@ -150,7 +163,8 @@ final class FeedServiceImpl implements FeedService
 
 		//sort them and get the top maximum size (if available)
 		Collections.sort( messagesFromAllSites, (m1, m2) -> m2.getPubDate().compareTo( m1.getPubDate() ) );
-		messages = messagesFromAllSites.subList( 0, messagesFromAllSites.size() > MAX_MESSAGES_LIST_SIZE ? MAX_MESSAGES_LIST_SIZE : messagesFromAllSites.size() );
+		messages = messagesFromAllSites.subList( 0,
+				messagesFromAllSites.size() > MAX_MESSAGES_LIST_SIZE ? MAX_MESSAGES_LIST_SIZE : messagesFromAllSites.size() );
 
 		//determine if there are new messages
 		if( previousTopMessage == null && feedMessagePersister.isMessagePersisted() )

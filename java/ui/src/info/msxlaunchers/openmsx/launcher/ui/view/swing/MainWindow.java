@@ -219,7 +219,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			Set<String> databases,
 			String currentDatabase,
 			boolean rightToLeft,
-			boolean showUpdateAllDatabases)
+			boolean showUpdateAllDatabases,
+			boolean enableFeedButton)
 	{
 		this.databases = databases;
 		this.currentDatabase = currentDatabase;
@@ -235,9 +236,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addWindowListener(new WindowCloseAdapter());
 		setResizable(false);
-
-		//menus
-//		drawMenu();
 
 		//main window
 		drawScreen();
@@ -274,6 +272,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 		enableSoundIndicators(false, false, false, false, false, false, false, false);
 		enableGenerationIndicators(false, false, false, false);
+
+		enableFeedButton(enableFeedButton);
 
 		pack();
 		setLocationRelativeTo(null);
@@ -691,7 +691,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		totalLabel.setTitle(messages.get("COUNT"));
 		favoritesButton.setToolTipText(messages.get("FAVORITES"));
 		searchButton.setToolTipText(messages.get("SEARCH"));
-feedButton.setToolTipText("FEED");
+		feedButton.setToolTipText(messages.get("FEED"));
 		filtersLabel.setTitle(messages.get("FILTERS"));
 		launchButton.setToolTipText(messages.get("LAUNCH"));
 		removeButton.setToolTipText(messages.get("REMOVE"));
@@ -819,6 +819,7 @@ feedButton.setToolTipText("FEED");
 		else if(source == feedButton)
 		{
 			processShowNewsListRequest();
+			indicateNewNews(false);
 		}
 		else if(source == filtersSelectButton)
 		{
@@ -1081,6 +1082,23 @@ feedButton.setToolTipText("FEED");
 		generationIndicatorMSX2.setEnabled(msx2Flag);
 		generationIndicatorMSX2P.setEnabled(msx2pFlag);
 		generationIndicatorTurboR.setEnabled(turboRFlag);
+	}
+
+	public void enableFeedButton(boolean enable)
+	{
+		feedButton.setEnabled(enable);
+	}
+
+	public void indicateNewNews(boolean enable)
+	{
+		if( enable )
+		{
+			feedButton.setIcon(Icons.FEED_NEW.getImageIcon());
+		}
+		else
+		{
+			feedButton.setIcon(Icons.FEED.getImageIcon());
+		}
 	}
 
 	public void showFeedMenu(List<FeedMessage> feedMessages)

@@ -40,13 +40,15 @@ public interface MainView
 	 * @param defaultDatabase Name of default database to display - could be null
 	 * @param rightToLeft Flag to determine screen orientation based on language
 	 * @param showUpdateAllDatabases Flag to show the update all databases menu item
+	 * @param enableFeedAccess Flag to enable the feed button
 	 */
 	void displayMain( Language language,
 			Set<GameLabel> games,
 			Set<String> databases,
 			String defaultDatabase,
 			boolean rightToLeft,
-			boolean showUpdateAllDatabases );
+			boolean showUpdateAllDatabases,
+			boolean enableFeedAccess );
 
 	/**
 	 * Refreshes language display in the application based on the given language
@@ -225,6 +227,20 @@ public interface MainView
 	 * Updates the filter name as 'Untitled' on the main screen
 	 */
 	void setFilterNameLabelUntitled();
+
+	/**
+	 * Enables or disables access to feed menu (by enabling or disabling button for example)
+	 * 
+	 * @param flag If true enable access, otherwise disable
+	 */
+	void enableFeedAccess( boolean flag );
+
+	/**
+	 * Indicates that there are new messages in the news feed
+	 * 
+	 * @param flag If true indicate new news (like change the new icon), otherwise set to normal state
+	 */
+	void indicateNewFeedMessages( boolean flag );
 
 	/**
 	 * Shows the feed news menu

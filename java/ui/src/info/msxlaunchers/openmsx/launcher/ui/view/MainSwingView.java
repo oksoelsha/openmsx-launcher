@@ -34,14 +34,17 @@ import java.util.Set;
 import javax.swing.SwingUtilities;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
- * Swing-based implementation of <code>MainView</code>
+ * Swing-based implementation of <code>MainView</code>. This class is a Singleton, meaning there's only one instance
+ * to be injected by Guice. That's because there's only one Main Window in the application
  * 
  * @since v1.2
  * @author Sam Elsharif
  *
  */
+@Singleton
 class MainSwingView implements MainView
 {
 	private final MainPresenter mainPresenter;
@@ -55,7 +58,7 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#displayMain(info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, java.util.Set, java.util.Set, java.lang.String, java.util.Set, boolean)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#displayMain(info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, java.util.Set, java.util.Set, java.lang.String, boolean, boolean, boolean)
 	 */
 	@Override
 	public void displayMain( Language language,
@@ -63,9 +66,11 @@ class MainSwingView implements MainView
 			Set<String> databases,
 			String defaultDatabase,
 			boolean rightToLeft,
-			boolean showUpdateAllDatabases )
+			boolean showUpdateAllDatabases,
+			boolean enableFeedButton )
 	{
-		SwingUtilities.invokeLater( new MainWindowStarter( language, games, databases, defaultDatabase, rightToLeft, showUpdateAllDatabases ) );
+		SwingUtilities.invokeLater( new MainWindowStarter( language, games, databases, defaultDatabase, rightToLeft, showUpdateAllDatabases,
+				enableFeedButton ) );
 	}
 
 	/* (non-Javadoc)
@@ -272,6 +277,24 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#enableFeedAccess(boolean)
+	 */
+	@Override
+	public void enableFeedAccess( boolean flag )
+	{
+		mainWindow.enableFeedButton( flag );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#indicateNewFeedMessages(boolean)
+	 */
+	@Override
+	public void indicateNewFeedMessages( boolean flag )
+	{
+		mainWindow.indicateNewNews( flag );
+	}
+
+	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showFeedMessagesMenu(java.util.List)
 	 */
 	@Override
@@ -288,13 +311,15 @@ class MainSwingView implements MainView
 		private final String defaultDatabase;
 		private final boolean rightToLeft;
 		private final boolean showUpdateAllDatabases;
+		private final boolean enableFeedAccess;
 
 		MainWindowStarter( Language language,
 				Set<GameLabel> games,
 				Set<String> databases,
 				String defaultDatabase,
 				boolean rightToLeft,
-				boolean showUpdateAllDatabases )
+				boolean showUpdateAllDatabases,
+				boolean enableFeedAccess )
 		{
 			this.language = language;
 			this.games = games;
@@ -302,12 +327,13 @@ class MainSwingView implements MainView
 			this.defaultDatabase = defaultDatabase;
 			this.rightToLeft = rightToLeft;
 			this.showUpdateAllDatabases = showUpdateAllDatabases;
+			this.enableFeedAccess = enableFeedAccess;
 		}
 
 		@Override
 		public void run()
 		{
-			mainWindow.display( language, games, databases, defaultDatabase, rightToLeft, showUpdateAllDatabases );
+			mainWindow.display( language, games, databases, defaultDatabase, rightToLeft, showUpdateAllDatabases, enableFeedAccess );
 		}		
 	}
 }

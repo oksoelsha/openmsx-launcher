@@ -15,34 +15,6 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
-import info.msxlaunchers.openmsx.common.FileTypeUtils;
-import info.msxlaunchers.openmsx.common.Utils;
-import info.msxlaunchers.openmsx.common.version.VersionUtils;
-import info.msxlaunchers.openmsx.game.repository.RepositoryData;
-import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
-import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
-import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
-import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
-import info.msxlaunchers.openmsx.launcher.data.game.Game;
-import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
-import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
-import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
-import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
-import info.msxlaunchers.openmsx.launcher.feed.FeedService;
-import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
-import info.msxlaunchers.openmsx.launcher.log.LogEvent;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
-import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceExceptionIssue;
-import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterSetNotFoundException;
-import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
-import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceExceptionIssue;
-import info.msxlaunchers.openmsx.launcher.starter.EmulatorStarter;
-import info.msxlaunchers.openmsx.launcher.ui.view.MainView;
-import info.msxlaunchers.platform.FileLocator;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -51,7 +23,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -64,6 +35,32 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
+
+import info.msxlaunchers.openmsx.common.FileTypeUtils;
+import info.msxlaunchers.openmsx.common.Utils;
+import info.msxlaunchers.openmsx.common.version.VersionUtils;
+import info.msxlaunchers.openmsx.game.repository.RepositoryData;
+import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
+import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
+import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
+import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
+import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
+import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
+import info.msxlaunchers.openmsx.launcher.log.LogEvent;
+import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
+import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
+import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceException;
+import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceExceptionIssue;
+import info.msxlaunchers.openmsx.launcher.persistence.filter.FilterSetNotFoundException;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceExceptionIssue;
+import info.msxlaunchers.openmsx.launcher.starter.EmulatorStarter;
+import info.msxlaunchers.openmsx.launcher.ui.view.MainView;
+import info.msxlaunchers.platform.FileLocator;
 
 /**
  * Implementation of <code>MainPresenter</code>
@@ -94,7 +91,7 @@ final class MainPresenterImpl implements MainPresenter
 	private final Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	private final Provider<PatcherPresenter> patcherPresenterFactory;
 	private final MachineUpdatePresenterFactory machineUpdatePresenterFactory;
-	private final FeedService feedService;
+	private final FeedServicePresenter feedServicePresenter;
 
 	private static final String SCREENSHOT_EXT = ".png";
 	private static final String SCREENSHOT1_SUFFIX = "a";
@@ -142,7 +139,7 @@ final class MainPresenterImpl implements MainPresenter
 			DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory,
 			Provider<PatcherPresenter> patcherPresenterFactory,
 			MachineUpdatePresenterFactory machineUpdatePresenterFactory,
-			FeedService feedService ) throws IOException
+			FeedServicePresenter feedServicePresenter ) throws IOException
 	{
 		this.view = Objects.requireNonNull( view );
 		this.settingsPresenterFactory = Objects.requireNonNull( settingsPresenterFactory );
@@ -163,7 +160,7 @@ final class MainPresenterImpl implements MainPresenter
 		this.activityViewerPresenterFactory = Objects.requireNonNull( activityViewerPresenterFactory );
 		this.patcherPresenterFactory = Objects.requireNonNull( patcherPresenterFactory );
 		this.machineUpdatePresenterFactory = Objects.requireNonNull( machineUpdatePresenterFactory );
-		this.feedService = Objects.requireNonNull( feedService );
+		this.feedServicePresenter = Objects.requireNonNull( feedServicePresenter );
 
 		try
 		{
@@ -231,7 +228,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		if( settings.isEnableFeedService() )
 		{
-			this.feedService.start();
+			this.feedServicePresenter.startService();
 		}
 
 		openMSXMachinesFullPath = settings.getOpenMSXMachinesFullPath();
@@ -244,7 +241,8 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void start()
 	{
-		view.displayMain( currentLanguage, getSortedGameList(), databases, currentDatabase, currentRightToLeft, showUpdateAllDatabases );
+		view.displayMain( currentLanguage, getSortedGameList(), databases, currentDatabase, currentRightToLeft, showUpdateAllDatabases,
+				settings.isEnableFeedService() );
 	}
 
 	/* (non-Javadoc)
@@ -300,6 +298,16 @@ final class MainPresenterImpl implements MainPresenter
 				view.setFilterNameLabelUntitled();
 			}
 		}
+
+		if( newSettings.isEnableFeedService() )
+		{
+			feedServicePresenter.startService();
+		}
+		else
+		{
+			feedServicePresenter.stopService();
+		}
+		view.enableFeedAccess( newSettings.isEnableFeedService() );
 	}
 
 	/* (non-Javadoc)
@@ -1182,13 +1190,14 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onRequestNewsList()
 	{
-		try {
-			List<FeedMessage> feedMessages = feedService.getMessages();
-
-			view.showFeedMessagesMenu( feedMessages );
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try
+		{
+			feedServicePresenter.onRequestNewsList();
+		}
+		catch( IOException ioe )
+		{
+			// TODO
+			ioe.printStackTrace();
 		}
 	}
 

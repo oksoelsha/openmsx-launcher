@@ -43,5 +43,6 @@ public class PresenterModule extends AbstractModule
 		bind( ActivityViewerPresenter.class ).to( ActivityViewerPresenterImpl.class );
 		bind( PatcherPresenter.class ).to( PatcherPresenterImpl.class );
 		install( new FactoryModuleBuilder().implement( MachineUpdatePresenter.class, MachineUpdatePresenterImpl.class ).build( MachineUpdatePresenterFactory.class ) );
+		bind( FeedServicePresenter.class ).to( FeedServicePresenterImpl.class );
 	}
 }

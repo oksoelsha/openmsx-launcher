@@ -128,14 +128,14 @@ public class SettingsWindow  extends JDialog implements ActionListener
 			openMSXFullPathLabel.setHorizontalAlignment(SwingConstants.LEADING);
 			screenshotsFullPathLabel.setHorizontalAlignment(SwingConstants.LEADING);
 			defaultDatabaseLabel.setHorizontalAlignment(SwingConstants.LEADING);
-			languageLabel.setHorizontalAlignment(SwingConstants.LEADING);			
+			languageLabel.setHorizontalAlignment(SwingConstants.LEADING);
 		}
 		else
 		{
 			openMSXFullPathLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 			screenshotsFullPathLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 			defaultDatabaseLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-			languageLabel.setHorizontalAlignment(SwingConstants.TRAILING);			
+			languageLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		}
 		openMSXFullPathTextField = new JTextField(settings.getOpenMSXFullPath());
 		openMSXFullPathTextField.setColumns(10);
@@ -179,6 +179,10 @@ public class SettingsWindow  extends JDialog implements ActionListener
 					rightToLeft);
 			languageComboBox.setMaximumRowCount(languages.length+1);
 			languageComboBox.setSelectedItem(messages.get(languageCode));
+		}
+		{
+			enableFeedServiceCheckBox = new JCheckBox(messages.get("ENABLE_MSX_NEWS_SERVICE"));
+			enableFeedServiceCheckBox.setSelected(settings.isEnableFeedService());
 		}
 		JPanel fullPathPanel = new JPanel();
 		fullPathPanel.setBorder(BorderFactory.createTitledBorder(messages.get("DIRECTORIES")));
@@ -225,6 +229,9 @@ public class SettingsWindow  extends JDialog implements ActionListener
 								.addComponent(defaultDatabaseComboBox, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
 								.addComponent(languageComboBox, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(defaultDatabaseLabel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+								.addGap(111)
+								.addComponent(enableFeedServiceCheckBox, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addComponent(generalPanel, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
 								.addGroup(groupLayout.createSequentialGroup()))
@@ -265,11 +272,13 @@ public class SettingsWindow  extends JDialog implements ActionListener
 							.addGap(28)
 							.addComponent(defaultDatabaseComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(14)
-							.addComponent(languageComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(languageComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(16)
+							.addComponent(enableFeedServiceCheckBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(32)
 							.addComponent(defaultDatabaseLabel))
-						.addComponent(generalPanel, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(generalPanel, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)))
 		);
 		groupPane.setLayout(groupLayout);
 

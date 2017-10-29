@@ -1,12 +1,42 @@
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anySetOf;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import com.google.inject.Provider;
+
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
-import info.msxlaunchers.openmsx.launcher.feed.FeedService;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.favorite.FavoritePersistenceException;
@@ -20,43 +50,8 @@ import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.search.GameFinder;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 import info.msxlaunchers.openmsx.launcher.starter.EmulatorStarter;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenterImpl;
 import info.msxlaunchers.openmsx.launcher.ui.view.MainView;
 import info.msxlaunchers.platform.FileLocator;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import com.google.inject.Provider;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anySetOf;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 
 @RunWith( MockitoJUnitRunner.class )
 public class MainPresenterImplTest
@@ -72,7 +67,7 @@ public class MainPresenterImplTest
 	@Mock Provider<ActivityViewerPresenter> activityViewerPresenterFactory;
 	@Mock Provider<PatcherPresenter> patcherPresenterFactory;
 	@Mock MachineUpdatePresenterFactory machineUpdatePresenterFactory;
-	@Mock FeedService feedService;
+	@Mock FeedServicePresenter feedServicePresenter;
 	@Mock Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory;
 	@Mock SettingsPersister settingsPersister;
 	@Mock LauncherPersistence launcherPersistence;
@@ -107,7 +102,7 @@ public class MainPresenterImplTest
 
 		presenter = new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedServicePresenter );
 	}
 
 	@Test( expected = IOException.class )
@@ -117,7 +112,7 @@ public class MainPresenterImplTest
 
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedServicePresenter );
 	}
 
 	@Test
@@ -128,7 +123,7 @@ public class MainPresenterImplTest
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedServicePresenter );
 	}
 
 	@Test
@@ -140,7 +135,7 @@ public class MainPresenterImplTest
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedServicePresenter );
 	}
 
 	@Test
@@ -152,7 +147,7 @@ public class MainPresenterImplTest
 		//no exception is thrown
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
-				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedService );
+				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory, feedServicePresenter );
 	}
 
 	@Test

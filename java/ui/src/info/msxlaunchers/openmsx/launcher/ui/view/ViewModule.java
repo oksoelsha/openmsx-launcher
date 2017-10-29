@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.ui.view;
 import info.msxlaunchers.openmsx.launcher.ui.view.platform.ViewPlatformModule;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
 
 /**
  * @since v1.2
@@ -29,7 +30,7 @@ public class ViewModule extends AbstractModule
 	@Override 
 	protected void configure()
 	{
-		bind( MainView.class ).to( MainSwingView.class );
+		bind( MainView.class ).to( MainSwingView.class ).in( Singleton.class );
 		bind( SettingsView.class ).to( SettingsSwingView.class );
 		bind( ProfileEditingView.class ).to( ProfileEditingSwingView.class );
 		bind( ScannerView.class ).to( ScannerSwingView.class );

@@ -15,6 +15,9 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import info.msxlaunchers.openmsx.extension.ExtensionListerModule;
 import info.msxlaunchers.openmsx.game.repository.RepositoryDataModule;
 import info.msxlaunchers.openmsx.game.scan.ScannerModule;
@@ -32,9 +35,6 @@ import info.msxlaunchers.openmsx.launcher.ui.view.ViewModule;
 import info.msxlaunchers.openmsx.launcher.updater.UpdateCheckerModule;
 import info.msxlaunchers.openmsx.machine.MachineListerModule;
 import info.msxlaunchers.platform.PlatformModule;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * Main class that starts the application
