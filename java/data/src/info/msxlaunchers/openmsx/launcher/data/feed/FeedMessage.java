@@ -61,7 +61,7 @@ public class FeedMessage
 	{
 		int dayOfMonth = pubDate.getDayOfMonth();
 		String dayOfMonthString = dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth;
-		return dayOfMonthString + "/" + pubDate.getMonthValue();
+		return dayOfMonthString + "-" + pubDate.getMonthValue();
 	}
 
 	public String getFeedSiteName()

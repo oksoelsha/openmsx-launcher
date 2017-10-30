@@ -36,6 +36,7 @@ import info.msxlaunchers.openmsx.launcher.persistence.feed.FeedMessagePersister;
 final class FeedServiceImpl implements FeedService
 {
 	private final String sites[][] = {
+			{"http://www.msxlaunchers.info/", "feed/", "MSX Launchers"},
 			{"https://www.msx.org/", "feed/news/", "MSX Resource Center"},
 			{"https://www.msxblog.es/", "feed/", "MSX Blog"},
 			{"http://www.icongames.com.br/msxfiles/blog-en/", "feed/", "The MSX Files v2"},
@@ -158,7 +159,7 @@ final class FeedServiceImpl implements FeedService
 
 		for( int row = 0; row < sites.length; row++ )
 		{
-    		messagesFromAllSites.addAll( feedReader.read( sites[row][0] + sites[row][1], sites[row][2], sites[row][0] ) );
+    		messagesFromAllSites.addAll( getFeedMessages( row ) );
     	}
 
 		//sort them and get the top maximum size (if available)
@@ -175,6 +176,18 @@ final class FeedServiceImpl implements FeedService
 		if( !messages.get( 0 ).toString().equals( previousTopMessage ) )
 		{
 			isNewMessages = true;
+		}
+	}
+
+	private List<FeedMessage> getFeedMessages( int row )
+	{
+		try
+		{
+			return feedReader.read( sites[row][0] + sites[row][1], sites[row][2], sites[row][0] );
+		}
+		catch( IOException ioe )
+		{
+			return Collections.emptyList();
 		}
 	}
 }

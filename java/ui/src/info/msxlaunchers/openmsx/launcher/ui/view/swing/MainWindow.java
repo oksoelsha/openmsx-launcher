@@ -1126,10 +1126,22 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 					.linkColor(Color.white).noUnderline().bold().size(10).build());
 			newsPanel.add(sitePanel);
 
-			feedMessagesContextMenu.insert(newsPanel, index);
+//			feedMessagesContextMenu.insert(newsPanel, index);
+			feedMessagesContextMenu.add(newsPanel);
 		}
 
 		showButtonMenu(feedButton, feedMessagesContextMenu, 2);
+	}
+
+	public void showFeedProcessingMessage()
+	{
+		JPopupMenu feedMessagesProcessingContextMenu = new JPopupMenu();
+		feedMessagesProcessingContextMenu.setComponentOrientation(orientation);
+		JPanel messagePanel = new JPanel();
+		JLabel message = new JLabel(messages.get("FEED_PROCESSING_MESSAGE"));
+		messagePanel.add(message);
+		feedMessagesProcessingContextMenu.add(messagePanel);
+		showButtonMenu(feedButton, feedMessagesProcessingContextMenu, 2);
 	}
 
 	private void showButtonMenu(JComponent button, JPopupMenu menu, int xOffset)

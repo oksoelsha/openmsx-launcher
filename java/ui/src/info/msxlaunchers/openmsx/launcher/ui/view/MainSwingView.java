@@ -295,12 +295,21 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showFeedMessagesMenu(java.util.List)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showFeedMessagesList(java.util.List)
 	 */
 	@Override
-	public void showFeedMessagesMenu( List<FeedMessage> feedMessages )
+	public void showFeedMessagesList( List<FeedMessage> feedMessages )
 	{
 		mainWindow.showFeedMenu( feedMessages );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showFeedProcessingMessage()
+	 */
+	@Override
+	public void showFeedProcessingMessage()
+	{
+		mainWindow.showFeedProcessingMessage();
 	}
 
 	private class MainWindowStarter implements Runnable

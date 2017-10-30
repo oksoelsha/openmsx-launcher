@@ -243,7 +243,13 @@ public interface MainView
 	void indicateNewFeedMessages( boolean flag );
 
 	/**
-	 * Shows the feed news menu
+	 * Shows the feed news list
 	 */
-	void showFeedMessagesMenu( List<FeedMessage> feedMessages );
+	void showFeedMessagesList( List<FeedMessage> feedMessages );
+
+	/**
+	 * Shows message that launcher is still processing feed
+	 */
+	void showFeedProcessingMessage();
+
 }

@@ -14,13 +14,13 @@ public class FeedMessageTest
 		assertEquals( "title", feedMessage1.getTitle() );
 		assertEquals( "link", feedMessage1.getLink() );
 		assertEquals( "2017-10-19", feedMessage1.getPubDate().toString() );
-		assertEquals( "19/10", feedMessage1.getPubDateDisplayName() );
+		assertEquals( "19-10", feedMessage1.getPubDateDisplayName() );
 		assertEquals( "siteName", feedMessage1.getFeedSiteName() );
 		assertEquals( "siteUrl", feedMessage1.getFeedSiteUrl() );
 
 		FeedMessage feedMessage2 = new FeedMessage( "title", "link", "Wed, 5 Oct 2016 14:36:23 +0000", "siteName", "siteUrl" );
 
-		assertEquals( "05/10", feedMessage2.getPubDateDisplayName() );
+		assertEquals( "05-10", feedMessage2.getPubDateDisplayName() );
 	}
 
 	@Test

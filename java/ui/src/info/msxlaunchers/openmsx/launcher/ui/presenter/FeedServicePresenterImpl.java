@@ -37,6 +37,7 @@ class FeedServicePresenterImpl implements FeedServicePresenter
 	private final MainView view;
 
 	private NewNewsChecker newNewsChecker;
+	private volatile boolean running = false;
 
 	@Inject
 	FeedServicePresenterImpl( FeedService feedService, MainView view )
@@ -51,9 +52,12 @@ class FeedServicePresenterImpl implements FeedServicePresenter
 	@Override
 	public void startService()
 	{
-		feedService.start();
-		newNewsChecker = new NewNewsChecker();
-		newNewsChecker.start();
+		if( !running )
+		{
+			feedService.start();
+			newNewsChecker = new NewNewsChecker();
+			newNewsChecker.start();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -62,6 +66,7 @@ class FeedServicePresenterImpl implements FeedServicePresenter
 	@Override
 	public void stopService()
 	{
+		running = false;
 		feedService.stop();
 		newNewsChecker.stop();
 	}
@@ -74,12 +79,19 @@ class FeedServicePresenterImpl implements FeedServicePresenter
 	{
 		List<FeedMessage> feedMessages = feedService.getMessages();
 
-		view.showFeedMessagesMenu( feedMessages );
+		if( feedMessages.isEmpty() )
+		{
+			view.showFeedProcessingMessage();
+		}
+		else
+		{
+			view.showFeedMessagesList( feedMessages );
+		}
 	}
 
 	private class NewNewsChecker
 	{
-		private boolean running = false;
+		private volatile boolean running = false;
 
 		void start()
 		{

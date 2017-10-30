@@ -1196,8 +1196,7 @@ final class MainPresenterImpl implements MainPresenter
 		}
 		catch( IOException ioe )
 		{
-			// TODO
-			ioe.printStackTrace();
+			LauncherLogger.logException( this, ioe );
 		}
 	}
 
