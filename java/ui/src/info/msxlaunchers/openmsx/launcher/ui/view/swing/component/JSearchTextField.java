@@ -55,7 +55,7 @@ import javax.swing.event.PopupMenuListener;
 @SuppressWarnings("serial")
 public class JSearchTextField extends JTextField
 {
-	private static final int TYPING_DELAY = 250;
+	private static final int TYPING_DELAY = 200;
 
 	private final SearchFieldHandler searchFieldHandler;
 	private final JPopupMenu parentMenu;
