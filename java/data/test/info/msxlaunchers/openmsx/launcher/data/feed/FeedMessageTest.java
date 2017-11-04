@@ -18,9 +18,9 @@ public class FeedMessageTest
 		assertEquals( "siteName", feedMessage1.getFeedSiteName() );
 		assertEquals( "siteUrl", feedMessage1.getFeedSiteUrl() );
 
-		FeedMessage feedMessage2 = new FeedMessage( "title", "link", "Wed, 5 Oct 2016 14:36:23 +0000", "siteName", "siteUrl" );
+		FeedMessage feedMessage2 = new FeedMessage( "title", "link", "Tue, 8 Mar 2016 14:36:23 +0000", "siteName", "siteUrl" );
 
-		assertEquals( "05-10", feedMessage2.getPubDateDisplayName() );
+		assertEquals( "08-03", feedMessage2.getPubDateDisplayName() );
 	}
 
 	@Test

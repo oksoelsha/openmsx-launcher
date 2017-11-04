@@ -59,9 +59,7 @@ public class FeedMessage
 
 	public String getPubDateDisplayName()
 	{
-		int dayOfMonth = pubDate.getDayOfMonth();
-		String dayOfMonthString = dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth;
-		return dayOfMonthString + "-" + pubDate.getMonthValue();
+		return getPaddedNumber( pubDate.getDayOfMonth() ) + "-" + getPaddedNumber( pubDate.getMonthValue() );
 	}
 
 	public String getFeedSiteName()
@@ -79,5 +77,10 @@ public class FeedMessage
 	{
 		return "[title=" + title + ", link=" + link + ", pubDate=" + pubDate  +
 				", feedSiteName=" + feedSiteName + ", feedSiteUrl=" + feedSiteUrl + "]";
+	}
+
+	private String getPaddedNumber( int number )
+	{
+		return number < 10 ? "0" + number : "" + number;
 	}
 }

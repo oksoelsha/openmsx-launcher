@@ -36,7 +36,7 @@ import info.msxlaunchers.openmsx.launcher.persistence.feed.FeedMessagePersister;
 final class FeedServiceImpl implements FeedService
 {
 	private final String sites[][] = {
-			{"http://www.msxlaunchers.info/", "feed/", "MSX Launchers"},
+			{"http://www.msxlaunchers.info/", "feed", "MSX Launchers"},
 			{"https://www.msx.org/", "feed/news/", "MSX Resource Center"},
 			{"https://www.msxblog.es/", "feed/", "MSX Blog"},
 			{"http://www.icongames.com.br/msxfiles/blog-en/", "feed/", "The MSX Files v2"},
@@ -45,7 +45,7 @@ final class FeedServiceImpl implements FeedService
 
 	private final int MAX_MESSAGES_LIST_SIZE = 15;
 	private final long CHECK_INTERVAL = 1000l; //one second
-	private final long TOTAL_RSS_CHECK_PERIOD = 10*60*1000; //ten minutes
+	private final long TOTAL_RSS_CHECK_PERIOD = 10*60*1000; //10 minutes
 	private final long TOTAL_INTERVAL_CHECKS_PER_RSS_CHECK_PERIOD = TOTAL_RSS_CHECK_PERIOD / CHECK_INTERVAL;
 
 	private Thread service;
@@ -173,7 +173,7 @@ final class FeedServiceImpl implements FeedService
 			previousTopMessage = feedMessagePersister.getMessage();
 		}
 
-		if( !messages.get( 0 ).toString().equals( previousTopMessage ) )
+		if( !messages.isEmpty() && !messages.get( 0 ).toString().equals( previousTopMessage ) )
 		{
 			isNewMessages = true;
 		}
