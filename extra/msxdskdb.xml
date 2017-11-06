@@ -4,6 +4,7 @@
  The msxdskdb.xml file contains information about MSX games and applications on disk. 
 																			 	
 	Aug 2017 Sam Elsharif		Initial database
+	Nov 2017 Sam Elsharif		version 2
 -->
 <softwaredb>
 	<software>
@@ -349,6 +350,24 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">e49e98ec64dea296a7df95a7691c04ccbb7f383e</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Devil Hunter</title>
+		<system>MSX</system>
+		<company>MSX Magazine</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">31e2e74a308b99e77f84829cb11760d3eccc5dc6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4c65f877ba13466fc052dc8d135940cb56fa6040</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Die Frage II</title>
+		<system>MSX</system>
+		<company>Studio Sequence</company>
+		<year>1995</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3da39ec846c109fbd74476efa3f9a349a85081b0</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4f0ddc72531c55857325ed3651219b7a6081de39</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>DIX</title>
 		<system>MSX</system>
 		<company>MSX Engine</company>
@@ -379,6 +398,16 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">278a012c211b75fb428bb27eef11851ce3f2fa0f</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">aafec82b03626bf42cbebaa62a3cd065d5c812a1</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">7c9c5d66f5668b227b8214ccb1b84831d5731a3b</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>DuckTales</title>
+		<system>MSX</system>
+		<company>Emphasys</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ce56341e7a0968370e56eb3948061fd9b752c83a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ce8b936c53e3559820f8239ad0e3a8d271e134d1</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">95ce5cbd0687552a52a3055c4ff8c667705a57ce</hash></format><remark><text>Dutch</text></remark></dsk></dump>
 	</software>
 	<software>
 		<title>Eggbert</title>
@@ -543,6 +572,7 @@
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">6d017d34ee300d0a7ad601a73fc6aaca1463777f</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">60f0b3a7db82516d550bb7a2d13a2b5599a67843</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">59d35f238d96902145011d19abb7e35ed4e5e72f</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Greatest Driver</title>
@@ -1263,6 +1293,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">178ea1e96dfb1aa78281f1b03403e53eced37484</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Western</title>
+		<system>MSX</system>
+		<company>Yermani Soft</company>
+		<year>2008</year>
+		<country>ES</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f687caa73276dd59d2187f3d5dfe861b06698319</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f0490d76f1bcf753a27177246e672797dd20a797</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Xak I - The Art of Visual Stage</title>
 		<system>MSX</system>
 		<company>Microcabin</company>
@@ -1414,8 +1453,11 @@
 		<year>1987</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">db9f4cbb343e45e80a6a0f09a8029aa8c604973b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a074c3164f004bb212cb12c06ac6aa00e6f88133</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">c2fc677385c14c86acf766a8bb25346e465ef236</hash></format><remark><text>French Translation</text></remark></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9b403f98bf445e278151a798657eb05f13b6f21a</hash></format><remark><text>French Translation</text></remark></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">528288874f2daeaba956258285d2e055a5468523</hash></format><remark><text>English Translation</text></remark></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">078717d07ba0fff3d5f04ce1bf4a3118b9bafa2f</hash></format><remark><text>English Translation</text></remark></dsk></dump>
 	</software>
 	<software>
 		<title>Zowazo World</title>
