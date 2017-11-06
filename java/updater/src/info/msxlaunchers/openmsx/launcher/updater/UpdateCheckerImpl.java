@@ -54,6 +54,7 @@ final class UpdateCheckerImpl implements UpdateChecker
 	private final String NEW_LAUNCHER_RESOURCE = "/new/launcher";
 	private final String NEW_EXTRADATA_RESOURCE = "/new/extra-data";
 	private final String NEW_DSK_XML_DB_RESOURCE = "/new/dsk-xml-db";
+	private final String NEW_CAS_WAV_XML_DB_RESOURCE = "/new/caswav-xml-db";
 
 	private boolean isDownloadedNewOpenLauncher = false;
 
@@ -140,6 +141,9 @@ final class UpdateCheckerImpl implements UpdateChecker
 
         conn = getWebServiceConnection( MAIN_URL + NEW_DSK_XML_DB_RESOURCE );
         writeDownloadedFile( conn, new File( extraDataDirectory, "msxdskdb.xml" ) );
+
+        conn = getWebServiceConnection( MAIN_URL + NEW_CAS_WAV_XML_DB_RESOURCE );
+        writeDownloadedFile( conn, new File( extraDataDirectory, "msxcaswavdb.xml" ) );
 	}
 
 	private HttpURLConnection getWebServiceConnection( String urlString ) throws IOException
@@ -158,8 +162,7 @@ final class UpdateCheckerImpl implements UpdateChecker
 
 	private void writeDownloadedFile( HttpURLConnection conn, File file ) throws IOException
 	{
-        InputStream in = conn.getInputStream();
-        try( FileOutputStream out = new FileOutputStream( file ) )
+        try( InputStream in = conn.getInputStream(); FileOutputStream out = new FileOutputStream( file ) )
         {
         	byte[] buf = new byte[WRITE_BUFFER];
             int n = in.read( buf );

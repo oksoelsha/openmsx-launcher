@@ -36,7 +36,7 @@
 									mainclassname="info.msxlaunchers.openmsx.launcher.ui.Launcher">
 									<classpath file="../openmsx-launcher-assembly/target/openmsx-launcher.jar"/>
 									<classpath file="${settings.localRepository}/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
-									<classpath file="${settings.localRepository}/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar"/>
+									<classpath file="${settings.localRepository}/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar"/>
 									<classpath file="../ui/lib/filedrop/filedrop.jar"/>
 									<classpath file="${settings.localRepository}/com/google/inject/guice/3.0/guice-3.0.jar"/>
 									<classpath file="${settings.localRepository}/com/google/inject/extensions/guice-assistedinject/3.0/guice-assistedinject-3.0.jar"/>
@@ -51,6 +51,8 @@
 								<copy file="../../extra/extra-data.dat" todir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/pressctrl.tcl" todir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/pressshift.tcl" todir="target/openMSX Launcher.app/share"/>
+								<copy file="../../extra/msxdskdb.xml" todir="target/openMSX Launcher.app/share"/>
+								<copy file="../../extra/msxcaswavdb.xml" todir="target/openMSX Launcher.app/share"/>
 							</target>
 						</configuration>
 					</execution>
