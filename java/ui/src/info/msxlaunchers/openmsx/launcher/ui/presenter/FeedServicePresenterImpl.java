@@ -54,6 +54,7 @@ class FeedServicePresenterImpl implements FeedServicePresenter
 	{
 		if( !running )
 		{
+			running = true;
 			feedService.start();
 			newNewsChecker = new NewNewsChecker();
 			newNewsChecker.start();
