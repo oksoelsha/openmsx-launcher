@@ -15,7 +15,7 @@ td { padding: 12px; }
 
 <body>
 
-<h2>openMSX Launcher v1.9</h2>
+<h2>openMSX Launcher v1.10</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -31,15 +31,15 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from version 1.8</u></h3>
+<h3><u>Upgrade from version 1.9</u></h3>
 
 Databases created in previous versions are fully compatible with the current version.
 
 <p>In all platforms (Windows, MacOS, Linux and BSD) you can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.
 
-<h3><u>Upgrade from versions earlier than 1.8</u></h3>
+<h3><u>Upgrade from versions earlier than 1.9</u></h3>
 
-Refer to upgrade instructions in older versions to 1.8. You can find them in past README files.
+Refer to upgrade instructions in older versions to 1.9. You can find them in past README files.
 
 <h3><u>How to start</u></h3>
 
@@ -82,6 +82,9 @@ to detect the language of the system automatically. If that fails (i.e. if it st
 uses English text even if your system language is different), you can force the
 language selection here.
 
+<p></p>
+5) MSX News: This is to enable ot disable the MSX News service.
+
 <h3><u>Fill Database</u></h3>
 This is a tool that scans your storage drive for MSX software supported by openMSX and adds it to the launcher databases.
 
@@ -101,6 +104,16 @@ Search button is located above the four main buttons. When pressing it, a text f
 or all of SHA1 code. Search is case insensitive. SHA1 code search is useful if you want to locate a game by its SHA1 code to apply patches to it.
 As you type, a list of matches appears. Select the game you're looking for by mouse click or use arrow and enter keys to select it.
 <p><u>Note:</u> mouse clicks don't work on Ubuntu, the only Linux flavour that was tested. This could be a bug in the implementation that hasn't been identified yet. Use the keyboard instead.</p>
+
+<h3><u>MSX News</u></h3>
+MSX News button is located above the four main buttons. The service must be enabled in the settings to retrieve the latest MSX news. When pressing the button,
+the latest news from MSX websites will be listed. The websites that are checked on a regular basis are:
+<br></br>
+<div class="tab">MSX Launchers</div>
+<div class="tab">MSX Resource Center</div>
+<div class="tab">MSX Blog</div>
+<div class="tab">The MSX Files v2</div>
+<div class="tab">Javi Lavandeira</div>
 
 <h3><u>Update All Databases</u></h3>
 <u>Note:</u> starting from version 1.6 this feature is hidden by default. Check appendix A for details.
@@ -180,6 +193,14 @@ end script
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.10 - released November 11, 2017</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added support for disk and tape XML databases (tape XML file is the one supplied by blueMSX). These will provide more info on known disk and tape dumps</li>
+<li>Added service to retrieve MSX news from common MSX websites</li>
+</ul>
 
 <b>Version 1.9 - released July 9, 2017</b>
 <br></br>
