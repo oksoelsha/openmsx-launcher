@@ -189,7 +189,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private static final String SPACES = "                                ";
 	private static final int SEARCH_TEXT_FIELD_COLUMNS = 25;
 
-	private final Dimension NEWS_DATE_DIMENSION = new Dimension(35, 10);
+	private final Dimension NEWS_DATE_DIMENSION = new Dimension(42, 10);
 	private final Color NEWS_SITE_BACKGROUND_COLOR = new Color(50, 200, 50);
 	private final LayoutManager NEWS_PANEL_LAYOUT_MANAGER = new FlowLayout(FlowLayout.LEFT, 5, 1);
 
@@ -1126,7 +1126,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 					.linkColor(Color.white).noUnderline().bold().size(10).build());
 			newsPanel.add(sitePanel);
 
-//			feedMessagesContextMenu.insert(newsPanel, index);
 			feedMessagesContextMenu.add(newsPanel);
 		}
 
