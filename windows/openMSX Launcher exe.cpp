@@ -2,6 +2,8 @@
  * Windows launcher for openMSX Launcher v1.6 and later
  *
  * Author - Sam Elsharif
+ *
+ * Nov 2017 - accept optional jre location as a command line argument
  */
 #include "stdafx.h"
 #include "openMSX Launcher exe.h"
@@ -61,9 +63,25 @@ BOOL GetRegistryValue(TCHAR *keyPath, TCHAR *key, TCHAR *value)
 
 /*
 javaVersionPath: pre-allocated buffer that will hold the JRE full path upon return
+lpCmdLine: command line argument. Windows passes an empty string if one wasn't specified
+Return: True if command line argument was a non-zero length string, FALSE otherwise
+*/
+BOOL GetJavaPathFromCommandLine(TCHAR *javaVersionPath, LPTSTR lpCmdLine)
+{
+	if (__argc == 1)
+	{
+		//this means no arguments were passed
+		return FALSE;
+	}
+
+	return !_tcscpy_s(javaVersionPath, BUFFER_SIZE, lpCmdLine);
+}
+
+/*
+javaVersionPath: pre-allocated buffer that will hold the JRE full path upon return
 Return: True if JRE was found and is version 1.8 or later, FALSE otherwise
 */
-BOOL GetJavaPath(TCHAR *javaVersionPath)
+BOOL GetJavaPathFromRegistry(TCHAR *javaVersionPath)
 {
 	//get the Java version from the registry
 	TCHAR  value[BUFFER_SIZE];
@@ -281,7 +299,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 		//get the JRE full path
 		TCHAR javaVersionPath[BUFFER_SIZE];
-		if (!GetJavaPath(javaVersionPath))
+		if (!GetJavaPathFromCommandLine(javaVersionPath, lpCmdLine) && !GetJavaPathFromRegistry(javaVersionPath))
 		{
 			MessageBox(0, JAVA_NOT_INSTALLED_MSG, ERROR_TITLE, MB_ICONERROR | MB_OK);
 		}
