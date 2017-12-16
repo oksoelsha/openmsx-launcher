@@ -41,12 +41,13 @@ final class BackupDatabaseAction extends TransactionalDatabaseOperation<Database
 	private static final String CREATE_BACKUP_DATABASE_NUMBER_STATEMENT = "INSERT INTO database_backup (time, IDDB) VALUES(?, ?)";
 	private static final String BACKUP_GAMES_STATEMENT = "INSERT INTO game_backup (name, info, machine, romA, extension_rom, romB, " +
 			"diskA, diskB, tape, harddisk, laserdisc, tcl_script, msx, msx2, msx2plus, turbo_r, " +
-			"psg, scc, scc_i, pcm, msx_music, msx_audio, moonsound, midi, genre1, genre2, msx_genid, screenshot_suffix, sha1, size, IDDB, fdd_mode) " +
+			"psg, scc, scc_i, pcm, msx_music, msx_audio, moonsound, midi, genre1, genre2, msx_genid, screenshot_suffix, sha1, size, IDDB, fdd_mode, tcl_script_override) " +
 			"SELECT game.name, game.info, game.machine, game.romA, game.extension_rom, game.romB, " +
 			"game.diskA, game.diskB, game.tape, game.harddisk, game.laserdisc, game.tcl_script, " +
 			"game.msx, game.msx2, game.msx2plus, game.turbo_r, " +
 			"game.psg, game.scc, game.scc_i, game.pcm, game.msx_music, game.msx_audio, game.moonsound, game.midi," +
-			"game.genre1, game.genre2, game.msx_genid, game.screenshot_suffix, game.sha1, game.size, ?, game.fdd_mode FROM game where game.IDDB=?";
+			"game.genre1, game.genre2, game.msx_genid, game.screenshot_suffix, game.sha1, game.size, ?, game.fdd_mode, game.tcl_script_override " +
+			"FROM game where game.IDDB=?";
 
 	private final int MAX_DATABASE_BACKUP_NUMBER = 10;
 

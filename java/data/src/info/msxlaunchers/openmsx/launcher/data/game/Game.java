@@ -53,6 +53,7 @@ public final class Game implements Serializable
 	private final long size;
 	private final String screenshotSuffix;
 	private final String tclScript;
+	private final boolean tclScriptOverride;
 	private final FDDMode fddMode;
 
 	public static class GameParam
@@ -74,6 +75,7 @@ public final class Game implements Serializable
 		private long size;
 		private String screenshotSuffix;
 		private String tclScript;
+		private boolean tclScriptOverride;
 		private FDDMode fddMode;
 
 		public GameParam machine( String machine ) { this.machine = Utils.resetIfEmpty( machine ); return this; }
@@ -106,6 +108,7 @@ public final class Game implements Serializable
 		public GameParam size( long size ) { this.size = size; return this; }
 		public GameParam screenshotSuffix( String screenshotSuffix ) { this.screenshotSuffix = Utils.resetIfEmpty( screenshotSuffix ); return this; }
 		public GameParam tclScript( String tclScript ) { this.tclScript = Utils.resetIfEmpty( tclScript ); return this; }
+		public GameParam tclScriptOverride( boolean tclScriptOverride ) { this.tclScriptOverride = tclScriptOverride; return this; }
 		public GameParam fddMode( FDDMode fddMode ) { this.fddMode = fddMode; return this; }
 
 		public Game build()
@@ -153,6 +156,7 @@ public final class Game implements Serializable
 	public static GameParam size( long size ) { return new GameParam().size( size ); }
 	public static GameParam screenshotSuffix( String screenshotSuffix ) { return new GameParam().screenshotSuffix( screenshotSuffix ); }
 	public static GameParam tclScript( String tclScript ) { return new GameParam().tclScript( tclScript ); }
+	public static GameParam tclScriptOverride( boolean tclScriptOverride ) { return new GameParam().tclScriptOverride( tclScriptOverride ); }
 	public static GameParam fddMode( FDDMode fddMode ) { return new GameParam().fddMode( fddMode ); }
 
 	private Game( GameParam param )
@@ -193,6 +197,7 @@ public final class Game implements Serializable
 		this.size = param.size;
 		this.screenshotSuffix = param.screenshotSuffix;
 		this.tclScript = param.tclScript;
+		this.tclScriptOverride = param.tclScriptOverride;
 
 		this.fddMode = param.fddMode;
 	}
@@ -254,7 +259,8 @@ public final class Game implements Serializable
 	public String getScreenshotSuffix() { return screenshotSuffix; }
 	public String getTclScript() { return tclScript; }
 	public FDDMode getFDDMode() { return fddMode; };
-	
+	public boolean isTclScriptOverride() { return tclScriptOverride; };
+
 	//the following are to determine what kind of media the game is.
 	//the order of check is ROM, Disk, Tape, Laserdisc
 	

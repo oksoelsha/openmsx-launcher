@@ -60,6 +60,7 @@ public interface ProfileEditingPresenter
 	 * @param laserdisc Full path to Laserdisc file
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum Code
+	 * @param scriptOverride Flag to override other non-Script arguments
 	 * @throws LauncherException
 	 */
 	void onRequestAddGameSaveAction( String name,
@@ -74,7 +75,8 @@ public interface ProfileEditingPresenter
 			String harddisk,
 			String laserdisc,
 			String script,
-			int fddModeCode ) throws LauncherException;
+			int fddModeCode,
+			boolean scriptOverride ) throws LauncherException;
 
 	/**
 	 * Called when user decides to launch the game from within the Add or Edit screens
@@ -90,6 +92,7 @@ public interface ProfileEditingPresenter
 	 * @param laserdisc Full path to Laserdisc file
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum Code
+	 * @param scriptOverride Flag to override other non-Script arguments
 	 * @throws LauncherException
 	 */
 	void onRequestLaunchAction( String machine,
@@ -102,7 +105,8 @@ public interface ProfileEditingPresenter
 			String harddisk,
 			String laserdisc,
 			String script,
-			int fddModeCode ) throws LauncherException;
+			int fddModeCode,
+			boolean scriptOverride ) throws LauncherException;
 
 	/**
 	 * Called when user requests to save the game from within the Edit screen
@@ -121,6 +125,7 @@ public interface ProfileEditingPresenter
 	 * @param laserdisc Full path to Laserdisc file
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum Code
+	 * @param scriptOverride Flag to override other non-Script arguments
 	 * @throws LauncherException
 	 */
 	void onRequestEditGameSaveAction( String oldName,
@@ -136,5 +141,6 @@ public interface ProfileEditingPresenter
 			String harddisk,
 			String laserdisc,
 			String script,
-			int fddModeCode ) throws LauncherException;
+			int fddModeCode,
+			boolean scriptOverride ) throws LauncherException;
 }

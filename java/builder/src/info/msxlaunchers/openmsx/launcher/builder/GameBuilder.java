@@ -69,6 +69,7 @@ public class GameBuilder
 	 * @param laserdisc Laserdisc file name
 	 * @param script Script file name
 	 * @param fddMode FDD Mode
+	 * @param scriptOverride Flag to override non-Script arguments 
 	 * @param extraDataMap Map containing extra data for game by sha1 code
 	 * @return Game object or null if all main game fields are null
 	 */
@@ -82,6 +83,7 @@ public class GameBuilder
 		String laserdisc,
 		String script,
 		FDDMode fddMode,
+		boolean scriptOverride,
 		Map<String,ExtraData> extraDataMap )
 	{
 		boolean notScript = isNotScript( romA, romB, diskA, diskB, tape, harddisk, laserdisc, script );
@@ -107,6 +109,7 @@ public class GameBuilder
 				laserdisc,
 				script,
 				fddMode,
+				scriptOverride,
 				fileSha1CodeAndSize.sha1Code,
 				fileSha1CodeAndSize.size,
 				initIfNull( extraDataMap ) );
@@ -153,6 +156,7 @@ public class GameBuilder
 				null,
 				null,
 				null,
+				true,
 				fileSha1CodeAndSize.sha1Code,
 				fileSha1CodeAndSize.size,
 				initIfNull( extraDataMap ) );
@@ -204,6 +208,7 @@ public class GameBuilder
 			laserdisc,
 			null,
 			null,
+			true,
 			sha1Code,
 			fileSize,
 			initIfNull( extraDataMap ) );
@@ -231,6 +236,7 @@ public class GameBuilder
 				game.getLaserdisc(),
 				game.getTclScript(),
 				null,
+				game.isTclScriptOverride(),
 				game.getSha1Code(),
 				game.getSize(),
 				initIfNull( extraDataMap ) );
@@ -256,6 +262,7 @@ public class GameBuilder
 				String laserdisc,
 				String script,
 				FDDMode fddMode,
+				boolean scriptOverride,
 				String sha1Code,
 				long fileSize,
 				Map<String,ExtraData> extraDataMap )
@@ -325,6 +332,7 @@ public class GameBuilder
 				.genre1( Genre.fromValue( genre1  ) ).genre2( Genre.fromValue( genre2 ) )
 				.screenshotSuffix( screenshotSuffix )
 				.fddMode( fddMode )
+				.tclScriptOverride( scriptOverride )
 				.build();
 		}
 		catch( IllegalArgumentException iae )

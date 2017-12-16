@@ -55,7 +55,7 @@ public class GameBuilderTest
 	{
 		GameBuilder gameBuilder = new GameBuilder( "url" );
 
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( null, null, null, null, null, null, null, null, null, null, null, null, null, null );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( null, null, null, null, null, null, null, null, null, null, null, null, null, false, null );
 
 		assertNull( game );
 	}
@@ -109,12 +109,13 @@ public class GameBuilderTest
 		String info = "info";
 
 		GameBuilder gameBuilder = new GameBuilder( "url" );
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, extraDataMap );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, true, extraDataMap );
 
 		//now check all game fields
 		assertEquals( name, game.getName() );
 		assertEquals( info, game.getInfo() );
 		assertNull( game.getTclScript() );
+		assertTrue( game.isTclScriptOverride() );
 		assertNull( game.getMachine() );
 		assertEquals( tmpFile.getAbsolutePath(), game.getRomA() );
 		assertNull( game.getExtensionRom() );
@@ -170,12 +171,13 @@ public class GameBuilderTest
 		String info = "info";
 
 		GameBuilder gameBuilder = new GameBuilder( "url" );
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpZipFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, extraDataMap );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpZipFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, false, extraDataMap );
 
 		//now check all game fields
 		assertEquals( name, game.getName() );
 		assertEquals( info, game.getInfo() );
 		assertNull( game.getTclScript() );
+		assertFalse( game.isTclScriptOverride() );
 		assertNull( game.getMachine() );
 		assertEquals( tmpZipFile.getAbsolutePath(), game.getRomA() );
 		assertNull( game.getExtensionRom() );
@@ -215,12 +217,13 @@ public class GameBuilderTest
 		String info = "info";
 		String script = "script";
 
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, null, null, null, null, null, null, null, null, script, FDDMode.DISABLE_SECOND, null );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, null, null, null, null, null, null, null, null, script, FDDMode.DISABLE_SECOND, true, null );
 
 		//the following fields are set
 		assertEquals( name, game.getName() );
 		assertEquals( info, game.getInfo() );
 		assertEquals( script, game.getTclScript() );
+		assertTrue( game.isTclScriptOverride() );
 
 		//the following fields are not set
 		assertNull( game.getMachine() );

@@ -93,6 +93,7 @@ abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabase
 		statement.setLong( 30, game.getSize() );
 		statement.setLong( 31, databaseId );
 		statement.setShort( 32, getFDDModeEnumValue( game.getFDDMode() ) );
+		statement.setBoolean( 33, game.isTclScriptOverride() );
 	}
 
 	protected int getGenreEnumValue( Genre genre )

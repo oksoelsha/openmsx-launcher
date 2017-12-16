@@ -48,7 +48,12 @@ abstract class AbstractStarterPlatformArguments implements StarterPlatformArgume
 
 		String script = game.getTclScript();
 
-		if( Utils.isEmpty( script ) )
+		if( !Utils.isEmpty( script ) && game.isTclScriptOverride() )
+		{
+			//script in this case overrides all other arguments
+			argumentsBuilder.appendIfValueDefined( "-script", script );
+		}
+		else
 		{
 			//if no script is used then look at the other arguments
 			argumentsBuilder.appendIfValueDefined( "-carta", game.getRomA() );
@@ -60,12 +65,8 @@ abstract class AbstractStarterPlatformArguments implements StarterPlatformArgume
 			argumentsBuilder.appendIfValueDefined( "-hda", game.getHarddisk() );
 			argumentsBuilder.appendIfValueDefined( "-machine", game.getMachine() );
 			argumentsBuilder.appendIfValueDefined( "-laserdisc", game.getLaserdisc() );
-			argumentsBuilder.appendIfValueDefined( "-script", getFDDScriptIfNeeded( game, extraDataDirectory ) );
-		}
-		else
-		{
-			//script in this case overrides all other arguments
 			argumentsBuilder.appendIfValueDefined( "-script", script );
+			argumentsBuilder.appendIfValueDefined( "-script", getFDDScriptIfNeeded( game, extraDataDirectory ) );
 		}
 	}
 

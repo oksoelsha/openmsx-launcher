@@ -32,6 +32,7 @@ public class MacStarterArgumentsTest
 				.machine( "machine" )
 				.laserdisc( "laserdisc" )
 				.tclScript( "tclScript" )
+				.tclScriptOverride( true )
 				.build();
 
 		Settings settings = new Settings( "/openMSX dir/",
@@ -98,9 +99,9 @@ public class MacStarterArgumentsTest
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-hda" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-machine" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
-		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( null ) );
+		verify( argsBuilder, times( 2 ) ).appendIfValueDefined( eq( "-script" ), eq( null ) );
 
-		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+		verify( argsBuilder, times( 11 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
 	}
 
 	@Test
@@ -146,9 +147,10 @@ public class MacStarterArgumentsTest
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-hda" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-machine" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( null ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( new File( "directory", "pressctrl.tcl").toString() ) );
 
-		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+		verify( argsBuilder, times( 11 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
 	}
 
 	@Test
@@ -194,8 +196,9 @@ public class MacStarterArgumentsTest
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-hda" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-machine" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( null ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( new File( "directory", "pressshift.tcl").toString() ) );
 
-		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+		verify( argsBuilder, times( 11 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
 	}
 }

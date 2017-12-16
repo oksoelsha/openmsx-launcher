@@ -1432,7 +1432,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				.isPSG( true ).isSCC( true ).isSCCI( true ).isPCM( true ).isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 				.genre1( Genre.ADVENTURE_POINT_AND_CLICK ).genre2( Genre.BOARD_GAMES )
 				.msxGenID( 4567 ).sha1Code( "testSha1Code" ).size( 102030 ).screenshotSuffix( "tx" )
-				.fddMode( FDDMode.ENABLE_BOTH )
+				.fddMode( FDDMode.ENABLE_BOTH ).tclScriptOverride( true )
 				.build();
 		Game game2 = Game.name( "testName2" ).romA( "testRomA2" ).machine( "testMachine2" ).build();
 
@@ -1510,6 +1510,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 		assertEquals( 102030, restoredGame1.getSize() );
 		assertEquals( "tx", restoredGame1.getScreenshotSuffix() );
 		assertEquals( FDDMode.ENABLE_BOTH, restoredGame1.getFDDMode() );
+		assertTrue( restoredGame1.isTclScriptOverride() );
 	}
 
 	@Test( expected = GamePersistenceException.class )

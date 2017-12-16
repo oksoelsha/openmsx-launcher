@@ -25,7 +25,7 @@ public class GameTest
 			.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 			.genre1( Genre.ACTION ).genre2( Genre.ADVENTURE_TEXT_AND_GFX )
 			.msxGenID( 80 ).sha1Code( "123456789abcdef" ).size( 16 ).screenshotSuffix( "suffix" )
-			.tclScript( "tclScript" ).fddMode( FDDMode.DISABLE_BOTH ).build();
+			.tclScript( "tclScript" ).fddMode( FDDMode.DISABLE_BOTH ).tclScriptOverride( true ).build();
 
 		assertEquals( "name", game.getName() );
 		assertEquals( "info", game.getInfo() );
@@ -58,6 +58,7 @@ public class GameTest
 		assertEquals( "suffix", game.getScreenshotSuffix() );
 		assertEquals( "tclScript", game.getTclScript() );
 		assertEquals( FDDMode.DISABLE_BOTH, game.getFDDMode() );
+		assertTrue( game.isTclScriptOverride() );
 	}
 
 	@Test( expected = IllegalArgumentException.class )

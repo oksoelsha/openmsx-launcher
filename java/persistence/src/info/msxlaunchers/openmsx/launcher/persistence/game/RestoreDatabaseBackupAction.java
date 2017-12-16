@@ -38,12 +38,13 @@ final class RestoreDatabaseBackupAction extends TransactionalDatabaseOperation<B
 	private static final String GET_BACKUP_ID_STATEMENT = "SELECT ID FROM database_backup where IDDB=? and time=?";
 	private static final String RESTORE_GAMES_STATEMENT = "INSERT INTO game (name, info, machine, romA, extension_rom, romB, " +
 			"diskA, diskB, tape, harddisk, laserdisc, tcl_script, msx, msx2, msx2plus, turbo_r, " +
-			"psg, scc, scc_i, pcm, msx_music, msx_audio, moonsound, midi, genre1, genre2, msx_genid, screenshot_suffix, sha1, size, IDDB, fdd_mode) " +
+			"psg, scc, scc_i, pcm, msx_music, msx_audio, moonsound, midi, genre1, genre2, msx_genid, screenshot_suffix, sha1, size, " +
+			"IDDB, fdd_mode, tcl_script_override) " +
 			"SELECT name, info, machine, romA, extension_rom, romB, " +
 			"diskA, diskB, tape, harddisk, laserdisc, tcl_script, " +
 			"msx, msx2, msx2plus, turbo_r, " +
 			"psg, scc, scc_i, pcm, msx_music, msx_audio, moonsound, midi," +
-			"genre1, genre2, msx_genid, screenshot_suffix, sha1, size, ?, fdd_mode FROM game_backup where IDDB=?";
+			"genre1, genre2, msx_genid, screenshot_suffix, sha1, size, ?, fdd_mode, tcl_script_override FROM game_backup where IDDB=?";
 	private static final String DELETE_BACKUP_STATEMENT = "DELETE FROM database_backup where ID=?";
 
 	private final DatabaseBackup backup;

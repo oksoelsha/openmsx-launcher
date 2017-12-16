@@ -132,7 +132,8 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 				currentSelectedGame.getHarddisk(),
 				currentSelectedGame.getLaserdisc(),
 				currentSelectedGame.getTclScript(),
-				currentSelectedGame.getFDDMode().getValue() );
+				currentSelectedGame.getFDDMode().getValue(),
+				currentSelectedGame.isTclScriptOverride() );
 		}
 		catch( InvalidMachinesDirectoryException imde )
 		{
@@ -144,9 +145,6 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestAddGameSaveAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int)
-	 */
 	@Override
 	public void onRequestAddGameSaveAction( String name,
 			String info,
@@ -160,7 +158,8 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			String harddisk,
 			String laserdisc,
 			String script,
-			int fddModeCode ) throws LauncherException
+			int fddModeCode,
+			boolean scriptOverride ) throws LauncherException
 	{
 		Map<String,ExtraData> extraDataMap = null;
 		try
@@ -177,7 +176,7 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 		try
 		{
 			game = getGameObject( name, info, machine, romA, romB, extensionRom,
-					diskA, diskB, tape, harddisk, laserdisc, script, fddModeCode, extraDataMap );
+					diskA, diskB, tape, harddisk, laserdisc, script, fddModeCode, scriptOverride, extraDataMap );
 		}
 		catch( IllegalArgumentException iae )
 		{
@@ -221,7 +220,7 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestLaunchAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestLaunchAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, boolean)
 	 */
 	@Override
 	public void onRequestLaunchAction( String machine,
@@ -234,7 +233,8 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			String harddisk,
 			String laserdisc,
 			String script,
-			int fddModeCode ) throws LauncherException
+			int fddModeCode,
+			boolean scriptOverride ) throws LauncherException
 	{
 		Game game = null;
 		try
@@ -247,6 +247,7 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 				.laserdisc( laserdisc )
 				.tclScript( script )
 				.fddMode( FDDMode.fromValue( fddModeCode ) )
+				.tclScriptOverride( scriptOverride )
 				.build();
 		}
 		catch ( IllegalArgumentException iae )
@@ -265,7 +266,7 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestEditGameSaveAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter#onRequestEditGameSaveAction(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, boolean)
 	 */
 	@Override
 	public void onRequestEditGameSaveAction( String oldName,
@@ -281,7 +282,8 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			String harddisk,
 			String laserdisc,
 			String script,
-			int fddModeCode ) throws LauncherException
+			int fddModeCode,
+			boolean scriptOverride ) throws LauncherException
 	{
 		Map<String,ExtraData> extraDataMap = null;
 		try
@@ -297,7 +299,7 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 		try
 		{
 			newGame = getGameObject( newName, info, machine, romA, romB, extensionRom,
-					diskA, diskB, tape, harddisk, laserdisc, script, fddModeCode, extraDataMap );
+					diskA, diskB, tape, harddisk, laserdisc, script, fddModeCode, scriptOverride, extraDataMap );
 		}
 		catch ( IllegalArgumentException iae )
 		{
@@ -348,10 +350,10 @@ final class ProfileEditingPresenterImpl implements ProfileEditingPresenter
 			String diskA, String diskB,
 			String tape, String harddisk,
 			String laserdisc, String script,
-			int fddModeCode,
+			int fddModeCode, boolean scriptOverride,
 			Map<String,ExtraData> extraDataMap )
 	{
 		return gameBuilder.createGameObjectForDataEnteredByUser( name, info, machine, romA, romB, extensionRom, diskA, diskB,
-				tape, harddisk, laserdisc, script, FDDMode.fromValue( fddModeCode ), extraDataMap );
+				tape, harddisk, laserdisc, script, FDDMode.fromValue( fddModeCode ), scriptOverride, extraDataMap );
 	}
 }

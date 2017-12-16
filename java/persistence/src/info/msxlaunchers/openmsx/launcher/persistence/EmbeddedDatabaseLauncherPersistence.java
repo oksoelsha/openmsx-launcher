@@ -58,7 +58,7 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			"psg BOOLEAN default false, scc BOOLEAN default false, scc_i BOOLEAN default false, pcm BOOLEAN default false," +
 			"msx_music BOOLEAN default false, msx_audio BOOLEAN default false, moonsound BOOLEAN default false, midi BOOLEAN default false," +
 			"genre1 INTEGER, genre2 INTEGER, msx_genid INTEGER, screenshot_suffix VARCHAR(10), sha1 VARCHAR(40), size BIGINT," +
-			"IDDB BIGINT not null, primary key (ID), fdd_mode SMALLINT)";
+			"IDDB BIGINT not null, primary key (ID), fdd_mode SMALLINT, tcl_script_override BOOLEAN default true)";
 	private final String CREATE_GAME_TABLE_STATEMENT = "CREATE TABLE game" + GAME_TABLE_DEF;
 	private final String ADD_FOREIGN_KEY_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT DATABASE_GAME_FK Foreign Key (IDDB) REFERENCES database (ID) ON DELETE CASCADE";
 	private final String ADD_UNIQUE_CONSTRAINT_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT UNIQUE_GAMENAME UNIQUE(name,IDDB)";
@@ -70,6 +70,9 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 	//upgrade statements
 	private final String ADD_FDD_MODE_COLUMN_TO_GAME = "ALTER TABLE game ADD COLUMN fdd_mode SMALLINT";
 	private final String ADD_FDD_MODE_COLUMN_TO_GAME_BACKUP = "ALTER TABLE game_backup ADD COLUMN fdd_mode SMALLINT";
+	private final String ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME = "ALTER TABLE game ADD COLUMN tcl_script_override BOOLEAN default true";
+	private final String ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME_BACKUP = "ALTER TABLE game_backup ADD COLUMN tcl_script_override BOOLEAN default true";
+
 	private final String COLUMN_ALREADY_EXISTS_ERROR_CODE = "X0Y32";
 
 	private final GamePersister gamePersister;
@@ -129,6 +132,9 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 					//then might be the upgrade case
 					//first case to deal with is FDDMode column in Games table (new in v1.8)
 					addFDDModeColumnIfNecessary( connection );
+
+					//second case to deal with is TCLScriptOverride column in Games table (new in v1.11)
+					addTclScriptOverrideColumnIfNecessary( connection );
 				}
 			}
 			catch( SQLException se )
@@ -265,6 +271,25 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 		{
 			statement.execute( ADD_FDD_MODE_COLUMN_TO_GAME );
 			statement.execute( ADD_FDD_MODE_COLUMN_TO_GAME_BACKUP );
+		}
+		catch( SQLException se )
+		{
+			if( !se.getSQLState().equals( COLUMN_ALREADY_EXISTS_ERROR_CODE ) )
+			{
+				//if we get an exception other than 'column already exists' then rethrow it
+				LauncherLogger.logException( this, se );
+
+				throw se;
+			}
+		}
+	}
+
+	private void addTclScriptOverrideColumnIfNecessary( Connection connection ) throws SQLException
+	{
+		try( Statement statement = connection.createStatement() )
+		{
+			statement.execute( ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME );
+			statement.execute( ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME_BACKUP );
 		}
 		catch( SQLException se )
 		{

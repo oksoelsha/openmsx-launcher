@@ -100,6 +100,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	private JButton browseLaserdiscButton;
 	private JLabel scriptLabel;
 	private JTextFieldDragDrop scriptTextField;
+	private JCheckBox scriptOverrideCheckBox;
 	private JButton browseScriptButton;
 	private JButton launchButton;
 	private JButton saveButton;
@@ -136,7 +137,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			String harddisk,
 			String laserdisc,
 			String script,
-			int fddModeCode)
+			int fddModeCode,
+			boolean isScriptOverride)
 	{
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		if(editMode)
@@ -231,10 +233,12 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			harddiskTextField.setText(harddisk);
 			laserdiscTextField.setText(laserdisc);
 			scriptTextField.setText(script);
+			scriptOverrideCheckBox.setSelected(isScriptOverride);
 		}
 		else
 		{
 			extensionComboBox.setEnabled(false);
+			scriptOverrideCheckBox.setSelected(true);
 		}
 
 		setLocationRelativeTo(parent);
@@ -249,7 +253,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			throw new RuntimeException("Cannot call this in Edit mode");
 		}
 
-		display(null, null, null, null, null, null, null, null, null, null, null, null, 0);
+		display(null, null, null, null, null, null, null, null, null, null, null, null, 0, false);
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -269,7 +273,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					harddiskTextField.getText(),
 					laserdiscTextField.getText(),
 					scriptTextField.getText(),
-					fddModesComboBox.getSelectedIndex());
+					fddModesComboBox.getSelectedIndex(),
+					scriptOverrideCheckBox.isSelected());
 			}
 			catch(LauncherException le)
 			{
@@ -295,7 +300,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							harddiskTextField.getText(),
 							laserdiscTextField.getText(),
 							scriptTextField.getText(),
-							fddModesComboBox.getSelectedIndex());
+							fddModesComboBox.getSelectedIndex(),
+							scriptOverrideCheckBox.isSelected());
 				}
 				else
 				{
@@ -311,7 +317,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							harddiskTextField.getText(),
 							laserdiscTextField.getText(),
 							scriptTextField.getText(),
-							fddModesComboBox.getSelectedIndex());
+							fddModesComboBox.getSelectedIndex(),
+							scriptOverrideCheckBox.isSelected());
 				}
 
 				dispose();
@@ -730,6 +737,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseScriptButton = new JButton(Icons.FOLDER.getImageIcon());
 		browseScriptButton.setToolTipText(messages.get("BROWSE"));
 		browseScriptButton.addActionListener(this);
+		scriptOverrideCheckBox = new JCheckBox(messages.get("OVERRIDE_OTHER_ARGUMENTS"));
 
 		GroupLayout groupLayout = new GroupLayout(scriptPanel);
 		groupLayout.setHorizontalGroup(
@@ -740,6 +748,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					.addGap(5)
 					.addComponent(scriptTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
 					.addComponent(browseScriptButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(85)
+					.addComponent(scriptOverrideCheckBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -748,7 +759,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(3)
-							.addComponent(scriptLabel))
+							.addComponent(scriptLabel)
+							.addGap(32)
+							.addComponent(scriptOverrideCheckBox))
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 							.addComponent(scriptTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(browseScriptButton)))

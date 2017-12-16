@@ -61,8 +61,9 @@ public interface ProfileEditingView
 	 * @param laserdisc Full path to Laserdisc file
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum code
+	 * @param isTclScriptOverride Flag to determine whether to override other non-TCL script arguments
 	 */
 	void displayEditGameScreen( ProfileEditingPresenter presenter, Language language, Set<String> machines, Set<String> extensions, boolean rightToLeft, 
 			String name, String info, String machine, String romA, String romB, String extension,
-			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script, int fddModeCode );
+			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script, int fddModeCode, boolean isTclScriptOverride );
 }

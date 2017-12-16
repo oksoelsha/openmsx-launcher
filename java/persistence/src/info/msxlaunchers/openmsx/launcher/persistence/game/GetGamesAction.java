@@ -113,6 +113,7 @@ final class GetGamesAction extends NonTransactionalDatabaseOperation<Set<Game>>
 				.sha1Code( result.getString( "sha1" ) )
 				.size( result.getLong( "size" ) )
 				.fddMode( FDDMode.fromValue( result.getShort( "fdd_mode" )) )
+				.tclScriptOverride( result.getBoolean( "tcl_script_override" ) )
 				.build();
 	}
 }
