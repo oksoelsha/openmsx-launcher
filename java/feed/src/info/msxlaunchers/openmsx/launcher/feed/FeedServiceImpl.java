@@ -39,8 +39,6 @@ final class FeedServiceImpl implements FeedService
 			{"http://www.msxlaunchers.info/", "feed", "MSX Launchers"},
 			{"https://www.msx.org/", "feed/news/", "MSX Resource Center"},
 			{"https://www.msxblog.es/", "feed/", "MSX Blog"},
-			{"http://www.icongames.com.br/msxfiles/blog-en/", "feed/", "The MSX Files v2"},
-			{"http://www.lavandeira.net/", "feed/", "Javi Lavandeira"},
 	};
 
 	private final int MAX_MESSAGES_LIST_SIZE = 15;

@@ -75,7 +75,7 @@ final class RSSFeedReader implements FeedReader
 
         try( InputStream in = readRSSFeed( feedUrl ) )
         {
-            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+            XMLEventReader eventReader = inputFactory.createXMLEventReader( in );
 
             while( eventReader.hasNext() )
             {
