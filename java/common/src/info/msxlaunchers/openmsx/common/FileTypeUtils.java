@@ -41,6 +41,7 @@ public final class FileTypeUtils
 		final Set<String> romExtensionsTemp = new HashSet<>();
 		romExtensionsTemp.add( "ri" );
 		romExtensionsTemp.add( "rom" );
+		romExtensionsTemp.add( "col" );
 
 		romExtensions = Collections.unmodifiableSet( romExtensionsTemp );
 

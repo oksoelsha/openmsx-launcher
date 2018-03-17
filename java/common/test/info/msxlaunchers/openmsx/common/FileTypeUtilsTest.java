@@ -17,6 +17,8 @@ public class FileTypeUtilsTest
 	private String romUpper = getClass().getResource("files/romUpper.ROM").getFile();
 	private String ri = getClass().getResource("files/ri.ri").getFile();
 	private String riUpper = getClass().getResource("files/riUpper.RI").getFile();
+	private String col = getClass().getResource("files/col.col").getFile();
+	private String colUpper = getClass().getResource("files/colUpper.COL").getFile();
 
 	private String di1 = getClass().getResource("files/di1.di1").getFile();
 	private String di1Upper = getClass().getResource("files/di1Upper.DI1").getFile();
@@ -77,6 +79,12 @@ public class FileTypeUtilsTest
 		assertTrue( FileTypeUtils.isROM( file ) );
 
 		file = new File( riUpper );
+		assertTrue( FileTypeUtils.isROM( file ) );
+
+		file = new File( col );
+		assertTrue( FileTypeUtils.isROM( file ) );
+
+		file = new File( colUpper );
 		assertTrue( FileTypeUtils.isROM( file ) );
 
 		file = new File( dsk );
@@ -345,11 +353,12 @@ public class FileTypeUtilsTest
 		Set<String> romExtensions = FileTypeUtils.getROMExtensions();
 
 		//there are currently two ROM extensions supported
-		assertEquals( 2, romExtensions.size() );
+		assertEquals( 3, romExtensions.size() );
 
 		//check the ROM extensions
 		assertTrue( romExtensions.contains( "rom" ) );
 		assertTrue( romExtensions.contains( "ri" ) );
+		assertTrue( romExtensions.contains( "col" ) );
 	}
 
 	@Test( expected = UnsupportedOperationException.class )
