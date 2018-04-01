@@ -5,6 +5,7 @@
 																			 	
 	Aug 2017 Sam Elsharif		Initial database
 	Nov 2017 Sam Elsharif		version 2
+	Mar 2018 Sam Elsharif		version 3
 -->
 <softwaredb>
 	<software>
@@ -24,6 +25,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">b97b17acd1b603ff90caf95f348625a22e50a4e3</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">2a39e835b942ab4232c714e5cbce80615becf7cd</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">db405dfd53f26b7dd459423269f81b726cda1336</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Akin</title>
+		<system>MSX</system>
+		<company>Parallax</company>
+		<year>1995</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">fac5d8b94300bb04f503076c9f1a3a7575c2eac9</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Aleste 2</title>
@@ -122,6 +131,15 @@
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">f8334e234ac5c6b197aedc6dfbf45f27bf765426</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">b2c5f2c23374afcab770fe965892c3cb0395527c</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Battle Bomber</title>
+		<system>MSX</system>
+		<company>BitBoyz</company>
+		<year>1996</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">75e6a558ac1f0346f951d9c6667e0b9ecb8557e8</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3a44689e214cad5612c3104e221332d9054229f0</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Be-Bop Bout</title>
@@ -398,6 +416,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">278a012c211b75fb428bb27eef11851ce3f2fa0f</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">aafec82b03626bf42cbebaa62a3cd065d5c812a1</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">7c9c5d66f5668b227b8214ccb1b84831d5731a3b</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Dragonworld</title>
+		<system>MSX</system>
+		<company>Idealogic</company>
+		<year>1985</year>
+		<country>ES</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1ab5dc3dea856e5e6f0f96a74ac5092e2c0b79a7</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>DuckTales</title>
@@ -726,6 +752,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">898f1e922ab3b232e130be04da38546fe0016613</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>La Isla del Tesoro</title>
+		<system>MSX</system>
+		<company>Idealogic</company>
+		<year>1986</year>
+		<country>ES</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c71a35f7d6d0eb52b745b2eed25b4b11ef4d834c</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Last Mission, The</title>
 		<system>MSX</system>
 		<company>Opera Soft</company>
@@ -793,6 +827,16 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">64aa67740c5da734721419e29047b40d01e739be</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">06dac1960baba43b225bb53d819c0830d5bea30e</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">d37c06d798aa2b208c0dcc009682c37d97ffcc75</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Milkymate</title>
+		<system>MSX</system>
+		<company>Atsic</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">1d1f160c961a6805ed4ae9d3250d241f7cf6b402</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">42a1b1facea3b678dcac177419099232170017df</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">da8fbbd4ef6708c6ddd1e0313b2b3bc1b36d7b1a</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Moon Light Saga</title>
@@ -890,6 +934,14 @@
 		<year>1992</year>
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">28d9dc71c80a05059ab21f3081e3f16a9ff6bc06</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Pixess</title>
+		<system>MSX</system>
+		<company>Compjoetania</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0f7149aeb00924b9ac3bc3927cf1633995236623</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Playball III</title>
