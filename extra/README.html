@@ -15,7 +15,7 @@ td { padding: 12px; }
 
 <body>
 
-<h2>openMSX Launcher v1.10</h2>
+<h2>openMSX Launcher v1.10.5</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -31,19 +31,21 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from version 1.9</u></h3>
+<h3><u>Upgrade from version 1.10</u></h3>
 
 Databases created in previous versions are fully compatible with the current version.
 
 <p>In all platforms (Windows, MacOS, Linux and BSD) you can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.
 
-<h3><u>Upgrade from versions earlier than 1.9</u></h3>
+<h3><u>Upgrade from versions earlier than 1.10</u></h3>
 
-Refer to upgrade instructions in older versions to 1.9. You can find them in past README files.
+Refer to upgrade instructions in older versions to 1.10. You can find them in past README files.
 
 <h3><u>How to start</u></h3>
 
-<p class="tab"><b>Windows</b>: double-click on the exe file.</p>
+<p class="tab"><b>Windows</b>: double-click on the exe file. The exe will locate the JRE on the machine automatically and start it. The exe  takes in the JRE location
+as an optional argument in case it cannot find it. In this case, in order to pass the JRE location as an option, create a shortcut for the executable and edit its target to pass
+the JRE location. Make sure you add the location without double quotes (i.e. C:\Program Files\Java\jre1.8.0_151\bin\java.exe)</p>
 
 <p class="tab"><b>MacOS</b>: double-click on the application icon.</p>
 
@@ -112,8 +114,6 @@ the latest news from MSX websites will be listed. The websites that are checked 
 <div class="tab">MSX Launchers</div>
 <div class="tab">MSX Resource Center</div>
 <div class="tab">MSX Blog</div>
-<div class="tab">The MSX Files v2</div>
-<div class="tab">Javi Lavandeira</div>
 
 <h3><u>Update All Databases</u></h3>
 <u>Note:</u> starting from version 1.6 this feature is hidden by default. Check appendix A for details.
@@ -193,6 +193,17 @@ end script
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.10.5 - released Mar 31, 2018</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Provided an option to allow TCL scripts to override or be added to other profile fields when starting a game. The old behavior was to always override. This is useful when, for example,
+running games that require GFX9000</li>
+<li>Allow the Windows executable to take an optional parameter that points to the location of the JRE on the machine</li>
+<li>Removed rarely updated MSX sites from the news service and kept only MSX Launchers, MRC and MSX Blog</li>
+<li>Added 'col' extension to the list of acceptable ROM types</li>
+</ul>
 
 <b>Version 1.10 - released November 11, 2017</b>
 <br></br>

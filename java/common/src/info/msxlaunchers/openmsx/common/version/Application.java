@@ -24,9 +24,9 @@ package info.msxlaunchers.openmsx.common.version;
  */
 public interface Application
 {
-	public final static String APP_NAME = "openMSX Launcher";
+	public static final String APP_NAME = "openMSX Launcher";
 
-	public final static String VERSION = "1.10";
+	public static final String VERSION = "1.10.5";
 
-	public final static String RELEASE_YEARS = "2013-2017";
+	public static final String RELEASE_YEARS = "2013-2018";
 }
