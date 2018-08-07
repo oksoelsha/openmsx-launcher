@@ -6,6 +6,7 @@
 	Aug 2017 Sam Elsharif		Initial database
 	Nov 2017 Sam Elsharif		version 2
 	Mar 2018 Sam Elsharif		version 3
+	Aug 2018 Sam Elsharif		version 4
 -->
 <softwaredb>
 	<software>
@@ -89,12 +90,46 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">32d90309b020d0fb3f1b64fb5991c2816008c5dc</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Angelus</title>
+		<system>MSX</system>
+		<company>ENIX</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">bd0c8b59526d15b7ad19fed8178602beba9fca3a</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Anma's Amusement Disk</title>
 		<system>MSX</system>
 		<company>Anma</company>
 		<year>1992</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">52afb44c02c02fad7ce8cbdca90875599ae1616f</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Arcus</title>
+		<system>MSX</system>
+		<company>Wolfteam</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">aa180f094f624acf3c3556416904cbf484eff3e9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e9c7a85090110a24bc2a83a30b400927228429b2</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Arcus II - Silent Symphony</title>
+		<system>MSX</system>
+		<company>Wolfteam</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">168e0286eab427cd4ca47c7286c2a05b92425ff4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">df9ceebfdc28fb3ef2d994c03dfb2692fb97451c</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Aura Battle Dunbine</title>
+		<system>MSX</system>
+		<company>Family Soft</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">59605c480b3659acc085ac9e24b8f694a66b32ae</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Balance of Power</title>
@@ -252,12 +287,30 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">bca8592b98525c7e122affc19623a5f15d86fc69</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Castle Adventure</title>
+		<system>MSX</system>
+		<company>FGI</company>
+		<year>1989</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">98a8830369ffbf0e999c89fd86cf63741ec753d2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">17f530d85a799e69787e37cd5af02ffe0f2934db</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">33eb2c2b88e58c866d8d5e3f5654864f7e106443</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Chiller</title>
 		<system>MSX</system>
 		<company>Mastertronic</company>
 		<year>1985</year>
 		<country>UK</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">1e15c9405cbfd8181b669a1683a0a82eba4e1926</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>City Fight</title>
+		<system>MSX</system>
+		<company>Pony Canyon</company>
+		<year>1986</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">943a9d13752718ab978f09d6f063b666b90191a0</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Cloud Master</title>
@@ -581,6 +634,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">d5c83fb938f0a8921a3dfdff6ecc61c081785823</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Gekitotsu 7 Narabe</title>
+		<system>MSX</system>
+		<company>Satico</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7de811de42688419fdc87eb0381149f390c051a5</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">df7de62938997acbfc200624921a5fb8d4c126ba</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Gorby's Pipeline</title>
 		<system>MSX</system>
 		<company>Compile</company>
@@ -694,6 +756,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">a90b6bb34673d89dadecdf21da5188d8b0e492ae</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">c315baab5c254758b01b65e0f9a34ae28d7f1d5d</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">ca080742d4af491721ff25d4419c22f1582f1df5</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Kimidakeni</title>
+		<system>MSX</system>
+		<company>Technopolis Soft</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">294bf8ae1847f34a716885360088ba0290253ce9</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Kinetic Connection</title>
@@ -1279,6 +1349,14 @@
 		<year>1993</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">34e6c8e5c332cf458b21351e580dbeefdcb6ff6f</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>The Adventure of Randar III</title>
+		<system>MSX</system>
+		<company>Compile</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">52e16b7339699263193154de1bfd577b76c25624</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Time Bandits</title>
