@@ -79,7 +79,6 @@ public class HelpWindow extends JDialog implements ActionListener
 			applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		}
 		JPanel contentPanel = new JPanel();
-		setBounds(100, 100, 450, 216);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -149,32 +148,34 @@ public class HelpWindow extends JDialog implements ActionListener
 						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 							.addComponent(versionLabel)
 							.addComponent(developerLabel))
-						.addGap(115)
+						.addGap(100)
 						.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
 					.addGroup(gl_contentPanel.createSequentialGroup()
 						.addGap(10)
-						.addComponent(aboutMessageScrollPane, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE))
-			);
-			gl_contentPanel.setVerticalGroup(
-				gl_contentPanel.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_contentPanel.createSequentialGroup()
-						.addGap(15)
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addGap(1)
-								.addComponent(launcherIcon, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addGap(13)
-								.addComponent(versionLabel)
-								.addGap(15)
-								.addComponent(developerLabel))
-						.addComponent(okButton))
-						.addGap(15)
-						.addComponent(aboutMessageScrollPane, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
-			);
-			contentPanel.setLayout(gl_contentPanel);
+						.addComponent(aboutMessageScrollPane, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE)
+						.addGap(10))
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGap(15)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(launcherIcon, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(13)
+							.addComponent(versionLabel)
+							.addGap(15)
+							.addComponent(developerLabel))
+					.addComponent(okButton))
+					.addGap(15)
+					.addComponent(aboutMessageScrollPane, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE))
+		);
+		contentPanel.setLayout(gl_contentPanel);
 
-        setLocationRelativeTo(parent);
+		pack();
+		setLocationRelativeTo(parent);
 		setVisible(true);
 	}
 
