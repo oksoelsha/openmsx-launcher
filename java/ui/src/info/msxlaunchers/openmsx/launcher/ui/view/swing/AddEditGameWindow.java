@@ -66,39 +66,27 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	private final Component parent;
 	private final boolean editMode;
 
-	private JLabel nameLabel;
 	private JTextField nameTextField;
-	private JLabel infoLabel;
 	private JTextFieldDragDrop infoTextField;
 	private JButton browseInfoButton;
-	private JLabel machineLabel;
 	private JComboBox<String> machinesComboBox;
 	private JCheckBox extensionCheckBox;
-	private JLabel romALabel;
 	private JTextFieldDragDrop romATextField;
 	private JButton browseRomAButton;
-	private JLabel romBLabel;
 	private JTextFieldDragDrop romBTextField;
 	private JButton browseRomBButton;
 	private JComboBox<String> extensionComboBox;
-	private JLabel diskALabel;
 	private JTextFieldDragDrop diskATextField;
 	private JButton browseDiskAButton;
-	private JLabel diskBLabel;
 	private JTextFieldDragDrop diskBTextField;
 	private JButton browseDiskBButton;
-	private JLabel fddModeLabel;
 	private JComboBox<String> fddModesComboBox;
-	private JLabel tapeLabel;
 	private JTextFieldDragDrop tapeTextField;
 	private JButton browseTapeButton;
-	private JLabel harddiskLabel;
 	private JTextFieldDragDrop harddiskTextField;
 	private JButton browseHarddiskButton;
-	private JLabel laserdiscLabel;
 	private JTextFieldDragDrop laserdiscTextField;
 	private JButton browseLaserdiscButton;
-	private JLabel scriptLabel;
 	private JTextFieldDragDrop scriptTextField;
 	private JCheckBox scriptOverrideCheckBox;
 	private JButton browseScriptButton;
@@ -151,7 +139,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		}
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
-		setBounds(0, 0, 550, 278);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -241,6 +228,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			scriptOverrideCheckBox.setSelected(true);
 		}
 
+		pack();
 		setLocationRelativeTo(parent);
 		setVisible(true);
 	}
@@ -383,12 +371,12 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel generalPanel = new JPanel(false);
 
-		nameLabel = new JLabel(messages.get("NAME"));
+		JLabel nameLabel = new JLabel(messages.get("NAME"));
 		nameLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		nameTextField = new JTextField();
 		nameTextField.setColumns(10);
 		
-		infoLabel = new JLabel(messages.get("INFO"));
+		JLabel infoLabel = new JLabel(messages.get("INFO"));
 		infoLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		infoTextField = new JTextFieldDragDrop();
 		infoTextField.setColumns(10);
@@ -396,9 +384,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseInfoButton.setToolTipText(messages.get("BROWSE"));
 		browseInfoButton.addActionListener(this);
 
-		machineLabel = new JLabel(messages.get("MACHINE"));
+		JLabel machineLabel = new JLabel(messages.get("MACHINE"));
 		machineLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		machinesComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(machines));
+		machinesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
 
 		GroupLayout groupLayout = new GroupLayout(generalPanel);
 		groupLayout.setHorizontalGroup(
@@ -454,7 +442,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel romPanel = new JPanel(false);
 
-		romALabel = new JLabel(messages.get("ROM_A"));
+		JLabel romALabel = new JLabel(messages.get("ROM_A"));
 		romALabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		romATextField = new JTextFieldDragDrop();
 		romATextField.setColumns(10);
@@ -462,7 +450,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseRomAButton.setToolTipText(messages.get("BROWSE"));
 		browseRomAButton.addActionListener(this);
 
-		romBLabel = new JLabel(messages.get("ROM_B"));
+		JLabel romBLabel = new JLabel(messages.get("ROM_B"));
 		romBLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		romBTextField = new JTextFieldDragDrop();
 		romBTextField.setColumns(10);
@@ -473,7 +461,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		extensionCheckBox = new JCheckBox(messages.get("EXTENSION"));
 		extensionCheckBox.addActionListener(this);
 
-		extensionComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(extensions));
+		extensionComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(extensions));
 
 		GroupLayout groupLayout = new GroupLayout(romPanel);
 		groupLayout.setHorizontalGroup(
@@ -533,7 +521,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel diskPanel = new JPanel(false);
 		
-		diskALabel = new JLabel(messages.get("DISK_A"));
+		JLabel diskALabel = new JLabel(messages.get("DISK_A"));
 		diskALabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		diskATextField = new JTextFieldDragDrop();
 		diskATextField.setColumns(10);
@@ -541,7 +529,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseDiskAButton.setToolTipText(messages.get("BROWSE"));
 		browseDiskAButton.addActionListener(this);
 
-		diskBLabel = new JLabel(messages.get("DISK_B"));
+		JLabel diskBLabel = new JLabel(messages.get("DISK_B"));
 		diskBLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		diskBTextField = new JTextFieldDragDrop();
 		diskBTextField.setColumns(10);
@@ -549,10 +537,10 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseDiskBButton.setToolTipText(messages.get("BROWSE"));
 		browseDiskBButton.addActionListener(this);
 
-		fddModeLabel = new JLabel(messages.get("CONFIGURATION"));
+		JLabel fddModeLabel = new JLabel(messages.get("CONFIGURATION"));
 		fddModeLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		String fddModesModes[] = Arrays.asList(FDDMode.values()).stream().map(f -> messages.get(f.toString())).toArray(String[]::new);
-		fddModesComboBox = new JComboBox<String>(fddModesModes);
+		String[] fddModesModes = Arrays.asList(FDDMode.values()).stream().map(f -> messages.get(f.toString())).toArray(String[]::new);
+		fddModesComboBox = new JComboBox<>(fddModesModes);
 
 		GroupLayout groupLayout = new GroupLayout(diskPanel);
 		groupLayout.setHorizontalGroup(
@@ -609,7 +597,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel tapePanel = new JPanel(false);
 
-		tapeLabel = new JLabel(messages.get("TAPE"));
+		JLabel tapeLabel = new JLabel(messages.get("TAPE"));
 		tapeLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 
 		tapeTextField = new JTextFieldDragDrop();
@@ -650,7 +638,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel harddiskPanel = new JPanel(false);
 
-		harddiskLabel = new JLabel(messages.get("HARDDISK"));
+		JLabel harddiskLabel = new JLabel(messages.get("HARDDISK"));
 		harddiskLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		harddiskTextField = new JTextFieldDragDrop();
 		harddiskTextField.setColumns(10);
@@ -690,7 +678,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel laserdiscPanel = new JPanel(false);
 
-		laserdiscLabel = new JLabel(messages.get("LASERDISC"));
+		JLabel laserdiscLabel = new JLabel(messages.get("LASERDISC"));
 		laserdiscLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		laserdiscTextField = new JTextFieldDragDrop();
 		laserdiscTextField.setColumns(10);
@@ -730,7 +718,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	{
 		JPanel scriptPanel = new JPanel(false);
 
-		scriptLabel = new JLabel(messages.get("SCRIPT"));
+		JLabel scriptLabel = new JLabel(messages.get("SCRIPT"));
 		scriptLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		scriptTextField = new JTextFieldDragDrop();
 		scriptTextField.setColumns(10);
