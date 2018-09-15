@@ -55,7 +55,7 @@ final class LogFileReader implements LogReader
 		//first read the rotated log file - the launcher logging is configured to use a single backup
 		try
 		{
-			lines = Files.readAllLines( Paths.get( logDirectory, LauncherLogger.MESSAGE_LOG_FILENAME ) );
+			lines = Files.readAllLines( Paths.get( logDirectory, LauncherLogger.MESSAGE_LOG_FILENAME + ".1" ) );
 		}
 		catch( IOException ioe )
 		{

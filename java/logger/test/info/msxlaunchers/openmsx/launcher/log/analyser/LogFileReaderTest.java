@@ -52,7 +52,7 @@ public class LogFileReaderTest
 	public void givenCurrentAndRotatedLogFiles_whenRead_thenReturnAllLines() throws IOException
 	{
 		populateLogFile( "message.log.0", "current log line");
-		populateLogFile( "message.log", "rotated log line");
+		populateLogFile( "message.log.1", "rotated log line");
 
 		LogFileReader logFileReader = new LogFileReader( tmpFolder.getRoot().toString() );
 
