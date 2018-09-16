@@ -26,6 +26,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplay
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -126,13 +127,12 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		}
 
 		JPanel contentPanel = new JPanel();
-		setBounds(100, 100, 527, 640);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		JPanel directoriesPanel = new JPanel();
 		directoriesPanel.setBorder(BorderFactory.createTitledBorder(messages.get("DIRECTORIES")));
-		
+
 		JPanel databaseOptionsPanel = new JPanel();
 		databaseOptionsPanel.setBorder(BorderFactory.createTitledBorder(messages.get("DATABASE_OPTIONS")));
 		
@@ -163,67 +163,51 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(mediumSearchPanel, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(machinePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+					.addComponent(machinePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		
-		searchROMCheckBox = new JCheckBox(messages.get("ROM"), true);
-		searchROMCheckBox.addActionListener(this);
-
-		searchDiskCheckBox = new JCheckBox(messages.get("DISK"), true);
-		searchDiskCheckBox.addActionListener(this);
-
-		searchTapeCheckBox = new JCheckBox(messages.get("TAPE"), true);
-		searchTapeCheckBox.addActionListener(this);
-
-		searchLaserdiscCheckBox = new JCheckBox(messages.get("LASERDISC"), true);
-		searchLaserdiscCheckBox.addActionListener(this);
-
-		GroupLayout gl_panel_3 = new GroupLayout(mediumSearchPanel);
-		gl_panel_3.setHorizontalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addGap(87)
-					.addComponent(searchROMCheckBox)
-					.addGap(22)
-					.addComponent(searchDiskCheckBox)
-					.addGap(22)
-					.addComponent(searchTapeCheckBox)
-					.addGap(22)
-					.addComponent(searchLaserdiscCheckBox)
-					.addContainerGap(128, Short.MAX_VALUE))
-		);
-		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap(15, Short.MAX_VALUE)
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
-						.addComponent(searchROMCheckBox)
-						.addComponent(searchDiskCheckBox)
-						.addComponent(searchTapeCheckBox)
-						.addComponent(searchLaserdiscCheckBox))
-					.addContainerGap())
-		);
-		mediumSearchPanel.setLayout(gl_panel_3);
+		//Directories
+		directoriesListModel = new DefaultListModel<>();
+		directoriesList = new JList<>(directoriesListModel);
+		addDirectoryButton = new JButton(messages.get("ADD"));
+		addDirectoryButton.addActionListener(this);
+		removeDirectoryButton = new JButton(messages.get("REMOVE"));
+		removeDirectoryButton.addActionListener(this);
 		
-		machinesComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(machines));
-		GroupLayout gl_panel_4 = new GroupLayout(machinePanel);
-		gl_panel_4.setHorizontalGroup(
-			gl_panel_4.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_4.createSequentialGroup()
-					.addGap(93)
-					.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(127, Short.MAX_VALUE))
+		searchSubdirectoriesCheckBox = new JCheckBox(messages.get("SEARCH_SUB_DIRECTORIES"));
+		searchSubdirectoriesCheckBox.setSelected(true);
+		GroupLayout gl_panel = new GroupLayout(directoriesPanel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(85)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(searchSubdirectoriesCheckBox)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(directoriesList, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(addDirectoryButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(removeDirectoryButton, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))))
+					.addContainerGap(28, Short.MAX_VALUE))
 		);
-		gl_panel_4.setVerticalGroup(
-			gl_panel_4.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_4.createSequentialGroup()
-					.addContainerGap(5, Short.MAX_VALUE)
-					.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(3)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(directoriesList, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(addDirectoryButton)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(removeDirectoryButton)))
+					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+					.addComponent(searchSubdirectoriesCheckBox))
 		);
-		machinePanel.setLayout(gl_panel_4);
-		
+		directoriesPanel.setLayout(gl_panel);
+
+		//Database options
 		addModeLabel = new JLabel(messages.get("ADD_MODE"));
 		
 		JLabel lblProfileNameIn = new JLabel(messages.get("PROFILE_NAME"));
@@ -238,16 +222,16 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		buttonGroup.add(existingDatabaseRadioButton);
 		buttonGroup.add(newDatabaseRadioButton);
 
-		existingDatabasesComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(databases));
+		existingDatabasesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(databases));
 
 		newDatabaseTextField = new JTextField();
 		newDatabaseTextField.setColumns(10);
 
-		String addModes[] = {messages.get("APPEND_TO_DATABASE"), messages.get("OVERWRITE_DATABASE")};
-		addModesComboBox = new JComboBox<String>(addModes);
+		String[] addModes = {messages.get("APPEND_TO_DATABASE"), messages.get("OVERWRITE_DATABASE")};
+		addModesComboBox = new JComboBox<>(addModes);
 
-		String profileNames[] = {messages.get("USE_FILENAME"), messages.get("USE_COMMON_NAME")};
-		profileNamesComboBox = new JComboBox<String>(profileNames);
+		String[] profileNames = {messages.get("USE_FILENAME"), messages.get("USE_COMMON_NAME")};
+		profileNamesComboBox = new JComboBox<>(profileNames);
 
 		backupDatabaseCheckBox = new JCheckBox(messages.get("BACKUP_EXISTING_DATABASE"));
 
@@ -310,83 +294,87 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		);
 		databaseOptionsPanel.setLayout(gl_panel_2);
 
-		directoriesListModel = new DefaultListModel<Object>();
-		directoriesList = new JList<Object>(directoriesListModel);
-		addDirectoryButton = new JButton(messages.get("ADD"));
-		addDirectoryButton.addActionListener(this);
-		removeDirectoryButton = new JButton(messages.get("REMOVE"));
-		removeDirectoryButton.addActionListener(this);
-		
-		searchSubdirectoriesCheckBox = new JCheckBox(messages.get("SEARCH_SUB_DIRECTORIES"));
-		searchSubdirectoriesCheckBox.setSelected(true);
-		GroupLayout gl_panel = new GroupLayout(directoriesPanel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(85)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(searchSubdirectoriesCheckBox)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(directoriesList, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(addDirectoryButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(removeDirectoryButton, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))))
-					.addContainerGap(28, Short.MAX_VALUE))
+		//Media search
+		searchROMCheckBox = new JCheckBox(messages.get("ROM"), true);
+		searchROMCheckBox.addActionListener(this);
+
+		searchDiskCheckBox = new JCheckBox(messages.get("DISK"), true);
+		searchDiskCheckBox.addActionListener(this);
+
+		searchTapeCheckBox = new JCheckBox(messages.get("TAPE"), true);
+		searchTapeCheckBox.addActionListener(this);
+
+		searchLaserdiscCheckBox = new JCheckBox(messages.get("LASERDISC"), true);
+		searchLaserdiscCheckBox.addActionListener(this);
+
+		GroupLayout gl_panel_3 = new GroupLayout(mediumSearchPanel);
+		gl_panel_3.setHorizontalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addGap(87)
+					.addComponent(searchROMCheckBox)
+					.addGap(22)
+					.addComponent(searchDiskCheckBox)
+					.addGap(22)
+					.addComponent(searchTapeCheckBox)
+					.addGap(22)
+					.addComponent(searchLaserdiscCheckBox)
+					.addContainerGap(128, Short.MAX_VALUE))
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(3)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(directoriesList, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(addDirectoryButton)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(removeDirectoryButton)))
-					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-					.addComponent(searchSubdirectoriesCheckBox))
+		gl_panel_3.setVerticalGroup(
+			gl_panel_3.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addContainerGap(15, Short.MAX_VALUE)
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(searchROMCheckBox)
+						.addComponent(searchDiskCheckBox)
+						.addComponent(searchTapeCheckBox)
+						.addComponent(searchLaserdiscCheckBox))
+					.addContainerGap())
 		);
-		directoriesPanel.setLayout(gl_panel);
+		mediumSearchPanel.setLayout(gl_panel_3);
+
+		//Machine selection
+		machinesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
+		GroupLayout gl_panel_4 = new GroupLayout(machinePanel);
+		gl_panel_4.setHorizontalGroup(
+			gl_panel_4.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_4.createSequentialGroup()
+					.addGap(93)
+					.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, 261, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(127, Short.MAX_VALUE))
+		);
+		gl_panel_4.setVerticalGroup(
+			gl_panel_4.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_4.createSequentialGroup()
+					.addContainerGap(5, Short.MAX_VALUE)
+					.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		machinePanel.setLayout(gl_panel_4);
+
+		//Buttons
 		JPanel buttonPanel = new JPanel();
 
 		contentPanel.setLayout(gl_contentPanel);
-		{
-			getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-			{
-				okButton = new JButton(messages.get("OK"));
-				okButton.addActionListener(this);
-				okButton.setEnabled(false);
-			}
-			{
-				cancelButton = new JButton(messages.get("CANCEL"));
-				cancelButton.addActionListener(this);
-				getRootPane().setDefaultButton(cancelButton);
-			}
-			GroupLayout gl_buttonPane = new GroupLayout(buttonPanel);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(156)
-						.addComponent(okButton, GroupLayout.PREFERRED_SIZE, MainWindow.BUTTON_DIMENSION.width, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, MainWindow.BUTTON_DIMENSION.width, GroupLayout.PREFERRED_SIZE)
-						.addGap(200))
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.CENTER)
-							.addComponent(okButton)
-							.addComponent(cancelButton))
-							.addGap(5))
-			);
-			buttonPanel.setLayout(gl_buttonPane);
-		}
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 8));
+
+		okButton = new JButton(messages.get("OK"));
+		okButton.addActionListener(this);
+		okButton.setPreferredSize(MainWindow.BUTTON_DIMENSION);
+		okButton.setEnabled(false);
+		buttonPanel.add(okButton);
+
+		cancelButton = new JButton(messages.get("CANCEL"));
+		cancelButton.addActionListener(this);
+		cancelButton.setPreferredSize(MainWindow.BUTTON_DIMENSION);
+		buttonPanel.add(cancelButton);
+		getRootPane().setDefaultButton(cancelButton);
 
 		//decide which radio button is selected first
-		if(databases.size() == 0)
+		if(databases.isEmpty())
 		{
 			newDatabaseRadioButton.setSelected(true);
 			existingDatabaseRadioButton.setEnabled(false);
@@ -432,6 +420,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 			profileNamesComboBox.setRenderer(renderer);
 		}
 
+		pack();
 		setLocationRelativeTo(parent);
 		setVisible(true);
 	}
