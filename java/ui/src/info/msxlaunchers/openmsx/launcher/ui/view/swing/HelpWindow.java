@@ -109,6 +109,8 @@ public class HelpWindow extends JDialog implements ActionListener
 		}
 		aboutMessageTextField.append("http://msxlaunchers.info/");
 		aboutMessageTextField.append("\n\n");
+		aboutMessageTextField.append("JRE Version " + System.getProperty("java.version"));
+		aboutMessageTextField.append("\n\n");
 		aboutMessageTextField.append(messages.get("MESSAGE"));
 		aboutMessageTextField.append("\n\n");
 		aboutMessageTextField.append(messages.get("CREDITS"));
