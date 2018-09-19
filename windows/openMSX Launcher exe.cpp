@@ -4,12 +4,14 @@
  * Author - Sam Elsharif
  *
  * Nov 2017 - accept optional jre location as a command line argument
+ * Sep 2018 - account for Java9+ registry entries
  */
 #include "stdafx.h"
 #include "openMSX Launcher exe.h"
 #include <string>
 
 #define JAVA_REGISTRY_PATH L"SOFTWARE\\JavaSoft\\Java Runtime Environment\\"
+#define JAVA_9_OR_LATER_REGISTRY_PATH L"SOFTWARE\\JavaSoft\\JRE\\"
 #define JAVA_REGISTRY_CURRENT_VERSION L"CurrentVersion"
 #define JAVA_REGISTRY_JAVA_HOME L"JavaHome"
 #define JAVA_EXE L"\\bin\\java.exe"
@@ -79,7 +81,30 @@ BOOL GetJavaPathFromCommandLine(TCHAR *javaVersionPath, LPTSTR lpCmdLine)
 
 /*
 javaVersionPath: pre-allocated buffer that will hold the JRE full path upon return
-Return: True if JRE was found and is version 1.8 or later, FALSE otherwise
+value: first part of the Java path
+Return: True if JavaHome registry entry was found, FALSE otherwise
+*/
+BOOL GetJavaPath(TCHAR *javaVersionPath, TCHAR *value, TCHAR *registryPath)
+{
+	//get the Java JRE location based on the version
+	_tcscpy_s(javaVersionPath, BUFFER_SIZE, registryPath);
+	_tcscat_s(javaVersionPath, BUFFER_SIZE, value);
+
+	//get the JRE path
+	if (!GetRegistryValue(javaVersionPath, JAVA_REGISTRY_JAVA_HOME, value))
+	{
+		return FALSE;
+	}
+
+	_tcscpy_s(javaVersionPath, BUFFER_SIZE, value);
+	_tcscat_s(javaVersionPath, BUFFER_SIZE, JAVA_EXE);
+
+	return TRUE;
+}
+
+/*
+javaVersionPath: pre-allocated buffer that will hold the JRE full path upon return
+Return: True if JRE was found and is version 1.8, FALSE otherwise
 */
 BOOL GetJavaPathFromRegistry(TCHAR *javaVersionPath)
 {
@@ -99,20 +124,23 @@ BOOL GetJavaPathFromRegistry(TCHAR *javaVersionPath)
 		return FALSE;
 	}
 
-	//get the Java JRE location based on the version
-	_tcscpy_s(javaVersionPath, BUFFER_SIZE, JAVA_REGISTRY_PATH);
-	_tcscat_s(javaVersionPath, BUFFER_SIZE, value);
+	return GetJavaPath(javaVersionPath, value, JAVA_REGISTRY_PATH);
+}
 
-	//get the JRE path
-	if (!GetRegistryValue(javaVersionPath, JAVA_REGISTRY_JAVA_HOME, value))
+/*
+javaVersionPath: pre-allocated buffer that will hold the JRE full path upon return
+Return: True if JRE was found and is version 9 or later, FALSE otherwise
+*/
+BOOL GetJava9orLaterPathFromRegistry(TCHAR *javaVersionPath)
+{
+	//get the Java version from the registry
+	TCHAR  value[BUFFER_SIZE];
+	if (!GetRegistryValue(JAVA_9_OR_LATER_REGISTRY_PATH, JAVA_REGISTRY_CURRENT_VERSION, value))
 	{
 		return FALSE;
 	}
 
-	_tcscpy_s(javaVersionPath, BUFFER_SIZE, value);
-	_tcscat_s(javaVersionPath, BUFFER_SIZE, JAVA_EXE);
-
-	return TRUE;
+	return GetJavaPath(javaVersionPath, value, JAVA_9_OR_LATER_REGISTRY_PATH);
 }
 
 BOOL StartJavaProcess(const TCHAR* javaFullPath)
@@ -299,7 +327,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 		//get the JRE full path
 		TCHAR javaVersionPath[BUFFER_SIZE];
-		if (!GetJavaPathFromCommandLine(javaVersionPath, lpCmdLine) && !GetJavaPathFromRegistry(javaVersionPath))
+		if (!GetJavaPathFromCommandLine(javaVersionPath, lpCmdLine) &&
+			!GetJava9orLaterPathFromRegistry(javaVersionPath) &&
+			!GetJavaPathFromRegistry(javaVersionPath))
 		{
 			MessageBox(0, JAVA_NOT_INSTALLED_MSG, ERROR_TITLE, MB_ICONERROR | MB_OK);
 		}
