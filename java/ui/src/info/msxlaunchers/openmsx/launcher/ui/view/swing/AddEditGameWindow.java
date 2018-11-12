@@ -346,7 +346,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		}
 		else if(source == browseHarddiskButton)
 		{
-			WindowUtils.browseFile(this, harddiskTextField, messages.get("HARDDISK"), FileTypeUtils.getDiskExtensions(), true);
+			WindowUtils.browseFile(this, harddiskTextField, messages.get("HARDDISK"), FileTypeUtils.getHarddiskExtensions(), true);
 		}
 		else if(source == browseLaserdiscButton)
 		{

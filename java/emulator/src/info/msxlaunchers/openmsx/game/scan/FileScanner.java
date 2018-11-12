@@ -236,6 +236,7 @@ final class FileScanner implements Scanner
 		if( FileTypeUtils.isROM( file ) ||
 				FileTypeUtils.isDisk( file ) ||
 				FileTypeUtils.isTape( file ) ||
+				FileTypeUtils.isHarddisk( file ) ||
 				FileTypeUtils.isLaserdisc( file ) )
 		{
 			String sha1Code = HashUtils.getSHA1Code( file );
@@ -269,6 +270,9 @@ final class FileScanner implements Scanner
 			}
 			else if( searchDisk && FileTypeUtils.isDisk( file ) )
 			{
+				//the following will check whether this file is a regular disk or harddisk based on its size.
+				//the disk extensions contain more than just dsk, even though dsk is the only one that can be a harddisk.
+				//it's ok, we'll leave this logic the way it is. Later in this method we'll check for harddisks
 				if( fileSize <= FileTypeUtils.MAX_DISK_FILE_SIZE )
 				{
 					added = addToProcessedGames( getGameName( file, sha1Code ),
@@ -306,6 +310,19 @@ final class FileScanner implements Scanner
 						sha1Code,
 						fileSize );
 			}
+			else if( searchDisk && FileTypeUtils.isHarddisk( file ) )
+			{
+				//we're combining disks and harddisks in the searchDisk flag
+				added = addToProcessedGames( getGameName( file, sha1Code ),
+						null,
+						null,
+						fileNameToUse,
+						EXTENSION_ROM_IDE,
+						null,
+						null,
+						sha1Code,
+						fileSize );
+			}
 			else if( searchLaserdisc && FileTypeUtils.isLaserdisc( file ) )
 			{
 				added = addToProcessedGames( getGameName( file, sha1Code ),
@@ -322,7 +339,7 @@ final class FileScanner implements Scanner
 
 		return added;
     }
-	
+
 	private int processZipFile( File zipFile, File relativePath )
 	{
 		int added = 0;

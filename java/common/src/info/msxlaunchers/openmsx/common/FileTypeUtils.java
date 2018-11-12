@@ -31,6 +31,7 @@ public final class FileTypeUtils
 	private static final Set<String> romExtensions;
 	private static final Set<String> diskExtensions;
 	private static final Set<String> tapeExtensions;
+	private static final Set<String> harddiskExtensions;
 	private static final Set<String> laserdiscExtensions;
 	private static final Set<String> zipExtensions;
 	private static final Set<String> xmlExtension;
@@ -59,6 +60,12 @@ public final class FileTypeUtils
 		tapeExtensionsTemp.add( "wav" );
 
 		tapeExtensions = Collections.unmodifiableSet( tapeExtensionsTemp );
+
+		final Set<String> harddiskExtensionsTemp = new HashSet<>();
+		harddiskExtensionsTemp.add( "dsk" );
+		harddiskExtensionsTemp.add( "hdd" );
+
+		harddiskExtensions = Collections.unmodifiableSet( harddiskExtensionsTemp );
 
 		final Set<String> laserdiscExtensionsTemp = new HashSet<>();
 		laserdiscExtensionsTemp.add( "ogv" );
@@ -115,6 +122,17 @@ public final class FileTypeUtils
 		return isType( file, tapeExtensions );
 	}
 	
+	/**
+	 * Returns if the given file is a harddisk based on its extension
+	 * 
+	 * @param file File
+	 * @return true if file is a harddisk, false otherwise
+	 */
+	public static boolean isHarddisk( File file )
+	{
+		return isType( file, harddiskExtensions );
+	}
+
 	/**
 	 * Returns if the given file is a laserdisc based on its extension
 	 * 
@@ -243,6 +261,16 @@ public final class FileTypeUtils
 	public static Set<String> getTapeExtensions()
 	{
 		return tapeExtensions;
+	}
+
+	/**
+	 * Returns set containing harddisk file extensions supported by openMSX
+	 * 
+	 * @return Non-modifiable set containing harddisk file extensions
+	 */
+	public static Set<String> getHarddiskExtensions()
+	{
+		return harddiskExtensions;
 	}
 
 	/**

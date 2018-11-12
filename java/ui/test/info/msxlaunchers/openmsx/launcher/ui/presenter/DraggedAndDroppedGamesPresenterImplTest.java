@@ -105,6 +105,7 @@ public class DraggedAndDroppedGamesPresenterImplTest
 		allKindsOfFiles.addAll( FileTypeUtils.getROMExtensions().stream().map( ext -> new File( tmpFolder.getRoot(), "file." + ext ) ).collect( Collectors.toSet() ) );
 		allKindsOfFiles.addAll( FileTypeUtils.getDiskExtensions().stream().map( ext -> new File( tmpFolder.getRoot(), "file." + ext ) ).collect( Collectors.toSet() ) );
 		allKindsOfFiles.addAll( FileTypeUtils.getTapeExtensions().stream().map( ext -> new File( tmpFolder.getRoot(), "file." + ext ) ).collect( Collectors.toSet() ) );
+		allKindsOfFiles.addAll( FileTypeUtils.getHarddiskExtensions().stream().map( ext -> new File( tmpFolder.getRoot(), "file." + ext ) ).collect( Collectors.toSet() ) );
 		allKindsOfFiles.addAll( FileTypeUtils.getLaserdiscExtensions().stream().map( ext -> new File( tmpFolder.getRoot(), "file." + ext ) ).collect( Collectors.toSet() ) );
 		allKindsOfFiles.addAll( FileTypeUtils.getZIPExtensions().stream().map( ext -> new File( tmpFolder.getRoot(), "file." + ext ) ).collect( Collectors.toSet() ) );
 		allKindsOfFiles.add( tmpFolder.newFolder() );

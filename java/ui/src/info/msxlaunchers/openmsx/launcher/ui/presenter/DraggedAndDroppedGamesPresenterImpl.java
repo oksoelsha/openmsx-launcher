@@ -155,7 +155,12 @@ final class DraggedAndDroppedGamesPresenterImpl implements DraggedAndDroppedGame
 
 	private boolean isDirectoryOrPotentialMSXFile( File file )
 	{
-		return file.isDirectory() || FileTypeUtils.isROM( file ) || FileTypeUtils.isDisk( file ) ||
-				FileTypeUtils.isTape( file ) || FileTypeUtils.isLaserdisc( file ) || FileTypeUtils.isZIP( file );
+		return file.isDirectory() ||
+				FileTypeUtils.isROM( file ) ||
+				FileTypeUtils.isDisk( file ) ||
+				FileTypeUtils.isTape( file ) ||
+				FileTypeUtils.isHarddisk( file ) ||
+				FileTypeUtils.isLaserdisc( file ) ||
+				FileTypeUtils.isZIP( file );
 	}
 }

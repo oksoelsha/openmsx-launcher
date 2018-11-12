@@ -13,43 +13,46 @@ import static org.junit.Assert.assertTrue;
 
 public class FileTypeUtilsTest
 {
-	private String rom = getClass().getResource("files/rom.rom").getFile();
-	private String romUpper = getClass().getResource("files/romUpper.ROM").getFile();
-	private String ri = getClass().getResource("files/ri.ri").getFile();
-	private String riUpper = getClass().getResource("files/riUpper.RI").getFile();
-	private String col = getClass().getResource("files/col.col").getFile();
-	private String colUpper = getClass().getResource("files/colUpper.COL").getFile();
+	private String rom = "rom.rom";
+	private String romUpper = "romUpper.ROM";
+	private String ri = "ri.ri";
+	private String riUpper = "riUpper.RI";
+	private String col = "col.col";
+	private String colUpper = "colUpper.COL";
 
-	private String di1 = getClass().getResource("files/di1.di1").getFile();
-	private String di1Upper = getClass().getResource("files/di1Upper.DI1").getFile();
-	private String di2 = getClass().getResource("files/di2.di2").getFile();
-	private String di2Upper = getClass().getResource("files/di2Upper.DI2").getFile();
-	private String dmk = getClass().getResource("files/dmk.dmk").getFile();
-	private String dmkUpper = getClass().getResource("files/dmkUpper.DMK").getFile();
-	private String dsk = getClass().getResource("files/dsk.dsk").getFile();
-	private String dskUpper = getClass().getResource("files/dskUpper.DSK").getFile();
-	private String xsa = getClass().getResource("files/xsa.xsa").getFile();
-	private String xsaUpper = getClass().getResource("files/xsaUpper.XSA").getFile();
+	private String di1 = "di1.di1";
+	private String di1Upper = "di1Upper.DI1";
+	private String di2 = "di2.di2";
+	private String di2Upper = "di2Upper.DI2";
+	private String dmk = "dmk.dmk";
+	private String dmkUpper = "dmkUpper.DMK";
+	private String dsk = "dsk.dsk";
+	private String dskUpper = "dskUpper.DSK";
+	private String xsa = "files/xsa.xsa";
+	private String xsaUpper = "xsaUpper.XSA";
 
-	private String tapeCas = getClass().getResource("files/tapeCas.cas").getFile();
-	private String tapeCasUpper = getClass().getResource("files/tapeCasUpper.CAS").getFile();
-	private String tapeWav = getClass().getResource("files/tapeWav.wav").getFile();
-	private String tapeWavUpper = getClass().getResource("files/tapeWavUpper.WAV").getFile();
+	private String tapeCas = "tapeCas.cas";
+	private String tapeCasUpper = "tapeCasUpper.CAS";
+	private String tapeWav = "tapeWav.wav";
+	private String tapeWavUpper = "tapeWavUpper.WAV";
 
-	private String laserdisc = getClass().getResource("files/laserdisc.ogv").getFile();
-	private String laserdiscUpper = getClass().getResource("files/laserdiscUpper.OGV").getFile();
+	private String harddisk = "hdd.hdd";
+	private String harddiskUpper = "hdd.HDD";
 
-	private String zip = getClass().getResource("files/zip.zip").getFile();
-	private String zipUpper = getClass().getResource("files/zipUpper.ZIP").getFile();
-	private String gz = getClass().getResource("files/gz.gz").getFile();
-	private String gzUpper = getClass().getResource("files/gzUpper.GZ").getFile();
+	private String laserdisc = "laserdisc.ogv";
+	private String laserdiscUpper = "laserdiscUpper.OGV";
 
-	private String xml = getClass().getResource("files/xml.Xml").getFile();
+	private String zip = "zip.zip";
+	private String zipUpper = "zipUpper.ZIP";
+	private String gz = "gz.gz";
+	private String gzUpper = "gzUpper.GZ";
 
-	private String ips = getClass().getResource("files/ips.IPS").getFile();
-	private String ups = getClass().getResource("files/ups.ups").getFile();
+	private String xml = "xml.Xml";
 
-	private String non = getClass().getResource("files/non.non").getFile();
+	private String ips = "ips.IPS";
+	private String ups = "ups.ups";
+
+	private String non = "non.non";
 
 	@Test
 	public void test_whenInstantiateClass_thenGetAnInstance()
@@ -62,7 +65,7 @@ public class FileTypeUtilsTest
 	public void testIsROM()
 	{
 		File file;
-		
+
 		file = null;
 		assertFalse( FileTypeUtils.isROM( file ) );
 
@@ -90,6 +93,9 @@ public class FileTypeUtilsTest
 		file = new File( dsk );
 		assertFalse( FileTypeUtils.isROM( file ) );
 
+		file = new File( harddisk );
+		assertFalse( FileTypeUtils.isROM( file ) );
+
 		file = new File( xml );
 		assertFalse( FileTypeUtils.isROM( file ) );
 
@@ -101,7 +107,7 @@ public class FileTypeUtilsTest
 	public void testIsDisk()
 	{
 		File file;
-		
+
 		file = null;
 		assertFalse( FileTypeUtils.isDisk( file ) );
 
@@ -141,6 +147,9 @@ public class FileTypeUtilsTest
 		file = new File( rom );
 		assertFalse( FileTypeUtils.isDisk( file ) );
 
+		file = new File( harddiskUpper );
+		assertFalse( FileTypeUtils.isDisk( file ) );
+
 		file = new File( xml );
 		assertFalse( FileTypeUtils.isDisk( file ) );
 
@@ -152,7 +161,7 @@ public class FileTypeUtilsTest
 	public void testIsTape()
 	{
 		File file;
-		
+
 		file = null;
 		assertFalse( FileTypeUtils.isTape( file ) );
 
@@ -182,10 +191,40 @@ public class FileTypeUtilsTest
 	}
 
 	@Test
+	public void testIsHarddisk()
+	{
+		File file;
+
+		file = null;
+		assertFalse( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( "/" );
+		assertFalse( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( harddisk );
+		assertTrue( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( harddiskUpper );
+		assertTrue( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( dsk );
+		assertTrue( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( dskUpper );
+		assertTrue( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( xml );
+		assertFalse( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( ips );
+		assertFalse( FileTypeUtils.isHarddisk( file ) );
+	}
+
+	@Test
 	public void testIsLaserdisc()
 	{
 		File file;
-		
+
 		file = null;
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 
@@ -201,6 +240,9 @@ public class FileTypeUtilsTest
 		file = new File( tapeWavUpper );
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 
+		file = new File( harddisk );
+		assertFalse( FileTypeUtils.isLaserdisc( file ) );
+
 		file = new File( xml );
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 
@@ -212,7 +254,7 @@ public class FileTypeUtilsTest
 	public void testIsZIP()
 	{
 		File file;
-		
+
 		file = null;
 		assertFalse( FileTypeUtils.isZIP( file ) );
 
@@ -245,7 +287,7 @@ public class FileTypeUtilsTest
 	public void testIsXML()
 	{
 		File file;
-		
+
 		file = null;
 		assertFalse( FileTypeUtils.isXML( file ) );
 
@@ -269,7 +311,7 @@ public class FileTypeUtilsTest
 	public void testIsPatch()
 	{
 		File file;
-		
+
 		file = null;
 		assertFalse( FileTypeUtils.isPatch( file ) );
 
@@ -283,6 +325,9 @@ public class FileTypeUtilsTest
 		assertTrue( FileTypeUtils.isPatch( file ) );
 
 		file = new File( tapeCasUpper );
+		assertFalse( FileTypeUtils.isPatch( file ) );
+
+		file = new File( harddiskUpper );
 		assertFalse( FileTypeUtils.isPatch( file ) );
 
 		file = new File( zip );
@@ -300,11 +345,12 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isROM( file ) );
 		assertFalse( FileTypeUtils.isDisk( file ) );
 		assertFalse( FileTypeUtils.isTape( file ) );
+		assertFalse( FileTypeUtils.isHarddisk( file ) );
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 		assertFalse( FileTypeUtils.isZIP( file ) );
 		assertFalse( FileTypeUtils.isXML( file ) );
 		assertFalse( FileTypeUtils.isPatch( file ) );
-	}	
+	}
 
 	@Test
 	public void testGetMainFile()
@@ -412,6 +458,27 @@ public class FileTypeUtilsTest
 		Set<String> tapeExtensions = FileTypeUtils.getTapeExtensions();
 
 		tapeExtensions.add( "cannot-add" );
+	}
+
+	@Test
+	public void testGetHarddiskExtensions()
+	{
+		Set<String> harddiskExtensions = FileTypeUtils.getHarddiskExtensions();
+
+		//there are currently two harddisk extensions supported
+		assertEquals( 2, harddiskExtensions.size() );
+
+		//check the harddisk extensions
+		assertTrue( harddiskExtensions.contains( "dsk" ) );
+		assertTrue( harddiskExtensions.contains( "hdd" ) );
+	}
+
+	@Test( expected = UnsupportedOperationException.class )
+	public void testUnmodifiableGetHarddiskExtensions()
+	{
+		Set<String> harddiskExtensions = FileTypeUtils.getHarddiskExtensions();
+
+		harddiskExtensions.add( "cannot-add" );
 	}
 
 	@Test
