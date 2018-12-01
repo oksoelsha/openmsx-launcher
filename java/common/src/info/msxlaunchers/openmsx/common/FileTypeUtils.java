@@ -16,76 +16,27 @@
 package info.msxlaunchers.openmsx.common;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * Utility class that contains static methods that deal with <code>Game</code> file fields 
+ * Utility class that contains static methods that handle <code>Game</code> file fields 
  * 
  * @since v1.0
  * @author Sam Elsharif
  */
 public final class FileTypeUtils
 {
-	private static final Set<String> romExtensions;
-	private static final Set<String> diskExtensions;
-	private static final Set<String> tapeExtensions;
-	private static final Set<String> harddiskExtensions;
-	private static final Set<String> laserdiscExtensions;
-	private static final Set<String> zipExtensions;
-	private static final Set<String> xmlExtension;
-	private static final Set<String> patchExtensions;
-
-	static
-	{
-		final Set<String> romExtensionsTemp = new HashSet<>();
-		romExtensionsTemp.add( "ri" );
-		romExtensionsTemp.add( "rom" );
-		romExtensionsTemp.add( "col" );
-
-		romExtensions = Collections.unmodifiableSet( romExtensionsTemp );
-
-		final Set<String> diskExtensionsTemp = new HashSet<>();
-		diskExtensionsTemp.add( "di1" );
-		diskExtensionsTemp.add( "di2" );
-		diskExtensionsTemp.add( "dmk" );
-		diskExtensionsTemp.add( "dsk" );
-		diskExtensionsTemp.add( "xsa" );
-
-		diskExtensions = Collections.unmodifiableSet( diskExtensionsTemp );
-
-		final Set<String> tapeExtensionsTemp = new HashSet<>();
-		tapeExtensionsTemp.add( "cas" );
-		tapeExtensionsTemp.add( "wav" );
-
-		tapeExtensions = Collections.unmodifiableSet( tapeExtensionsTemp );
-
-		final Set<String> harddiskExtensionsTemp = new HashSet<>();
-		harddiskExtensionsTemp.add( "dsk" );
-		harddiskExtensionsTemp.add( "hdd" );
-
-		harddiskExtensions = Collections.unmodifiableSet( harddiskExtensionsTemp );
-
-		final Set<String> laserdiscExtensionsTemp = new HashSet<>();
-		laserdiscExtensionsTemp.add( "ogv" );
-
-		laserdiscExtensions = Collections.unmodifiableSet( laserdiscExtensionsTemp );
-
-		final Set<String> zipExtensionsTemp = new HashSet<>();
-		zipExtensionsTemp.add( "zip" );
-		zipExtensionsTemp.add( "gz" );
-
-		zipExtensions = Collections.unmodifiableSet( zipExtensionsTemp );
-
-		xmlExtension = Collections.unmodifiableSet( Collections.singleton( "xml" ) );
-
-		final Set<String> patchExtensionsTemp = new HashSet<>();
-		patchExtensionsTemp.add( "ips" );
-		patchExtensionsTemp.add( "ups" );
-
-		patchExtensions = Collections.unmodifiableSet( patchExtensionsTemp );
-	}
+	private static final Set<String> romExtensions = getUnmodifiableSet( "ri", "rom", "col" );
+	private static final Set<String> diskExtensions = getUnmodifiableSet( "di1", "di2", "dmk", "dsk", "xsa" );
+	private static final Set<String> tapeExtensions = getUnmodifiableSet( "cas", "wav" );
+	private static final Set<String> harddiskExtensions = getUnmodifiableSet( "dsk", "hdd" );
+	private static final Set<String> laserdiscExtensions = getUnmodifiableSet( "ogv" );
+	private static final Set<String> zipExtensions = getUnmodifiableSet( "zip", "gz" );
+	private static final Set<String> xmlExtension = getUnmodifiableSet( "xml" );
+	private static final Set<String> patchExtensions = getUnmodifiableSet( "ips", "ups" );
 
 	public static final long MAX_DISK_FILE_SIZE = 737280;
 
@@ -301,6 +252,12 @@ public final class FileTypeUtils
 	public static Set<String> getPatchExtensions()
 	{
 		return patchExtensions;
+	}
+
+	private static Set<String> getUnmodifiableSet( String...extensions )
+	{
+		return Arrays.asList(extensions).stream()
+				.collect( Collectors.collectingAndThen( Collectors.toSet(), Collections::unmodifiableSet ) );
 	}
 
 	private static boolean isType( File file, Set<String> validExtensions )
