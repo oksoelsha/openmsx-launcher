@@ -99,11 +99,13 @@ final class BackupDatabaseAction extends TransactionalDatabaseOperation<Database
 
 			backupNumberStatement.executeUpdate();
 
-			ResultSet generatedKeys = backupNumberStatement.getGeneratedKeys();
-			generatedKeys.next();
+			try( ResultSet generatedKeys = backupNumberStatement.getGeneratedKeys() )
+			{
+				generatedKeys.next();
 
-			backupGamesStatement.setLong( 1, generatedKeys.getLong( 1 ) );
-			backupGamesStatement.setLong( 2, databaseId );
+				backupGamesStatement.setLong( 1, generatedKeys.getLong( 1 ) );
+				backupGamesStatement.setLong( 2, databaseId );
+			}
 
 			backupGamesStatement.executeUpdate();
 		}

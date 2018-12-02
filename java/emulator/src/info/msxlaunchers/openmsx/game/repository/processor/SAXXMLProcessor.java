@@ -97,10 +97,9 @@ final class SAXXMLProcessor implements XMLProcessor
 			//shouldn't happen
 		}
 
-		try
+		try( InputStream inputStream = new FileInputStream( xmlFile ) )
 		{
 			SAXParser parser = spfac.newSAXParser();
-			InputStream inputStream = new FileInputStream( xmlFile );
 			Reader reader = new InputStreamReader( inputStream, "UTF-8" );
 			InputSource is = new InputSource( reader );
 			is.setEncoding( "UTF-8" );

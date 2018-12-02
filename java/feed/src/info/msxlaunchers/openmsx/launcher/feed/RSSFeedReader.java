@@ -48,10 +48,10 @@ import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
  */
 final class RSSFeedReader implements FeedReader
 {
-    private final String ITEM = "item";
-    private final String TITLE = "title";
-    private final String LINK = "link";
-    private final String PUB_DATE = "pubDate";
+    private static final String ITEM = "item";
+    private static final String TITLE = "title";
+    private static final String LINK = "link";
+    private static final String PUB_DATE = "pubDate";
 
     RSSFeedReader()
 	{
@@ -96,21 +96,18 @@ final class RSSFeedReader implements FeedReader
 	                        break;
                     }
                 }
-                else if( event.isEndElement() )
+                else if( event.isEndElement() && event.asEndElement().getName().getLocalPart().equals( ITEM ) )
                 {
-                    if( event.asEndElement().getName().getLocalPart().equals( ITEM ) )
-                    {
-                        FeedMessage message = new FeedMessage( title, link, pubdate, siteName, siteUrl );
-                        messages.add( message );
-                        event = eventReader.nextEvent();
-                        continue;
-                    }
+                	FeedMessage message = new FeedMessage( title, link, pubdate, siteName, siteUrl );
+                	messages.add( message );
+                	event = eventReader.nextEvent();
+                	continue;
                 }
             }
         }
         catch( IOException | XMLStreamException e )
         {
-			LauncherLogger.logException( this, e );
+        	LauncherLogger.logException( this, e );
         	throw new IOException( e );
         }
 
@@ -119,27 +116,27 @@ final class RSSFeedReader implements FeedReader
 
 	private void trustAllCertificates()
 	{
-    	TrustManager[] trustAllCerts = new TrustManager[] {
-    		new X509TrustManager()
-    		{
-    			public X509Certificate[] getAcceptedIssuers()
-    			{
-    				return null;
-    			}
+		TrustManager[] trustAllCerts = new TrustManager[] {
+				new X509TrustManager()
+				{
+					public X509Certificate[] getAcceptedIssuers()
+					{
+						return null;
+					}
 
-    			public void checkClientTrusted( X509Certificate[] certs, String authType )
-    			{
-    			}
+					public void checkClientTrusted( X509Certificate[] certs, String authType )
+					{
+					}
 
-    			public void checkServerTrusted( X509Certificate[] certs, String authType )
-    			{
-    			}
-    		}
-    	};
+					public void checkServerTrusted( X509Certificate[] certs, String authType )
+					{
+					}
+				}
+		};
 
     	try
     	{
-    		SSLContext sc = SSLContext.getInstance( "SSL" );
+    		SSLContext sc = SSLContext.getInstance( "TLSv1.2" );
     		sc.init( null, trustAllCerts, new SecureRandom() );
     		HttpsURLConnection.setDefaultSSLSocketFactory( sc.getSocketFactory() );
     	}
