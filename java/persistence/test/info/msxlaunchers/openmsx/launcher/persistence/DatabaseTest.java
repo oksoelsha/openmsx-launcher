@@ -14,7 +14,7 @@ import org.junit.rules.TemporaryFolder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class DatabaseTest
+abstract public class DatabaseTest
 {
 	@ClassRule
 	public static TemporaryFolder tmpFolder = new TemporaryFolder();

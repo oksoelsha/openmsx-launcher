@@ -71,7 +71,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 	private final String currentDatabase;
 	private final Set<String> machines;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 
 	private JList<Object> directoriesList;
 	private DefaultListModel<Object> directoriesListModel;
@@ -109,7 +109,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		this.currentDatabase = currentDatabase;
 		this.machines = machines;
 		this.rightToLeft = rightToLeft;
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 	}
@@ -421,7 +421,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
@@ -527,7 +527,7 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 
 	private void startScan()
 	{
-		FillDatabaseTask fillDatabaseTask = new FillDatabaseTask(new FillDatabaseTaskExecutorImpl(), parent, messages, rightToLeft);
+		FillDatabaseTask fillDatabaseTask = new FillDatabaseTask(new FillDatabaseTaskExecutorImpl(), mainWindow, messages, rightToLeft);
 
 		ProgressWindow progressWindow = new ProgressWindow(fillDatabaseTask, language, rightToLeft, this);
 		progressWindow.showProgress();
@@ -541,12 +541,12 @@ public class FillDatabaseWindow extends JDialog implements ActionListener
 			}
 			catch(LauncherException le)
 			{
-				MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+				MessageBoxUtil.showErrorMessageBox(mainWindow, le, messages, rightToLeft);
 			}
 
 			dispose();
 
-			MessageBoxUtil.showInformationMessageBox(parent, messages.get("TOTAL_ADDED_TO_DATABASE") + ": " + fillDatabaseTask.getResult(),
+			MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("TOTAL_ADDED_TO_DATABASE") + ": " + fillDatabaseTask.getResult(),
 					messages, rightToLeft);
 		}
 	}

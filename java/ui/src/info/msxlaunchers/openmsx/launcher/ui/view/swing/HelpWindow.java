@@ -54,7 +54,7 @@ public class HelpWindow extends JDialog implements ActionListener
 	private final boolean rightToLeft;
 	private final String extraDataVersion;
 	private final String screenshotsVersion;
-	private final Component parent;
+	private final Component mainWindow;
 
 	private JButton okButton;
 
@@ -64,7 +64,7 @@ public class HelpWindow extends JDialog implements ActionListener
 		this.rightToLeft = rightToLeft;
 		this.extraDataVersion = extraDataVersion;
 		this.screenshotsVersion = screenshotsVersion;
-		this.parent = parent;
+		this.mainWindow = parent;
 	}
 
 	public void display()
@@ -177,7 +177,7 @@ public class HelpWindow extends JDialog implements ActionListener
 		contentPanel.setLayout(gl_contentPanel);
 
 		pack();
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 

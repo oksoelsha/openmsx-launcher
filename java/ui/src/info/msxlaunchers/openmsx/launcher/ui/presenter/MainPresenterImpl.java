@@ -1353,7 +1353,7 @@ final class MainPresenterImpl implements MainPresenter
 				existingFilterValue = true;
 			}
 
-			filtersByType.put( type, existingFilterValue & filter.isFiltered( game, repositoryInfoMap == null ? null:repositoryInfoMap.get( game.getSha1Code() ) ) );
+			filtersByType.put( type, existingFilterValue && filter.isFiltered( game, repositoryInfoMap == null ? null:repositoryInfoMap.get( game.getSha1Code() ) ) );
 		}
 
 		//check which filter types have true

@@ -66,13 +66,12 @@ public class DatabaseBackupsWindow extends JDialog implements ActionListener
 	private final DatabaseBackupsPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final Set<DatabaseBackup> backups;
 	private final DateFormat dateFormat;
 
 	private final DatabaseBackupsWindow thisWindow = this;
 
-	private JTable table;
 	private LabeledTableModel tableModel;
 	private JButton backupNowButton;
 	private JButton okButton;
@@ -85,7 +84,7 @@ public class DatabaseBackupsWindow extends JDialog implements ActionListener
 		this.presenter = presenter;
 		this.rightToLeft = rightToLeft;
 
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.backups = backups;
 
@@ -113,7 +112,7 @@ public class DatabaseBackupsWindow extends JDialog implements ActionListener
 		JPanel tablePane = new JPanel();
 
 		tableModel = new LabeledTableModel(backups.size());
-		table = new JTable(tableModel);
+		JTable table = new JTable(tableModel);
 		table.setRowSelectionAllowed(false);
 		table.setTableHeader(null);
 		table.setPreferredScrollableViewportSize(new Dimension(350, 82));
@@ -197,7 +196,7 @@ public class DatabaseBackupsWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 

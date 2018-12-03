@@ -67,11 +67,10 @@ public class DatabaseManagerWindow extends JDialog implements ActionListener
 	private final DatabaseManagerPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 
 	private final DatabaseManagerWindow thisWindow = this;
 
-	private JTable table;
 	private TableModel tableModel;
 	private JButton deleteAllBackupsButton;
 	private JButton okButton;
@@ -86,7 +85,7 @@ public class DatabaseManagerWindow extends JDialog implements ActionListener
 		this.presenter = presenter;
 		this.rightToLeft = rightToLeft;
 
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 	}
 
@@ -111,7 +110,7 @@ public class DatabaseManagerWindow extends JDialog implements ActionListener
 		JPanel tablePane = new JPanel();
 
 		tableModel = new TableModel();
-		table = new JTable(tableModel);
+		JTable table = new JTable(tableModel);
 		table.setRowSelectionAllowed(false);
 		table.setPreferredScrollableViewportSize(new Dimension(450, 82));
 		table.getColumnModel().getColumn(0).setPreferredWidth(280);
@@ -196,19 +195,18 @@ public class DatabaseManagerWindow extends JDialog implements ActionListener
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		informationPane.setLayout(gridBagLayout);
-		GridBagConstraints labelConstraints = new GridBagConstraints();
-		GridBagConstraints valueConstraints = new GridBagConstraints();
 
+		GridBagConstraints valueConstraints = new GridBagConstraints();
 		valueConstraints.fill = GridBagConstraints.HORIZONTAL;
 		valueConstraints.anchor = GridBagConstraints.NORTHWEST;
 		valueConstraints.weightx = 1.0;
 		valueConstraints.gridwidth = GridBagConstraints.REMAINDER;
 		valueConstraints.insets = new Insets(2, 2, 2, 4);
 
-        labelConstraints = (GridBagConstraints)valueConstraints.clone();
-        labelConstraints.weightx = 0.0;
-        labelConstraints.gridwidth = 1;
-        labelConstraints.insets = new Insets(2, 14, 2, 4);
+		GridBagConstraints labelConstraints = (GridBagConstraints)valueConstraints.clone();
+		labelConstraints.weightx = 0.0;
+		labelConstraints.gridwidth = 1;
+		labelConstraints.insets = new Insets(2, 14, 2, 4);
 
         totalDatabasesValue = new JLabel();
         totalGamesValue = new JLabel();
@@ -253,7 +251,7 @@ public class DatabaseManagerWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 

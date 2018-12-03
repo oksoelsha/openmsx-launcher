@@ -17,7 +17,6 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
@@ -39,9 +38,8 @@ public class HyperLink extends JLabel
 	private static final Color DEFAULT_LINK_COLOR = new Color(0, 0, 0x99);
 	private static final Cursor HAND_CURSOR = new Cursor(Cursor.HAND_CURSOR);
 
-	private final Font font = getFont();
 	@SuppressWarnings("rawtypes")
-	private Map attributes = font.getAttributes();
+	private Map attributes = getFont().getAttributes();
 
 	private final boolean noUnderline;
 
@@ -67,12 +65,12 @@ public class HyperLink extends JLabel
 		}
 	}
 
-	public static HyperLinkParam label(String label) { return new HyperLinkParam().label(label); };
-	public static HyperLinkParam address(String address) { return new HyperLinkParam().address(address); };
-	public static HyperLinkParam linkColor(Color linkColor) { return new HyperLinkParam().linkColor(linkColor); };
-	public static HyperLinkParam noUnderline() { return new HyperLinkParam().noUnderline(); };
-	public static HyperLinkParam bold() { return new HyperLinkParam().noUnderline(); };
-	public static HyperLinkParam size(int size) { return new HyperLinkParam().size(size); };
+	public static HyperLinkParam label(String label) { return new HyperLinkParam().label(label); }
+	public static HyperLinkParam address(String address) { return new HyperLinkParam().address(address); }
+	public static HyperLinkParam linkColor(Color linkColor) { return new HyperLinkParam().linkColor(linkColor); }
+	public static HyperLinkParam noUnderline() { return new HyperLinkParam().noUnderline(); }
+	public static HyperLinkParam bold() { return new HyperLinkParam().noUnderline(); }
+	public static HyperLinkParam size(int size) { return new HyperLinkParam().size(size); }
 
 	@SuppressWarnings("unchecked")
 	private HyperLink(HyperLinkParam param)
@@ -83,7 +81,7 @@ public class HyperLink extends JLabel
 		if(param.bold)
 		{
 			attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
-			setFont(font.deriveFont(attributes));
+			setFont(getFont().deriveFont(attributes));
 		}
 
 		if(param.linkColor == null)
@@ -100,7 +98,7 @@ public class HyperLink extends JLabel
 		if(param.size > 0)
 		{
 			attributes.put(TextAttribute.SIZE, param.size);
-			setFont(font.deriveFont(attributes));
+			setFont(getFont().deriveFont(attributes));
 		}
 
 		addMouseListener(new MouseListener() {
@@ -116,7 +114,7 @@ public class HyperLink extends JLabel
 				if(!noUnderline)
 				{
 					attributes.put(TextAttribute.UNDERLINE, -1);
-					setFont(font.deriveFont(attributes));
+					setFont(getFont().deriveFont(attributes));
 				}
 			}
 
@@ -125,7 +123,7 @@ public class HyperLink extends JLabel
 				if(!noUnderline)
 				{
 					attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-					setFont(font.deriveFont(attributes));
+					setFont(getFont().deriveFont(attributes));
 				}
 			}
 

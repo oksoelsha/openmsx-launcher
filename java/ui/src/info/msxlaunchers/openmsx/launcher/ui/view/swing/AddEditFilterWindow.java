@@ -85,7 +85,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 	private final FilterEditingPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final String[] filterItemsToEdit;
 	private final String filterName;
 	private final boolean editMode;
@@ -114,7 +114,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		this.editMode = (filterItemsToEdit != null);
 		this.editSavedFilterMode = editMode && (filterName != null);
 
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 	}
 
@@ -136,7 +136,8 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) { 
+			@Override
+			public void windowClosing(WindowEvent e) {
 				presenter.onRequestClose();
 				dispose();
 			} 
@@ -295,7 +296,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
@@ -356,10 +357,10 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 	private abstract class AbstractLayer implements Layer
 	{
 		@Override
-    	final public FilterType getType()
-    	{
-    		return getClass().getAnnotation(FilterDescriptor.class).type();
-    	}
+		public final FilterType getType()
+		{
+			return getClass().getAnnotation(FilterDescriptor.class).type();
+		}
 
 		@Override
 		public String getValue2()
@@ -492,70 +493,70 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		}
     }
 
-    @FilterDescriptor(type = FilterType.GENRE)
-    private class GenresLayer extends AbstractLayer
-    {
-    	private final GenresLayer instance = this;
-    	private final JComboBox<ComboBoxWithDisplayNameItem> genresComboBox = new JComboBox<ComboBoxWithDisplayNameItem>();
+	@FilterDescriptor(type = FilterType.GENRE)
+	private class GenresLayer extends AbstractLayer
+	{
+		private final GenresLayer instance = this;
+		private final JComboBox<ComboBoxWithDisplayNameItem> genresComboBox = new JComboBox<>();
 
 		@Override
-    	public Component getLayer()
-    	{
-    		JPanel genresPanel = getFilterLayerPanel();
+		public Component getLayer()
+		{
+			JPanel genresPanel = getFilterLayerPanel();
 
-    		Genre[] genres = Genre.values();
-    		Arrays.sort( genres, (g1, g2) -> g1.getDisplayName().compareTo( g2.getDisplayName() ) );
-    		for(int index = 1; index < genres.length; index++)
-    		{
-    			genresComboBox.addItem(new ComboBoxWithDisplayNameItem(genres[index].getDisplayName(), genres[index].toString()));
-    		}
+			Genre[] genres = Genre.values();
+			Arrays.sort( genres, (g1, g2) -> g1.getDisplayName().compareTo( g2.getDisplayName() ) );
+			for(int index = 1; index < genres.length; index++)
+			{
+				genresComboBox.addItem(new ComboBoxWithDisplayNameItem(genres[index].getDisplayName(), genres[index].toString()));
+			}
 
-    		genresPanel.add(genresComboBox);
-    		addButton(instance, genresPanel);
+			genresPanel.add(genresComboBox);
+			addButton(instance, genresPanel);
 
-    		return genresPanel;
-    	}
+			return genresPanel;
+		}
  
-    	@Override
+		@Override
 		public String getValue1()
 		{
 			return ((ComboBoxWithDisplayNameItem)genresComboBox.getSelectedItem()).value;
 		}
-    }
+	}
 
-    @FilterDescriptor(type = FilterType.MEDIUM)
-    private class MediaLayer extends AbstractLayer
-    {
-    	private final MediaLayer instance = this;
-    	private final JComboBox<ComboBoxWithDisplayNameItem> mediaComboBox = getComboBoxWithDisplayValuesLocalizedExternally(Medium.class, false);
+	@FilterDescriptor(type = FilterType.MEDIUM)
+	private class MediaLayer extends AbstractLayer
+	{
+		private final MediaLayer instance = this;
+		private final JComboBox<ComboBoxWithDisplayNameItem> mediaComboBox = getComboBoxWithDisplayValuesLocalizedExternally(Medium.class, false);
 
 		@Override
-    	public Component getLayer()
-    	{
-    		JPanel mediaPanel = getFilterLayerPanel();
+		public Component getLayer()
+		{
+			JPanel mediaPanel = getFilterLayerPanel();
 
-    		mediaPanel.add(mediaComboBox);
-    		addButton(instance, mediaPanel);
+			mediaPanel.add(mediaComboBox);
+			addButton(instance, mediaPanel);
 
-    		return mediaPanel;
-    	}
+			return mediaPanel;
+		}
  
     	@Override
 		public String getValue1()
 		{
 			return ((ComboBoxWithDisplayNameItem)mediaComboBox.getSelectedItem()).value;
 		}
-    }
+	}
 
-    @FilterDescriptor(type = FilterType.SIZE)
-    private class SizesLayer extends AbstractLayer
-    {
-    	private final SizesLayer instance = this;
-		private final JComboBox<ComboBoxWithDisplayNameItem> sizesComboBox = new JComboBox<ComboBoxWithDisplayNameItem>(getSizesModel());
+	@FilterDescriptor(type = FilterType.SIZE)
+	private class SizesLayer extends AbstractLayer
+	{
+		private final SizesLayer instance = this;
+		private final JComboBox<ComboBoxWithDisplayNameItem> sizesComboBox = new JComboBox<>(getSizesModel());
 		private final JComboBox<ComboBoxWithDisplayNameItem> parametersComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterParameter.class, false);
-		private final JComboBox<ComboBoxWithDisplayNameItem> secondSizesComboBox = new JComboBox<ComboBoxWithDisplayNameItem>(getSizesModel());
+		private final JComboBox<ComboBoxWithDisplayNameItem> secondSizesComboBox = new JComboBox<>(getSizesModel());
 
-		private final static String KB = " KB";
+		private static final String KB = " KB";
 
 		SizesLayer()
 		{
@@ -563,100 +564,100 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		}
 
 		@Override
-    	public Component getLayer()
-    	{
-    		JPanel sizesPanel = getFilterLayerPanel();
+		public Component getLayer()
+		{
+			JPanel sizesPanel = getFilterLayerPanel();
 
-    		sizesPanel.add(sizesComboBox);
-    		sizesPanel.add(parametersComboBox);
-    		sizesPanel.add(secondSizesComboBox);
-    		addButton(instance, sizesPanel);
+			sizesPanel.add(sizesComboBox);
+			sizesPanel.add(parametersComboBox);
+			sizesPanel.add(secondSizesComboBox);
+			addButton(instance, sizesPanel);
 
-    		parametersComboBox.addActionListener(new ActionListener() {
+			parametersComboBox.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-		    		String parameter = ((ComboBoxWithDisplayNameItem)parametersComboBox.getSelectedItem()).value;
-		    		if(parameter.equals(FilterParameter.BETWEEN_INCLUSIVE.toString()))
-		    		{
-		    			secondSizesComboBox.setEnabled(true);		
-		    		}
-		    		else
-		    		{
-		    			secondSizesComboBox.setEnabled(false);
-		    		}
+					String parameter = ((ComboBoxWithDisplayNameItem)parametersComboBox.getSelectedItem()).value;
+					if(parameter.equals(FilterParameter.BETWEEN_INCLUSIVE.toString()))
+					{
+						secondSizesComboBox.setEnabled(true);		
+					}
+					else
+					{
+						secondSizesComboBox.setEnabled(false);
+					}
 				}
 			});
 
-    		return sizesPanel;
-    	}
+			return sizesPanel;
+		}
  
-    	private ComboBoxWithDisplayNameItem[] getSizesModel()
-    	{
-    		int[] sizes = { 16, 32, 128, 256, 360, 512, 720, 1024 };
-    		ComboBoxWithDisplayNameItem[] comboBoxItems = new ComboBoxWithDisplayNameItem[sizes.length];
+		private ComboBoxWithDisplayNameItem[] getSizesModel()
+		{
+			int[] sizes = { 16, 32, 128, 256, 360, 512, 720, 1024 };
+			ComboBoxWithDisplayNameItem[] comboBoxItems = new ComboBoxWithDisplayNameItem[sizes.length];
 
-    		for(int index = 0; index < sizes.length; index++)
-    		{
-    			comboBoxItems[index] = new ComboBoxWithDisplayNameItem(sizes[index] + KB, sizes[index] * 1024);
-    		}
+			for(int index = 0; index < sizes.length; index++)
+			{
+				comboBoxItems[index] = new ComboBoxWithDisplayNameItem(sizes[index] + KB, sizes[index] * 1024);
+			}
 
-    		return comboBoxItems;
-    	}
+			return comboBoxItems;
+		}
 
-    	@Override
+		@Override
 		public String getValue1()
 		{
 			return ((ComboBoxWithDisplayNameItem)sizesComboBox.getSelectedItem()).value;
 		}
 
-    	@Override
+		@Override
 		public String getValue2()
 		{
 			return ((ComboBoxWithDisplayNameItem)secondSizesComboBox.getSelectedItem()).value;
 		}
 
-    	@Override
+		@Override
 		public FilterParameter getParameter()
 		{
 			return FilterParameter.valueOf(((ComboBoxWithDisplayNameItem)parametersComboBox.getSelectedItem()).value);
 		}
-    }
+	}
 
-    @FilterDescriptor(type = FilterType.SOUND)
-    private class SoundChipsLayer extends AbstractLayer
-    {
-    	private final SoundChipsLayer instance = this;
-    	private final JComboBox<ComboBoxWithDisplayNameItem> soundChipsComboBox = getComboBoxWithDisplayValuesLocalizedInternally(Sound.class, false);
+	@FilterDescriptor(type = FilterType.SOUND)
+	private class SoundChipsLayer extends AbstractLayer
+	{
+		private final SoundChipsLayer instance = this;
+		private final JComboBox<ComboBoxWithDisplayNameItem> soundChipsComboBox = getComboBoxWithDisplayValuesLocalizedInternally(Sound.class, false);
 
 		@Override
-    	public Component getLayer()
-    	{
-    		JPanel soundChipsPanel = getFilterLayerPanel();
+		public Component getLayer()
+		{
+			JPanel soundChipsPanel = getFilterLayerPanel();
 
-    		soundChipsPanel.add(soundChipsComboBox);
-    		addButton(instance, soundChipsPanel);
+			soundChipsPanel.add(soundChipsComboBox);
+			addButton(instance, soundChipsPanel);
 
-    		return soundChipsPanel;
-    	}
+			return soundChipsPanel;
+		}
  
-    	@Override
+		@Override
 		public String getValue1()
 		{
 			return ((ComboBoxWithDisplayNameItem)soundChipsComboBox.getSelectedItem()).value;
 		}
-    }
+	}
 
-    @FilterDescriptor(type = FilterType.YEAR)
-    private class YearsLayer extends AbstractLayer
-    {
-    	private final YearsLayer instance = this;
-		private final JComboBox<String> yearsComboBox = new JComboBox<String>(getYears());
+	@FilterDescriptor(type = FilterType.YEAR)
+	private class YearsLayer extends AbstractLayer
+	{
+		private final YearsLayer instance = this;
+		private final JComboBox<String> yearsComboBox = new JComboBox<>(getYears());
 		private final JComboBox<ComboBoxWithDisplayNameItem> parametersComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterParameter.class, false);
-		private final JComboBox<String> secondYearsComboBox = new JComboBox<String>(getYears());
+		private final JComboBox<String> secondYearsComboBox = new JComboBox<>(getYears());
 
-		private final static int FIRST_YEAR = 1982;
-		private final static int LAST_YEAR = 2016;
+		private static final int FIRST_YEAR = 1982;
+		private static final int LAST_YEAR = 2018;
 
 		YearsLayer()
 		{
@@ -664,105 +665,105 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		}
 
 		@Override
-    	public Component getLayer()
-    	{
-    		JPanel sizesPanel = getFilterLayerPanel();
+		public Component getLayer()
+		{
+			JPanel sizesPanel = getFilterLayerPanel();
 
-    		sizesPanel.add(yearsComboBox);
-    		sizesPanel.add(parametersComboBox);
-    		sizesPanel.add(secondYearsComboBox);
-    		addButton(instance, sizesPanel);
+			sizesPanel.add(yearsComboBox);
+			sizesPanel.add(parametersComboBox);
+			sizesPanel.add(secondYearsComboBox);
+			addButton(instance, sizesPanel);
 
-    		parametersComboBox.addActionListener(new ActionListener() {
+			parametersComboBox.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-		    		String parameter = ((ComboBoxWithDisplayNameItem)parametersComboBox.getSelectedItem()).value;
-		    		if(parameter.equals(FilterParameter.BETWEEN_INCLUSIVE.toString()))
-		    		{
-		    			secondYearsComboBox.setEnabled(true);		
-		    		}
-		    		else
-		    		{
-		    			secondYearsComboBox.setEnabled(false);
-		    		}
+					String parameter = ((ComboBoxWithDisplayNameItem)parametersComboBox.getSelectedItem()).value;
+					if(parameter.equals(FilterParameter.BETWEEN_INCLUSIVE.toString()))
+					{
+						secondYearsComboBox.setEnabled(true);		
+					}
+					else
+					{
+						secondYearsComboBox.setEnabled(false);
+					}
 				}
 			});
 
-    		return sizesPanel;
-    	}
+			return sizesPanel;
+		}
 
-    	private String[] getYears()
-    	{
-    		String[] years = new String[LAST_YEAR - FIRST_YEAR + 1];
+		private String[] getYears()
+		{
+			String[] years = new String[LAST_YEAR - FIRST_YEAR + 1];
 
-    		int count = 0;
-    		for(int year = FIRST_YEAR; year <= LAST_YEAR; year++)
-    		{
-    			years[count++] = String.valueOf(year);
-    		}
+			int count = 0;
+			for(int year = FIRST_YEAR; year <= LAST_YEAR; year++)
+			{
+				years[count++] = String.valueOf(year);
+			}
 
-    		return years;
-    	}
+			return years;
+		}
 
-    	@Override
+		@Override
 		public String getValue1()
 		{
 			return yearsComboBox.getSelectedItem().toString();
 		}
 
-    	@Override
+		@Override
 		public String getValue2()
 		{
 			return secondYearsComboBox.getSelectedItem().toString();
 		}
 
-    	@Override
+		@Override
 		public FilterParameter getParameter()
 		{
 			return FilterParameter.valueOf(((ComboBoxWithDisplayNameItem)parametersComboBox.getSelectedItem()).value);
 		}
-    }
-
-    private void showCorrespondingSelector(FilterType filterType)
-	{
-		CardLayout cl = (CardLayout)(filterItemsPanel.getLayout());
-        cl.show(filterItemsPanel, filterType.toString());
 	}
 
-    private String getFilterDescriptor(FilterType type, String value1, String value2, FilterParameter parameter)
-    {
-    	String descriptor = null;
+	private void showCorrespondingSelector(FilterType filterType)
+	{
+		CardLayout cl = (CardLayout)(filterItemsPanel.getLayout());
+		cl.show(filterItemsPanel, filterType.toString());
+	}
 
-    	switch(type)
-    	{
-	    	case COMPANY:
-	    		descriptor = value1;
-	    		break;
-	    	case COUNTRY:
-	    	case MEDIUM:
-	    		descriptor = messages.get(value1);
-	    		break;
-	    	case GENERATION:
-	    		descriptor = MSXGeneration.valueOf(value1).getDisplayName();
-	    		break;
-	    	case GENRE:
-	    		descriptor = Genre.valueOf(value1).getDisplayName();
-	    		break;
-	    	case SOUND:
-	    		descriptor = Sound.valueOf(value1).getDisplayName();
-	    		break;
-	    	case SIZE:
-	    		descriptor = getFilterWithParameterDescriptor(Utils.getString(Integer.parseInt(value1)/1024), Utils.getString(Integer.parseInt(value2)/1024),
-	    														parameter, " KB");
-	    		break;
-	    	case YEAR:
-	    		descriptor = getFilterWithParameterDescriptor(value1, value2, parameter, "");
-	    		break;
-    	}
+	private String getFilterDescriptor(FilterType type, String value1, String value2, FilterParameter parameter)
+	{
+		String descriptor = null;
 
-    	return descriptor;
-    }
+		switch(type)
+		{
+			case COMPANY:
+				descriptor = value1;
+				break;
+			case COUNTRY:
+			case MEDIUM:
+				descriptor = messages.get(value1);
+				break;
+			case GENERATION:
+				descriptor = MSXGeneration.valueOf(value1).getDisplayName();
+				break;
+			case GENRE:
+				descriptor = Genre.valueOf(value1).getDisplayName();
+				break;
+			case SOUND:
+				descriptor = Sound.valueOf(value1).getDisplayName();
+				break;
+			case SIZE:
+				descriptor = getFilterWithParameterDescriptor(Utils.getString(Integer.parseInt(value1)/1024), Utils.getString(Integer.parseInt(value2)/1024),
+						parameter, " KB");
+				break;
+			case YEAR:
+				descriptor = getFilterWithParameterDescriptor(value1, value2, parameter, "");
+				break;
+		}
+
+		return descriptor;
+	}
 
     private String getFilterWithParameterDescriptor(String value1, String value2, FilterParameter parameter, String valueUnit)
     {
@@ -808,7 +809,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 			Arrays.sort( comboBoxItems, ( c1, c2 ) -> c1.label.compareToIgnoreCase( c2.label ) );
 		}
 
-		JComboBox<ComboBoxWithDisplayNameItem> comboBox = new JComboBox<ComboBoxWithDisplayNameItem>(comboBoxItems);
+		JComboBox<ComboBoxWithDisplayNameItem> comboBox = new JComboBox<>(comboBoxItems);
 		if(rightToLeft)
 		{
 			DefaultListCellRenderer renderer = new DefaultListCellRenderer();
@@ -833,7 +834,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 			Arrays.sort( comboBoxItems, ( c1, c2 ) -> c1.label.compareToIgnoreCase( c2.label ) );
 		}
 
-		return new JComboBox<ComboBoxWithDisplayNameItem>(comboBoxItems);
+		return new JComboBox<>(comboBoxItems);
 	}
 
 	private static class ComboBoxWithDisplayNameItem
@@ -880,7 +881,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 	//
 	// The following is to keep track of the filter items added to and removed from the table
 	//
-	private List<FilterItemObject> filterItemObjectList = new ArrayList<FilterItemObject>();
+	private List<FilterItemObject> filterItemObjectList = new ArrayList<>();
 
 	private void addRowToTable(String filter)
 	{

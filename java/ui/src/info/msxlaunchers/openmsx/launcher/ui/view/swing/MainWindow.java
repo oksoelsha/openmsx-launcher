@@ -105,7 +105,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private boolean showUpdateAllDatabases;
 
 	private JPanel contentPane;
-	private JMenuBar menuBar;
+	private JMenuBar topMenuBar;
 	private JMenu optionsMenu;
 	private JMenuItem optionsSettings;
 	private JMenu actionsMenu;
@@ -149,8 +149,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JLabel screenshot2Label;
 
 	private JPopupMenu favoritesContextMenu;
-	private JPopupMenu databasesContextMenu;
-	private JPopupMenu searchContextMenu;
 
 	private JPopupMenu filtersContextMenu;
 	private JMenuItem newFilterMenuItem;
@@ -177,7 +175,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private String removeConfirmationMessage = null;
 	private String updateAllDatabasesConfirmationMessage = null;
 
-	private Map<Medium, ImageIcon> mediaIconsMap = new HashMap<Medium,ImageIcon>();
+	private Map<Medium, ImageIcon> mediaIconsMap = new HashMap<>();
 
 	public static final Dimension BUTTON_DIMENSION = new Dimension(109, 28);
 
@@ -189,9 +187,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private static final String SPACES = "                                ";
 	private static final int SEARCH_TEXT_FIELD_COLUMNS = 25;
 
-	private final Dimension NEWS_DATE_DIMENSION = new Dimension(42, 10);
-	private final Color NEWS_SITE_BACKGROUND_COLOR = new Color(50, 200, 50);
-	private final LayoutManager NEWS_PANEL_LAYOUT_MANAGER = new FlowLayout(FlowLayout.LEFT, 5, 1);
+	private static final Dimension NEWS_DATE_DIMENSION = new Dimension(42, 10);
+	private static final Color NEWS_SITE_BACKGROUND_COLOR = new Color(50, 200, 50);
+	private static final LayoutManager NEWS_PANEL_LAYOUT_MANAGER = new FlowLayout(FlowLayout.LEFT, 5, 1);
 
 	private final MainWindow ref = this;
 
@@ -282,91 +280,91 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	private void drawMenu()
 	{
-		menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
+		topMenuBar = new JMenuBar();
+		setJMenuBar(topMenuBar);
 
-        //options menu
+		//options menu
 		optionsMenu = new JMenu();
-		menuBar.add(optionsMenu);
+		topMenuBar.add(optionsMenu);
 
 		optionsSettings = new JMenuItemWithIcon();
 		optionsSettings.setIcon(Icons.SETTINGS.getImageIcon());
 		optionsSettings.addActionListener(event -> presenter.onRequestSettingsScreen());
-        optionsMenu.add(optionsSettings);
+		optionsMenu.add(optionsSettings);
 
-        //actions menu
+		//actions menu
 		actionsMenu = new JMenu();
-		menuBar.add(actionsMenu);
+		topMenuBar.add(actionsMenu);
 
-        actionsCreateEmptyDatabase = new JMenuItemWithIcon();
-        actionsCreateEmptyDatabase.addActionListener(event -> presenter.onRequestCreateEmptyDatabaseScreen());
-        actionsMenu.add(actionsCreateEmptyDatabase);
+		actionsCreateEmptyDatabase = new JMenuItemWithIcon();
+		actionsCreateEmptyDatabase.addActionListener(event -> presenter.onRequestCreateEmptyDatabaseScreen());
+		actionsMenu.add(actionsCreateEmptyDatabase);
 
-        actionsFillDatabase = new JMenuItemWithIcon();
-        actionsFillDatabase.setIcon(Icons.FILL_DB.getImageIcon());
-        actionsFillDatabase.addActionListener(event -> onRequestFillDatabaseScreen());
-        actionsMenu.add(actionsFillDatabase);
+		actionsFillDatabase = new JMenuItemWithIcon();
+		actionsFillDatabase.setIcon(Icons.FILL_DB.getImageIcon());
+		actionsFillDatabase.addActionListener(event -> onRequestFillDatabaseScreen());
+		actionsMenu.add(actionsFillDatabase);
 
-        actionsChangeMachine = new JMenuItemWithIcon();
-        actionsChangeMachine.addActionListener(event -> onRequestChangeMachineScreen());
-        actionsMenu.add(actionsChangeMachine);
+		actionsChangeMachine = new JMenuItemWithIcon();
+		actionsChangeMachine.addActionListener(event -> onRequestChangeMachineScreen());
+		actionsMenu.add(actionsChangeMachine);
 
-        actionsUpdateAllDatabase = new JMenuItemWithIcon();
-        //update all databases only appears if added manually to the settings file
-        if(showUpdateAllDatabases)
-        {
-        	actionsUpdateAllDatabase.addActionListener(event -> onRequestUpdateAllDatabases());
-        	actionsMenu.add(actionsUpdateAllDatabase);
-        }
+		actionsUpdateAllDatabase = new JMenuItemWithIcon();
+		//update all databases only appears if added manually to the settings file
+		if(showUpdateAllDatabases)
+		{
+			actionsUpdateAllDatabase.addActionListener(event -> onRequestUpdateAllDatabases());
+			actionsMenu.add(actionsUpdateAllDatabase);
+		}
 
-        actionsImportBlueMSXLauncherDatabases = new JMenuItemWithIcon();
-        //import blueMSX Launcher databases is only for Windows
-        if(OSUtils.isWindows())
-        {
-	        actionsImportBlueMSXLauncherDatabases.addActionListener(event -> onRequestImportBlueMSXLauncherDatabasesScreen());
-	        actionsMenu.addSeparator();
-	        actionsMenu.add(actionsImportBlueMSXLauncherDatabases);
-        }
+		actionsImportBlueMSXLauncherDatabases = new JMenuItemWithIcon();
+		//import blueMSX Launcher databases is only for Windows
+		if(OSUtils.isWindows())
+		{
+			actionsImportBlueMSXLauncherDatabases.addActionListener(event -> onRequestImportBlueMSXLauncherDatabasesScreen());
+			actionsMenu.addSeparator();
+			actionsMenu.add(actionsImportBlueMSXLauncherDatabases);
+		}
 
-        //tools menu
-        toolsMenu = new JMenu();
-        menuBar.add(toolsMenu);
+		//tools menu
+		toolsMenu = new JMenu();
+		topMenuBar.add(toolsMenu);
 
-        databaseManager = new JMenuItemWithIcon();
-        databaseManager.addActionListener(event -> onRequestDatabaseManagerScreen());
-        toolsMenu.add(databaseManager);
+		databaseManager = new JMenuItemWithIcon();
+		databaseManager.addActionListener(event -> onRequestDatabaseManagerScreen());
+		toolsMenu.add(databaseManager);
 
-        activityViewer = new JMenuItemWithIcon();
-        activityViewer.addActionListener(event -> onRequestActivityViewerScreen());
-        toolsMenu.add(activityViewer);
-        toolsMenu.addSeparator();
+		activityViewer = new JMenuItemWithIcon();
+		activityViewer.addActionListener(event -> onRequestActivityViewerScreen());
+		toolsMenu.add(activityViewer);
+		toolsMenu.addSeparator();
 
-        patcher = new JMenuItemWithIcon();
-        patcher.setIcon(Icons.PATCH.getImageIcon());
-        patcher.addActionListener(event -> onRequestPatcherScreen());
-        toolsMenu.add(patcher);
+		patcher = new JMenuItemWithIcon();
+		patcher.setIcon(Icons.PATCH.getImageIcon());
+		patcher.addActionListener(event -> onRequestPatcherScreen());
+		toolsMenu.add(patcher);
 
-        //help menu
-        helpMenu = new JMenu();
-        menuBar.add(helpMenu);
+		//help menu
+		helpMenu = new JMenu();
+		topMenuBar.add(helpMenu);
 
-        helpFile = new JMenuItemWithIcon();
-        helpFile.setIcon(Icons.HELP.getImageIcon());
-        helpFile.addActionListener(event -> onRequestHelpFile());
-        helpMenu.add(helpFile);
+		helpFile = new JMenuItemWithIcon();
+		helpFile.setIcon(Icons.HELP.getImageIcon());
+		helpFile.addActionListener(event -> onRequestHelpFile());
+		helpMenu.add(helpFile);
 
-        helpCheckForUpdates = new JMenuItemWithIcon();
-        helpCheckForUpdates.addActionListener(event -> onRequestUpdatesChecker());
-        helpMenu.add(helpCheckForUpdates);
-    	helpMenu.addSeparator();
+		helpCheckForUpdates = new JMenuItemWithIcon();
+		helpCheckForUpdates.addActionListener(event -> onRequestUpdatesChecker());
+		helpMenu.add(helpCheckForUpdates);
+		helpMenu.addSeparator();
 
-        helpAbout = new JMenuItemWithIcon();
-        //don't show the About menu item in Mac - this appears in the Mac application menu
-        if(!OSUtils.isMac())
-        {
-            helpAbout.addActionListener(event -> presenter.onRequestAboutScreen());
-        	helpMenu.add(helpAbout);
-        }
+		helpAbout = new JMenuItemWithIcon();
+		//don't show the About menu item in Mac - this appears in the Mac application menu
+		if(!OSUtils.isMac())
+		{
+			helpAbout.addActionListener(event -> presenter.onRequestAboutScreen());
+			helpMenu.add(helpAbout);
+		}
 	}
 
 	public void removeDatabase(String database)
@@ -383,7 +381,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 
 		//disable the database selector button if there were no databases left
-		databaseSelectButton.setEnabled(databases.size() > 0);
+		databaseSelectButton.setEnabled(!databases.isEmpty());
 	}
 
 	public void renameDatabase(String oldDatabase, String newDatabase)
@@ -402,22 +400,22 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		totalLabel = new JCompositeLabel(50, 37, true);
 
 		//disable the database selector button if there were no databases left
-		databaseSelectButton.setEnabled(databases.size() > 0);
+		databaseSelectButton.setEnabled(!databases.isEmpty());
 
 		gameList = new JListWithImagesAndActions(new DefaultListModel<Object>());
 		//need to unregister the gameList component from the ToolTipManager to allow the Ctrl+F1 to work
 		ToolTipManager.sharedInstance().unregisterComponent(gameList);
-		gameList.registerKeyboardAction(event -> moveSelectedGames(), getCtrl_XKeyStroke(), JComponent.WHEN_FOCUSED);
-		gameList.registerKeyboardAction(event -> showPropertiesOfSelectedGame(), getCtrl_F1KeyStroke(), JComponent.WHEN_FOCUSED);
-		gameList.registerKeyboardAction(event -> locateMainFileOfSelectedGame(), getCtrl_Shift_FKeyStroke(), JComponent.WHEN_FOCUSED);
-		gameList.registerKeyboardAction(event -> editGame(), getCtrl_EKeyStroke(), JComponent.WHEN_FOCUSED);
-		gameList.registerKeyboardAction(event -> addSelectedGameToFavorites(), getCtrl_DKeyStroke(), JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> moveSelectedGames(), getCtrlXKeyStroke(), JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> showPropertiesOfSelectedGame(), getCtrlF1KeyStroke(), JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> locateMainFileOfSelectedGame(), getCtrlShiftFKeyStroke(), JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> editGame(), getCtrlEKeyStroke(), JComponent.WHEN_FOCUSED);
+		gameList.registerKeyboardAction(event -> addSelectedGameToFavorites(), getCtrlDKeyStroke(), JComponent.WHEN_FOCUSED);
 		gameList.registerKeyboardAction(event -> viewGameInfo(), getF1KeyStroke(), JComponent.WHEN_FOCUSED);
-		gameList.registerKeyboardAction(event -> processShowSearchScreenRequest(), getCtrl_FKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
-		gameList.registerKeyboardAction(event -> processShowDatabasesMenuRequest(), getCtrl_QKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
-		gameList.registerKeyboardAction(event -> processShowFavoritesMenuRequest(), getCtrl_IKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
-		gameList.registerKeyboardAction(event -> processShowFiltersMenuRequest(), getCtrl_LKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
-		gameList.registerKeyboardAction(event -> applyFilter(null), getCtrl_RKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> processShowSearchScreenRequest(), getCtrlFKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> processShowDatabasesMenuRequest(), getCtrlQKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> processShowFavoritesMenuRequest(), getCtrlIKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> processShowFiltersMenuRequest(), getCtrlLKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> applyFilter(null), getCtrlRKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         JScrollPane gameListScrollBar = new JScrollPane(gameList);
 
@@ -734,7 +732,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 
 		//disable the database selector button if there were no databases left
-		databaseSelectButton.setEnabled(databases.size() > 0);
+		databaseSelectButton.setEnabled(!databases.isEmpty());
 	}
 
 	public void updateGameCount(int total)
@@ -768,6 +766,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
@@ -907,7 +906,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	public void showDatabasesList(Set<String> databases)
 	{
-		databasesContextMenu = new JPopupMenu();
+		JPopupMenu databasesContextMenu = new JPopupMenu();
 		databasesContextMenu.setComponentOrientation(orientation);
 
 		for(String database:databases)
@@ -994,7 +993,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		    filtersContextMenu.add(filterMenuItem);
 		}
 
-		if(filterNames.size() > 0)
+		if(!filterNames.isEmpty())
 		{
 			filtersContextMenu.addSeparator();
 		}
@@ -1351,7 +1350,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 				//delete from the Jlist - start with higher indices then go down
 				//the reason for this is that deleting lower indices first will shift elements up so indices of later items will be different
-		        int selections[] = gameList.getSelectedIndices();
+		        int[] selections = gameList.getSelectedIndices();
 		        for(int index=selections.length-1; index >= 0; index--)
 		        {
 		        	gameList.remove(selections[index]);
@@ -1482,7 +1481,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	private void processShowSearchScreenRequest()
 	{
-		searchContextMenu = new JPopupMenu();
+		JPopupMenu searchContextMenu = new JPopupMenu();
 		searchContextMenu.setComponentOrientation(orientation);
 
 		JPanel searchPanel = new JPanel();
@@ -1571,7 +1570,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		//I had to put this here because of the alignment of the Arabic menu when changing the language in Settings
 		drawMenu();
 
-		menuBar.setComponentOrientation(orientation);
+		topMenuBar.setComponentOrientation(orientation);
 		optionsMenu.applyComponentOrientation(orientation);
 		actionsMenu.applyComponentOrientation(orientation);
 		toolsMenu.applyComponentOrientation(orientation);
@@ -1610,10 +1609,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private Set<String> getSelectedGames()
 	{
 		Set<String> gameNames = null;
-        int selections[] = gameList.getSelectedIndices();
+        int[] selections = gameList.getSelectedIndices();
         if(selections != null && selections.length > 0)
         {
-	        gameNames = new HashSet<String>(Arrays.asList(gameList.getSelectedItems()));
+	        gameNames = new HashSet<>(Arrays.asList(gameList.getSelectedItems()));
         }
         return gameNames;
 	}
@@ -1624,16 +1623,16 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	    moveMenuItem = new JMenuItemWithIcon();
 	    moveMenuItem.addActionListener(this);
-	    moveMenuItem.setAccelerator(getCtrl_XKeyStroke());
+	    moveMenuItem.setAccelerator(getCtrlXKeyStroke());
 	    contextMenu.add(moveMenuItem);
 
 	    locateFileMenuItem = new JMenuItemWithIcon();
-	    locateFileMenuItem.setAccelerator(getCtrl_Shift_FKeyStroke());
+	    locateFileMenuItem.setAccelerator(getCtrlShiftFKeyStroke());
 	    locateFileMenuItem.addActionListener(this);
 	    contextMenu.add(locateFileMenuItem);
 
 	    addFavoriteMenuItem = new JMenuItemWithIcon();
-	    addFavoriteMenuItem.setAccelerator(getCtrl_DKeyStroke());
+	    addFavoriteMenuItem.setAccelerator(getCtrlDKeyStroke());
 	    addFavoriteMenuItem.setIcon(Icons.FAVORITE.getImageIcon());
 	    addFavoriteMenuItem.addActionListener(this);
 	    contextMenu.add(addFavoriteMenuItem);
@@ -1647,7 +1646,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	    propertiesMenuItem = new JMenuItemWithIcon();
 	    propertiesMenuItem.addActionListener(this);
-	    propertiesMenuItem.setAccelerator(getCtrl_F1KeyStroke());
+	    propertiesMenuItem.setAccelerator(getCtrlF1KeyStroke());
 	    contextMenu.add(propertiesMenuItem);
 	}
 
@@ -1687,27 +1686,27 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
-	private KeyStroke getCtrl_XKeyStroke()
+	private KeyStroke getCtrlXKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_X, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	private KeyStroke getCtrl_EKeyStroke()
+	private KeyStroke getCtrlEKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	private KeyStroke getCtrl_F1KeyStroke()
+	private KeyStroke getCtrlF1KeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F1, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	private KeyStroke getCtrl_Shift_FKeyStroke()
+	private KeyStroke getCtrlShiftFKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() | KeyEvent.SHIFT_DOWN_MASK);
 	}
 
-	private KeyStroke getCtrl_DKeyStroke()
+	private KeyStroke getCtrlDKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_D, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
@@ -1717,32 +1716,32 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		return KeyStroke.getKeyStroke("F1");
 	}
 
-	private KeyStroke getCtrl_FKeyStroke()
+	private KeyStroke getCtrlFKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	private KeyStroke getCtrl_QKeyStroke()
+	private KeyStroke getCtrlQKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_Q, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	private KeyStroke getCtrl_IKeyStroke()
+	private KeyStroke getCtrlIKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_I, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	private KeyStroke getCtrl_LKeyStroke()
+	private KeyStroke getCtrlLKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_L, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	private KeyStroke getCtrl_RKeyStroke()
+	private KeyStroke getCtrlRKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
 	}
 
-	abstract private class PopupMenuAction extends AbstractAction
+	private abstract class PopupMenuAction extends AbstractAction
 	{
 		private final String popupMenuItemName;
 
@@ -1763,7 +1762,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
-	abstract private class PopupMenuItemName extends PopupMenuAction
+	private abstract class PopupMenuItemName extends PopupMenuAction
 	{
 		PopupMenuItemName(String popupMenuItemName)
 		{
@@ -1781,7 +1780,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
-	abstract private class PopupMenuItemDelete extends PopupMenuAction
+	private abstract class PopupMenuItemDelete extends PopupMenuAction
 	{
 		PopupMenuItemDelete(String popupMenuItemName)
 		{
@@ -1790,7 +1789,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
-	abstract private class PopupMenuItemEdit extends PopupMenuAction
+	private abstract class PopupMenuItemEdit extends PopupMenuAction
 	{
 		PopupMenuItemEdit(String popupMenuItemName)
 		{

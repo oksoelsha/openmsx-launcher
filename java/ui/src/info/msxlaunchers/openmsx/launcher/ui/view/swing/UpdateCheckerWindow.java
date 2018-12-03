@@ -59,7 +59,7 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 	private final UpdateCheckerPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 
 	private JComponent updateOpenMSXLauncherButton;
 	private JComponent updateExtraDataButton;
@@ -68,7 +68,7 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 	private JPanel launcherVersionPane;
 	private JPanel extraDataVersionPane;
 
-	private final Dimension INSTALL_BUTTON_SIZE = new Dimension(100, 18);
+	private static final Dimension INSTALL_BUTTON_SIZE = new Dimension(100, 18);
 
 	public UpdateCheckerWindow(UpdateCheckerPresenter presenter,
 			Language language,
@@ -77,7 +77,7 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		this.presenter = presenter;
 		this.rightToLeft = rightToLeft;
 
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 	}
 
@@ -98,16 +98,15 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 
 		GridBagLayout tableLayout = new GridBagLayout();
 		tablePane.setLayout(tableLayout);
-		GridBagConstraints labelConstraints = new GridBagConstraints();
-		GridBagConstraints valueConstraints = new GridBagConstraints();
 
+		GridBagConstraints valueConstraints = new GridBagConstraints();
 		valueConstraints.fill = GridBagConstraints.HORIZONTAL;
 		valueConstraints.anchor = GridBagConstraints.NORTHWEST;
 		valueConstraints.weightx = 1.0;
 		valueConstraints.gridwidth = GridBagConstraints.REMAINDER;
 		valueConstraints.insets = new Insets(4, 4, 4, 8);
 
-		labelConstraints = (GridBagConstraints)valueConstraints.clone();
+		GridBagConstraints labelConstraints = (GridBagConstraints)valueConstraints.clone();
 		labelConstraints.weightx = 0.0;
 		labelConstraints.gridwidth = 1;
 
@@ -203,7 +202,7 @@ public class UpdateCheckerWindow extends JDialog implements ActionListener
 		contentPane.add(buttonsPane);
 
 		pack();
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 

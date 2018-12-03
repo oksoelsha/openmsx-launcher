@@ -63,7 +63,7 @@ public class PatcherWindow extends JDialog implements ActionListener
 	private final PatcherPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 
 	private JComboBox<PatchMethod> patchMethodComboBox;
 	private JTextField patchFileTextField;
@@ -82,15 +82,15 @@ public class PatcherWindow extends JDialog implements ActionListener
 	private JButton okButton;
 	private JButton cancelButton;
 
-	private final FlowLayout LEFT_FLOW_LAYOUT = new FlowLayout(FlowLayout.LEFT);
-	private final FlowLayout RIGHT_FLOW_LAYOUT = new FlowLayout(FlowLayout.RIGHT);
+	private static final FlowLayout LEFT_FLOW_LAYOUT = new FlowLayout(FlowLayout.LEFT);
+	private static final FlowLayout RIGHT_FLOW_LAYOUT = new FlowLayout(FlowLayout.RIGHT);
 
 	public PatcherWindow(PatcherPresenter presenter, Language language, boolean rightToLeft)
 	{
 		this.presenter = presenter;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 	}
 
 	public void displayScreen()
@@ -293,7 +293,7 @@ public class PatcherWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-        setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
@@ -383,7 +383,7 @@ public class PatcherWindow extends JDialog implements ActionListener
 				patchTask.get();
 
 				//here patching was successful
-				MessageBoxUtil.showInformationMessageBox(parent, messages.get("FILE_PATCHED_SUCCESSFULLY"), messages, rightToLeft);
+				MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("FILE_PATCHED_SUCCESSFULLY"), messages, rightToLeft);
 				
 				resetFields();
 			}
@@ -391,7 +391,7 @@ public class PatcherWindow extends JDialog implements ActionListener
 		catch(LauncherException le)
 		{
 			//this can only be thrown from the validation not the patching step
-			MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+			MessageBoxUtil.showErrorMessageBox(mainWindow, le, messages, rightToLeft);
 		}
 		catch (InterruptedException ie)
 		{
@@ -402,7 +402,7 @@ public class PatcherWindow extends JDialog implements ActionListener
 			Throwable ex = ee.getCause();
 			if(ex instanceof LauncherException)
 			{
-				MessageBoxUtil.showErrorMessageBox(parent, (LauncherException)ex, messages, rightToLeft);
+				MessageBoxUtil.showErrorMessageBox(mainWindow, (LauncherException)ex, messages, rightToLeft);
 			}
 		}
 	}
@@ -470,7 +470,7 @@ public class PatcherWindow extends JDialog implements ActionListener
 			panel.add(new JLabel(messages.get("PATCHING") + "..."));
 
 			pack();
-			setLocationRelativeTo(parent);
+			setLocationRelativeTo(mainWindow);
 		}
 
 		void showIndicator()

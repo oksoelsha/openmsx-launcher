@@ -49,15 +49,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 @SuppressWarnings("serial")
 public class ActivityViewerWindow extends JDialog implements ActionListener
 {
-	final Map<String,List<String[]>> logData;
+	private final Map<String,List<String[]>> logData;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final Map<String,String> messages;
 
-	private final int GAME_COL_WIDTH = 300;
-	private final int DATABASE_COL_WIDTH = 220;
-	private final int TIME_COL_WIDTH = 420;
-	private final int COUNT_COL_WIDTH = 60;
+	private static final int GAME_COL_WIDTH = 300;
+	private static final int DATABASE_COL_WIDTH = 220;
+	private static final int TIME_COL_WIDTH = 420;
+	private static final int COUNT_COL_WIDTH = 60;
 
 	private JButton okButton;
 
@@ -66,7 +66,7 @@ public class ActivityViewerWindow extends JDialog implements ActionListener
 		this.logData = logData;
 		this.rightToLeft = rightToLeft;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 	}
 
 	public void display()
@@ -88,8 +88,8 @@ public class ActivityViewerWindow extends JDialog implements ActionListener
 		JPanel launchHistoryPanel = new JPanel();
 		List<String[]> launchHistoryData = logData.get("ALL_PLAY_HISTORY");
 
-		Object launchHistoryColumnNames[] = {messages.get("TIME"), messages.get("GAME"), messages.get("DATABASE")};
-		Object launchHistoryRowData[][] = launchHistoryData.<String[]>toArray(new String[0][]);
+		Object[] launchHistoryColumnNames = {messages.get("TIME"), messages.get("GAME"), messages.get("DATABASE")};
+		Object[][] launchHistoryRowData = launchHistoryData.<String[]>toArray(new String[0][]);
 		JTable launchHistoryTable = new JTable(launchHistoryRowData, launchHistoryColumnNames);
 		launchHistoryTable.setRowSelectionAllowed(false);
 		launchHistoryTable.setPreferredScrollableViewportSize(new Dimension(450, 180));
@@ -106,8 +106,8 @@ public class ActivityViewerWindow extends JDialog implements ActionListener
 		JPanel mostPlayedPanel = new JPanel();
 		List<String[]> mostPlayedData = logData.get("MOST_PLAYED");
 
-		Object mostPlayedColumnNames[] = {messages.get("GAME"), messages.get("DATABASE"), messages.get("COUNT")};
-		Object mostPlayedRowData[][] = mostPlayedData.<String[]>toArray(new String[0][]);
+		Object[] mostPlayedColumnNames = {messages.get("GAME"), messages.get("DATABASE"), messages.get("COUNT")};
+		Object[][] mostPlayedRowData = mostPlayedData.<String[]>toArray(new String[0][]);
 		JTable mostPlayedTable = new JTable(mostPlayedRowData, mostPlayedColumnNames);
 		mostPlayedTable.setRowSelectionAllowed(false);
 		mostPlayedTable.setPreferredScrollableViewportSize(new Dimension(450, 180));
@@ -152,7 +152,7 @@ public class ActivityViewerWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 

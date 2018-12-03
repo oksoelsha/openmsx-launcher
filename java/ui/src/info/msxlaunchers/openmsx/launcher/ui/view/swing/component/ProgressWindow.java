@@ -47,7 +47,7 @@ public class ProgressWindow extends JDialog implements ActionListener
 	private final ProgressWindowTask<?> taskToExecute;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 
 	private JButton cancelButton;
 
@@ -59,7 +59,7 @@ public class ProgressWindow extends JDialog implements ActionListener
 		this.taskToExecute = taskToExecute;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
-		this.parent = parent;
+		this.mainWindow = parent;
     }
 
 	public void showProgress()
@@ -89,10 +89,10 @@ public class ProgressWindow extends JDialog implements ActionListener
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 		setUndecorated(true);
-	    JPanel panel = new JPanel();
-	    panel.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
-	    setContentPane(panel);
-		setLocationRelativeTo(parent);
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+		setContentPane(panel);
+		setLocationRelativeTo(mainWindow);
 		if(rightToLeft)
 		{
 			setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);

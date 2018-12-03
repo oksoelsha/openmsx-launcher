@@ -40,9 +40,9 @@ import javax.swing.WindowConstants;
 @SuppressWarnings("serial")
 public class UserInputWindow<E> extends JDialog implements ActionListener
 {
-	private final Component parent;
+	private final Component mainWindow;
 	private final boolean rightToLeft;
-	private final String title;
+	private final String windowTitle;
 	private final String message;
 	private final UserInputMethodComponent<E> userInputMethodComponent;
 
@@ -54,9 +54,9 @@ public class UserInputWindow<E> extends JDialog implements ActionListener
 	public UserInputWindow(Component parent, Map<String,String> messages, boolean rightToLeft, String title,
 			String message, UserInputMethodComponent<E> userInputMethodComponent)
 	{
-		this.parent = parent;
+		this.mainWindow = parent;
 		this.rightToLeft = rightToLeft;
-		this.title = title;
+		this.windowTitle = title;
 		this.message = message;
 		this.userInputMethodComponent = userInputMethodComponent;
 
@@ -67,56 +67,52 @@ public class UserInputWindow<E> extends JDialog implements ActionListener
 	public E displayAndGetUserInput()
 	{
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(title);
+		setTitle(windowTitle);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 		setBounds(0, 0, 300, 150);
 		getContentPane().setLayout(new BorderLayout());
+
+		JPanel messagePane = new JPanel();
+		getContentPane().add(messagePane, BorderLayout.NORTH);
+		if(rightToLeft)
 		{
-			JPanel messagePane = new JPanel();
-			getContentPane().add(messagePane, BorderLayout.NORTH);
-			if(rightToLeft)
-			{
-				messagePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 8, 10));
-			}
-			else
-			{
-				messagePane.setLayout(new FlowLayout(FlowLayout.LEFT, 8, 10));
-			}
-			{
-				JLabel messageLabel = new JLabel(message);
-				messagePane.add(messageLabel);
-			}
-
-			JPanel userInputPane = new JPanel();
-			getContentPane().add(userInputPane, BorderLayout.CENTER);
-			userInputPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
-			{
-				Component component = userInputMethodComponent.getMethodComponent();
-				component.setPreferredSize(new Dimension(178, 28));
-				userInputPane.add(component);
-			}
-
-			JPanel buttonPane = new JPanel();
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			{
-				okButton.addActionListener(this);
-				okButton.setPreferredSize(MainWindow.BUTTON_DIMENSION);
-				buttonPane.add(okButton);
-			}
-			{
-				cancelButton.addActionListener(this);
-				cancelButton.setPreferredSize(MainWindow.BUTTON_DIMENSION);
-				buttonPane.add(cancelButton);
-			}
-			if(rightToLeft)
-			{
-				buttonPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-			}
+			messagePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 8, 10));
+		}
+		else
+		{
+			messagePane.setLayout(new FlowLayout(FlowLayout.LEFT, 8, 10));
 		}
 
-        setLocationRelativeTo(parent);
+		JLabel messageLabel = new JLabel(message);
+		messagePane.add(messageLabel);
+
+		JPanel userInputPane = new JPanel();
+		getContentPane().add(userInputPane, BorderLayout.CENTER);
+		userInputPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
+
+		Component component = userInputMethodComponent.getMethodComponent();
+		component.setPreferredSize(new Dimension(178, 28));
+		userInputPane.add(component);
+
+		JPanel buttonPane = new JPanel();
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		okButton.addActionListener(this);
+		okButton.setPreferredSize(MainWindow.BUTTON_DIMENSION);
+		buttonPane.add(okButton);
+
+		cancelButton.addActionListener(this);
+		cancelButton.setPreferredSize(MainWindow.BUTTON_DIMENSION);
+		buttonPane.add(cancelButton);
+
+		if(rightToLeft)
+		{
+			buttonPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		}
+
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 
 		return userInput;

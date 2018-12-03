@@ -63,7 +63,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	private final Set<String> machines;
 	private final Set<String> extensions;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final boolean editMode;
 
 	private JTextField nameTextField;
@@ -107,7 +107,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		this.machines = machines;
 		this.extensions = extensions;
 		this.rightToLeft = rightToLeft;
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.editMode = editMode;
 
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
@@ -229,7 +229,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-		setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 	
@@ -244,6 +244,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		display(null, null, null, null, null, null, null, null, null, null, null, null, 0, false);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
@@ -266,7 +267,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			}
 			catch(LauncherException le)
 			{
-				MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+				MessageBoxUtil.showErrorMessageBox(mainWindow, le, messages, rightToLeft);
 			}
 		}
 		else if(source == saveButton)
@@ -313,7 +314,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			}
 			catch(LauncherException le)
 			{
-				MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+				MessageBoxUtil.showErrorMessageBox(mainWindow, le, messages, rightToLeft);
 			}
 		}
 		else if(source == cancelButton)

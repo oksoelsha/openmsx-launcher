@@ -64,7 +64,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 	private final int knownDumps;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final String generationMSXURL;
 
 	private JPanel tablePane = null;
@@ -74,8 +74,8 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 
 	private JButton okButton;
 
-	private final static String SEPARATOR = ", ";
-	private final static int MSX_GEN_NON_EXISTING_CODES_START = 10000;
+	private static final String SEPARATOR = ", ";
+	private static final int MSX_GEN_NON_EXISTING_CODES_START = 10000;
 
 	public GamePropertiesWindow(Game game,
 								RepositoryGame repositoryGame,
@@ -89,7 +89,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		this.knownDumps = knownDumps;
 		this.rightToLeft = rightToLeft;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.generationMSXURL = generationMSXURL;
 	}
 
@@ -177,7 +177,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		contentPane.add(buttonsPane);
 
 		pack();
-        setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 

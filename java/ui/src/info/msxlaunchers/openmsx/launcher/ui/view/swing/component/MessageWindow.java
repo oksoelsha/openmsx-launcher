@@ -43,8 +43,8 @@ import javax.swing.WindowConstants;
 @SuppressWarnings("serial")
 public class MessageWindow extends JDialog implements ActionListener
 {
-	private final Component parent;
-	private final String title;
+	private final Component mainWindow;
+	private final String windowTitle;
 	private final String message;
 	private final int mode;
 	private final String[] buttonLabels;
@@ -65,8 +65,8 @@ public class MessageWindow extends JDialog implements ActionListener
 
 	public MessageWindow(Component parent, String title, String message, int mode, String[] buttonLabels, boolean rightToLeft)
 	{
-		this.parent = parent;
-		this.title = title;
+		this.mainWindow = parent;
+		this.windowTitle = title;
 		this.message = message;
 		this.mode = mode;
 		this.buttonLabels = buttonLabels;
@@ -77,11 +77,13 @@ public class MessageWindow extends JDialog implements ActionListener
 		//when clicking the close button, return a generic -1, which should be interpreted as cancel
 		addWindowListener(new WindowAdapter()
 		{
+			@Override
 			public void windowClosed(WindowEvent e)
 			{
 				result = -1;
 			}
 
+			@Override
 			public void windowClosing(WindowEvent e)
 			{
 				result = -1;
@@ -92,57 +94,55 @@ public class MessageWindow extends JDialog implements ActionListener
 	public int displayAndGetResult()
 	{
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(title);
+		setTitle(windowTitle);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 		JPanel contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-		{
-			JPanel messagePane = new JPanel();
-			if(rightToLeft)
-			{
-				messagePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 10));
-			}
-			else
-			{
-				messagePane.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
-			}
-			contentPane.add(messagePane);
-			{
-				JLabel messageLabel = new JLabel(message, getIconFromMode(mode), SwingConstants.TRAILING);
-				if(rightToLeft)
-				{
-					messageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-					messageLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-				}
-				else
-				{
-					messageLabel.setHorizontalAlignment(SwingConstants.LEFT);
-					messageLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
-				}
-				messagePane.add(messageLabel);
-			}
 
-			JPanel buttonsPane = new JPanel();
-			contentPane.add(buttonsPane);
-			{
-				for(int counter = 0; counter < buttons.length; counter++)
-				{
-					buttons[counter] = new JButton(buttonLabels[counter]);
-					buttons[counter].addActionListener(this);
-					buttons[counter].setPreferredSize(MainWindow.BUTTON_DIMENSION);
-					buttonsPane.add(buttons[counter]);
-				}
-			}
-			if(rightToLeft)
-			{
-				buttonsPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-			}
+		JPanel messagePane = new JPanel();
+		if(rightToLeft)
+		{
+			messagePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 10));
+		}
+		else
+		{
+			messagePane.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
+		}
+		contentPane.add(messagePane);
+
+		JLabel messageLabel = new JLabel(message, getIconFromMode(mode), SwingConstants.TRAILING);
+		if(rightToLeft)
+		{
+			messageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			messageLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+		}
+		else
+		{
+			messageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			messageLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+		}
+		messagePane.add(messageLabel);
+
+		JPanel buttonsPane = new JPanel();
+		contentPane.add(buttonsPane);
+
+		for(int counter = 0; counter < buttons.length; counter++)
+		{
+			buttons[counter] = new JButton(buttonLabels[counter]);
+			buttons[counter].addActionListener(this);
+			buttons[counter].setPreferredSize(MainWindow.BUTTON_DIMENSION);
+			buttonsPane.add(buttons[counter]);
+		}
+
+		if(rightToLeft)
+		{
+			buttonsPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		}
 
 		pack();
-        setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 
 		return result;
@@ -170,20 +170,16 @@ public class MessageWindow extends JDialog implements ActionListener
 		switch(mode)
 		{
 			case ERROR:
-//				icon = "OptionPane.errorIcon";
 				icon = Icons.ERROR.getImageIcon();
 				break;
 			case INFORMATION:
-//				icon = "OptionPane.informationIcon";
 				icon = Icons.INFORMATION.getImageIcon();
 				break;
 			case WARNING:
-//				icon = "OptionPane.warningIcon";
 				//not needed for now
 				icon = null;
 				break;
 			case QUESTION:
-//				icon = "OptionPane.questionIcon";
 				icon = Icons.QUESTION.getImageIcon();
 				break;
 			default:

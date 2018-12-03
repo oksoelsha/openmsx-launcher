@@ -60,11 +60,10 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 	private final String database;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final Set<String> machines;
 
 	private JRadioButton allDatabasesRadioButton;
-	private JRadioButton currentDatabaseRadioButton;
 	private JRadioButton changeAllMachinesRadioButton;
 	private JComboBox<String> changeAllMachinesComboBox;
 	private JRadioButton changeFromToMachineRadioButton;
@@ -80,7 +79,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 		this.database = database;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.machines = machines;
 	}
 
@@ -101,7 +100,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 		databasePane.setBorder(BorderFactory.createTitledBorder(messages.get("DATABASE")));
 		databasePane.setLayout(new GridLayout(0, 1));
 
-		currentDatabaseRadioButton = new JRadioButton(messages.get("UPDATE_CURRENT_DATABASE") + " [" + database + "]");
+		JRadioButton currentDatabaseRadioButton = new JRadioButton(messages.get("UPDATE_CURRENT_DATABASE") + " [" + database + "]");
 		currentDatabaseRadioButton.setSelected(true);
 		currentDatabaseRadioButton.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		databasePane.add(currentDatabaseRadioButton);
@@ -128,8 +127,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 		valueConstraints.gridwidth = GridBagConstraints.REMAINDER;
 		valueConstraints.insets = new Insets(2, 2, 2, 4);
 
-		GridBagConstraints labelConstraints = new GridBagConstraints();
-		labelConstraints = (GridBagConstraints)valueConstraints.clone();
+		GridBagConstraints labelConstraints = (GridBagConstraints)valueConstraints.clone();
 		labelConstraints.weightx = 0.0;
 		labelConstraints.gridwidth = 1;
 
@@ -139,7 +137,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 		machinesLayout.setConstraints(changeAllMachinesRadioButton, labelConstraints);
 		machinesPane.add(changeAllMachinesRadioButton);
 
-		changeAllMachinesComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(machines));
+		changeAllMachinesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
 		machinesLayout.setConstraints(changeAllMachinesComboBox, valueConstraints);
 		machinesPane.add(changeAllMachinesComboBox);
 
@@ -148,7 +146,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 		machinesLayout.setConstraints(changeFromToMachineRadioButton, labelConstraints);
 		machinesPane.add(changeFromToMachineRadioButton);
 
-		changeFromMachineComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(machines));
+		changeFromMachineComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
 		changeFromMachineComboBox.setEnabled(false);
 		machinesLayout.setConstraints(changeFromMachineComboBox, valueConstraints);
 		machinesPane.add(changeFromMachineComboBox);
@@ -158,7 +156,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 		machinesLayout.setConstraints(toLabel, labelConstraints);
 		machinesPane.add(toLabel);
 
-		changeToMachineComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(machines));
+		changeToMachineComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
 		changeToMachineComboBox.setEnabled(false);
 		machinesLayout.setConstraints(changeToMachineComboBox, valueConstraints);
 		machinesPane.add(changeToMachineComboBox);
@@ -214,7 +212,7 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 		}
 
 		pack();
-        setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
@@ -253,11 +251,11 @@ public class MachineUpdateWindow extends JDialog implements ActionListener
 
 			dispose();
 			
-			MessageBoxUtil.showInformationMessageBox(parent, messages.get("TOTAL_UPDATED_PROFILES") + ": " + totalUpdated, messages, rightToLeft);
+			MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("TOTAL_UPDATED_PROFILES") + ": " + totalUpdated, messages, rightToLeft);
 		}
 		catch(LauncherException le)
 		{
-			MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+			MessageBoxUtil.showErrorMessageBox(mainWindow, le, messages, rightToLeft);
 		}
 	}
 

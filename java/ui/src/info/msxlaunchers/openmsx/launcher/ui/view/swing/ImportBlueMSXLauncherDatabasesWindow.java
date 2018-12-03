@@ -61,7 +61,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 	private final BlueMSXLauncherDatabasesImporterPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final Set<String> machines;
 
 	private JTextField blueMSXLauncherDirectoryTextField;
@@ -83,7 +83,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 		this.presenter = presenter;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.machines = machines;
 	}
 
@@ -138,7 +138,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 	    	{
 	    		if(!listSelectionEvent.getValueIsAdjusting())
 	    		{
-	    			int selection[] = availableDatabasesList.getSelectedIndices();
+	    			int[] selection = availableDatabasesList.getSelectedIndices();
 	    			if(selection.length == 1)
 	    			{
 						leftArrowButton.setEnabled(false);
@@ -189,7 +189,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 	    	{
 	    		if(!listSelectionEvent.getValueIsAdjusting())
 	    		{
-	    			int selection[] = selectedDatabasesList.getSelectedIndices();
+	    			int[] selection = selectedDatabasesList.getSelectedIndices();
 	    			if(selection.length == 1)
 	    			{
 						rightArrowButton.setEnabled(false);
@@ -217,7 +217,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 		JLabel machinesLabel = new JLabel(messages.get("MACHINE"));
 		machinesPane.add(machinesLabel);
 
-		machinesComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(machines));
+		machinesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
 		machinesPane.add(machinesComboBox);
 
 		contentPane.add(machinesPane);
@@ -261,7 +261,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 		}
 
 		pack();
-        setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
@@ -306,7 +306,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 
 	private void moveFromOneListToAnother(JList<Object> source, JList<Object> target)
 	{
-		int selections[] = source.getSelectedIndices();
+		int[] selections = source.getSelectedIndices();
 		DefaultListModel<Object> sourceModel = (DefaultListModel<Object>)source.getModel();
 		DefaultListModel<Object> targetModel = (DefaultListModel<Object>)target.getModel();
 
@@ -340,7 +340,7 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 	private void processImportRequest()
 	{
 		int selectedSize = selectedDatabasesListModel.getSize();
-		String databaseNames[] = new String[selectedSize];
+		String[] databaseNames = new String[selectedSize];
 		for(int ix = 0; ix < selectedSize; ix++)
 		{
 			databaseNames[ix] = (String)selectedDatabasesListModel.getElementAt(ix);
@@ -352,11 +352,11 @@ public class ImportBlueMSXLauncherDatabasesWindow extends JDialog implements Act
 
 			dispose();
 
-			MessageBoxUtil.showInformationMessageBox(parent, messages.get("TOTAL_IMPORTED_DATABASES") + ": " + totalImported, messages, rightToLeft);
+			MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("TOTAL_IMPORTED_DATABASES") + ": " + totalImported, messages, rightToLeft);
 		}
 		catch(LauncherException le)
 		{
-			MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+			MessageBoxUtil.showErrorMessageBox(mainWindow, le, messages, rightToLeft);
 		}
 	}
 }

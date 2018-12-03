@@ -60,12 +60,10 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 	private final Language language;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component parent;
+	private final Component mainWindow;
 	private final File[] files;
 	private final Set<String> machines;
 
-	private JList<Object> fileList;
-	private DefaultListModel<Object> fileListModel;
 	private JComboBox<String> profileNamesComboBox;
 	private JCheckBox backupDatabase;
 	private JComboBox<String> machinesComboBox;
@@ -82,7 +80,7 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 		this.language = language;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 		this.files = files;
 		this.machines = machines;
 	}
@@ -103,8 +101,8 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 		JPanel filesPane = new JPanel();
 		filesPane.setBorder(BorderFactory.createTitledBorder(messages.get("FILES_AND_DIRS")));
 
-		fileListModel = new DefaultListModel<>();
-		fileList = new JList<>(fileListModel);
+		DefaultListModel<Object> fileListModel = new DefaultListModel<>();
+		JList<Object> fileList = new JList<>(fileListModel);
 
 		for(File file:files)
 		{
@@ -127,8 +125,8 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 		JLabel lblProfileNameIn = new JLabel(messages.get("PROFILE_NAME"));
 		profileNamePane.add(lblProfileNameIn);
 
-		String profileNames[] = {messages.get("USE_FILENAME"), messages.get("USE_COMMON_NAME")};
-		profileNamesComboBox = new JComboBox<String>(profileNames);
+		String[] profileNames = {messages.get("USE_FILENAME"), messages.get("USE_COMMON_NAME")};
+		profileNamesComboBox = new JComboBox<>(profileNames);
 		profileNamePane.add(profileNamesComboBox);
 
 		optionsPane.add(profileNamePane);
@@ -148,7 +146,7 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 		JLabel machinesLabel = new JLabel(messages.get("MACHINE"));
 		machinesPane.add(machinesLabel);
 
-		machinesComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(machines));
+		machinesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
 		machinesPane.add(machinesComboBox);
 
 		contentPane.add(machinesPane);
@@ -192,7 +190,7 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 		}
 
 		pack();
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
@@ -213,7 +211,7 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 
 	private void addDraggedAndDroppedGames()
 	{
-		FillDatabaseTask fillDatabaseTask = new FillDatabaseTask(new AddDraggedAndDroppedGamesExecutor(), parent, messages, rightToLeft);
+		FillDatabaseTask fillDatabaseTask = new FillDatabaseTask(new AddDraggedAndDroppedGamesExecutor(), mainWindow, messages, rightToLeft);
 
 		ProgressWindow progressWindow = new ProgressWindow(fillDatabaseTask, language, rightToLeft, this);
 		progressWindow.showProgress();
@@ -227,12 +225,12 @@ public class AddDraggedAndDroppedGamesWindow extends JDialog implements ActionLi
 			}
 			catch(LauncherException le)
 			{
-				MessageBoxUtil.showErrorMessageBox(parent, le, messages, rightToLeft);
+				MessageBoxUtil.showErrorMessageBox(mainWindow, le, messages, rightToLeft);
 			}
 
 			dispose();
 
-			MessageBoxUtil.showInformationMessageBox(parent, messages.get("TOTAL_ADDED_TO_DATABASE") + ": " + fillDatabaseTask.getResult(),
+			MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("TOTAL_ADDED_TO_DATABASE") + ": " + fillDatabaseTask.getResult(),
 					messages, rightToLeft);
 		}
 	}

@@ -48,14 +48,14 @@ import info.msxlaunchers.openmsx.common.Utils;
 @SuppressWarnings("serial")
 public class JListWithImagesAndActions extends JList<Object>
 {
-	public final static String DOUBLE_CLICK_COMMAND = "doubleClickCommand";
-	public final static String ENTER_KEY_COMMAND = "enterKeyCommand";
-	public final static String DELETE_KEY_COMMAND = "deleteKeyCommand";
-	public final static String INSERT_KEY_COMMAND = "insertKeyCommand";
+	public static final String DOUBLE_CLICK_COMMAND = "doubleClickCommand";
+	public static final String ENTER_KEY_COMMAND = "enterKeyCommand";
+	public static final String DELETE_KEY_COMMAND = "deleteKeyCommand";
+	public static final String INSERT_KEY_COMMAND = "insertKeyCommand";
 
-	private final static Color BACKGROUND_COLOR = new Color(250, 250, 250);
+	private static final Color BACKGROUND_COLOR = new Color(250, 250, 250);
 
-	private int KEYBOARD_PRESS_DELAY = 800;
+	private static final int KEYBOARD_PRESS_DELAY = 800;
 	private StringBuilder pressedKeysBuffer = new StringBuilder();
 	private long pressTimeValue;
 
@@ -90,7 +90,7 @@ public class JListWithImagesAndActions extends JList<Object>
 					}
 					if(me.getClickCount() == 2)
 					{
-						if(ob.size() > 0)
+						if(!ob.isEmpty())
 						{
 							actionListener.actionPerformed(new ActionEvent(this,
 									ActionEvent.ACTION_PERFORMED,
@@ -104,6 +104,7 @@ public class JListWithImagesAndActions extends JList<Object>
 
 		addKeyListener(new KeyAdapter()
 		{
+			@Override
 			public void keyPressed(KeyEvent ke)
 			{
 				if(actionListener == null || ke.isAltDown())
@@ -118,7 +119,7 @@ public class JListWithImagesAndActions extends JList<Object>
 				}
 				if(ke.getKeyCode() == KeyEvent.VK_ENTER)
 				{
-					if(ob.size() > 0)
+					if(!ob.isEmpty())
 					{
 						actionListener.actionPerformed(new ActionEvent(this,
 								ActionEvent.ACTION_PERFORMED,
@@ -128,7 +129,7 @@ public class JListWithImagesAndActions extends JList<Object>
 				} 
 				else if(ke.getKeyCode() == KeyEvent.VK_DELETE)
 				{
-					if(ob.size() > 0)
+					if(!ob.isEmpty())
 					{
 						actionListener.actionPerformed(new ActionEvent(this,
 								ActionEvent.ACTION_PERFORMED,
@@ -138,7 +139,7 @@ public class JListWithImagesAndActions extends JList<Object>
 				} 
 				else if(ke.getKeyCode() == KeyEvent.VK_INSERT)
 				{
-					if(ob.size() > 0)
+					if(!ob.isEmpty())
 					{
 						actionListener.actionPerformed(new ActionEvent(this,
 								ActionEvent.ACTION_PERFORMED,
@@ -185,6 +186,7 @@ public class JListWithImagesAndActions extends JList<Object>
 		listModel.clear();
 	}
 
+	@Override
 	public void remove(int index)
 	{
 		listModel.remove(index);
@@ -254,13 +256,13 @@ public class JListWithImagesAndActions extends JList<Object>
 		private static JPanel textPanel = new JPanel();
 		private static final FlowLayout allLayout = new FlowLayout(FlowLayout.LEFT, 0, 2);
 		private static final BorderLayout textLayout = new BorderLayout();
-		private final static Color background = new Color(190, 220, 230);
-		private final static Color infoColor = new Color(100, 100, 100);
+		private static final Color backgroundColor = new Color(190, 220, 230);
+		private static final Color infoColor = new Color(100, 100, 100);
 
 		private static final String LABEL_DASH = " - ";
 		private static final String LABEL_KB = " KB";
 		private static final String LABEL_SPACE = " ";
-		private final static Border LABEL_MARGIN = new EmptyBorder(0, 3, 0, 0);
+		private static final Border LABEL_MARGIN = new EmptyBorder(0, 3, 0, 0);
 
 		static
 		{
@@ -289,8 +291,8 @@ public class JListWithImagesAndActions extends JList<Object>
 
 			if (isSelected)
 			{
-				setBackground(background);
-				textPanel.setBackground(background);
+				setBackground(backgroundColor);
+				textPanel.setBackground(backgroundColor);
 			}
 			else
 			{

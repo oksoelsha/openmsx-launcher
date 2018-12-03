@@ -73,7 +73,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 	private final String languageCode;
 	private final boolean rightToLeft;
 	private final String suggestedOpenMSXPath;
-	private final Component parent;
+	private final Component mainWindow;
 
 	private JTextField openMSXFullPathTextField;
 	private JButton openMSXFullPathBrowseButton;
@@ -97,7 +97,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		this.presenter = presenter;
 		this.settings = settings;
 		this.databases = databases;
-		this.parent = GlobalSwingContext.getIntance().getMainWindow();
+		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
 
 		messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.language = language;
@@ -139,51 +139,48 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		}
 		openMSXFullPathTextField = new JTextField(settings.getOpenMSXFullPath());
 		openMSXFullPathTextField.setColumns(10);
-		{
-			openMSXFullPathBrowseButton = new JButton(Icons.FOLDER.getImageIcon());
-			openMSXFullPathBrowseButton.addActionListener(this);
-			openMSXFullPathBrowseButton.setToolTipText(messages.get("BROWSE"));
 
-			openMSXFullPathDetectButton = new JButton(Icons.DETECT.getImageIcon());
-			openMSXFullPathDetectButton.addActionListener(this);
-			openMSXFullPathDetectButton.setToolTipText(messages.get("DETECT"));
-		}
+		openMSXFullPathBrowseButton = new JButton(Icons.FOLDER.getImageIcon());
+		openMSXFullPathBrowseButton.addActionListener(this);
+		openMSXFullPathBrowseButton.setToolTipText(messages.get("BROWSE"));
+
+		openMSXFullPathDetectButton = new JButton(Icons.DETECT.getImageIcon());
+		openMSXFullPathDetectButton.addActionListener(this);
+		openMSXFullPathDetectButton.setToolTipText(messages.get("DETECT"));
+
 		screenshotsFullPathTextField = new JTextField(settings.getScreenshotsFullPath());
 		screenshotsFullPathTextField.setColumns(10);
-		{
-			screenshotsFullPathBrowseButton = new JButton(Icons.FOLDER.getImageIcon());
-			screenshotsFullPathBrowseButton.setToolTipText(messages.get("BROWSE"));
-			screenshotsFullPathBrowseButton.addActionListener(this);
-		}
-		{
-			defaultDatabaseComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(databases));
-			defaultDatabaseComboBox.setSelectedItem(settings.getDefaultDatabase());
-		}
-		{
-			Language[] languages = Language.values();
-			List<LanguageAndIcon> languagesAndIcons = new ArrayList<>(languages.length + 1);
 
-			for(int ix=0; ix < languages.length; ix++)
-			{
-				languagesAndIcons.add(new LanguageAndIcon(languages[ix].toString(),
-						messages.get(languages[ix].toString()),
-						Icons.valueOf("FLAG_" + languages[ix].getLocaleName()).getImageIcon()));
-			}
-			Collator collator = Collator.getInstance(Locale.forLanguageTag(language.getLocaleName()));
-			languagesAndIcons = languagesAndIcons.stream().sorted((l1, l2) -> collator.compare(l1.language, l2.language)).collect(Collectors.toList());
+		screenshotsFullPathBrowseButton = new JButton(Icons.FOLDER.getImageIcon());
+		screenshotsFullPathBrowseButton.setToolTipText(messages.get("BROWSE"));
+		screenshotsFullPathBrowseButton.addActionListener(this);
 
-			languagesAndIcons.add(0, new LanguageAndIcon(null, messages.get("SYSTEM_DEFAULT"), null));
-			languageComboBox = new JComboBoxWithImages(languagesAndIcons.stream().map(li -> li.languageCode).toArray(size -> new String[size]),
-					languagesAndIcons.stream().map(li -> li.language).toArray(size -> new String[size]),
-					languagesAndIcons.stream().map(li -> li.icon).toArray(size -> new ImageIcon[size]),
-					rightToLeft);
-			languageComboBox.setMaximumRowCount(languages.length+1);
-			languageComboBox.setSelectedItem(messages.get(languageCode));
-		}
+		defaultDatabaseComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(databases));
+		defaultDatabaseComboBox.setSelectedItem(settings.getDefaultDatabase());
+
+		Language[] languages = Language.values();
+		List<LanguageAndIcon> languagesAndIcons = new ArrayList<>(languages.length + 1);
+
+		for(int ix=0; ix < languages.length; ix++)
 		{
-			enableFeedServiceCheckBox = new JCheckBox(messages.get("ENABLE_MSX_NEWS_SERVICE"));
-			enableFeedServiceCheckBox.setSelected(settings.isEnableFeedService());
+			languagesAndIcons.add(new LanguageAndIcon(languages[ix].toString(),
+					messages.get(languages[ix].toString()),
+					Icons.valueOf("FLAG_" + languages[ix].getLocaleName()).getImageIcon()));
 		}
+		Collator collator = Collator.getInstance(Locale.forLanguageTag(language.getLocaleName()));
+		languagesAndIcons = languagesAndIcons.stream().sorted((l1, l2) -> collator.compare(l1.language, l2.language)).collect(Collectors.toList());
+
+		languagesAndIcons.add(0, new LanguageAndIcon(null, messages.get("SYSTEM_DEFAULT"), null));
+		languageComboBox = new JComboBoxWithImages(languagesAndIcons.stream().map(li -> li.languageCode).toArray(size -> new String[size]),
+				languagesAndIcons.stream().map(li -> li.language).toArray(size -> new String[size]),
+				languagesAndIcons.stream().map(li -> li.icon).toArray(size -> new ImageIcon[size]),
+				rightToLeft);
+		languageComboBox.setMaximumRowCount(languages.length+1);
+		languageComboBox.setSelectedItem(messages.get(languageCode));
+
+		enableFeedServiceCheckBox = new JCheckBox(messages.get("ENABLE_MSX_NEWS_SERVICE"));
+		enableFeedServiceCheckBox.setSelected(settings.isEnableFeedService());
+
 		JPanel fullPathPanel = new JPanel();
 		fullPathPanel.setBorder(BorderFactory.createTitledBorder(messages.get("DIRECTORIES")));
 		JPanel generalPanel = new JPanel();
@@ -306,7 +303,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		}
 
 		pack();
-        setLocationRelativeTo(parent);
+		setLocationRelativeTo(mainWindow);
 		setVisible(true);
 	}
 
