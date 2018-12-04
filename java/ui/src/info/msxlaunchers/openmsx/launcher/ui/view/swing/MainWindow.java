@@ -574,12 +574,18 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	    ListSelectionListener listSelectionListener = new ListSelectionListener()
 	    {
 			@Override
-	    	public void valueChanged(ListSelectionEvent listSelectionEvent)
-	    	{
-	    		if(!listSelectionEvent.getValueIsAdjusting())
-	    		{
-	    			presenter.onSelectGames(getSelectedGames());
-	    		}
+			public void valueChanged(ListSelectionEvent listSelectionEvent)
+			{
+				if( gameList.getSelectedIndex() < 0 )
+				{
+					//this is the case where there's no selection
+					//This happens when the JList component is reloaded which causes this event to trigger
+					enableButtons(false, false, currentDatabase != null, false, false);
+				}
+				else if(!listSelectionEvent.getValueIsAdjusting() )
+				{
+					presenter.onSelectGames(getSelectedGames());
+				}
 	    	}
 	    };
 	    gameList.addListSelectionListener(listSelectionListener);
