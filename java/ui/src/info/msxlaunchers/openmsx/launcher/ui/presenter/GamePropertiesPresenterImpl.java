@@ -16,8 +16,14 @@
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
+import info.msxlaunchers.openmsx.common.FileTypeUtils;
+import info.msxlaunchers.openmsx.common.FileUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
@@ -68,6 +74,20 @@ final class GamePropertiesPresenterImpl implements GamePropertiesPresenter
 			}
 		}
 
-		view.displayGamePropertiesScreen( game, repositoryGame, knownDumps, currentLanguage, currentRightToLeft );
+		Path mainFile = Paths.get( FileTypeUtils.getMainFile(game.getRomA(), game.getRomB(), game.getDiskA(), game.getDiskB(),
+        		game.getTape(), game.getHarddisk(), game.getLaserdisc(), game.getTclScript()));
+
+		List<String> fileGroup;
+		
+		try
+		{
+			fileGroup = FileUtils.getFileGroup( mainFile );
+		}
+		catch( IOException ioe )
+		{
+			fileGroup = Collections.emptyList();
+		}
+
+		view.displayGamePropertiesScreen( game, repositoryGame, knownDumps, fileGroup, currentLanguage, currentRightToLeft );
 	}
 }

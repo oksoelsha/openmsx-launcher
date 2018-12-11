@@ -7,6 +7,7 @@ import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.view.GamePropertiesView;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Set;
 
 import org.junit.Test;
@@ -49,7 +50,7 @@ public class GamePropertiesImplTest
 	{
 		GamePropertiesPresenterImpl presenter = new GamePropertiesPresenterImpl( gamePropertiesView, repositoryData );
 
-		Game game = Game.name( "name" ).sha1Code( "1234" ).build();
+		Game game = Game.name( "name" ).diskA( "diskA.dsk" ).sha1Code( "1234" ).build();
 		RepositoryGame repositoryGame = new RepositoryGame( "title", "company","year", "country" );
 
 		when( repositoryData.getGameInfo( game.getSha1Code() ) ).thenReturn( repositoryGame );
@@ -58,7 +59,7 @@ public class GamePropertiesImplTest
 
 		presenter.onRequestGamePropertiesScreen( game, Language.ENGLISH, false );
 
-		verify( gamePropertiesView, times( 1 ) ).displayGamePropertiesScreen( game, repositoryGame, 3, Language.ENGLISH, false );
+		verify( gamePropertiesView, times( 1 ) ).displayGamePropertiesScreen( game, repositoryGame, 3, Collections.emptyList(), Language.ENGLISH, false );
 	}
 
 	@Test
@@ -66,7 +67,7 @@ public class GamePropertiesImplTest
 	{
 		GamePropertiesPresenterImpl presenter = new GamePropertiesPresenterImpl( gamePropertiesView, repositoryData );
 
-		Game game = Game.name( "name" ).sha1Code( "1234" ).build();
+		Game game = Game.name( "name" ).romA( "romA.rom" ).sha1Code( "1234" ).build();
 
 		when( repositoryData.getGameInfo( game.getSha1Code() ) ).thenThrow( new IOException() );
 		when( otherCodes.size() ).thenReturn( 5 );
@@ -74,6 +75,6 @@ public class GamePropertiesImplTest
 
 		presenter.onRequestGamePropertiesScreen( game, Language.ENGLISH, false );
 
-		verify( gamePropertiesView, times( 1 ) ).displayGamePropertiesScreen( game, null, 0, Language.ENGLISH, false );
+		verify( gamePropertiesView, times( 1 ) ).displayGamePropertiesScreen( game, null, 0, Collections.emptyList(), Language.ENGLISH, false );
 	}
 }

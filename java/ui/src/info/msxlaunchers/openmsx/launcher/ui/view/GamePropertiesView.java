@@ -15,6 +15,8 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view;
 
+import java.util.List;
+
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
@@ -34,8 +36,10 @@ public interface GamePropertiesView
 	 * @param game Game object
 	 * @param repositoryGame RepositoryGame object. Null if information is unavailable
 	 * @param knownDumps Number of known dumps of game ROM, including the ROM itself
+	 * @param fileGroup List containing files in multi-disk or multi-tape games
 	 * @param language Language
 	 * @param rightToLeft Flag to determine screen orientation based on language
 	 */
-	void displayGamePropertiesScreen( Game game, RepositoryGame repositoryGame, int knownDumps, Language language, boolean rightToLeft );
+	void displayGamePropertiesScreen( Game game, RepositoryGame repositoryGame, int knownDumps, 
+			List<String> fileGroup, Language language, boolean rightToLeft );
 }

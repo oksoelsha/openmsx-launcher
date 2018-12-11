@@ -37,6 +37,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
@@ -62,6 +63,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 	private final Game game;
 	private final RepositoryGame repositoryGame;
 	private final int knownDumps;
+	private final List<String> fileGroup;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final Component mainWindow;
@@ -80,11 +82,13 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 	public GamePropertiesWindow(Game game,
 								RepositoryGame repositoryGame,
 								int knownDumps,
+								List<String> fileGroup,
 								Language language,
 								boolean rightToLeft,
 								String generationMSXURL)
 	{
 		this.game = game;
+		this.fileGroup = fileGroup;
 		this.repositoryGame = repositoryGame;
 		this.knownDumps = knownDumps;
 		this.rightToLeft = rightToLeft;
@@ -134,7 +138,8 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
         File mainFile = new File(FileTypeUtils.getMainFile(game.getRomA(), game.getRomB(), game.getDiskA(), game.getDiskB(),
         		game.getTape(), game.getHarddisk(), game.getLaserdisc(), game.getTclScript()));
         addPropertyToDisplay(messages.get("FILE"), mainFile.getAbsolutePath());
-        addPropertyToDisplay(messages.get("MEDIUM"), messages.get(getMedium(game)));
+        addPropertyToDisplay(messages.get("MEDIUM"), getMedium());
+
         if(repositoryGame != null)
         {
             addPropertyToDisplay(messages.get("KNOWN_DUMPS"), String.valueOf(knownDumps));
@@ -291,6 +296,16 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		}
 
 		return medium;
+	}
+
+	private String getMedium()
+	{
+		StringBuilder builder = new StringBuilder(messages.get(getMedium(game)));
+		if(game.isDisk() || game.isTape())
+		{
+			builder.append(" ").append(fileGroup.size()).append("x");
+		}
+		return  builder.toString();
 	}
 
 	private String getGeneration(Game game)
