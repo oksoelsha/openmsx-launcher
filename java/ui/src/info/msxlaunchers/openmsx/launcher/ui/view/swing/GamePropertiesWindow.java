@@ -300,10 +300,10 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 
 	private String getMedium()
 	{
-		StringBuilder builder = new StringBuilder(messages.get(getMedium(game)));
+		StringBuilder builder = new StringBuilder();
 		if(game.isDisk() || game.isTape())
 		{
-			builder.append(" ").append(fileGroup.size()).append("x");
+			builder.append(messages.get(getMedium(game))).append(" ").append(fileGroup.size()).append("x");
 		}
 		return  builder.toString();
 	}
