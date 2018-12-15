@@ -15,7 +15,7 @@ td { padding: 12px; }
 
 <body>
 
-<h2>openMSX Launcher v1.10.5</h2>
+<h2>openMSX Launcher v1.10.6</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -31,7 +31,7 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from version 1.10</u></h3>
+<h3><u>Upgrade from version 1.10 or 1.10.5</u></h3>
 
 Databases created in previous versions are fully compatible with the current version.
 
@@ -43,7 +43,7 @@ Refer to upgrade instructions in older versions to 1.10. You can find them in pa
 
 <h3><u>How to start</u></h3>
 
-<p class="tab"><b>Windows</b>: double-click on the exe file. The exe will locate the JRE on the machine automatically and start it. The exe  takes in the JRE location
+<p class="tab"><b>Windows</b>: double-click on the exe file. The exe will locate the JRE on the machine automatically and start it. The exe takes in the JRE location
 as an optional argument in case it cannot find it. In this case, in order to pass the JRE location as an option, create a shortcut for the executable and edit its target to pass
 the JRE location. Make sure you add the location without double quotes (i.e. C:\Program Files\Java\jre1.8.0_151\bin\java.exe)</p>
 
@@ -193,6 +193,21 @@ end script
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.10.6 - released Dec 16, 2018</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added number of disks or tapes in multi-disk/multi-tape games in the game properties window</li>
+<li>Added support for harddisk hdd extension</li>
+<li>Added JRE version to the About window</li>
+</ul>
+Bug Fixes:
+<ul>
+<li>Disabled the delete button after deleting an entry in the list (after which no element is selected)</li>
+<li>Fixed JRE location via registry for version 9 and later</li>
+<li>Fixed the log filename to read when messages log is rotated</li>
+</ul>
 
 <b>Version 1.10.5 - released Mar 31, 2018</b>
 <br></br>
