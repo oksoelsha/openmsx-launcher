@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,9 +35,10 @@ import info.msxlaunchers.openmsx.common.FileTypeUtils;
  * @author Sam Elsharif
  *
  */
-class WindowUtils
+public class WindowUtils
 {
 	public static final Dimension iconButtonDimension = new Dimension(35, 26);
+	private static final String ELLIPSES = "...";
 
 	/**
 	 * 
@@ -66,7 +68,7 @@ class WindowUtils
 		{
 			if(includeZipFiles)
 			{
-				extensionsEffectiveValue = new HashSet<String>(extensions);
+				extensionsEffectiveValue = new HashSet<>(extensions);
 				extensionsEffectiveValue.addAll(FileTypeUtils.getZIPExtensions());
 			}
 			fileChooser.addChoosableFileFilter(new FileFilterImpl(filterDescription, extensionsEffectiveValue));
@@ -76,6 +78,42 @@ class WindowUtils
         {
         	field.setText(fileChooser.getSelectedFile().getAbsolutePath());
         }		
+	}
+
+	/**
+	 * Truncate string if its width is longer than given available width and add ellipsis, otherwise return same string
+	 * 
+	 * @param string String to truncate if longer than available width
+	 * @param fontMetrics Font metrics to get width of given string based on font type and size
+	 * @param availableWidth Available width to fit the string
+	 * @return Truncated string ending with ellipsis if longer than available width, otherwise same string
+	 */
+	public static String truncateStringAndDisplayEllipsis(String string, FontMetrics fontMetrics, int availableWidth)
+	{
+		String stringToDisplay = null;
+
+		if(string == null || fontMetrics == null)
+		{
+			stringToDisplay = "";
+		}
+		else
+		{
+			if(fontMetrics.stringWidth(string) > availableWidth)
+			{
+				int index = string.length() - 1;
+				stringToDisplay = string.substring(0, index) + ELLIPSES;
+				while(fontMetrics.stringWidth(stringToDisplay) >= availableWidth)
+				{
+					stringToDisplay = string.substring(0, --index) + ELLIPSES;
+				}
+			}
+			else
+			{
+				stringToDisplay = string;
+			}
+		}
+
+		return stringToDisplay;
 	}
 
 	private static class FileFilterImpl extends FileFilter

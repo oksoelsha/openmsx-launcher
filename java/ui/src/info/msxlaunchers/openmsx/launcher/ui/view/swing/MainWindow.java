@@ -70,6 +70,7 @@ import javax.swing.event.ListSelectionListener;
 
 import info.msxlaunchers.openmsx.common.OSUtils;
 import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
@@ -1033,16 +1034,16 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler#getSearchMatches(java.lang.String)
 	 */
 	@Override
-	public Set<String> getSearchMatches(String searchString)
+	public Set<DatabaseItem> getSearchMatches(String searchString)
 	{
 		return presenter.onRequestSearchMatches(searchString);
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler#handleSearchSelection(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler#handleSearchSelection(info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem)
 	 */
 	@Override
-	public void handleSearchSelection(String searchSelection)
+	public void handleSearchSelection(DatabaseItem searchSelection)
 	{
 		selectGame(searchSelection);
 	}
@@ -1668,7 +1669,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		resetFilterMenuItem.addActionListener(this);
 	}
 
-	private void selectGame(String databaseItem)
+	private void selectGame(String databaseItemString)
+	{
+		selectGame(DatabaseItem.getDatabaseItem(databaseItemString));
+	}
+
+	private void selectGame(DatabaseItem databaseItem)
 	{
 		try
 		{

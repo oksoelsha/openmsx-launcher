@@ -23,6 +23,8 @@ import java.awt.FontMetrics;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.WindowUtils;
+
 /**
  * Label that shows two sections: a title (e.g. Database) and a value (name of database)
  * 
@@ -44,7 +46,6 @@ public class JCompositeLabel extends JLabel
 	private String titleTextAlign;
 
 	private static final Color BACKGROUND = new Color(187, 187, 187);
-	private static final String ELLIPSES = "...";
 	private static final String textAlignCenter = "center";
 	private static final String textAlignLeft = "left";
 	private static final String textAlignRight = "right";
@@ -115,38 +116,10 @@ public class JCompositeLabel extends JLabel
 				"<table cellspacing=\"0\" cellpadding=\"0\" style=\"width:" + divWidth + "px\"><tr><td style=\"background:#bbbbbb; text-align:" +
 				titleTextAlign +
 				"\">" +
-				getDisplayString(title) +
+				WindowUtils.truncateStringAndDisplayEllipsis(title, fontMetrics, maxStringWidthInPixels) +
 				"</td></tr><tr><td style=\"background:#777777; color:white; padding:1px; white-space:nowrap; height:14px; text-align:" +
 				valueTextAlign + "\">" +
-				getDisplayString(value) +
+				WindowUtils.truncateStringAndDisplayEllipsis(value, fontMetrics, maxStringWidthInPixels) +
 				"</td></tr></table></html>";
-	}
-
-	private String getDisplayString(String string)
-	{
-		String stringToDisplay = null;
-
-		if(string == null)
-		{
-			stringToDisplay = "";
-		}
-		else
-		{
-			if(fontMetrics.stringWidth(string) > maxStringWidthInPixels)
-			{
-				int index = string.length() - 1;
-				stringToDisplay = string.substring(0, index) + ELLIPSES;
-				while(fontMetrics.stringWidth(stringToDisplay) >= maxStringWidthInPixels)
-				{
-					stringToDisplay = string.substring(0, --index) + ELLIPSES;
-				}
-			}
-			else
-			{
-				stringToDisplay = string;
-			}
-		}
-
-		return stringToDisplay;
 	}
 }

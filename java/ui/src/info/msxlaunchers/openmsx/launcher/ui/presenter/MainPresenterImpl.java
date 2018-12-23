@@ -811,14 +811,11 @@ final class MainPresenterImpl implements MainPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onSelectDatabaseItem(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onSelectDatabaseItem(info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem)
 	 */
 	@Override
-	public void onSelectDatabaseItem( String databaseItemString ) throws LauncherException
+	public void onSelectDatabaseItem( DatabaseItem databaseItem ) throws LauncherException
 	{
-		//switch database and highlight the game
-		DatabaseItem databaseItem = DatabaseItem.getDatabaseItem( databaseItemString );
-
 		onSelectDatabase( databaseItem.getDatabase() );
 
 		view.highlightGame( databaseItem.getGameName() );
@@ -1160,17 +1157,13 @@ final class MainPresenterImpl implements MainPresenter
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestSearchMatches(java.lang.String)
 	 */
 	@Override
-	public Set<String> onRequestSearchMatches( String searchString )
+	public Set<DatabaseItem> onRequestSearchMatches( String searchString )
 	{
 		Set<DatabaseItem> matches =  new TreeSet<>( new DatabaseItemComparator() );
 
 		matches.addAll( launcherPersistence.getGameFinder().find( searchString, MAX_SEARCH_MATCHES ) );
 
-		Set<String> matchesAsString = new LinkedHashSet<>();
-
-		matches.stream().forEach( match -> matchesAsString.add( match.toString() ) );
-
-		return matchesAsString;
+		return matches;
 	}
 
 	/* (non-Javadoc)

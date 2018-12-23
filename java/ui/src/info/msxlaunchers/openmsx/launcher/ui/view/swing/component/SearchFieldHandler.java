@@ -17,6 +17,8 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
 import java.util.Set;
 
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
+
 /**
  * Interface containing a method to process text string entered by user by searching the database for matches
  * 
@@ -30,13 +32,14 @@ public interface SearchFieldHandler
 	 * Get search matches for the given string
 	 * 
 	 * @param searchString String entered by user to use in the search
+	 * @return Set of search matches
 	 */
-	Set<String> getSearchMatches(String searchString);
+	Set<DatabaseItem> getSearchMatches(String searchString);
 
 	/**
 	 * Handle search selection (e.g. go the selected game on the UI)
 	 * 
 	 * @param searchSelection Search selection made by user
 	 */
-	void handleSearchSelection(String searchSelection);
+	void handleSearchSelection(DatabaseItem searchSelection);
 }

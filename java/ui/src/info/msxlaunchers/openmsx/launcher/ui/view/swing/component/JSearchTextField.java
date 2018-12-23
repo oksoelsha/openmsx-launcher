@@ -16,6 +16,8 @@
 package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -45,6 +47,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.WindowUtils;
+
 /**
  * JMenuItem implementation to use in the Search JPopupMenu
  * 
@@ -67,7 +72,7 @@ public class JSearchTextField extends JTextField
 	private final ActionListener timerListener = new TimerListener();
 	private final Timer fieldUpdateTimer = new Timer(TYPING_DELAY, timerListener);
 
-	private static final int MATCHES_MENU_ITEM_HEIGHT = 20;
+	private static final int MATCHES_MENU_ITEM_HEIGHT = 34;
 
 	private static final String ENTER_MAP_KEY = "Enter-key";
 	private static final String DOWN_MAP_KEY = "Down-key";
@@ -77,11 +82,13 @@ public class JSearchTextField extends JTextField
 	private int currentMatchSelectionIndex = UNSELECTED_INDEX;
 	private int currentMatchSelectionMaximum = 0;
 
-	private JMatchLabel matchesLabels[];
+	private JMatchLabel[] matchesLabels;
 
 	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(7, 7, 7, 7);
 	private static final Border LABEL_LINE = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.gray);
 	private static final Border LABEL_COMPOUND_BORDER = BorderFactory.createCompoundBorder(LABEL_LINE, LABEL_MARGIN);
+	private final FontMetrics fontMetricsSize10 = getFontMetrics(new Font(null, Font.PLAIN, 10));
+	private final FontMetrics fontMetricsSize8 = getFontMetrics(new Font(null, Font.PLAIN, 8));
 	@SuppressWarnings("unchecked")
 	private static final Painter<JComponent> LABEL_BACKGROUND_PAINTER = (Painter<JComponent>)UIManager.get("MenuItem[MouseOver].backgroundPainter");
 
@@ -127,7 +134,7 @@ public class JSearchTextField extends JTextField
 			{
 				if(currentMatchSelectionIndex > UNSELECTED_INDEX)
 				{
-					processMatchSelection(matchesLabels[currentMatchSelectionIndex].getText());
+					processMatchSelection(matchesLabels[currentMatchSelectionIndex].getSelectedItem());
 				}
 			}
 		});
@@ -195,9 +202,9 @@ public class JSearchTextField extends JTextField
 		});
 	}
 
-	private void showMatches(Set<String> matches)
+	private void showMatches(Set<DatabaseItem> matches)
 	{
-		if(matches.size() == 0)
+		if(matches.isEmpty())
 		{
 			matchesPopup.setVisible(false);
 		}
@@ -209,7 +216,7 @@ public class JSearchTextField extends JTextField
 
 			int index = 0;
 			matchesLabels = new JMatchLabel[matches.size()];
-			for(String match:matches)
+			for(DatabaseItem match:matches)
 			{
 				matchesLabels[index] = new JMatchLabel(match, index);
 				matchesPanel.add(matchesLabels[index++]);
@@ -227,10 +234,16 @@ public class JSearchTextField extends JTextField
 	{
 		private final int indexInMatchesList;
 		private boolean mouseInsideLabel;
+		private final DatabaseItem databaseItem;
 
-		JMatchLabel(String label, int indexInMatchesList)
+		JMatchLabel(DatabaseItem databaseItem, int indexInMatchesList)
 		{
-			super(label);
+			setText("<html><div style=\"white-space: nowrap; font-size: 10px;\">" +
+					WindowUtils.truncateStringAndDisplayEllipsis(databaseItem.getGameName(), fontMetricsSize10, parentMenu.getWidth() - 72) +
+					"</div><div style=\"white-space: nowrap; font-size: 8px; padding-left: 2px;\"> - " +
+					WindowUtils.truncateStringAndDisplayEllipsis(databaseItem.getDatabase(), fontMetricsSize8, parentMenu.getWidth() - 122) +
+					"</div></html>");
+			this.databaseItem = databaseItem;
 			this.indexInMatchesList = indexInMatchesList;
 
 			setOpaque(!gradientResultHighlight);
@@ -238,6 +251,11 @@ public class JSearchTextField extends JTextField
 			addMouseListener(this);
 			setBorder(LABEL_COMPOUND_BORDER);
 			mouseInsideLabel = false;
+		}
+
+		public DatabaseItem getSelectedItem()
+		{
+			return databaseItem;
 		}
 
 		@Override
@@ -280,7 +298,7 @@ public class JSearchTextField extends JTextField
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
-			processMatchSelection(((JMatchLabel)e.getSource()).getText());
+			processMatchSelection(((JMatchLabel)e.getSource()).getSelectedItem());
 		}
 
 		@Override
@@ -309,7 +327,7 @@ public class JSearchTextField extends JTextField
 		}
 	}
 
-	private void processMatchSelection(String selection)
+	private void processMatchSelection(DatabaseItem selection)
 	{
 		searchFieldHandler.handleSearchSelection(selection);
 		parentMenu.setVisible(false);
@@ -320,7 +338,7 @@ public class JSearchTextField extends JTextField
 		@Override
 		public void actionPerformed(ActionEvent evt)
 		{
-			Set<String> matches = searchFieldHandler.getSearchMatches(getText());
+			Set<DatabaseItem> matches = searchFieldHandler.getSearchMatches(getText());
 
 			showMatches(matches);
 

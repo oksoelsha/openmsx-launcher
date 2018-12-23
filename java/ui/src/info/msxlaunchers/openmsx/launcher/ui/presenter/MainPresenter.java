@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 
@@ -203,10 +204,10 @@ public interface MainPresenter
 	/**
 	 * Called when user selects a database item (e.g. favorite or search item)
 	 * 
-	 * @param databaseItemString Selected favorite or search item (in the format gamename [database])
+	 * @param databaseItem Selected favorite or search item
 	 * @throws LauncherException
 	 */
-	void onSelectDatabaseItem( String databaseItemString ) throws LauncherException;
+	void onSelectDatabaseItem( DatabaseItem databaseItem ) throws LauncherException;
 
 	/**
 	 * Called when user requests to delete selected a favorite
@@ -363,8 +364,9 @@ public interface MainPresenter
 	 * Called when user requests game matches for the string entered in the search field
 	 * 
 	 * @param searchString String to search partially for
+	 * @return Set of ordered search matches
 	 */
-	Set<String> onRequestSearchMatches( String searchString );
+	Set<DatabaseItem> onRequestSearchMatches( String searchString );
 
 	/**
 	 * Called when update extra data operation is finished successfully

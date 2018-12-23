@@ -503,9 +503,9 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnSelectDatabaseItem() throws LauncherException, FavoritePersistenceException
 	{
-		presenter.onSelectDatabaseItem( "game name [database name]" );
+		presenter.onSelectDatabaseItem( new DatabaseItem( "game", "name") );
 
-		verify( view, times( 1 ) ).highlightGame( "game name" );
+		verify( view, times( 1 ) ).highlightGame( "game" );
 	}
 
 	@Test
@@ -737,10 +737,9 @@ public class MainPresenterImplTest
 
 		when( gameFinder.find( anyString(), anyInt() ) ).thenReturn( matches );
 
-		Set<String> matchesAsStrings = presenter.onRequestSearchMatches( "searchString" );
+		Set<DatabaseItem> searchMatches = presenter.onRequestSearchMatches( "searchString" );
 
-		assertEquals( matches.size(), matchesAsStrings.size() );
-		assertEquals( getTestDatabaseItemsAsStrings( matches ), matchesAsStrings );
+		assertEquals( matches, searchMatches );
 	}
 
 	private Set<DatabaseItem> getTestDatabaseItems()
