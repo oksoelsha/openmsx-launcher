@@ -60,7 +60,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.WindowUtils;
 @SuppressWarnings("serial")
 public class JSearchTextField extends JTextField
 {
-	private static final int TYPING_DELAY = 200;
+	private static final int TYPING_DELAY = 150;
 
 	private final SearchFieldHandler searchFieldHandler;
 	private final JPopupMenu parentMenu;
