@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -495,9 +494,7 @@ public class MainPresenterImplTest
 
 		presenter.onRequestListOfFavorites();
 
-		Set<String> favoritesAsString = getTestDatabaseItemsAsStrings( favorites );
-
-		verify( view, times( 1 ) ).showFavoritesMenu( favoritesAsString );
+		verify( view, times( 1 ) ).showFavoritesMenu( favorites );
 	}
 
 	@Test
@@ -511,7 +508,7 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRequestDeleteFavoriteAction() throws LauncherException, FavoritePersistenceException
 	{
-		presenter.onRequestDeleteFavoriteAction( "game name [database name]" );
+		presenter.onRequestDeleteFavoriteAction( new DatabaseItem("game name", "database name" ) );
 
 		verify( favoritePersister, times( 1 ) ).deleteFavorite( new DatabaseItem( "game name", "database name" ) );
 	}
@@ -521,7 +518,7 @@ public class MainPresenterImplTest
 	{
 		doThrow( new FavoritePersistenceException( FavoritePersistenceExceptionIssue.IO ) ).when( favoritePersister ) .deleteFavorite( any( DatabaseItem.class ) );
 
-		presenter.onRequestDeleteFavoriteAction( "game name [database name]" );
+		presenter.onRequestDeleteFavoriteAction( new DatabaseItem( "game name", "database name" ) );
 	}
 
 	@Test
@@ -762,10 +759,5 @@ public class MainPresenterImplTest
 		set.add( databaseItem7 );
 
 		return set;
-	}
-
-	private Set<String> getTestDatabaseItemsAsStrings( Set<DatabaseItem> set )
-	{
-		return set.stream().map( di -> di.getGameName() + " [" + di.getDatabase() + "]").collect( Collectors.toSet() );
 	}
 }

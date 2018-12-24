@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.ui.view;
 
 import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
@@ -226,9 +227,9 @@ class MainSwingView implements MainView
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#showFavoritesMenu(java.util.Set)
 	 */
 	@Override
-	public void showFavoritesMenu( Set<String> favoritesAsStrings )
+	public void showFavoritesMenu( Set<DatabaseItem> favorites )
 	{
-		mainWindow.showFavoritesMenu( favoritesAsStrings );
+		mainWindow.showFavoritesMenu( favorites );
 	}
 
 	/* (non-Javadoc)

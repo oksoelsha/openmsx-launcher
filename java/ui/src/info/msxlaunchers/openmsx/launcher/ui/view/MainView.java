@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.ui.view;
 
 import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
 
@@ -189,9 +190,9 @@ public interface MainView
 	/**
 	 * Shows the favorites menu
 	 * 
-	 * @param favorites Set of favorites represented as moniker strings
+	 * @param favorites Set of favorites
 	 */
-	void showFavoritesMenu( Set<String> favoritesAsStrings );
+	void showFavoritesMenu( Set<DatabaseItem> favorites );
 
 	/**
 	 * Shows the databases list

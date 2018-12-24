@@ -210,7 +210,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 		new GlobalSwingContext(this);
 
-		new FileDrop(this, (File[] files) -> addDraggedGames(files));
+		new FileDrop(this, this::addDraggedGames);
 	}
 
 	public void display(Language language,
@@ -865,7 +865,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			}
 			else if(action instanceof FavoriteMenuItemName)
 			{
-				selectGame(((PopupMenuItemName)action).getPopupMenuItemName());
+				selectGame(((FavoriteMenuItemName)action).favorite);
 			}
 			else if(action instanceof DatabaseMenuItemName)
 			{
@@ -900,7 +900,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 				favoritesContextMenu.setVisible(false);
 				try
 				{
-					presenter.onRequestDeleteFavoriteAction(((PopupMenuItemDelete)action).getPopupMenuItemName());
+					presenter.onRequestDeleteFavoriteAction(((FavoriteMenuItemDelete)action).favorite);
 					gameList.requestFocusInWindow();
 				}
 				catch(LauncherException le)
@@ -929,16 +929,16 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		showButtonMenu(databaseSelectButton, databasesContextMenu, 0);
 	}
 
-	public void showFavoritesMenu(Set<String> favoritesAsStrings)
+	public void showFavoritesMenu(Set<DatabaseItem> favorites)
 	{
 		favoritesContextMenu = new JPopupMenu();
 		favoritesContextMenu.setComponentOrientation(orientation);
 
-		for(String favoriteMoniker:favoritesAsStrings)
+		for(DatabaseItem favorite:favorites)
 		{
 			JMenuItem favoriteMenuItem = new JMenuItem();
 			favoriteMenuItem.setComponentOrientation(orientation);
-			favoriteMenuItem.setAction(new FavoriteMenuItemName(favoriteMoniker));
+			favoriteMenuItem.setAction(new FavoriteMenuItemName(favorite));
 			favoriteMenuItem.addActionListener(this);
 
 			favoriteMenuItem.setMargin(POPUP_MENU_ITEM_BUTTON_INSETS);
@@ -947,7 +947,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		    JButton deleteButton = new JButton();
 		    deleteButton.setContentAreaFilled(false);
 		    deleteButton.setPreferredSize(POPUP_MENU_ITEM_BUTTON_DIMENSION);
-		    deleteButton.setAction(new FavoriteMenuItemDelete(favoriteMoniker));
+		    deleteButton.setAction(new FavoriteMenuItemDelete(favorite));
 		    deleteButton.addActionListener(this);
 		    deleteButton.setToolTipText(messages.get("DELETE"));
 		    addFilterButtonHoverBehavior(deleteButton);
@@ -1669,11 +1669,6 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		resetFilterMenuItem.addActionListener(this);
 	}
 
-	private void selectGame(String databaseItemString)
-	{
-		selectGame(DatabaseItem.getDatabaseItem(databaseItemString));
-	}
-
 	private void selectGame(DatabaseItem databaseItem)
 	{
 		try
@@ -1836,10 +1831,22 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	private class FavoriteMenuItemName extends PopupMenuItemName
 	{
-		FavoriteMenuItemName(String favoriteName)
+		private final DatabaseItem favorite;
+
+		FavoriteMenuItemName(DatabaseItem favorite)
 		{
-			super(favoriteName);
+			super(getFavoriteDisplayName(favorite));
+			this.favorite = favorite;
 		}
+	}
+
+	private String getFavoriteDisplayName(DatabaseItem favorite)
+	{
+		return "<html><div style=\"font-size: 10px; padding-right: 40px;\">" +
+				favorite.getGameName() +
+				"</div><div style=\"font-size: 8px; padding-left: 2px; padding-right: 40px;\"> - " +
+				favorite.getDatabase() +
+				"</div></html>";
 	}
 
 	private class DatabaseMenuItemName extends PopupMenuItemName
@@ -1852,9 +1859,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	private class FavoriteMenuItemDelete extends PopupMenuItemDelete
 	{
-		FavoriteMenuItemDelete(String favoriteName)
+		private final DatabaseItem favorite;
+
+		FavoriteMenuItemDelete(DatabaseItem favorite)
 		{
-			super(favoriteName);
+			super("");
+			this.favorite = favorite;
 		}
 	}
 

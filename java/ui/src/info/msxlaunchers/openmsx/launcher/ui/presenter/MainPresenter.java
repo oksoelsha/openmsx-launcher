@@ -212,10 +212,10 @@ public interface MainPresenter
 	/**
 	 * Called when user requests to delete selected a favorite
 	 * 
-	 * @param favoriteName Favorite to delete
+	 * @param favorite Favorite to delete
 	 * @throws LauncherException
 	 */
-	void onRequestDeleteFavoriteAction( String favoriteName ) throws LauncherException;
+	void onRequestDeleteFavoriteAction( DatabaseItem favorite ) throws LauncherException;
 
 	/**
 	 * Called when user requests the current list of saved filters

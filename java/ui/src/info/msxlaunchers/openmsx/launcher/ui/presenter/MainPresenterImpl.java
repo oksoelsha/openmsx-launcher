@@ -794,11 +794,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		favorites.addAll( launcherPersistence.getFavoritePersister().getFavorites() );
 
-		Set<String> favoritesAsString = new LinkedHashSet<>();
-
-		favorites.forEach( favorite -> favoritesAsString.add( favorite.toString() ) );
-
-		view.showFavoritesMenu( favoritesAsString );
+		view.showFavoritesMenu( favorites );
 	}
 
 	/* (non-Javadoc)
@@ -822,14 +818,14 @@ final class MainPresenterImpl implements MainPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestDeleteFavoriteAction(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestDeleteFavoriteAction(info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem)
 	 */
 	@Override
-	public void onRequestDeleteFavoriteAction( String favoriteName ) throws LauncherException
+	public void onRequestDeleteFavoriteAction( DatabaseItem favorite ) throws LauncherException
 	{
 		try
 		{
-			launcherPersistence.getFavoritePersister().deleteFavorite( DatabaseItem.getDatabaseItem( favoriteName ) );
+			launcherPersistence.getFavoritePersister().deleteFavorite( favorite );
 		}
 		catch( FavoritePersistenceException fpe )
 		{
