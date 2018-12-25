@@ -17,7 +17,6 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing.component;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -30,6 +29,7 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,7 +48,6 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.WindowUtils;
 
 /**
  * JMenuItem implementation to use in the Search JPopupMenu
@@ -72,7 +71,7 @@ public class JSearchTextField extends JTextField
 	private final ActionListener timerListener = new TimerListener();
 	private final Timer fieldUpdateTimer = new Timer(TYPING_DELAY, timerListener);
 
-	private static final int MATCHES_MENU_ITEM_HEIGHT = 34;
+	private static final int MATCHES_MENU_ITEM_HEIGHT = 42;
 
 	private static final String ENTER_MAP_KEY = "Enter-key";
 	private static final String DOWN_MAP_KEY = "Down-key";
@@ -82,13 +81,15 @@ public class JSearchTextField extends JTextField
 	private int currentMatchSelectionIndex = UNSELECTED_INDEX;
 	private int currentMatchSelectionMaximum = 0;
 
-	private JMatchLabel[] matchesLabels;
+	private JMatchPanel[] matchesLabels;
 
 	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(7, 7, 7, 7);
 	private static final Border LABEL_LINE = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.gray);
 	private static final Border LABEL_COMPOUND_BORDER = BorderFactory.createCompoundBorder(LABEL_LINE, LABEL_MARGIN);
-	private final FontMetrics fontMetricsSize10 = getFontMetrics(new Font(null, Font.PLAIN, 10));
-	private final FontMetrics fontMetricsSize8 = getFontMetrics(new Font(null, Font.PLAIN, 8));
+	private static final Font gameFont = new Font(null, Font.PLAIN, 14);
+	private static final Font databaseFont = new Font(null, Font.PLAIN, 9);
+	private static final Color databaseColor = new Color(100, 100, 100);
+
 	@SuppressWarnings("unchecked")
 	private static final Painter<JComponent> LABEL_BACKGROUND_PAINTER = (Painter<JComponent>)UIManager.get("MenuItem[MouseOver].backgroundPainter");
 
@@ -202,49 +203,20 @@ public class JSearchTextField extends JTextField
 		});
 	}
 
-	private void showMatches(Set<DatabaseItem> matches)
-	{
-		if(matches.isEmpty())
-		{
-			matchesPopup.setVisible(false);
-		}
-		else
-		{
-			matchesPopup.setSize(parentMenu.getWidth(), matches.size() * MATCHES_MENU_ITEM_HEIGHT);
-			matchesPopup.setLocation(parentMenu.getLocationOnScreen().x, parentMenu.getLocationOnScreen().y + parentMenu.getHeight() - 1);
-			matchesPanel.removeAll();
-
-			int index = 0;
-			matchesLabels = new JMatchLabel[matches.size()];
-			for(DatabaseItem match:matches)
-			{
-				matchesLabels[index] = new JMatchLabel(match, index);
-				matchesPanel.add(matchesLabels[index++]);
-			}
-
-			matchesPopup.setAlwaysOnTop(true);
-			matchesPopup.setVisible(true);
-		}
-
-		currentMatchSelectionIndex = UNSELECTED_INDEX;
-		currentMatchSelectionMaximum = matches.size();
-	}
-
-	private class JMatchLabel extends JLabel implements MouseListener
+	private class JMatchPanel extends JPanel implements MouseListener
 	{
 		private final int indexInMatchesList;
 		private boolean mouseInsideLabel;
 		private final DatabaseItem databaseItem;
 
-		JMatchLabel(DatabaseItem databaseItem, int indexInMatchesList)
+		JMatchPanel(DatabaseItem databaseItem, int indexInMatchesList)
 		{
-			setText("<html><div style=\"white-space: nowrap; font-size: 10px;\">" +
-					WindowUtils.truncateStringAndDisplayEllipsis(databaseItem.getGameName(), fontMetricsSize10, parentMenu.getWidth() - 72) +
-					"</div><div style=\"white-space: nowrap; font-size: 8px; padding-left: 2px;\"> - " +
-					WindowUtils.truncateStringAndDisplayEllipsis(databaseItem.getDatabase(), fontMetricsSize8, parentMenu.getWidth() - 122) +
-					"</div></html>");
 			this.databaseItem = databaseItem;
 			this.indexInMatchesList = indexInMatchesList;
+
+			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			addGameLabel();
+			addDatabaseLabel();
 
 			setOpaque(!gradientResultHighlight);
 			setBackground(UIManager.getColor("MenuItem.background"));
@@ -270,7 +242,22 @@ public class JSearchTextField extends JTextField
 			super.paintComponent(g);
 		}
 
-		void highlight()
+		private void addGameLabel()
+		{
+			JLabel gameName = new JLabel(databaseItem.getGameName());
+			gameName.setFont(gameFont);
+			add(gameName);
+		}
+
+		private void addDatabaseLabel()
+		{
+			JLabel databaseName = new JLabel(databaseItem.getDatabase());
+			databaseName.setFont(databaseFont);
+			databaseName.setForeground(databaseColor);
+			add(databaseName);
+		}
+
+		private void highlight()
 		{
 			mouseInsideLabel = true;
 			if(gradientResultHighlight)
@@ -284,7 +271,7 @@ public class JSearchTextField extends JTextField
 			currentMatchSelectionIndex = indexInMatchesList;
 		}
 
-		void unhighlight()
+		private void unhighlight()
 		{
 			mouseInsideLabel = false;
 			setBackground(UIManager.getColor("MenuItem.background"));
@@ -298,7 +285,7 @@ public class JSearchTextField extends JTextField
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
-			processMatchSelection(((JMatchLabel)e.getSource()).getSelectedItem());
+			processMatchSelection(((JMatchPanel)e.getSource()).getSelectedItem());
 		}
 
 		@Override
@@ -343,6 +330,34 @@ public class JSearchTextField extends JTextField
 			showMatches(matches);
 
 			((Timer)evt.getSource()).stop();
+		}
+
+		private void showMatches(Set<DatabaseItem> matches)
+		{
+			if(matches.isEmpty())
+			{
+				matchesPopup.setVisible(false);
+			}
+			else
+			{
+				matchesPopup.setSize(parentMenu.getWidth(), matches.size() * MATCHES_MENU_ITEM_HEIGHT);
+				matchesPopup.setLocation(parentMenu.getLocationOnScreen().x, parentMenu.getLocationOnScreen().y + parentMenu.getHeight() - 1);
+				matchesPanel.removeAll();
+
+				int index = 0;
+				matchesLabels = new JMatchPanel[matches.size()];
+				for(DatabaseItem match:matches)
+				{
+					matchesLabels[index] = new JMatchPanel(match, index);
+					matchesPanel.add(matchesLabels[index++]);
+				}
+
+				matchesPopup.setAlwaysOnTop(true);
+				matchesPopup.setVisible(true);
+			}
+
+			currentMatchSelectionIndex = UNSELECTED_INDEX;
+			currentMatchSelectionMaximum = matches.size();
 		}
 	}
 }
