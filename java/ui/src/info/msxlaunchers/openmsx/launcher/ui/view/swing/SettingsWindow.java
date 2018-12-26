@@ -155,7 +155,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		screenshotsFullPathBrowseButton.setToolTipText(messages.get("BROWSE"));
 		screenshotsFullPathBrowseButton.addActionListener(this);
 
-		defaultDatabaseComboBox = new JComboBox<String>(Utils.getSortedCaseInsensitiveArray(databases));
+		defaultDatabaseComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(databases));
 		defaultDatabaseComboBox.setSelectedItem(settings.getDefaultDatabase());
 
 		Language[] languages = Language.values();
@@ -189,6 +189,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		{
 			fullPathPanel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			generalPanel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+			enableFeedServiceCheckBox.setHorizontalTextPosition(SwingConstants.LEADING);
 		}
 		JPanel groupPane = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(groupPane);
