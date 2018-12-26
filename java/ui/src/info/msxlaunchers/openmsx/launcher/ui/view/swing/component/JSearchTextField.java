@@ -50,7 +50,7 @@ import javax.swing.event.PopupMenuListener;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 
 /**
- * JMenuItem implementation to use in the Search JPopupMenu
+ * JTextField-based implementation to display dynamic search results
  * 
  * @since v1.6
  * @author Sam Elsharif
@@ -71,7 +71,7 @@ public class JSearchTextField extends JTextField
 	private final ActionListener timerListener = new TimerListener();
 	private final Timer fieldUpdateTimer = new Timer(TYPING_DELAY, timerListener);
 
-	private static final int MATCHES_MENU_ITEM_HEIGHT = 42;
+	private static final int MATCHES_MENU_ITEM_HEIGHT = 39;
 
 	private static final String ENTER_MAP_KEY = "Enter-key";
 	private static final String DOWN_MAP_KEY = "Down-key";
@@ -83,7 +83,7 @@ public class JSearchTextField extends JTextField
 
 	private JMatchPanel[] matchesLabels;
 
-	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(7, 7, 7, 7);
+	private static final Border LABEL_MARGIN = BorderFactory.createEmptyBorder(5, 7, 7, 7);
 	private static final Border LABEL_LINE = BorderFactory.createMatteBorder(0, 1, 0, 1, Color.gray);
 	private static final Border LABEL_COMPOUND_BORDER = BorderFactory.createCompoundBorder(LABEL_LINE, LABEL_MARGIN);
 	private static final Font gameFont = new Font(null, Font.PLAIN, 14);
@@ -251,7 +251,7 @@ public class JSearchTextField extends JTextField
 
 		private void addDatabaseLabel()
 		{
-			JLabel databaseName = new JLabel(databaseItem.getDatabase());
+			JLabel databaseName = new JLabel("- " + databaseItem.getDatabase());
 			databaseName.setFont(databaseFont);
 			databaseName.setForeground(databaseColor);
 			add(databaseName);
