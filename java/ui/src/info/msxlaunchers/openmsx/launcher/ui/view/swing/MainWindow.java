@@ -594,7 +594,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 				{
 					//this is the case where there's no selection
 					//This happens when the JList component is reloaded which causes this event to trigger
-					enableButtons(false, false, currentDatabase != null, false, false);
+					presenter.resetAll();
 				}
 				else if(!listSelectionEvent.getValueIsAdjusting() )
 				{

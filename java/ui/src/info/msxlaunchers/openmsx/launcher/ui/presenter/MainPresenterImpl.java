@@ -451,10 +451,7 @@ final class MainPresenterImpl implements MainPresenter
 		if( currentDatabase == null )
 		{
 			//this happens when the last database is deleted
-			view.showGameScreenshots( null, null );
-			view.enableButtons( false, false, false, false, false );
-			view.enableSoundIndicators( false, false, false, false, false, false, false, false );
-			view.enableGenerationIndicators( false,  false,  false,  false );
+			resetAll();
 		}
 		else if( gameNames == null || gameNames.size() != 1 )
 		{
@@ -524,6 +521,18 @@ final class MainPresenterImpl implements MainPresenter
 				view.enableGenerationIndicators( game.isMSX(), game.isMSX2(), game.isMSX2Plus(), game.isTurboR() );
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#resetAll()
+	 */
+	@Override
+	public void resetAll()
+	{
+		view.showGameScreenshots( null, null );
+		view.enableButtons( false, false, currentDatabase != null, false, false );
+		view.enableSoundIndicators( false, false, false, false, false, false, false, false );
+		view.enableGenerationIndicators( false,  false,  false,  false );
 	}
 
 	/* (non-Javadoc)
