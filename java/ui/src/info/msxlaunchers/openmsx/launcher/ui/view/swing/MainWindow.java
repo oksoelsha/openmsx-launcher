@@ -19,6 +19,7 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -43,6 +44,7 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -63,6 +65,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -172,6 +175,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	private ComponentOrientation orientation = null;
 	private int popupMenuOrientation = 0;
+	private Insets favoritesMenuInsets = null;
 
 	private String removeConfirmationMessage = null;
 	private String updateAllDatabasesConfirmationMessage = null;
@@ -179,6 +183,13 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private Map<Medium, ImageIcon> mediaIconsMap = new HashMap<>();
 
 	public static final Dimension BUTTON_DIMENSION = new Dimension(109, 28);
+
+	private static final Font gameFont = new Font(null, Font.PLAIN, 14);
+	private static final Font databaseFont = new Font(null, Font.PLAIN, 9);
+	private static final Color databaseColor = new Color(100, 100, 100);
+	private static final Insets favoritesMenuMarginLeftToRight = new Insets(-2, 0, 22, 250);
+	private static final Insets favoritesMenuMarginRightToLeft = new Insets(-2, -12, 22, 260);
+	private static final Dimension favoritesLabelSize = new Dimension(300, 18);
 
 	private static final Color DEFAULT_BUTTON_BG_COLOR = UIManager.getLookAndFeelDefaults().getColor("Button.background");
 	private static final Insets POPUP_MENU_ITEM_BUTTON_INSETS = new Insets(-1, 0, -1, -13);
@@ -250,11 +261,13 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		{
 			orientation = ComponentOrientation.RIGHT_TO_LEFT;
 			popupMenuOrientation = FlowLayout.LEFT;
+			favoritesMenuInsets = favoritesMenuMarginRightToLeft;
 		}
 		else
 		{
 			orientation = ComponentOrientation.LEFT_TO_RIGHT;
 			popupMenuOrientation = FlowLayout.RIGHT;
+			favoritesMenuInsets = favoritesMenuMarginLeftToRight;
 		}
 		flipOrientation();
 
@@ -646,6 +659,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	{
 		orientation = ComponentOrientation.LEFT_TO_RIGHT;
 		popupMenuOrientation = FlowLayout.RIGHT;
+		favoritesMenuInsets = favoritesMenuMarginLeftToRight;
 		flipOrientation();
 	}
 
@@ -653,6 +667,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	{
 		orientation = ComponentOrientation.RIGHT_TO_LEFT;
 		popupMenuOrientation = FlowLayout.LEFT;
+		favoritesMenuInsets = favoritesMenuMarginRightToLeft;
 		flipOrientation();
 	}
 
@@ -932,26 +947,46 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	public void showFavoritesMenu(Set<DatabaseItem> favorites)
 	{
 		favoritesContextMenu = new JPopupMenu();
-		favoritesContextMenu.setComponentOrientation(orientation);
+		favoritesContextMenu.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		for(DatabaseItem favorite:favorites)
 		{
 			JMenuItem favoriteMenuItem = new JMenuItem();
-			favoriteMenuItem.setComponentOrientation(orientation);
 			favoriteMenuItem.setAction(new FavoriteMenuItemName(favorite));
 			favoriteMenuItem.addActionListener(this);
+			favoriteMenuItem.setMargin(favoritesMenuInsets);
+			favoriteMenuItem.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-			favoriteMenuItem.setMargin(POPUP_MENU_ITEM_BUTTON_INSETS);
-			favoriteMenuItem.setLayout(new FlowLayout(popupMenuOrientation, 0, 0));
+			JPanel menuItemPanel = new JPanel();
+			menuItemPanel.setComponentOrientation(orientation);
+			menuItemPanel.setOpaque(false);
 
+			JPanel labelsPanel = new JPanel();
+			labelsPanel.setOpaque(false);
+			labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
+
+			JLabel gameName = new JLabel(favorite.getGameName());
+			gameName.setFont(gameFont);
+			gameName.setPreferredSize(favoritesLabelSize);
+			labelsPanel.add(gameName);
+
+			JLabel databaseName = new JLabel("- " + favorite.getDatabase());
+			databaseName.setFont(databaseFont);
+			databaseName.setForeground(databaseColor);
+			databaseName.setPreferredSize(favoritesLabelSize);
+			labelsPanel.add(databaseName);
+			menuItemPanel.add(labelsPanel);
+
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setOpaque(false);
 		    JButton deleteButton = new JButton();
-		    deleteButton.setContentAreaFilled(false);
-		    deleteButton.setPreferredSize(POPUP_MENU_ITEM_BUTTON_DIMENSION);
+		    buttonPanel.add(deleteButton);
 		    deleteButton.setAction(new FavoriteMenuItemDelete(favorite));
 		    deleteButton.addActionListener(this);
 		    deleteButton.setToolTipText(messages.get("DELETE"));
-		    addFilterButtonHoverBehavior(deleteButton);
-		    favoriteMenuItem.add(deleteButton);
+		    menuItemPanel.add(buttonPanel);
+
+			favoriteMenuItem.add(menuItemPanel);
 
 		    favoritesContextMenu.add(favoriteMenuItem);			
 		}
@@ -1835,18 +1870,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 		FavoriteMenuItemName(DatabaseItem favorite)
 		{
-			super(getFavoriteDisplayName(favorite));
+			super("");
 			this.favorite = favorite;
 		}
-	}
-
-	private String getFavoriteDisplayName(DatabaseItem favorite)
-	{
-		return "<html><div style=\"font-size: 10px; padding-right: 40px;\">" +
-				favorite.getGameName() +
-				"</div><div style=\"font-size: 8px; padding-left: 2px; padding-right: 40px;\"> - " +
-				favorite.getDatabase() +
-				"</div></html>";
 	}
 
 	private class DatabaseMenuItemName extends PopupMenuItemName
