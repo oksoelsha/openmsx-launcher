@@ -196,7 +196,7 @@ final class MainPresenterImpl implements MainPresenter
 		{
 			//in this case there is no default database in the settings => just select the first database in the list.
 			//if list is empty then nothing will be selected anyway
-			if( databases.size() > 0 )
+			if( !databases.isEmpty() )
 			{
 				currentDatabase = databases.iterator().next();
 			}

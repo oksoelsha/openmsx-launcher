@@ -274,6 +274,29 @@ public class MainPresenterImplTest
 	}
 
 	@Test
+	public void testResetAllWhenDatabaseIsSelected()
+	{
+		presenter.resetAll();
+
+		verify( view, times( 1 ) ).showGameScreenshots( null, null );
+		verify( view, times( 1 ) ).enableButtons( false, false, true, false, false );
+		verify( view, times( 1 ) ).enableSoundIndicators( false, false, false, false, false, false, false, false );
+		verify( view, times( 1 ) ).enableGenerationIndicators( false,  false,  false,  false );
+	}
+
+	@Test
+	public void testResetAllWhenNoDatabaseIsSelected() throws LauncherException
+	{
+		presenter.onRequestDeleteDatabaseAction( defaultDatabase );
+		presenter.resetAll();
+
+		verify( view, times( 1 ) ).showGameScreenshots( null, null );
+		verify( view, times( 1 ) ).enableButtons( false, false, false, false, false );
+		verify( view, times( 1 ) ).enableSoundIndicators( false, false, false, false, false, false, false, false );
+		verify( view, times( 1 ) ).enableGenerationIndicators( false,  false,  false,  false );
+	}
+
+	@Test
 	public void testOnRequestMoveGamesScreen()
 	{
 		presenter.onRequestMoveGamesScreen( new HashSet<String>(), defaultDatabase );

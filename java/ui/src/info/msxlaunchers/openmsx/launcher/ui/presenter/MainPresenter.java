@@ -66,6 +66,11 @@ public interface MainPresenter
 	void onSelectGames( Set<String> gameNames );
 
 	/**
+	 * Resets all buttons to initial state
+	 */
+	void resetAll();
+
+	/**
 	 * Called when user launches openMSX with selected game
 	 * 
 	 * @param gameName Name of game to launch
