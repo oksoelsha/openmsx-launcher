@@ -3,6 +3,7 @@ package info.msxlaunchers.openmsx.launcher.data.game;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 
 import org.junit.Test;
 
@@ -25,7 +26,8 @@ public class GameTest
 			.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 			.genre1( Genre.ACTION ).genre2( Genre.ADVENTURE_TEXT_AND_GFX )
 			.msxGenID( 80 ).sha1Code( "123456789abcdef" ).size( 16 ).screenshotSuffix( "suffix" )
-			.tclScript( "tclScript" ).fddMode( FDDMode.DISABLE_BOTH ).tclScriptOverride( true ).build();
+			.tclScript( "tclScript" ).fddMode( FDDMode.DISABLE_BOTH ).tclScriptOverride( true )
+			.inputDevice( InputDevice.TRACKBALL ).connectGFX9000( true ).build();
 
 		assertEquals( "name", game.getName() );
 		assertEquals( "info", game.getInfo() );
@@ -59,6 +61,8 @@ public class GameTest
 		assertEquals( "tclScript", game.getTclScript() );
 		assertEquals( FDDMode.DISABLE_BOTH, game.getFDDMode() );
 		assertTrue( game.isTclScriptOverride() );
+		assertEquals( InputDevice.TRACKBALL, game.getInputDevice() );
+		assertTrue( game.isConnectGFX9000() );
 	}
 
 	@Test( expected = IllegalArgumentException.class )
@@ -70,6 +74,8 @@ public class GameTest
 				.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 				.genre1( Genre.ACTION ).genre2( Genre.ADVENTURE_TEXT_AND_GFX )
 				.msxGenID( 80 ).sha1Code( "123456789abcdef" ).size( 16 ).screenshotSuffix( "suffix" )
+				.fddMode( FDDMode.DISABLE_BOTH ).tclScriptOverride( true )
+				.inputDevice( InputDevice.TRACKBALL ).connectGFX9000( true )
 				.build();
 	}
 

@@ -61,6 +61,8 @@ public interface ProfileEditingPresenter
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum Code
 	 * @param scriptOverride Flag to override other non-Script arguments
+	 * @param inputDeviceCode Input device Enum Code
+	 * @param connectGFX9000 Flag to connect GFX9000 cartridge
 	 * @throws LauncherException
 	 */
 	void onRequestAddGameSaveAction( String name,
@@ -76,7 +78,9 @@ public interface ProfileEditingPresenter
 			String laserdisc,
 			String script,
 			int fddModeCode,
-			boolean scriptOverride ) throws LauncherException;
+			boolean scriptOverride,
+			int inputDeviceCode,
+			boolean connectGFX9000 ) throws LauncherException;
 
 	/**
 	 * Called when user decides to launch the game from within the Add or Edit screens
@@ -93,6 +97,8 @@ public interface ProfileEditingPresenter
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum Code
 	 * @param scriptOverride Flag to override other non-Script arguments
+	 * @param inputDeviceCode Input device Enum Code
+	 * @param connectGFX9000 Flag to connect GFX9000 cartridge
 	 * @throws LauncherException
 	 */
 	void onRequestLaunchAction( String machine,
@@ -106,7 +112,9 @@ public interface ProfileEditingPresenter
 			String laserdisc,
 			String script,
 			int fddModeCode,
-			boolean scriptOverride ) throws LauncherException;
+			boolean scriptOverride,
+			int inputDeviceCode,
+			boolean connectGFX9000 ) throws LauncherException;
 
 	/**
 	 * Called when user requests to save the game from within the Edit screen
@@ -126,6 +134,8 @@ public interface ProfileEditingPresenter
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum Code
 	 * @param scriptOverride Flag to override other non-Script arguments
+	 * @param inputDeviceCode Input device Enum Code
+	 * @param connectGFX9000 Flag to connect GFX9000 cartridge
 	 * @throws LauncherException
 	 */
 	void onRequestEditGameSaveAction( String oldName,
@@ -142,5 +152,7 @@ public interface ProfileEditingPresenter
 			String laserdisc,
 			String script,
 			int fddModeCode,
-			boolean scriptOverride ) throws LauncherException;
+			boolean scriptOverride,
+			int inputDeviceCode,
+			boolean connectGFX9000 ) throws LauncherException;
 }

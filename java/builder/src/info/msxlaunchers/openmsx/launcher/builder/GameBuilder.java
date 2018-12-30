@@ -35,6 +35,7 @@ import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 
 /**
  * Factory/Builder class to create Game object with extra data given different arguments
@@ -70,6 +71,8 @@ public class GameBuilder
 	 * @param script Script file name
 	 * @param fddMode FDD Mode
 	 * @param scriptOverride Flag to override non-Script arguments 
+	 * @param inputDevice Input Device
+	 * @param connectGFX9000 Flag to connect GFX9000 cartridge 
 	 * @param extraDataMap Map containing extra data for game by sha1 code
 	 * @return Game object or null if all main game fields are null
 	 */
@@ -84,6 +87,8 @@ public class GameBuilder
 		String script,
 		FDDMode fddMode,
 		boolean scriptOverride,
+		InputDevice inputDevice,
+		boolean connectGFX9000,
 		Map<String,ExtraData> extraDataMap )
 	{
 		boolean notScript = isNotScript( romA, romB, diskA, diskB, tape, harddisk, laserdisc, script );
@@ -110,6 +115,8 @@ public class GameBuilder
 				script,
 				fddMode,
 				scriptOverride,
+				inputDevice,
+				connectGFX9000,
 				fileSha1CodeAndSize.sha1Code,
 				fileSha1CodeAndSize.size,
 				initIfNull( extraDataMap ) );
@@ -157,6 +164,8 @@ public class GameBuilder
 				null,
 				null,
 				true,
+				null,
+				false,
 				fileSha1CodeAndSize.sha1Code,
 				fileSha1CodeAndSize.size,
 				initIfNull( extraDataMap ) );
@@ -209,6 +218,8 @@ public class GameBuilder
 			null,
 			null,
 			true,
+			null,
+			false,
 			sha1Code,
 			fileSize,
 			initIfNull( extraDataMap ) );
@@ -237,6 +248,8 @@ public class GameBuilder
 				game.getTclScript(),
 				null,
 				game.isTclScriptOverride(),
+				null,
+				game.isConnectGFX9000(),
 				game.getSha1Code(),
 				game.getSize(),
 				initIfNull( extraDataMap ) );
@@ -263,6 +276,8 @@ public class GameBuilder
 				String script,
 				FDDMode fddMode,
 				boolean scriptOverride,
+				InputDevice inputDevice,
+				boolean connectGFX9000,
 				String sha1Code,
 				long fileSize,
 				Map<String,ExtraData> extraDataMap )
@@ -333,6 +348,8 @@ public class GameBuilder
 				.screenshotSuffix( screenshotSuffix )
 				.fddMode( fddMode )
 				.tclScriptOverride( scriptOverride )
+				.inputDevice( inputDevice )
+				.connectGFX9000( connectGFX9000 )
 				.build();
 		}
 		catch( IllegalArgumentException iae )

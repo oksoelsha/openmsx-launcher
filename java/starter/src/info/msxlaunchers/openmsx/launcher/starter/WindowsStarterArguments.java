@@ -19,10 +19,10 @@ import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 import info.msxlaunchers.platform.ArgumentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 /**
  * Implementation of <code>StarterPlatformArguments</code> for Windows
@@ -34,22 +34,20 @@ import com.google.inject.name.Named;
 final class WindowsStarterArguments extends AbstractStarterPlatformArguments
 {
 	private final ArgumentsBuilder argumentsBuilder;
-	private final String extraDataDirectory;
 
 	@Inject
-	WindowsStarterArguments( ArgumentsBuilder argumentsBuilder, @Named("LauncherDataDirectory") String extraDataDirectory )
+	WindowsStarterArguments( ArgumentsBuilder argumentsBuilder )
 	{
 		this.argumentsBuilder = argumentsBuilder;
-		this.extraDataDirectory = extraDataDirectory;
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.starter.StarterPlatformArguments#getArguments(info.msxlaunchers.openmsx.launcher.data.global.Settings, info.msxlaunchers.openmsx.launcher.data.game.Game)
+	 * @see info.msxlaunchers.openmsx.launcher.starter.StarterPlatformArguments#getArguments(info.msxlaunchers.openmsx.launcher.data.settings.Settings, info.msxlaunchers.openmsx.launcher.data.game.Game)
 	 */
 	@Override
-	public List<String> getArguments( Settings settings, Game game )
+	public List<String> getArguments( Settings settings, Game game ) throws IOException
 	{
-		buildArguments( settings.getOpenMSXFullPath(), "openmsx.exe", argumentsBuilder, game, extraDataDirectory );
+		buildArguments( settings.getOpenMSXFullPath(), "openmsx.exe", argumentsBuilder, game );
 
 		return argumentsBuilder.getArgumentList();
 	}

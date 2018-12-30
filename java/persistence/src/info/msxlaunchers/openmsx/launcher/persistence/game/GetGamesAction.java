@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.persistence.game;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseResponse;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
@@ -55,7 +56,7 @@ final class GetGamesAction extends NonTransactionalDatabaseOperation<Set<Game>>
 	@Override
 	public DatabaseResponse<Set<Game>> executeNonTransactionalOperation( Connection connection) throws LauncherPersistenceException
 	{
-		Set<Game> games = new HashSet<Game>();
+		Set<Game> games = new HashSet<>();
 
 		long databaseId = getDatabaseId( connection, database );
 
@@ -114,6 +115,8 @@ final class GetGamesAction extends NonTransactionalDatabaseOperation<Set<Game>>
 				.size( result.getLong( "size" ) )
 				.fddMode( FDDMode.fromValue( result.getShort( "fdd_mode" )) )
 				.tclScriptOverride( result.getBoolean( "tcl_script_override" ) )
+				.inputDevice( InputDevice.fromValue( result.getShort( "input_device" )) )
+				.connectGFX9000( result.getBoolean( "connect_gfx9000" ) )
 				.build();
 	}
 }

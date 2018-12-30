@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.ProfileEditingPresenter;
@@ -28,6 +29,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplay
 
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -46,7 +48,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
 
 /**
  * Add/Edit game dialog class
@@ -70,6 +71,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 	private JTextFieldDragDrop infoTextField;
 	private JButton browseInfoButton;
 	private JComboBox<String> machinesComboBox;
+	private JComboBox<String> inputDeviceComboBox;
+	private JCheckBox connectGFX9000CheckBox;
 	private JCheckBox extensionCheckBox;
 	private JTextFieldDragDrop romATextField;
 	private JButton browseRomAButton;
@@ -126,7 +129,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			String laserdisc,
 			String script,
 			int fddModeCode,
-			boolean isScriptOverride)
+			boolean isScriptOverride,
+			int inputDevice,
+			boolean connectGX9000)
 	{
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		if(editMode)
@@ -140,7 +145,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		JPanel topPart = new JPanel();
@@ -148,8 +152,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		GroupLayout contentPaneLayout = new GroupLayout(contentPane);
 		contentPaneLayout.setHorizontalGroup(
 				contentPaneLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(topPart, GroupLayout.PREFERRED_SIZE, 524, GroupLayout.PREFERRED_SIZE)
-				.addComponent(buttonsPart, GroupLayout.PREFERRED_SIZE, 524, GroupLayout.PREFERRED_SIZE)
+				.addComponent(topPart, GroupLayout.PREFERRED_SIZE, 560, GroupLayout.PREFERRED_SIZE)
+				.addComponent(buttonsPart, GroupLayout.PREFERRED_SIZE, 560, GroupLayout.PREFERRED_SIZE)
 		);
 		contentPaneLayout.setVerticalGroup(
 				contentPaneLayout.createParallelGroup(Alignment.LEADING)
@@ -162,8 +166,10 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 
 		//add tabs
 		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.setPreferredSize(new Dimension(560,240));
 
 		addGeneralTab(tabbedPane);
+		addSetupTab(tabbedPane);
 		addROMTab(tabbedPane);
 		addDiskTab(tabbedPane);
 		addTapeTab(tabbedPane);
@@ -202,6 +208,8 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			nameTextField.setText(name);
 			infoTextField.setText(info);
 			machinesComboBox.setSelectedItem(machine);
+			inputDeviceComboBox.setSelectedIndex(inputDevice);
+			connectGFX9000CheckBox.setSelected(connectGX9000);
 			romATextField.setText(romA);
 			romBTextField.setText(romB);
 			if(extension == null)
@@ -241,7 +249,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			throw new RuntimeException("Cannot call this in Edit mode");
 		}
 
-		display(null, null, null, null, null, null, null, null, null, null, null, null, 0, false);
+		display(null, null, null, null, null, null, null, null, null, null, null, null, 0, false, 0, false );
 	}
 
 	@Override
@@ -263,7 +271,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					laserdiscTextField.getText(),
 					scriptTextField.getText(),
 					fddModesComboBox.getSelectedIndex(),
-					scriptOverrideCheckBox.isSelected());
+					scriptOverrideCheckBox.isSelected(),
+					inputDeviceComboBox.getSelectedIndex(),
+					connectGFX9000CheckBox.isSelected());
 			}
 			catch(LauncherException le)
 			{
@@ -290,7 +300,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							laserdiscTextField.getText(),
 							scriptTextField.getText(),
 							fddModesComboBox.getSelectedIndex(),
-							scriptOverrideCheckBox.isSelected());
+							scriptOverrideCheckBox.isSelected(),
+							inputDeviceComboBox.getSelectedIndex(),
+							connectGFX9000CheckBox.isSelected());
 				}
 				else
 				{
@@ -307,7 +319,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 							laserdiscTextField.getText(),
 							scriptTextField.getText(),
 							fddModesComboBox.getSelectedIndex(),
-							scriptOverrideCheckBox.isSelected());
+							scriptOverrideCheckBox.isSelected(),
+							inputDeviceComboBox.getSelectedIndex(),
+							connectGFX9000CheckBox.isSelected());
 				}
 
 				dispose();
@@ -385,10 +399,6 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		browseInfoButton.setToolTipText(messages.get("BROWSE"));
 		browseInfoButton.addActionListener(this);
 
-		JLabel machineLabel = new JLabel(messages.get("MACHINE"));
-		machineLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		machinesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
-
 		GroupLayout groupLayout = new GroupLayout(generalPanel);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -396,18 +406,14 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					.addGap(5)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(nameLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addComponent(nameLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 							.addGap(5)
-							.addComponent(nameTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE))
+							.addComponent(nameTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(infoLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addComponent(infoLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 							.addGap(5)
-							.addComponent(infoTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
-							.addComponent(browseInfoButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(machineLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-							.addGap(5)
-							.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE))))
+							.addComponent(infoTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
+							.addComponent(browseInfoButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -426,17 +432,68 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(1)
 							.addComponent(infoTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(browseInfoButton))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(machineLabel))
-						.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(browseInfoButton)))
 		);
 		generalPanel.setLayout(groupLayout);
 
 		tabbedPane.addTab(messages.get("GENERAL"), generalPanel);
+	}
+
+	private void addSetupTab(JTabbedPane tabbedPane)
+	{
+		JPanel setupPanel = new JPanel(false);
+
+		JLabel machineLabel = new JLabel(messages.get("MACHINE"));
+		machineLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		machinesComboBox = new JComboBox<>(Utils.getSortedCaseInsensitiveArray(machines));
+
+		JLabel inputDeviceLabel = new JLabel(messages.get("INPUT_DEVICE"));
+		inputDeviceLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		String[] inputDeviceValues = Arrays.asList(InputDevice.values()).stream().map(f -> messages.get(f.toString())).toArray(String[]::new);
+		inputDeviceComboBox = new JComboBox<>(inputDeviceValues);
+
+		connectGFX9000CheckBox = new JCheckBox(messages.get("CONNECT_GFX9000"));
+
+		GroupLayout groupLayout = new GroupLayout(setupPanel);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(5)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(machineLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+							.addGap(5)
+							.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(inputDeviceLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+							.addGap(5)
+							.addComponent(inputDeviceComboBox, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(105)
+							.addComponent(connectGFX9000CheckBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(35)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGap(3)
+								.addComponent(machineLabel))
+							.addComponent(machinesComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGap(3)
+								.addComponent(inputDeviceLabel))
+						.addComponent(inputDeviceComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(27)
+					.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(connectGFX9000CheckBox)))
+		);
+		setupPanel.setLayout(groupLayout);
+
+		tabbedPane.addTab(messages.get("SETUP"), setupPanel);
 	}
 
 	private void addROMTab(JTabbedPane tabbedPane)
@@ -446,7 +503,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		JLabel romALabel = new JLabel(messages.get("ROM_A"));
 		romALabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		romATextField = new JTextFieldDragDrop();
-		romATextField.setColumns(10);
+		romATextField.setColumns(9);
 		browseRomAButton = new JButton(Icons.FOLDER.getImageIcon());
 		browseRomAButton.setToolTipText(messages.get("BROWSE"));
 		browseRomAButton.addActionListener(this);
@@ -454,7 +511,7 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 		JLabel romBLabel = new JLabel(messages.get("ROM_B"));
 		romBLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		romBTextField = new JTextFieldDragDrop();
-		romBTextField.setColumns(10);
+		romBTextField.setColumns(9);
 		browseRomBButton = new JButton(Icons.FOLDER.getImageIcon());
 		browseRomBButton.setToolTipText(messages.get("BROWSE"));
 		browseRomBButton.addActionListener(this);
@@ -473,17 +530,17 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(romALabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+									.addComponent(romALabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 									.addGap(5)
-									.addComponent(romATextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+									.addComponent(romATextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 									.addComponent(browseRomAButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(romBLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+									.addComponent(romBLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 									.addGap(5)
-									.addComponent(romBTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+									.addComponent(romBTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 									.addComponent(browseRomBButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(100)
+									.addGap(105)
 									.addComponent(extensionCheckBox)
 									.addGap(5)
 									.addComponent(extensionComboBox, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))))))
@@ -550,17 +607,17 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 					.addGap(5)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(diskALabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addComponent(diskALabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 							.addGap(5)
-							.addComponent(diskATextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+							.addComponent(diskATextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 							.addComponent(browseDiskAButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(diskBLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addComponent(diskBLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 							.addGap(5)
-							.addComponent(diskBTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+							.addComponent(diskBTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 							.addComponent(browseDiskBButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(fddModeLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+						.addComponent(fddModeLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 						.addGap(5)
 						.addComponent(fddModesComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))))
 		);
@@ -612,9 +669,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(5)
-					.addComponent(tapeLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addComponent(tapeLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 					.addGap(5)
-					.addComponent(tapeTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+					.addComponent(tapeTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 					.addComponent(browseTapeButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(
@@ -652,9 +709,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(5)
-					.addComponent(harddiskLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addComponent(harddiskLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 					.addGap(5)
-					.addComponent(harddiskTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+					.addComponent(harddiskTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 					.addComponent(browseHarddiskButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(
@@ -692,9 +749,9 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(5)
-					.addComponent(laserdiscLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addComponent(laserdiscLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 					.addGap(5)
-					.addComponent(laserdiscTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+					.addComponent(laserdiscTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 					.addComponent(browseLaserdiscButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(
@@ -733,12 +790,12 @@ public class AddEditGameWindow extends JDialog implements ActionListener
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(5)
-					.addComponent(scriptLabel, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scriptLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 					.addGap(5)
-					.addComponent(scriptTextField, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scriptTextField, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 					.addComponent(browseScriptButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(85)
+					.addGap(110)
 					.addComponent(scriptOverrideCheckBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(

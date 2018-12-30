@@ -45,12 +45,12 @@ import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister
 @Singleton
 final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 {
-	private final String CREATE_DATABASE_TABLE_STATEMENT = "CREATE TABLE database (ID BIGINT not null generated always as identity," +
+	private static final String CREATE_DATABASE_TABLE_STATEMENT = "CREATE TABLE database (ID BIGINT not null generated always as identity," +
 			" name VARCHAR(64) not null unique, primary key (ID))";
-	private final String CREATE_DATABASE_BACKUP_TABLE_STATEMENT = "CREATE TABLE database_backup (ID BIGINT not null generated always as identity," +
+	private static final String CREATE_DATABASE_BACKUP_TABLE_STATEMENT = "CREATE TABLE database_backup (ID BIGINT not null generated always as identity," +
 			" time TIMESTAMP not null, IDDB BIGINT not null, primary key (ID))";
-	private final String ADD_FOREIGN_KEY_TO_DATABASE_BACKUP_TABLE = "ALTER TABLE database_backup ADD CONSTRAINT DATABASE_FK Foreign Key (IDDB) REFERENCES database (ID) ON DELETE CASCADE";
-	private final String GAME_TABLE_DEF = " (ID BIGINT not null generated always as identity," +
+	private static final String ADD_FOREIGN_KEY_TO_DATABASE_BACKUP_TABLE = "ALTER TABLE database_backup ADD CONSTRAINT DATABASE_FK Foreign Key (IDDB) REFERENCES database (ID) ON DELETE CASCADE";
+	private static final String GAME_TABLE_DEF = " (ID BIGINT not null generated always as identity," +
 			"name VARCHAR(128) not null, info VARCHAR(512), machine VARCHAR(64) not null," +
 			"romA VARCHAR(512), extension_rom VARCHAR(20), romB VARCHAR(512)," +
 			"diskA VARCHAR(512), diskB VARCHAR(512), tape VARCHAR(512), harddisk VARCHAR(512), laserdisc VARCHAR(512), tcl_script VARCHAR(512)," + 
@@ -58,22 +58,23 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 			"psg BOOLEAN default false, scc BOOLEAN default false, scc_i BOOLEAN default false, pcm BOOLEAN default false," +
 			"msx_music BOOLEAN default false, msx_audio BOOLEAN default false, moonsound BOOLEAN default false, midi BOOLEAN default false," +
 			"genre1 INTEGER, genre2 INTEGER, msx_genid INTEGER, screenshot_suffix VARCHAR(10), sha1 VARCHAR(40), size BIGINT," +
-			"IDDB BIGINT not null, primary key (ID), fdd_mode SMALLINT, tcl_script_override BOOLEAN default true)";
-	private final String CREATE_GAME_TABLE_STATEMENT = "CREATE TABLE game" + GAME_TABLE_DEF;
-	private final String ADD_FOREIGN_KEY_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT DATABASE_GAME_FK Foreign Key (IDDB) REFERENCES database (ID) ON DELETE CASCADE";
-	private final String ADD_UNIQUE_CONSTRAINT_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT UNIQUE_GAMENAME UNIQUE(name,IDDB)";
-	private final String CREATE_GAME_BACKUP_TABLE_STATEMENT = "CREATE TABLE game_backup" + GAME_TABLE_DEF;
-	private final String ADD_FOREIGN_KEY_TO_GAME_BACKUP_TABLE = "ALTER TABLE game_backup ADD CONSTRAINT DATABASE_BAK_FK Foreign Key (IDDB) REFERENCES database_backup (ID) ON DELETE CASCADE";
-	private final String CREATE_FAVORITE_TABLE_STATEMENT = "CREATE TABLE favorite (ID BIGINT not null generated always as identity, IDGAME BIGINT not null unique, primary key (ID))";
-	private final String ADD_FOREIGN_KEY_TO_FAVORITE_TABLE = "ALTER TABLE favorite ADD CONSTRAINT GAME_FK Foreign Key (IDGAME) REFERENCES game (ID) ON DELETE CASCADE";
+			"IDDB BIGINT not null, primary key (ID), fdd_mode SMALLINT, tcl_script_override BOOLEAN default true," +
+			"input_device SMALLINT, connect_gfx9000 BOOLEAN default false)";
+	private static final String CREATE_GAME_TABLE_STATEMENT = "CREATE TABLE game" + GAME_TABLE_DEF;
+	private static final String ADD_FOREIGN_KEY_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT DATABASE_GAME_FK Foreign Key (IDDB) REFERENCES database (ID) ON DELETE CASCADE";
+	private static final String ADD_UNIQUE_CONSTRAINT_TO_GAME_TABLE = "ALTER TABLE game ADD CONSTRAINT UNIQUE_GAMENAME UNIQUE(name,IDDB)";
+	private static final String CREATE_GAME_BACKUP_TABLE_STATEMENT = "CREATE TABLE game_backup" + GAME_TABLE_DEF;
+	private static final String ADD_FOREIGN_KEY_TO_GAME_BACKUP_TABLE = "ALTER TABLE game_backup ADD CONSTRAINT DATABASE_BAK_FK Foreign Key (IDDB) REFERENCES database_backup (ID) ON DELETE CASCADE";
+	private static final String CREATE_FAVORITE_TABLE_STATEMENT = "CREATE TABLE favorite (ID BIGINT not null generated always as identity, IDGAME BIGINT not null unique, primary key (ID))";
+	private static final String ADD_FOREIGN_KEY_TO_FAVORITE_TABLE = "ALTER TABLE favorite ADD CONSTRAINT GAME_FK Foreign Key (IDGAME) REFERENCES game (ID) ON DELETE CASCADE";
 
 	//upgrade statements
-	private final String ADD_FDD_MODE_COLUMN_TO_GAME = "ALTER TABLE game ADD COLUMN fdd_mode SMALLINT";
-	private final String ADD_FDD_MODE_COLUMN_TO_GAME_BACKUP = "ALTER TABLE game_backup ADD COLUMN fdd_mode SMALLINT";
-	private final String ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME = "ALTER TABLE game ADD COLUMN tcl_script_override BOOLEAN default true";
-	private final String ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME_BACKUP = "ALTER TABLE game_backup ADD COLUMN tcl_script_override BOOLEAN default true";
+	private static final String ADD_INPUT_DEVICE_COLUMN_TO_GAME = "ALTER TABLE game ADD COLUMN input_device SMALLINT";
+	private static final String ADD_INPUT_DEVICE_COLUMN_TO_GAME_BACKUP = "ALTER TABLE game_backup ADD COLUMN input_device SMALLINT";
+	private static final String ADD_CONNECT_GFX9000_COLUMN_TO_GAME = "ALTER TABLE game ADD COLUMN connect_gfx9000 BOOLEAN default false";
+	private static final String ADD_CONNECT_GFX9000_COLUMN_TO_GAME_BACKUP = "ALTER TABLE game_backup ADD COLUMN connect_gfx9000 BOOLEAN default false";
 
-	private final String COLUMN_ALREADY_EXISTS_ERROR_CODE = "X0Y32";
+	private static final String COLUMN_ALREADY_EXISTS_ERROR_CODE = "X0Y32";
 
 	private final GamePersister gamePersister;
 	private final FavoritePersister favoritePersister;
@@ -130,11 +131,11 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 				else
 				{
 					//then might be the upgrade case
-					//first case to deal with is FDDMode column in Games table (new in v1.8)
-					addFDDModeColumnIfNecessary( connection );
+					//first case to deal with is FDDMode column in Games table (new in v1.11)
+					addInputDeviceColumnIfNecessary( connection );
 
 					//second case to deal with is TCLScriptOverride column in Games table (new in v1.11)
-					addTclScriptOverrideColumnIfNecessary( connection );
+					addConnectGFX9000ColumnIfNecessary( connection );
 				}
 			}
 			catch( SQLException se )
@@ -265,12 +266,12 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 		}
 	}
 
-	private void addFDDModeColumnIfNecessary( Connection connection ) throws SQLException
+	private void addInputDeviceColumnIfNecessary( Connection connection ) throws SQLException
 	{
 		try( Statement statement = connection.createStatement() )
 		{
-			statement.execute( ADD_FDD_MODE_COLUMN_TO_GAME );
-			statement.execute( ADD_FDD_MODE_COLUMN_TO_GAME_BACKUP );
+			statement.execute( ADD_INPUT_DEVICE_COLUMN_TO_GAME );
+			statement.execute( ADD_INPUT_DEVICE_COLUMN_TO_GAME_BACKUP );
 		}
 		catch( SQLException se )
 		{
@@ -284,12 +285,12 @@ final class EmbeddedDatabaseLauncherPersistence implements LauncherPersistence
 		}
 	}
 
-	private void addTclScriptOverrideColumnIfNecessary( Connection connection ) throws SQLException
+	private void addConnectGFX9000ColumnIfNecessary( Connection connection ) throws SQLException
 	{
 		try( Statement statement = connection.createStatement() )
 		{
-			statement.execute( ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME );
-			statement.execute( ADD_TCL_SCRIPT_OVERRIDE_COLUMN_TO_GAME_BACKUP );
+			statement.execute( ADD_CONNECT_GFX9000_COLUMN_TO_GAME );
+			statement.execute( ADD_CONNECT_GFX9000_COLUMN_TO_GAME_BACKUP );
 		}
 		catch( SQLException se )
 		{

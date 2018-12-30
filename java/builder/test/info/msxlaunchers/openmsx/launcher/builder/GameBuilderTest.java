@@ -20,6 +20,7 @@ import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,7 +56,7 @@ public class GameBuilderTest
 	{
 		GameBuilder gameBuilder = new GameBuilder( "url" );
 
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( null, null, null, null, null, null, null, null, null, null, null, null, null, false, null );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( null, null, null, null, null, null, null, null, null, null, null, null, null, false, null, false, null );
 
 		assertNull( game );
 	}
@@ -109,7 +110,7 @@ public class GameBuilderTest
 		String info = "info";
 
 		GameBuilder gameBuilder = new GameBuilder( "url" );
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, true, extraDataMap );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, true, null, true, extraDataMap );
 
 		//now check all game fields
 		assertEquals( name, game.getName() );
@@ -144,6 +145,8 @@ public class GameBuilderTest
 		assertFalse( game.isMoonsound() );
 		assertFalse( game.isMIDI() );
 		assertNull( game.getFDDMode() );
+		assertNull( game.getInputDevice() );
+		assertTrue(game.isConnectGFX9000());
 	}
 
 	@Test
@@ -171,7 +174,7 @@ public class GameBuilderTest
 		String info = "info";
 
 		GameBuilder gameBuilder = new GameBuilder( "url" );
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpZipFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, false, extraDataMap );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpZipFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, false, null, false, extraDataMap );
 
 		//now check all game fields
 		assertEquals( name, game.getName() );
@@ -206,6 +209,8 @@ public class GameBuilderTest
 		assertFalse( game.isMoonsound() );
 		assertFalse( game.isMIDI() );
 		assertNull( game.getFDDMode() );
+		assertNull( game.getInputDevice() );
+		assertFalse( game.isConnectGFX9000() );
 	}
 
 	@Test
@@ -217,13 +222,16 @@ public class GameBuilderTest
 		String info = "info";
 		String script = "script";
 
-		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, null, null, null, null, null, null, null, null, script, FDDMode.DISABLE_SECOND, true, null );
+		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, null, null, null, null, null, null, null, null, script, FDDMode.DISABLE_SECOND, true, InputDevice.MOUSE, true, null );
 
 		//the following fields are set
 		assertEquals( name, game.getName() );
 		assertEquals( info, game.getInfo() );
 		assertEquals( script, game.getTclScript() );
 		assertTrue( game.isTclScriptOverride() );
+		assertTrue( game.isConnectGFX9000() );
+		assertEquals( FDDMode.DISABLE_SECOND, game.getFDDMode() );
+		assertEquals( InputDevice.MOUSE, game.getInputDevice() );
 
 		//the following fields are not set
 		assertNull( game.getMachine() );
@@ -253,7 +261,6 @@ public class GameBuilderTest
 		assertFalse( game.isMSXAUDIO() );
 		assertFalse( game.isMoonsound() );
 		assertFalse( game.isMIDI() );
-		assertEquals( FDDMode.DISABLE_SECOND, game.getFDDMode() );
 	}
 
 	@Test

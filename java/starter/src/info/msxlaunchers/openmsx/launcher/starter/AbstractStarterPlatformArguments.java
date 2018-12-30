@@ -15,14 +15,21 @@
  */
 package info.msxlaunchers.openmsx.launcher.starter;
 
+import info.msxlaunchers.openmsx.common.NumericalEnum;
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
-import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 import info.msxlaunchers.platform.ArgumentsBuilder;
 
 import java.io.File;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract implementation of <code>StarterPlatformArguments</code> that contains common methods for all platforms
@@ -33,13 +40,27 @@ import java.util.List;
  */
 abstract class AbstractStarterPlatformArguments implements StarterPlatformArguments
 {
-	private static final String PRESS_CTRL_SCRIPT = "pressctrl.tcl";
-	private static final String PRESS_SHIFT_SCRIPT = "pressshift.tcl";
+	private static final String TEMP_FILE_PREFIX = "openmsx-launcher-script";
+	private static final String TEMP_FILE_EXT = ".tmp";
 
-	@Override
-	abstract public List<String> getArguments( Settings settings, Game game );
+	private static final String ENABLE_GFX9000_LINE = "ext gfx9000" + System.lineSeparator() +
+			"ext slotexpander" + System.lineSeparator() +
+			"after time 10 \"set videosource GFX9000\"";
+	private static final Map<NumericalEnum, String> scriptLinesMap = new HashMap<>();
+	static
+	{
+		scriptLinesMap.put( InputDevice.JOYSTICK, "plug joyporta joystick1" );
+		scriptLinesMap.put( InputDevice.JOYSTICK_KEYBOARD, "plug joyporta keyjoystick1" );
+		scriptLinesMap.put( InputDevice.MOUSE, "plug joyporta mouse" );
+		scriptLinesMap.put( InputDevice.ARKANOID_PAD, "plug joyporta arkanoidpad" );
+		scriptLinesMap.put( InputDevice.TRACKBALL, "plug joyportb trackball" );
+		scriptLinesMap.put( InputDevice.TOUCHPAD, "plug joyportb touchpad" );
 
-	void buildArguments( String openMSXPath, String openMSXBinary, ArgumentsBuilder argumentsBuilder, Game game, String extraDataDirectory )
+		scriptLinesMap.put( FDDMode.DISABLE_SECOND, "after boot { keymatrixdown 6 2; after time 14 \"keymatrixup 6 2\" }");
+		scriptLinesMap.put( FDDMode.DISABLE_BOTH, "after boot { keymatrixdown 6 1; after time 14 \"keymatrixup 6 1\" }" );
+	}
+
+	void buildArguments( String openMSXPath, String openMSXBinary, ArgumentsBuilder argumentsBuilder, Game game ) throws IOException
 	{
 		File openMSXDirectory = new File( openMSXPath );
 		File fullpath = new File( openMSXDirectory, openMSXBinary );
@@ -66,23 +87,64 @@ abstract class AbstractStarterPlatformArguments implements StarterPlatformArgume
 			argumentsBuilder.appendIfValueDefined( "-machine", game.getMachine() );
 			argumentsBuilder.appendIfValueDefined( "-laserdisc", game.getLaserdisc() );
 			argumentsBuilder.appendIfValueDefined( "-script", script );
-			argumentsBuilder.appendIfValueDefined( "-script", getFDDScriptIfNeeded( game, extraDataDirectory ) );
+
+			//there's a potential conflict if the user provides their own script
+			argumentsBuilder.appendIfValueDefined( "-script", getScriptIfNeeded( game ) );
 		}
 	}
 
-	private String getFDDScriptIfNeeded( Game game, String extraDataDirectory )
+	private String getScriptIfNeeded( Game game ) throws IOException
 	{
 		String script = null;
-
-		if( game.getFDDMode() == FDDMode.DISABLE_SECOND )
+		if( game.getInputDevice() != InputDevice.NONE || game.getFDDMode() != FDDMode.ENABLE_BOTH || game.isConnectGFX9000() )
 		{
-			script = new File( extraDataDirectory, PRESS_CTRL_SCRIPT ).toString();
-		}
-		else if( game.getFDDMode() == FDDMode.DISABLE_BOTH )
-		{
-			script = new File( extraDataDirectory, PRESS_SHIFT_SCRIPT ).toString();
-		}
+			deleteOldTempFiles( Paths.get( System.getProperty( "java.io.tmpdir" ) ) );
 
+			Path tempFile = Files.createTempFile( TEMP_FILE_PREFIX, TEMP_FILE_EXT );
+
+			StringBuilder scriptLines = new StringBuilder();
+
+			addLineToScriptIfParamDefined( scriptLines, game.getInputDevice() );
+			addLineToScriptIfParamDefined( scriptLines, game.getFDDMode() );
+			addLineToScriptIfParamDefined( scriptLines, game.isConnectGFX9000() );
+
+			Files.write( tempFile, scriptLines.toString().getBytes() );
+
+			script = tempFile.toString();
+		}
 		return script;
+	}
+
+	private void addLineToScriptIfParamDefined( StringBuilder lines, NumericalEnum param )
+	{
+		if( param != null )
+		{
+			String line = scriptLinesMap.get( param );
+			if( line != null )
+			{
+				lines.append( line ).append( System.lineSeparator() );
+			}
+		}
+	}
+
+	private void addLineToScriptIfParamDefined( StringBuilder lines, boolean enableGFX9000 )
+	{
+		if( enableGFX9000 )
+		{
+			lines.append( ENABLE_GFX9000_LINE ).append( System.lineSeparator() );
+		}
+	}
+
+	private void deleteOldTempFiles( Path directory ) throws IOException
+	{
+		String fileMatch = TEMP_FILE_PREFIX + "*" + TEMP_FILE_EXT;
+
+		try ( DirectoryStream<Path> newDirectoryStream = Files.newDirectoryStream( directory, fileMatch ) )
+		{
+			for( Path newDirectoryStreamItem : newDirectoryStream )
+			{
+				Files.delete( newDirectoryStreamItem );
+			}
+		}
 	}
 }

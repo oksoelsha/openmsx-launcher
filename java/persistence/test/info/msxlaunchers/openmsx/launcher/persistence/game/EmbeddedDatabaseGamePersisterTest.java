@@ -6,6 +6,7 @@ import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 import info.msxlaunchers.openmsx.launcher.persistence.DatabaseTest;
 
 import java.sql.Connection;
@@ -142,7 +143,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 
 		Set<String> databases = persister.getDatabases();
 
-		assertEquals( databases.size(), 0 );
+		assertTrue( databases.isEmpty() );
 
 		persister.createDatabase( database1 );
 		persister.createDatabase( "database2" );
@@ -150,7 +151,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 
 		databases = persister.getDatabases();
 
-		assertEquals( databases.size(), 3 );
+		assertEquals( 3, databases.size() );
 		assertTrue( databases.contains( database1 ) );
 		assertTrue( databases.contains( "database2" ) );
 		assertTrue( databases.contains( "database3" ) );
@@ -226,7 +227,8 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 				.genre1( Genre.ADVENTURE_ALL ).genre2( Genre.ARCADE )
 				.msxGenID( 25 ).sha1Code( "sha1Code" ).screenshotSuffix( "ss" ).size( 100 )
-				.fddMode( FDDMode.DISABLE_SECOND )
+				.fddMode( FDDMode.DISABLE_SECOND ).tclScriptOverride( true )
+				.inputDevice( InputDevice.MOUSE ).connectGFX9000( true )
 				.build();
 
 		Game game2 = Game.name( "name2" ).machine( "machine2" ).diskA( "diskA2" ).build();
@@ -275,6 +277,9 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				assertEquals( "ss", game.getScreenshotSuffix() );
 				assertEquals( 100, game.getSize() );
 				assertEquals( FDDMode.DISABLE_SECOND, game.getFDDMode() );
+				assertTrue( game.isTclScriptOverride() );
+				assertEquals( InputDevice.MOUSE, game.getInputDevice() );
+				assertTrue( game.isConnectGFX9000() );
 			}
 		}
 	}
@@ -398,7 +403,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 
 		Set<Game> games = persister.getGames( database1 );
 
-		assertEquals( 0, games.size() );
+		assertTrue( games.isEmpty() );
 	}
 
 	@Test
@@ -495,6 +500,8 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				.isMSXMUSIC( true ).isMSXAUDIO( true ).isMoonsound( true ).isMIDI( true )
 				.genre1( Genre.ADVENTURE_ALL ).genre2( Genre.ARCADE )
 				.msxGenID( 25 ).sha1Code( "sha1Code" ).screenshotSuffix( "ss" ).size( 100 )
+				.fddMode( FDDMode.DISABLE_SECOND ).tclScriptOverride( true )
+				.inputDevice( InputDevice.ARKANOID_PAD ).connectGFX9000( true )
 				.build();
 
 		persister.saveGame( game1, database1 );
@@ -551,6 +558,9 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				assertEquals( "rr", game.getScreenshotSuffix() );
 				assertEquals( 110, game.getSize() );
 				assertEquals( FDDMode.DISABLE_BOTH, game.getFDDMode() );
+				assertFalse( game.isTclScriptOverride() );
+				assertEquals( InputDevice.NONE, game.getInputDevice() );
+				assertFalse( game.isConnectGFX9000() );
 			}
 			else
 			{
@@ -590,6 +600,8 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				.isMSXMUSIC( false ).isMSXAUDIO( true ).isMoonsound( false ).isMIDI( true )
 				.genre1( Genre.CARD_GAMES ).genre2( Genre.COMMUNICATION )
 				.msxGenID( 26 ).sha1Code( "sha1Code2" ).screenshotSuffix( "rr" ).size( 110 )
+				.tclScriptOverride( true ).connectGFX9000( true )
+				.inputDevice( InputDevice.JOYSTICK )
 				.build();
 
 		persister.updateGame( game1, game2, database1 );
@@ -632,6 +644,9 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				assertEquals( "rr", game.getScreenshotSuffix() );
 				assertEquals( 110, game.getSize() );
 				assertEquals( FDDMode.ENABLE_BOTH, game.getFDDMode() );
+				assertTrue( game.isTclScriptOverride() );
+				assertTrue( game.isConnectGFX9000() );
+				assertEquals( InputDevice.JOYSTICK, game.getInputDevice() );
 			}
 			else
 			{
@@ -1433,6 +1448,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				.genre1( Genre.ADVENTURE_POINT_AND_CLICK ).genre2( Genre.BOARD_GAMES )
 				.msxGenID( 4567 ).sha1Code( "testSha1Code" ).size( 102030 ).screenshotSuffix( "tx" )
 				.fddMode( FDDMode.ENABLE_BOTH ).tclScriptOverride( true )
+				.inputDevice( InputDevice.JOYSTICK_KEYBOARD ).connectGFX9000( true )
 				.build();
 		Game game2 = Game.name( "testName2" ).romA( "testRomA2" ).machine( "testMachine2" ).build();
 
@@ -1511,6 +1527,8 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 		assertEquals( "tx", restoredGame1.getScreenshotSuffix() );
 		assertEquals( FDDMode.ENABLE_BOTH, restoredGame1.getFDDMode() );
 		assertTrue( restoredGame1.isTclScriptOverride() );
+		assertEquals( InputDevice.JOYSTICK_KEYBOARD, restoredGame1.getInputDevice() );
+		assertTrue( restoredGame1.isConnectGFX9000() );
 	}
 
 	@Test( expected = GamePersistenceException.class )

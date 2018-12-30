@@ -20,6 +20,7 @@ import java.io.Serializable;
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 
 /**
  * This class represents a game with all relevant fields. It can only be instantiated through the fluid builder pattern
@@ -55,6 +56,8 @@ public final class Game implements Serializable
 	private final String tclScript;
 	private final boolean tclScriptOverride;
 	private final FDDMode fddMode;
+	private final InputDevice inputDevice;
+	private final boolean connectGFX9000;
 
 	public static class GameParam
 	{
@@ -77,6 +80,8 @@ public final class Game implements Serializable
 		private String tclScript;
 		private boolean tclScriptOverride;
 		private FDDMode fddMode;
+		private InputDevice inputDevice;
+		private boolean connectGFX9000;
 
 		public GameParam machine( String machine ) { this.machine = Utils.resetIfEmpty( machine ); return this; }
 		public GameParam romA( String romA ) { this.romA = Utils.resetIfEmpty( romA ); return this; }
@@ -110,6 +115,8 @@ public final class Game implements Serializable
 		public GameParam tclScript( String tclScript ) { this.tclScript = Utils.resetIfEmpty( tclScript ); return this; }
 		public GameParam tclScriptOverride( boolean tclScriptOverride ) { this.tclScriptOverride = tclScriptOverride; return this; }
 		public GameParam fddMode( FDDMode fddMode ) { this.fddMode = fddMode; return this; }
+		public GameParam inputDevice( InputDevice inputDevice ) { this.inputDevice = inputDevice; return this; }
+		public GameParam connectGFX9000( boolean connectGFX9000 ) { this.connectGFX9000 = connectGFX9000; return this; }
 
 		public Game build()
 		{
@@ -158,6 +165,8 @@ public final class Game implements Serializable
 	public static GameParam tclScript( String tclScript ) { return new GameParam().tclScript( tclScript ); }
 	public static GameParam tclScriptOverride( boolean tclScriptOverride ) { return new GameParam().tclScriptOverride( tclScriptOverride ); }
 	public static GameParam fddMode( FDDMode fddMode ) { return new GameParam().fddMode( fddMode ); }
+	public static GameParam inputDevice( InputDevice inputDevice ) { return new GameParam().inputDevice( inputDevice ); }
+	public static GameParam connectGFX9000( boolean connectGFX9000 ) { return new GameParam().connectGFX9000( connectGFX9000 ); }
 
 	private Game( GameParam param )
 	{
@@ -200,6 +209,8 @@ public final class Game implements Serializable
 		this.tclScriptOverride = param.tclScriptOverride;
 
 		this.fddMode = param.fddMode;
+		this.inputDevice = param.inputDevice;
+		this.connectGFX9000 = param.connectGFX9000;
 	}
 
 	@Override
@@ -258,8 +269,10 @@ public final class Game implements Serializable
 	public long getSize() { return size; }
 	public String getScreenshotSuffix() { return screenshotSuffix; }
 	public String getTclScript() { return tclScript; }
-	public FDDMode getFDDMode() { return fddMode; };
-	public boolean isTclScriptOverride() { return tclScriptOverride; };
+	public boolean isTclScriptOverride() { return tclScriptOverride; }
+	public FDDMode getFDDMode() { return fddMode; }
+	public InputDevice getInputDevice() { return inputDevice; }
+	public boolean isConnectGFX9000() { return connectGFX9000; }
 
 	//the following are to determine what kind of media the game is.
 	//the order of check is ROM, Disk, Tape, Laserdisc

@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.starter;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.settings.Settings;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -35,6 +36,7 @@ public interface StarterPlatformArguments
 	 * @param settings Settings of the launcher, needed to get the path to openMSX
 	 * @param game Game object
 	 * @return Unmodifiable List of openMSX command line arguments
+	 * @throws IOException
 	 */
-	List<String> getArguments( Settings settings, Game game );
+	List<String> getArguments( Settings settings, Game game ) throws IOException;
 }

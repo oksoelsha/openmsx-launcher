@@ -56,7 +56,7 @@ public class OpenMSXStarterTest
 	}
 
 	@Test @Ignore
-	public void testStarting()
+	public void testStarting() throws IOException
 	{
 		Game game = Game.machine( "ignore" )
 				.diskA( "ignore" )
@@ -102,7 +102,7 @@ public class OpenMSXStarterTest
 					//Need to review what to do in this case
 				}
 
-				assertEquals( process.exitValue(), 1 );
+				assertEquals( 1, process.exitValue() );
 			}
 			else
 			{

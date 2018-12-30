@@ -351,8 +351,10 @@ final class MainPresenterImpl implements MainPresenter
 
 			LauncherLogger.logMessage( LogEvent.LAUNCH, gameName + "[" + currentDatabase + "]" );
 		}
-		catch ( IOException e )
+		catch ( IOException ioe )
 		{
+			LauncherLogger.logException( this, ioe );
+
 			throw new LauncherException( LauncherExceptionCode.ERR_CANNOT_START_OPENMSX );
 		}
 	}
@@ -412,7 +414,7 @@ final class MainPresenterImpl implements MainPresenter
 	public void onRequestRemoveGamesAction( Set<String> gameNames ) throws LauncherException
 	{
 		//create a Game set from the game names
-		Set<Game> games = new HashSet<Game>();
+		Set<Game> games = new HashSet<>();
 
 		gameNames.forEach( gameName -> {
 			games.add( gamesMap.get( gameName ) );
@@ -637,7 +639,7 @@ final class MainPresenterImpl implements MainPresenter
 	public Set<String> onRequestMoveGamesScreen( Set<String> gameNames, String oldDatabase )
 	{
 		//create a list of databases that excludes the current one
-		Set<String> targetDatabases = new HashSet<String>( databases );
+		Set<String> targetDatabases = new HashSet<>( databases );
 		targetDatabases.remove( currentDatabase );
 
 		return view.displayAndGetMoveGames( currentLanguage, gameNames, oldDatabase, targetDatabases,
@@ -652,11 +654,11 @@ final class MainPresenterImpl implements MainPresenter
 			 throws LauncherException
 	{
 		//create a Game set from the game names
-		Set<Game> games = new HashSet<Game>();
+		Set<Game> games = new HashSet<>();
 
 		gameNames.forEach( gameName -> games.add( gamesMap.get( gameName ) ) );
 
-		Set<String> movedGameNames = new HashSet<String>();
+		Set<String> movedGameNames = new HashSet<>();
 
 		try
 		{
@@ -952,7 +954,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		if( !filterEditMode )
 		{
-			if( filter.size() > 0 )
+			if( !filter.isEmpty() )
 			{
 				untitledFilter = true;
 				view.setFilterNameLabelUntitled();
@@ -1258,7 +1260,7 @@ final class MainPresenterImpl implements MainPresenter
 
 	private Set<GameLabel> getSortedGameList()
 	{
-		Set<GameLabel> sortedList = new LinkedHashSet<GameLabel>();
+		Set<GameLabel> sortedList = new LinkedHashSet<>();
 		if( gamesMap != null )
 		{
 			gamesMap.entrySet().stream()
@@ -1339,7 +1341,7 @@ final class MainPresenterImpl implements MainPresenter
 
 	private boolean isFiltered( Game game )
 	{
-		Map<String,Boolean> filtersByType = new HashMap<String,Boolean>();
+		Map<String,Boolean> filtersByType = new HashMap<>();
 
 		for( Filter filter: currentFilter )
 		{

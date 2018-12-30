@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.persistence;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +32,7 @@ import java.sql.SQLException;
  * @author Sam Elsharif
  *
  */
-abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabaseOperation<E>
+public abstract class TransactionalDatabaseOperation<E> extends AbstractDatabaseOperation<E>
 {
 	private static final String DUPLICATE_ERROR_CODE = "23505";
 	private static final int MAXIMUM_GAME_NAME_LENGTH = 128;
@@ -52,7 +53,7 @@ abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabase
 		return response;
 	}
 
-	abstract public DatabaseResponse<E> executeTransactionalOperation( Connection connection ) throws LauncherPersistenceException;
+	public abstract DatabaseResponse<E> executeTransactionalOperation( Connection connection ) throws LauncherPersistenceException;
 
 	protected boolean isDuplicateError( SQLException se )
 	{
@@ -94,6 +95,8 @@ abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabase
 		statement.setLong( 31, databaseId );
 		statement.setShort( 32, getFDDModeEnumValue( game.getFDDMode() ) );
 		statement.setBoolean( 33, game.isTclScriptOverride() );
+		statement.setShort( 34, getInputDeviceEnumValue( game.getInputDevice() ) );
+		statement.setBoolean( 35, game.isConnectGFX9000() );
 	}
 
 	protected int getGenreEnumValue( Genre genre )
@@ -115,6 +118,18 @@ abstract public class TransactionalDatabaseOperation<E> extends AbstractDatabase
 		if( fddMode != null )
 		{
 			value = (short)fddMode.getValue();
+		}
+
+		return value;
+	}
+
+	protected short getInputDeviceEnumValue( InputDevice inputDevice )
+	{
+		short value = 0;
+
+		if( inputDevice != null )
+		{
+			value = (short)inputDevice.getValue();
 		}
 
 		return value;

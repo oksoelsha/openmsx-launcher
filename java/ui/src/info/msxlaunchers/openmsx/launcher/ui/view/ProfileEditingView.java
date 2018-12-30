@@ -62,8 +62,11 @@ public interface ProfileEditingView
 	 * @param script Full path to Script file
 	 * @param fddModeCode FDD Mode Enum code
 	 * @param isTclScriptOverride Flag to determine whether to override other non-TCL script arguments
+	 * @param inputDeviceCode Input device Enum code
+	 * @param connectGFX9000 Flag to connect GFX9000 cartridge
 	 */
 	void displayEditGameScreen( ProfileEditingPresenter presenter, Language language, Set<String> machines, Set<String> extensions, boolean rightToLeft, 
 			String name, String info, String machine, String romA, String romB, String extension,
-			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script, int fddModeCode, boolean isTclScriptOverride );
+			String diskA, String diskB, String tape, String harddisk, String laserdisc, String script, int fddModeCode, boolean isTclScriptOverride,
+			int inputDeviceCode, boolean connectGFX9000 );
 }
