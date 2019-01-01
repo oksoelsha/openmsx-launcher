@@ -29,6 +29,7 @@ import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistence;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
@@ -52,7 +53,7 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 	private final LauncherPersistence launcherPersistence;
 	private final MainPresenter mainPresenter;
 
-	private final String DOWNLOAD_URL = "http://msxlaunchers.info/download.html";
+	private static final String DOWNLOAD_URL = "http://msxlaunchers.info/download.html";
 
 	//Model
 	private Map<String,String> versionsFromServer;
@@ -184,12 +185,14 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 		{
 			updateChecker.getNewExtraDataFile();
 		}
-		catch( IOException e )
+		catch( IOException ioe )
 		{
+			LauncherLogger.logException( this, ioe );
 			throw new LauncherException( LauncherExceptionCode.ERR_CANNOT_CONTACT_SERVER );
 		}
 		catch( FileUpdateFailedException fufe )
 		{
+			LauncherLogger.logException( this, fufe );
 			throw new LauncherException( LauncherExceptionCode.ERR_CANNOT_INSTALL_NEW_UPDATED_FILES );
 		}
 
