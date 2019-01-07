@@ -190,6 +190,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private static final Insets favoritesMenuMarginLeftToRight = new Insets(-2, 0, 22, 250);
 	private static final Insets favoritesMenuMarginRightToLeft = new Insets(-2, -12, 22, 260);
 	private static final Dimension favoritesLabelSize = new Dimension(300, 18);
+	private static final Dimension favoriteMenuItemSizeOnMac = new Dimension(363, 40);
 
 	private static final Color DEFAULT_BUTTON_BG_COLOR = UIManager.getLookAndFeelDefaults().getColor("Button.background");
 	private static final Insets POPUP_MENU_ITEM_BUTTON_INSETS = new Insets(-1, 0, -1, -13);
@@ -985,7 +986,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		    deleteButton.addActionListener(this);
 		    deleteButton.setToolTipText(messages.get("DELETE"));
 		    menuItemPanel.add(buttonPanel);
-
+		    if(OSUtils.isMac())
+		    {
+		    	favoriteMenuItem.setPreferredSize(favoriteMenuItemSizeOnMac);
+		    }
 			favoriteMenuItem.add(menuItemPanel);
 
 		    favoritesContextMenu.add(favoriteMenuItem);			
