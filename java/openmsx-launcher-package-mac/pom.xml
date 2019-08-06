@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.msxlaunchers.openmsx</groupId>
 	<artifactId>openmsx-launcher-package-mac</artifactId>
-	<version>1.10.6</version>
+	<version>1.11</version>
 	<packaging>pom</packaging>
 	<name>openmsx-launcher-package-mac</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<version>1.10.6</version>
+		<version>1.11</version>
 	</properties>
 	<build>
 		<plugins>
@@ -49,8 +49,6 @@
 								<mkdir dir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/README.html" todir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/extra-data.dat" todir="target/openMSX Launcher.app/share"/>
-								<copy file="../../extra/pressctrl.tcl" todir="target/openMSX Launcher.app/share"/>
-								<copy file="../../extra/pressshift.tcl" todir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/msxdskdb.xml" todir="target/openMSX Launcher.app/share"/>
 								<copy file="../../extra/msxcaswavdb.xml" todir="target/openMSX Launcher.app/share"/>
 							</target>

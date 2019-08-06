@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.msxlaunchers.openmsx</groupId>
 	<artifactId>openmsx-launcher-build</artifactId>
-	<version>1.10.6</version>
+	<version>1.11</version>
 	<packaging>pom</packaging>
 	<name>openmsx-launcher-build</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<version>1.10.6</version>
+		<version>1.11</version>
 	</properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
