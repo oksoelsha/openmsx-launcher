@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Sam Elsharif
+ * Copyright 2019 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.data.filter;
+package info.msxlaunchers.openmsx.launcher.data.game.constants;
+
+import info.msxlaunchers.openmsx.common.EnumWithDisplayName;
 
 /**
- * Enum class for filter types
+ * Enum class for supported video sources
  * 
- * @since v1.2
+ * @since v1.12
  * @author Sam Elsharif
  *
  */
-public enum FilterType
+public enum VideoSource implements EnumWithDisplayName
 {
-	COMPANY,
-	COUNTRY,
-	GENERATION,
-	GENRE,
-	MEDIUM,
-	SIZE,
-	SOUND,
-	YEAR,
-	VIDEO_SOURCE
+	MSX( "MSX" ),
+	GFX9000( "GFX9000" );
+
+	private final String displayName;
+
+	private VideoSource( String displayName )
+	{
+		this.displayName = displayName;
+	}
+
+	@Override
+	public String getDisplayName()
+	{
+		return displayName;
+	}
 }

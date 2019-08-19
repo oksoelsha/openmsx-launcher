@@ -24,6 +24,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.MSXGeneration;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Sound;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.VideoSource;
 
 /**
  * Factory that contains methods to create filters, get filter monikers and return filter field values
@@ -100,6 +101,9 @@ public class FilterFactory
 					break;
 				case YEAR:
 					filter = new YearFilter( Utils.getNumber( value1 ), Utils.getNumber( value2 ), parameter );
+					break;
+				case VIDEO_SOURCE:
+					filter = new VideoSourceFilter( VideoSource.valueOf( value1 ) );
 					break;
 			}
 		}

@@ -1,6 +1,7 @@
 package info.msxlaunchers.openmsx.launcher.data.filter;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -118,6 +119,22 @@ public class FilterFactoryTest
 	}
 
 	@Test
+	public void testCreateVideoSourceFilter()
+	{
+		Filter filter = FilterFactory.createFilter( FilterType.VIDEO_SOURCE, "MSX", null, null );
+		assertTrue( filter instanceof VideoSourceFilter );
+
+		filter = FilterFactory.createFilter( "VIDEO_SOURCE", "GFX9000", null, null );
+		assertTrue( filter instanceof VideoSourceFilter );
+	}
+
+	@Test( expected = IllegalArgumentException.class )
+	public void testCreateVideoSourceFilterException()
+	{
+		FilterFactory.createFilter( FilterType.VIDEO_SOURCE, "wrong", null, null );
+	}
+
+	@Test
 	public void testGetFilterMoniker()
 	{
 		String moniker;
@@ -161,6 +178,10 @@ public class FilterFactoryTest
 		Filter yearFilter2 = FilterFactory.createFilter( FilterType.YEAR, "1985", "1988", FilterParameter.BETWEEN_INCLUSIVE );
 		moniker = FilterFactory.getFilterMoniker( yearFilter2 );
 		assertEquals( "YEAR:1985:1988:BETWEEN_INCLUSIVE", moniker );
+
+		Filter videoSourceFilter = FilterFactory.createFilter( FilterType.VIDEO_SOURCE, "MSX", null, null );
+		moniker = FilterFactory.getFilterMoniker( videoSourceFilter );
+		assertEquals( "VIDEO_SOURCE:MSX::", moniker );
 	}
 
 	@Test( expected = NullPointerException.class )
@@ -195,6 +216,9 @@ public class FilterFactoryTest
 
 		Filter yearFilter = FilterFactory.createFilter( FilterType.YEAR, "1985", null, FilterParameter.EQUAL_OR_GREATER );
 		assertEquals( FilterType.YEAR, FilterFactory.getFilterType( yearFilter ) );
+
+		Filter videoSourceFilter = FilterFactory.createFilter( FilterType.VIDEO_SOURCE, "GFX9000", null, null );
+		assertEquals( FilterType.VIDEO_SOURCE, FilterFactory.getFilterType( videoSourceFilter ) );
 	}
 
 	@Test( expected = NullPointerException.class )
@@ -255,6 +279,11 @@ public class FilterFactoryTest
 		assertEquals( "1989", FilterFactory.getAnnotatedFieldValue( yearFilter2, Value1Field.class ) );
 		assertEquals( "1990", FilterFactory.getAnnotatedFieldValue( yearFilter2, Value2Field.class ) );
 		assertEquals( "BETWEEN_INCLUSIVE", FilterFactory.getAnnotatedFieldValue( yearFilter2, ParameterField.class ) );
+
+		Filter videoSourceFilter = FilterFactory.createFilter( FilterType.VIDEO_SOURCE, "MSX", null, null );
+		assertEquals( "MSX", FilterFactory.getAnnotatedFieldValue( videoSourceFilter, Value1Field.class ) );
+		assertNull( FilterFactory.getAnnotatedFieldValue( videoSourceFilter, Value2Field.class ) );
+		assertNull( FilterFactory.getAnnotatedFieldValue( videoSourceFilter, ParameterField.class ) );
 	}
 
 	@Test( expected = NullPointerException.class )

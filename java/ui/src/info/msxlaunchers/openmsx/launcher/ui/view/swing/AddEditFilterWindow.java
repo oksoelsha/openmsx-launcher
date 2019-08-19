@@ -24,6 +24,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.MSXGeneration;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Sound;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.VideoSource;
 import info.msxlaunchers.openmsx.launcher.data.repository.constants.Company;
 import info.msxlaunchers.openmsx.launcher.data.repository.constants.Country;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
@@ -146,7 +147,8 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-		final JComboBox<ComboBoxWithDisplayNameItem> filterTypesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterType.class, false);
+		final JComboBox<ComboBoxWithDisplayNameItem> filterTypesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterType.class, true);
+		filterTypesComboBox.setMaximumRowCount(FilterType.values().length);
 		filterTypesComboBox.addActionListener(event -> showCorrespondingSelector(FilterType.valueOf(((ComboBoxWithDisplayNameItem)filterTypesComboBox.getSelectedItem()).value)));
 
 		filterItemsPanel = new JPanel();
@@ -259,8 +261,9 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		filterItemsPanel.add(new SizesLayer().getLayer(), FilterType.SIZE.toString());
 		filterItemsPanel.add(new SoundChipsLayer().getLayer(), FilterType.SOUND.toString());
 		filterItemsPanel.add(new YearsLayer().getLayer(), FilterType.YEAR.toString());
+		filterItemsPanel.add(new VideoSourcesLayer().getLayer(), FilterType.VIDEO_SOURCE.toString());
 
-		//initialise the table with existing filter items in case of edit
+		//Initialize the table with existing filter items in case of edit
 		if(filterItemsToEdit != null)
 		{
 			for(String filterItem:filterItemsToEdit)
@@ -725,6 +728,30 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		}
 	}
 
+	@FilterDescriptor(type = FilterType.VIDEO_SOURCE)
+	private class VideoSourcesLayer extends AbstractLayer
+	{
+		private final VideoSourcesLayer instance = this;
+		private final JComboBox<ComboBoxWithDisplayNameItem> videoSourcesComboBox = getComboBoxWithDisplayValuesLocalizedInternally(VideoSource.class, false);
+
+		@Override
+		public Component getLayer()
+		{
+			JPanel videoSourcesPanel = getFilterLayerPanel();
+
+			videoSourcesPanel.add(videoSourcesComboBox);
+			addButton(instance, videoSourcesPanel);
+
+			return videoSourcesPanel;
+		}
+ 
+		@Override
+		public String getValue1()
+		{
+			return ((ComboBoxWithDisplayNameItem)videoSourcesComboBox.getSelectedItem()).value;
+		}
+	}
+
 	private void showCorrespondingSelector(FilterType filterType)
 	{
 		CardLayout cl = (CardLayout)(filterItemsPanel.getLayout());
@@ -738,6 +765,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		switch(type)
 		{
 			case COMPANY:
+			case VIDEO_SOURCE:
 				descriptor = value1;
 				break;
 			case COUNTRY:
@@ -800,9 +828,9 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 
 		int index = 0;
 		for (Enum<E> enumVal: enumClass.getEnumConstants())
-		{  
+		{
 			comboBoxItems[index++] = new ComboBoxWithDisplayNameItem(messages.get(enumVal.toString()), enumVal.toString());
-        }
+		}
 
 		if(sort)
 		{
@@ -825,9 +853,9 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 
 		int index = 0;
 		for (Enum<E> enumVal: enumClass.getEnumConstants())
-		{  
+		{
 			comboBoxItems[index++] = new ComboBoxWithDisplayNameItem(((EnumWithDisplayName)enumVal).getDisplayName(), enumVal.toString());
-        }
+		}
 
 		if(sort)
 		{

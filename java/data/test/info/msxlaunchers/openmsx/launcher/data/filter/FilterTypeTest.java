@@ -16,5 +16,6 @@ public class FilterTypeTest
 		FilterType.valueOf( FilterType.SIZE.toString() );
 		FilterType.valueOf( FilterType.SOUND.toString() );
 		FilterType.valueOf( FilterType.YEAR.toString() );
+		FilterType.valueOf( FilterType.VIDEO_SOURCE.toString() );
 	}
 }
