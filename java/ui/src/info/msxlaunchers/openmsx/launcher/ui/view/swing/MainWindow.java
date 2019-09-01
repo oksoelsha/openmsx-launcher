@@ -83,6 +83,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewPropertie
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JCompositeLabel;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JLabelTransitionedImage;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JMenuItemWithIcon;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextField;
@@ -449,8 +450,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		JPanel editButtonPanel = new JPanel();
 		editButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
 
-		screenshot1Label = new JLabel(Icons.NO_SCREENSHOT.getImageIcon());
-		screenshot2Label = new JLabel(Icons.NO_SCREENSHOT.getImageIcon());
+		screenshot1Label = new JLabelTransitionedImage(Icons.NO_SCREENSHOT.getImageIcon());
+		screenshot2Label = new JLabelTransitionedImage(Icons.NO_SCREENSHOT.getImageIcon());
 
 		favoritesButton = new JButton();
 		favoritesButton.setIcon(Icons.FAVORITE.getImageIcon());
