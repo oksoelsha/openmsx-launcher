@@ -83,7 +83,8 @@ import info.msxlaunchers.openmsx.launcher.ui.view.platform.PlatformViewPropertie
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JCompositeLabel;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JLabelTransitionedImage;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JLabelTransitionedEnabledDisabledImage;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JLabelTransitionedNewImage;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JListWithImagesAndActions;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JMenuItemWithIcon;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JSearchTextField;
@@ -450,8 +451,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		JPanel editButtonPanel = new JPanel();
 		editButtonPanel.setLayout(new GridLayout(1, 0, 0, 0));
 
-		screenshot1Label = new JLabelTransitionedImage(Icons.NO_SCREENSHOT.getImageIcon());
-		screenshot2Label = new JLabelTransitionedImage(Icons.NO_SCREENSHOT.getImageIcon());
+		screenshot1Label = new JLabelTransitionedNewImage(Icons.NO_SCREENSHOT.getImageIcon());
+		screenshot2Label = new JLabelTransitionedNewImage(Icons.NO_SCREENSHOT.getImageIcon());
 
 		favoritesButton = new JButton();
 		favoritesButton.setIcon(Icons.FAVORITE.getImageIcon());
@@ -472,14 +473,14 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 		JPanel soundIndicatorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 1));
 		soundIndicatorsPanel.setBackground(indicatorsPanelBackground);
-		soundIndicatorPSG = new JLabel(Icons.SOUND_PSG.getImageIcon());
-		soundIndicatorSCC = new JLabel(Icons.SOUND_SCC.getImageIcon());
-		soundIndicatorSCCI = new JLabel(Icons.SOUND_SCC_I.getImageIcon());
-		soundIndicatorPCM = new JLabel(Icons.SOUND_PCM.getImageIcon());
-		soundIndicatorMSXMusic = new JLabel(Icons.SOUND_MSX_MUSIC.getImageIcon());
-		soundIndicatorMSXAudio = new JLabel(Icons.SOUND_MSX_AUDIO.getImageIcon());
-		soundIndicatorMoonsound = new JLabel(Icons.SOUND_MOONSOUND.getImageIcon());
-		soundIndicatorMidi = new JLabel(Icons.SOUND_MIDI.getImageIcon());
+		soundIndicatorPSG = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_PSG.getImageIcon());
+		soundIndicatorSCC = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_SCC.getImageIcon());
+		soundIndicatorSCCI = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_SCC_I.getImageIcon());
+		soundIndicatorPCM = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_PCM.getImageIcon());
+		soundIndicatorMSXMusic = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_MSX_MUSIC.getImageIcon());
+		soundIndicatorMSXAudio = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_MSX_AUDIO.getImageIcon());
+		soundIndicatorMoonsound = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_MOONSOUND.getImageIcon());
+		soundIndicatorMidi = new JLabelTransitionedEnabledDisabledImage(Icons.SOUND_MIDI.getImageIcon());
 
 		soundIndicatorsPanel.add(soundIndicatorPSG);
 		soundIndicatorsPanel.add(soundIndicatorSCC);
@@ -492,10 +493,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 		JPanel generationIndicatorsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 1));
 		generationIndicatorsPanel.setBackground(indicatorsPanelBackground);
-		generationIndicatorMSX = new JLabel(Icons.GENERATION_MSX.getImageIcon());
-		generationIndicatorMSX2 = new JLabel(Icons.GENERATION_MSX2.getImageIcon());
-		generationIndicatorMSX2P = new JLabel(Icons.GENERATION_MSX2P.getImageIcon());
-		generationIndicatorTurboR = new JLabel(Icons.GENERATION_TURBO_R.getImageIcon());
+		generationIndicatorMSX = new JLabelTransitionedEnabledDisabledImage(Icons.GENERATION_MSX.getImageIcon());
+		generationIndicatorMSX2 = new JLabelTransitionedEnabledDisabledImage(Icons.GENERATION_MSX2.getImageIcon());
+		generationIndicatorMSX2P = new JLabelTransitionedEnabledDisabledImage(Icons.GENERATION_MSX2P.getImageIcon());
+		generationIndicatorTurboR = new JLabelTransitionedEnabledDisabledImage(Icons.GENERATION_TURBO_R.getImageIcon());
 
 		generationIndicatorsPanel.add(generationIndicatorMSX);
 		generationIndicatorsPanel.add(generationIndicatorMSX2);

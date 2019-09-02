@@ -28,7 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 
 /**
- * JLabel based class that transitions from old image to new
+ * JLabel based class that transitions from enabled to disabled image and vice versa
  * It only works with Icons of type ImageIcon
  * 
  * @since v1.12
@@ -36,61 +36,52 @@ import javax.swing.Timer;
  *
  */
 @SuppressWarnings("serial")
-public class JLabelTransitionedImage extends JLabel
+public class JLabelTransitionedEnabledDisabledImage extends JLabel
 {
 	private static final int DELTA_TIME = 10;
 	private static final int ELAPSED_TIME = 200;
 	private static final int MAX_COUNT = ELAPSED_TIME / DELTA_TIME;
+	private static final float MAX_ALPHA = 1.0f;
+	private static final float MIN_ALPHA = 0.2f;
 
-	private Image currentImage;
-	private Icon newIcon;
-	private Image newImage;
+	private Image image;
 	private Timer timer;
-	private float alpha1;
-	private float alpha2;
+	private float alpha;
+	private boolean enabledFlag;
 
-	public JLabelTransitionedImage(Icon icon)
+	public JLabelTransitionedEnabledDisabledImage(Icon icon)
 	{
 		super(icon);
+		image = convertIconToImage(icon);
 	}
 
 	@Override
-	public void setIcon(Icon icon)
+	public void setEnabled(boolean enabled)
 	{
-		if(currentImage == null)
+		if(enabled != this.enabledFlag)
 		{
-			super.setIcon(icon);
-			currentImage = convertIconToImage(icon);
-			return;
+			this.enabledFlag = enabled;
+	
+			if(timer != null)
+			{
+				stopTransition();
+			}
+	
+			timer = new Timer(DELTA_TIME, new TransitionListener());
+			timer.start();
 		}
-
-		if(timer != null)
+		else
 		{
-			//a new image is set while the timer is still transitioning. In this case stop it before recreating
-			stopTransition();
+			showFinalState();
 		}
-		newIcon = icon;
-		newImage = convertIconToImage(icon);
-		alpha1 = 1.0f;
-		alpha2 = 0.0f;
-		timer = new Timer(DELTA_TIME, new TransitionListener());
-		timer.start();
 	}
 
 	@Override
 	protected void paintComponent(Graphics g)
 	{
-		super.paintComponent(g);
-		if (currentImage == null || newImage == null)
-		{
-			return;
-		}
-
 		Graphics2D g2 = (Graphics2D) g.create();
-		g2.setComposite(((AlphaComposite)g2.getComposite()).derive(alpha1));
-		g2.drawImage(currentImage, 0, 0, this);
-		g2.setComposite(((AlphaComposite)g2.getComposite()).derive(alpha2));
-		g2.drawImage(newImage, 0, 0, this);
+		g2.setComposite(((AlphaComposite)g2.getComposite()).derive(alpha));
+		g2.drawImage(image, 0, 0, this);
 		g2.dispose();
 	}
 
@@ -107,13 +98,14 @@ public class JLabelTransitionedImage extends JLabel
 			}
 			else
 			{
-				alpha1 = ((float)MAX_COUNT - counter) / (float) MAX_COUNT;
-				alpha2 = (float) counter / (float) MAX_COUNT;
-
-				alpha1 = Math.min(1f, alpha1);
-				alpha1 = Math.max(0f, alpha1);
-				alpha2 = Math.min(1f, alpha2);
-				alpha2 = Math.max(0f, alpha2);
+				if(enabledFlag)
+				{
+					alpha = (float) counter / (float) MAX_COUNT * (MAX_ALPHA - MIN_ALPHA) + MIN_ALPHA;
+				}
+				else
+				{
+					alpha = ((float)MAX_COUNT - counter) / (float) MAX_COUNT * (MAX_ALPHA - MIN_ALPHA) + MIN_ALPHA;
+				}
 
 				repaint();
 				counter++;
@@ -129,7 +121,18 @@ public class JLabelTransitionedImage extends JLabel
 	private void stopTransition()
 	{
 		timer.stop();
-		currentImage = newImage;
-		super.setIcon(newIcon);
+	}
+
+	private void showFinalState()
+	{
+		if(enabledFlag)
+		{
+			alpha = MAX_ALPHA;
+		}
+		else
+		{
+			alpha = MIN_ALPHA;
+		}
+		repaint();
 	}
 }
