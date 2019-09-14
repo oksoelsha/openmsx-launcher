@@ -46,9 +46,12 @@ final class NimbusLookAndFeelSetup
 			final Color background = new Color(240, 240, 240);
 
 			laf.getDefaults().put("Panel.background", background);
-			laf.getDefaults().put("MenuBar:Menu[Selected].backgroundPainter", new MenuBackgroundColor());
-			laf.getDefaults().put("MenuItem[MouseOver].backgroundPainter", new MenuItemBackgroundColor());
 			laf.getDefaults().put("MenuBar:Menu.contentMargins", new Insets (1, 5, 2, 10));
+			laf.getDefaults().put("MenuBar:Menu[Selected].backgroundPainter", new MenuBackgroundColor());
+			laf.getDefaults().put("Menu[Enabled+Selected].backgroundPainter", new MenuItemBackgroundColor());
+			laf.getDefaults().put("Menu.contentMargins", new Insets(2, 7, 3, 13));
+			laf.getDefaults().put("Menu[Enabled+Selected].textForeground", new Color(10, 10, 10));
+			laf.getDefaults().put("MenuItem[MouseOver].backgroundPainter", new MenuItemBackgroundColor());
 			laf.getDefaults().put("MenuItem.contentMargins", new Insets(2, 7, 3, 13));
 			laf.getDefaults().put("MenuItem.textIconGap", 6);
 			laf.getDefaults().put("MenuItem[MouseOver].textForeground", new Color(10, 10, 10));

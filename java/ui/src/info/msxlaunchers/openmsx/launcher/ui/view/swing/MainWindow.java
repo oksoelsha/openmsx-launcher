@@ -73,8 +73,14 @@ import javax.swing.event.ListSelectionListener;
 
 import info.msxlaunchers.openmsx.common.OSUtils;
 import info.msxlaunchers.openmsx.launcher.data.feed.FeedMessage;
+import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
+import info.msxlaunchers.openmsx.launcher.data.filter.FilterFactory;
+import info.msxlaunchers.openmsx.launcher.data.filter.FilterParameter;
+import info.msxlaunchers.openmsx.launcher.data.filter.FilterType;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
+import info.msxlaunchers.openmsx.launcher.data.repository.constants.Company;
+import info.msxlaunchers.openmsx.launcher.data.repository.constants.Country;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GameLabel;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
@@ -157,6 +163,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JPopupMenu favoritesContextMenu;
 
 	private JPopupMenu filtersContextMenu;
+	private JMenu quickFilterMenuItemList;
+	private JMenu companyQuickFilterMenuItemList;
+	private JMenu countryQuickFilterMenuItemList;
+	private JMenu yearQuickFilterMenuItemList;
+	private JMenu mediumQuickFilterMenuItemList;
 	private JMenuItem newFilterMenuItem;
 	private JMenuItem editCurrentUntitledFilterMenuItem;
 	private JMenuItem resetFilterMenuItem;
@@ -727,12 +738,19 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		infoMenuItem.setText(messages.get("INFO"));
 		propertiesMenuItem.setText(messages.get("PROPERTIES"));
 
+		quickFilterMenuItemList.setText(messages.get("QUICK_FILTER"));
+		companyQuickFilterMenuItemList.setText(messages.get("COMPANY"));
+		countryQuickFilterMenuItemList.setText(messages.get("COUNTRY"));
+		yearQuickFilterMenuItemList.setText(messages.get("YEAR"));
+		mediumQuickFilterMenuItemList.setText(messages.get("MEDIUM"));
 		newFilterMenuItem.setText(messages.get("NEW") + "...");
 		editCurrentUntitledFilterMenuItem.setText(messages.get("EDIT_UNTITLED_FILTER") + "...");
 		resetFilterMenuItem.setText(messages.get("RESET"));
 
 		removeConfirmationMessage = messages.get("REMOVE_CONFIRMATION_MESSAGE");
 		updateAllDatabasesConfirmationMessage = messages.get("UPDATE_ALL_DATABASES_CONFIRMATION_MESSAGE");
+
+		completeQuickFilterMenu();
 	}
 
 	public void fillGameList(String currentDatabase, Set<GameLabel> games, String selectedGame)
@@ -888,6 +906,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			else if(action instanceof DatabaseMenuItemName)
 			{
 				onSelectDatabase(((PopupMenuItemName)action).getPopupMenuItemName());
+			}
+			else if(action instanceof QuickFilterMenuItemName)
+			{
+				applyQuickFilter(((QuickFilterMenuItemName)action).filter);
 			}
 			gameList.requestFocusInWindow();
 		}
@@ -1056,6 +1078,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		{
 			filtersContextMenu.add(editCurrentUntitledFilterMenuItem);
 		}
+		filtersContextMenu.add(quickFilterMenuItemList);
+		quickFilterMenuItemList.add(companyQuickFilterMenuItemList);
+		quickFilterMenuItemList.add(countryQuickFilterMenuItemList);
+		quickFilterMenuItemList.add(yearQuickFilterMenuItemList);
+		quickFilterMenuItemList.add(mediumQuickFilterMenuItemList);
+
 		filtersContextMenu.add(newFilterMenuItem);
 
 		showButtonMenu(filtersSelectButton, filtersContextMenu, 0);
@@ -1189,6 +1217,53 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		feedMessagesProcessingContextMenu.add(messagePanel);
 		showButtonMenu(feedButton, feedMessagesProcessingContextMenu, 2);
 	}
+
+	private void completeQuickFilterMenu()
+	{
+		companyQuickFilterMenuItemList.removeAll();
+		for(Company company: Company.values())
+		{
+			JMenuItem companyQuickFilterMenuItem = new JMenuItem();
+			Filter filter = FilterFactory.createFilter(FilterType.COMPANY, company.getDisplayName(), null, null);
+			companyQuickFilterMenuItem.addActionListener(this);
+			companyQuickFilterMenuItem.setAction(new QuickFilterMenuItemName(filter));
+			companyQuickFilterMenuItem.setText(company.getDisplayName());
+			companyQuickFilterMenuItemList.add(companyQuickFilterMenuItem);
+		}
+
+		countryQuickFilterMenuItemList.removeAll();
+		for(Country country: Country.values())
+		{
+			JMenuItem countryQuickFilterMenuItem = new JMenuItem();
+			Filter filter = FilterFactory.createFilter(FilterType.COUNTRY, country.toString(), null, null);
+			countryQuickFilterMenuItem.addActionListener(this);
+			countryQuickFilterMenuItem.setAction(new QuickFilterMenuItemName(filter));
+			countryQuickFilterMenuItem.setText(messages.get(country.toString()));
+			countryQuickFilterMenuItemList.add(countryQuickFilterMenuItem);
+		}
+
+		yearQuickFilterMenuItemList.removeAll();
+		for(int year = 1982; year <= 1994; year++)
+		{
+			JMenuItem yearQuickFilterMenuItem = new JMenuItem();
+			Filter filter = FilterFactory.createFilter(FilterType.YEAR, year + "", null, FilterParameter.EQUAL);
+			yearQuickFilterMenuItem.addActionListener(this);
+			yearQuickFilterMenuItem.setAction(new QuickFilterMenuItemName(filter));
+			yearQuickFilterMenuItem.setText(year + "");
+			yearQuickFilterMenuItemList.add(yearQuickFilterMenuItem);
+		}
+
+		mediumQuickFilterMenuItemList.removeAll();
+		for(Medium medium: Medium.values())
+		{
+			JMenuItem mediumQuickFilterMenuItem = new JMenuItem();
+			Filter filter = FilterFactory.createFilter(FilterType.MEDIUM, medium.toString(), null, null);
+			mediumQuickFilterMenuItem.addActionListener(this);
+			mediumQuickFilterMenuItem.setAction(new QuickFilterMenuItemName(filter));
+			mediumQuickFilterMenuItem.setText(messages.get(medium.toString()));
+			mediumQuickFilterMenuItemList.add(mediumQuickFilterMenuItem);
+		}
+}
 
 	private void showButtonMenu(JComponent button, JPopupMenu menu, int xOffset)
 	{
@@ -1625,6 +1700,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		helpMenu.applyComponentOrientation(orientation);
 		contentPane.setComponentOrientation(orientation);
 		contentPane.applyComponentOrientation(orientation);
+		quickFilterMenuItemList.setComponentOrientation(orientation);
+		companyQuickFilterMenuItemList.setComponentOrientation(orientation);
+		countryQuickFilterMenuItemList.setComponentOrientation(orientation);
+		yearQuickFilterMenuItemList.setComponentOrientation(orientation);
 		newFilterMenuItem.setComponentOrientation(orientation);
 		editCurrentUntitledFilterMenuItem.setComponentOrientation(orientation);
 		resetFilterMenuItem.setComponentOrientation(orientation);
@@ -1700,6 +1779,12 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 
 	private void setupFiltersMenu()
 	{
+		quickFilterMenuItemList = new JMenu();
+		companyQuickFilterMenuItemList = new JMenu();
+		countryQuickFilterMenuItemList = new JMenu();
+		yearQuickFilterMenuItemList = new JMenu();
+		mediumQuickFilterMenuItemList = new JMenu();
+
 		newFilterMenuItem = new JMenuItem();
 		newFilterMenuItem.addActionListener(this);
 
@@ -1727,6 +1812,18 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		try
 		{
 			presenter.onSelectFilter(filterName);
+		}
+		catch(LauncherException le)
+		{
+			MessageBoxUtil.showErrorMessageBox(this, le, messages, orientation);
+		}
+	}
+
+	private void applyQuickFilter(Filter filter)
+	{
+		try
+		{
+			presenter.onSelectQuickFilter(filter);
 		}
 		catch(LauncherException le)
 		{
@@ -1886,6 +1983,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		DatabaseMenuItemName(String databaseName)
 		{
 			super(databaseName);
+		}
+	}
+
+	private class QuickFilterMenuItemName extends PopupMenuItemName
+	{
+		private final Filter filter;
+
+		QuickFilterMenuItemName(Filter filter)
+		{
+			super("");
+			this.filter = filter;
 		}
 	}
 

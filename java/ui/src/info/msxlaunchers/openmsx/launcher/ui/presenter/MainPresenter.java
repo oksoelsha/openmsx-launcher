@@ -241,6 +241,14 @@ public interface MainPresenter
 	void onSelectFilter( String filterName ) throws LauncherException;
 
 	/**
+	 * Called when user selects a quick filter
+	 * 
+	 * @param filterMoniker Selected filter
+	 * @throws LauncherException
+	 */
+	void onSelectQuickFilter( Filter filter ) throws LauncherException;
+
+	/**
 	 * Called when user requests to delete selected a filter by name
 	 * 
 	 * @param filterName Filter name to delete

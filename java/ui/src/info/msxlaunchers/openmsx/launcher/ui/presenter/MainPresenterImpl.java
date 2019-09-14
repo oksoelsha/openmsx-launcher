@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -215,7 +216,7 @@ final class MainPresenterImpl implements MainPresenter
 		{
 			try
 			{
-				retrieveDatabaseGames( currentDatabase );
+				retrieveDatabaseGames();
 			}
 			catch ( GamePersistenceException gpe )
 			{
@@ -318,24 +319,9 @@ final class MainPresenterImpl implements MainPresenter
 	{
 		if( database != null && !database.equals( currentDatabase ) )
 		{
-			try
-			{
-				retrieveDatabaseGames( database );
-			}
-			catch( GamePersistenceException gpe )
-			{
-				if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
-				{
-					throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, database );
-				}
-				else
-				{
-					throw new LauncherException( LauncherExceptionCode.ERR_IO );
-				}
-			}
-
 			currentDatabase = database;
-			view.fillGameList( database, getSortedGameList(), null );
+
+			populateGameList();
 		}
 	}
 
@@ -554,23 +540,7 @@ final class MainPresenterImpl implements MainPresenter
 			databases.add( currentDatabase );
 		}
 
-		try
-		{
-			retrieveDatabaseGames( currentDatabase );
-		}
-		catch( GamePersistenceException gpe )
-		{
-			if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
-			{
-				throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, currentDatabase );
-			}
-			else
-			{
-				throw new LauncherException( LauncherExceptionCode.ERR_IO );
-			}
-		}
-
-		view.fillGameList( currentDatabase, getSortedGameList(), null );
+		populateGameList();
 	}
 
 	/* (non-Javadoc)
@@ -865,6 +835,21 @@ final class MainPresenterImpl implements MainPresenter
 	}
 
 	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onSelectQuickFilter(info.msxlaunchers.openmsx.launcher.data.filter.Filter)
+	 */
+	@Override
+	public void onSelectQuickFilter( Filter filter ) throws LauncherException
+	{
+		currentFilter = Collections.singleton( filter );
+
+		populateGameList();
+
+		untitledFilter = true;
+
+		view.setFilterNameLabelUntitled();
+	}
+
+	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestDeleteFilterAction(java.lang.String)
 	 */
 	@Override
@@ -934,23 +919,7 @@ final class MainPresenterImpl implements MainPresenter
 	{
 		currentFilter = filter;
 
-		try
-		{
-			retrieveDatabaseGames( currentDatabase );
-		}
-		catch( GamePersistenceException gpe )
-		{
-			if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
-			{
-				throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND );
-			}
-			else
-			{
-				throw new LauncherException( LauncherExceptionCode.ERR_IO );
-			}
-		}
-
-		view.fillGameList( currentDatabase, getSortedGameList(), null );
+		populateGameList();
 
 		if( !filterEditMode )
 		{
@@ -1321,9 +1290,30 @@ final class MainPresenterImpl implements MainPresenter
 		return medium;
 	}
 
-	private void retrieveDatabaseGames( String database ) throws GamePersistenceException
+	private void populateGameList() throws LauncherException
 	{
-		Set<Game> games =  launcherPersistence.getGamePersister().getGames( database );
+		try
+		{
+			retrieveDatabaseGames();
+		}
+		catch( GamePersistenceException gpe )
+		{
+			if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, currentDatabase );
+			}
+			else
+			{
+				throw new LauncherException( LauncherExceptionCode.ERR_IO );
+			}
+		}
+
+		view.fillGameList( currentDatabase, getSortedGameList(), null );
+	}
+
+	private void retrieveDatabaseGames() throws GamePersistenceException
+	{
+		Set<Game> games =  launcherPersistence.getGamePersister().getGames( currentDatabase );
 
 		if( currentFilter == null )
 		{
@@ -1331,9 +1321,9 @@ final class MainPresenterImpl implements MainPresenter
 		}
 		else
 		{
-			Set<Game> filteredGames = new HashSet<Game>();
+			Set<Game> filteredGames = new HashSet<>();
 
-			games.stream().filter( game -> !isFiltered( game ) ).forEach( game -> filteredGames.add( game ) );
+			games.stream().filter( game -> !isFiltered( game ) ).forEach( filteredGames::add );
 
 			setGameMap( filteredGames );
 		}
@@ -1398,23 +1388,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		if( !Utils.isEmpty( currentDatabase ) )
 		{
-			try
-			{
-				retrieveDatabaseGames( currentDatabase );
-			}
-			catch( GamePersistenceException gpe )
-			{
-				if( gpe.getIssue().equals( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND ) )
-				{
-					throw new LauncherException( LauncherExceptionCode.ERR_DATABASE_NOT_FOUND, currentDatabase );
-				}
-				else
-				{
-					throw new LauncherException( LauncherExceptionCode.ERR_IO );
-				}
-			}
-	
-			view.fillGameList( currentDatabase, getSortedGameList(), null );
+			populateGameList();
 
 			updateFilterName( filterName );
 		}
