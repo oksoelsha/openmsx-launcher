@@ -147,7 +147,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-		final JComboBox<ComboBoxWithDisplayNameItem> filterTypesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterType.class, true);
+		final JComboBox<ComboBoxWithDisplayNameItem> filterTypesComboBox = getComboBoxWithDisplayValuesLocalizedExternally(FilterType.class, false);
 		filterTypesComboBox.setMaximumRowCount(FilterType.values().length);
 		filterTypesComboBox.addActionListener(event -> showCorrespondingSelector(FilterType.valueOf(((ComboBoxWithDisplayNameItem)filterTypesComboBox.getSelectedItem()).value)));
 
@@ -254,13 +254,13 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		filterItemsPanel.setLayout(new CardLayout(0, 0));
 
 		filterItemsPanel.add(new CompaniesLayer().getLayer(), FilterType.COMPANY.toString());
+		filterItemsPanel.add(new YearsLayer().getLayer(), FilterType.YEAR.toString());
 		filterItemsPanel.add(new CountriesLayer().getLayer(), FilterType.COUNTRY.toString());
+		filterItemsPanel.add(new MediaLayer().getLayer(), FilterType.MEDIUM.toString());
 		filterItemsPanel.add(new GenerationsLayer().getLayer(), FilterType.GENERATION.toString());
 		filterItemsPanel.add(new GenresLayer().getLayer(), FilterType.GENRE.toString());
-		filterItemsPanel.add(new MediaLayer().getLayer(), FilterType.MEDIUM.toString());
 		filterItemsPanel.add(new SizesLayer().getLayer(), FilterType.SIZE.toString());
 		filterItemsPanel.add(new SoundChipsLayer().getLayer(), FilterType.SOUND.toString());
-		filterItemsPanel.add(new YearsLayer().getLayer(), FilterType.YEAR.toString());
 		filterItemsPanel.add(new VideoSourcesLayer().getLayer(), FilterType.VIDEO_SOURCE.toString());
 
 		//Initialize the table with existing filter items in case of edit

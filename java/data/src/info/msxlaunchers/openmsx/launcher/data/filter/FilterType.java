@@ -25,12 +25,12 @@ package info.msxlaunchers.openmsx.launcher.data.filter;
 public enum FilterType
 {
 	COMPANY,
+	YEAR,
 	COUNTRY,
+	MEDIUM,
 	GENERATION,
 	GENRE,
-	MEDIUM,
 	SIZE,
 	SOUND,
-	YEAR,
 	VIDEO_SOURCE
 }
