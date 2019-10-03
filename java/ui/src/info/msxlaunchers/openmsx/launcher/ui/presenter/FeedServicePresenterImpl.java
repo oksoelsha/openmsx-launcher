@@ -69,7 +69,13 @@ class FeedServicePresenterImpl implements FeedServicePresenter
 	{
 		running = false;
 		feedService.stop();
-		newNewsChecker.stop();
+
+		//the following check for null is needed for the case when the service was never started
+		//e.g. service was disabled and kept that way in the settings before saving
+		if( newNewsChecker != null )
+		{
+			newNewsChecker.stop();
+		}
 	}
 
 	/* (non-Javadoc)
