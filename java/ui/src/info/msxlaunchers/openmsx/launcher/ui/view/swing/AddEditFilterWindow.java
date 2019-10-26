@@ -87,7 +87,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final Component mainWindow;
-	private final String[] filterItemsToEdit;
+	private final List<String> filterItemsToEdit;
 	private final String filterName;
 	private final boolean editMode;
 	private final boolean editSavedFilterMode;
@@ -106,7 +106,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 			Language language,
 			boolean rightToLeft,
 			String filterName,
-			String[] filterItemsToEdit)
+			List<String> filterItemsToEdit)
 	{
 		this.presenter = presenter;
 		this.rightToLeft = rightToLeft;
@@ -224,32 +224,32 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 			saveAsPanel.add(filterNameTextField);
 		}
 
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
+		GroupLayout glContentPanel = new GroupLayout(contentPanel);
+		glContentPanel.setHorizontalGroup(
+			glContentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(glContentPanel.createSequentialGroup()
 					.addComponent(filterSelectorPanel))
-				.addGroup(gl_contentPanel.createSequentialGroup()
+				.addGroup(glContentPanel.createSequentialGroup()
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_contentPanel.createSequentialGroup()
+				.addGroup(glContentPanel.createSequentialGroup()
 						.addComponent(saveAsPanel))
-				.addGroup(gl_contentPanel.createSequentialGroup()
+				.addGroup(glContentPanel.createSequentialGroup()
 						.addComponent(buttonsPane))
 		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+		glContentPanel.setVerticalGroup(
+			glContentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(glContentPanel.createSequentialGroup()
+					.addGroup(glContentPanel.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(filterSelectorPanel))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE, false)
+					.addGroup(glContentPanel.createParallelGroup(Alignment.BASELINE, false)
 						.addComponent(saveAsPanel))
 					.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(buttonsPane))
 		);
-		contentPanel.setLayout(gl_contentPanel);
+		contentPanel.setLayout(glContentPanel);
 
 		filterItemsPanel.setLayout(new CardLayout(0, 0));
 
@@ -758,70 +758,6 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		cl.show(filterItemsPanel, filterType.toString());
 	}
 
-	private String getFilterDescriptor(FilterType type, String value1, String value2, FilterParameter parameter)
-	{
-		String descriptor = null;
-
-		switch(type)
-		{
-			case COMPANY:
-			case VIDEO_SOURCE:
-				descriptor = value1;
-				break;
-			case COUNTRY:
-			case MEDIUM:
-				descriptor = messages.get(value1);
-				break;
-			case GENERATION:
-				descriptor = MSXGeneration.valueOf(value1).getDisplayName();
-				break;
-			case GENRE:
-				descriptor = Genre.valueOf(value1).getDisplayName();
-				break;
-			case SOUND:
-				descriptor = Sound.valueOf(value1).getDisplayName();
-				break;
-			case SIZE:
-				descriptor = getFilterWithParameterDescriptor(Utils.getString(Integer.parseInt(value1)/1024), Utils.getString(Integer.parseInt(value2)/1024),
-						parameter, " KB");
-				break;
-			case YEAR:
-				descriptor = getFilterWithParameterDescriptor(value1, value2, parameter, "");
-				break;
-		}
-
-		return descriptor;
-	}
-
-    private String getFilterWithParameterDescriptor(String value1, String value2, FilterParameter parameter, String valueUnit)
-    {
-    	StringBuilder buffer = new StringBuilder();
-
-		switch(parameter)
-		{
-			case EQUAL:
-				buffer.append("= ").append(value1).append(valueUnit);
-				break;
-			case EQUAL_OR_GREATER:
-				buffer.append(">= ").append(value1).append(valueUnit);
-				break;
-			case EQUAL_OR_LESS:
-				buffer.append("<= ").append(value1).append(valueUnit);
-				break;
-			case GREATER:
-				buffer.append("> ").append(value1).append(valueUnit);
-				break;
-			case LESS:
-				buffer.append("< ").append(value1).append(valueUnit);
-				break;
-			case BETWEEN_INCLUSIVE:
-	    		buffer.append(">= ").append(value1).append(valueUnit).append(" , ").append("<= ").append(value2).append(valueUnit);
-				break;
-		}
-
-		return buffer.toString();
-    }
-
     private <E extends Enum<E>> JComboBox<ComboBoxWithDisplayNameItem> getComboBoxWithDisplayValuesLocalizedExternally(Class<E> enumClass, boolean sort)
 	{
 		ComboBoxWithDisplayNameItem[] comboBoxItems = new ComboBoxWithDisplayNameItem[enumClass.getEnumConstants().length];
@@ -913,27 +849,12 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 
 	private void addRowToTable(String filter)
 	{
-		String[] filterMonikerParts = filter.split(":");
+		FilterItemObject filterItemObject = FilterUtils.getFilterItemObject(filter);
 
-		FilterType type = FilterType.valueOf(filterMonikerParts[0]);
-		String value1 = filterMonikerParts[1];
-		String value2;
-		FilterParameter parameter;
+		tableModel.addRow(new Object[] {messages.get(filterItemObject.type.toString()),
+				FilterUtils.getFilterDescriptor(filterItemObject.type, filterItemObject.value1, filterItemObject.value2, filterItemObject.parameter, messages)});
 
-		if(filterMonikerParts.length == 4)
-    	{
-			value2 = filterMonikerParts[2];
-			parameter = FilterParameter.valueOf(filterMonikerParts[3]);
-    	}
-    	else
-    	{
-			value2 = null;
-			parameter = null;
-    	}
-
-		tableModel.addRow(new Object[] {messages.get(type.toString()), getFilterDescriptor(type, value1, value2, parameter)});
-
-		filterItemObjectList.add(new FilterItemObject(type, value1, value2, parameter));
+		filterItemObjectList.add(filterItemObject);
 	}
 
 	private void addRowToTableAndApply(FilterType type, String value1, String value2, FilterParameter parameter) throws LauncherException
@@ -941,7 +862,7 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 		if(presenter.onAddToFilterListAndApply(type, value1, value2, parameter))
 		{
 			//this means the filter didn't exist before -> proceed
-			tableModel.addRow(new Object[] {messages.get(type.toString()), getFilterDescriptor(type, value1, value2, parameter)});
+			tableModel.addRow(new Object[] {messages.get(type.toString()), FilterUtils.getFilterDescriptor(type, value1, value2, parameter, messages)});
 
 			filterItemObjectList.add(new FilterItemObject(type, value1, value2, parameter));
 		}
@@ -954,21 +875,5 @@ public class AddEditFilterWindow extends JDialog implements ActionListener
 
 		tableModel.removeRow(index);
 		filterItemObjectList.remove(index);
-	}
-
-	private static class FilterItemObject
-	{
-		private final FilterType type;
-		private final String value1;
-		private final String value2;
-		private final FilterParameter parameter;
-
-		FilterItemObject(FilterType type, String value1, String value2, FilterParameter parameter)
-		{
-			this.type = type;
-			this.value1 = value1;
-			this.value2 = value2;
-			this.parameter = parameter;
-		}
 	}
 }

@@ -230,6 +230,13 @@ public interface MainView
 	void setFilterNameLabelUntitled();
 
 	/**
+	 * Displays filter details
+	 * 
+	 * @param filterDescriptions List of filter descriptions to display
+	 */
+	void displayFilterDetails( List<String> filterDescriptions );
+
+	/**
 	 * Enables or disables access to feed menu (by enabling or disabling button for example)
 	 * 
 	 * @param flag If true enable access, otherwise disable

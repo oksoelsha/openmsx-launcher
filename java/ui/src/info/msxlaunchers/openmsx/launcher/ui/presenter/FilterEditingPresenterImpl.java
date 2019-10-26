@@ -27,6 +27,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.FilterEditingView;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -81,7 +82,7 @@ final class FilterEditingPresenterImpl implements FilterEditingPresenter
 		filterItemsSet.clear();
 		filterItemsSet.addAll( filterItems );
 
-		String[] filterMonikerStrings = getFilterAsStringMonikers( filterItems );
+		List<String> filterMonikerStrings = FilterFactory.getFilterMonikers( filterItems );
 
 		view.displayEditFilterScreen( currentLanguage, currentRightToLeft, filterName, filterMonikerStrings );
 	}
@@ -185,17 +186,5 @@ final class FilterEditingPresenterImpl implements FilterEditingPresenter
 		{
 			mainPresenter.onRequestSetFilterNameUntitled();
 		}
-	}
-
-	private String[] getFilterAsStringMonikers( Set<Filter> filter )
-	{
-		String[] filtersAsStringArray = new String[filter.size()];
-		int index = 0;
-		for( Filter filterItem: filter )
-		{
-			filtersAsStringArray[index++] = FilterFactory.getFilterMoniker( filterItem );
-		}
-
-		return filtersAsStringArray;
 	}
 }

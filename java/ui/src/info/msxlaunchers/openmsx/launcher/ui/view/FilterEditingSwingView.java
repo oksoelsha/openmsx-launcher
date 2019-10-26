@@ -19,6 +19,8 @@ import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.FilterEditingPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.AddEditFilterWindow;
 
+import java.util.List;
+
 import com.google.inject.Inject;
 
 /**
@@ -50,10 +52,10 @@ class FilterEditingSwingView implements FilterEditingView
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.FilterEditingView#displayEditFilterScreen(info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, boolean, java.lang.String, java.lang.String[])
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.FilterEditingView#displayEditFilterScreen(info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, boolean, java.lang.String, java.util.List)
 	 */
 	@Override
-	public void displayEditFilterScreen( Language language, boolean rightToLeft, String filterName, String[] filter )
+	public void displayEditFilterScreen( Language language, boolean rightToLeft, String filterName, List<String> filter )
 	{
 		AddEditFilterWindow addEditFiltersWindow = new AddEditFilterWindow( presenter, language, rightToLeft, filterName, filter );
 

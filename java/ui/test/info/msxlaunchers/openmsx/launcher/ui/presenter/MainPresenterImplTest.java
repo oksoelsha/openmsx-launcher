@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anySetOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -589,6 +590,7 @@ public class MainPresenterImplTest
 		presenter.onRequestSetFilterNameUntitled();
 
 		verify( view, times( 1 ) ).setFilterNameLabelUntitled();
+		verify( view, times( 1 ) ).displayFilterDetails( anyListOf( String.class ) );
 	}
 
 	@Test

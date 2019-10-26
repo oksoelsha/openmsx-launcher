@@ -17,7 +17,11 @@ package info.msxlaunchers.openmsx.launcher.data.filter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
@@ -74,43 +78,35 @@ public class FilterFactory
 
 		Filter filter = null;
 
-		try
+		switch( type )
 		{
-			switch( type )
-			{
-				case COMPANY:
-					filter = new CompanyFilter( value1 );
-					break;
-				case COUNTRY:
-					filter = new CountryFilter( value1 );
-					break;
-				case GENERATION:
-					filter = new GenerationFilter( MSXGeneration.valueOf( value1 ) );
-					break;
-				case GENRE:
-					filter = new GenreFilter( Genre.valueOf( value1 ) );
-					break;
-				case MEDIUM:
-					filter = new MediumFilter( Medium.valueOf( value1 ) );
-					break;
-				case SIZE:
-					filter = new SizeFilter( Utils.getNumber( value1 ), Utils.getNumber( value2 ), parameter );
-					break;
-				case SOUND:
-					filter = new SoundFilter( Sound.valueOf( value1 ) );
-					break;
-				case YEAR:
-					filter = new YearFilter( Utils.getNumber( value1 ), Utils.getNumber( value2 ), parameter );
-					break;
-				case VIDEO_SOURCE:
-					filter = new VideoSourceFilter( VideoSource.valueOf( value1 ) );
-					break;
-			}
-		}
-		catch( IllegalArgumentException iae )
-		{
-			//this could happen when some enum arguments are wrong
-			throw iae;
+			case COMPANY:
+				filter = new CompanyFilter( value1 );
+				break;
+			case COUNTRY:
+				filter = new CountryFilter( value1 );
+				break;
+			case GENERATION:
+				filter = new GenerationFilter( MSXGeneration.valueOf( value1 ) );
+				break;
+			case GENRE:
+				filter = new GenreFilter( Genre.valueOf( value1 ) );
+				break;
+			case MEDIUM:
+				filter = new MediumFilter( Medium.valueOf( value1 ) );
+				break;
+			case SIZE:
+				filter = new SizeFilter( Utils.getNumber( value1 ), Utils.getNumber( value2 ), parameter );
+				break;
+			case SOUND:
+				filter = new SoundFilter( Sound.valueOf( value1 ) );
+				break;
+			case YEAR:
+				filter = new YearFilter( Utils.getNumber( value1 ), Utils.getNumber( value2 ), parameter );
+				break;
+			case VIDEO_SOURCE:
+				filter = new VideoSourceFilter( VideoSource.valueOf( value1 ) );
+				break;
 		}
 
 		return filter;
@@ -144,6 +140,24 @@ public class FilterFactory
 		builder.append( parameter == null ? "" : parameter );
 
 		return builder.toString();
+	}
+
+	/**
+	 * Returns a list of filter monikers for the given set of filters
+	 * 
+	 * @param filters Set of filters. If null, return an empty list
+	 * @return
+	 */
+	public static List<String> getFilterMonikers( Set<Filter> filters )
+	{
+		if( filters == null )
+		{
+			return Collections.emptyList();
+		}
+		else
+		{
+			return filters.stream().map(FilterFactory::getFilterMoniker).collect(Collectors.toList());
+		}
 	}
 
 	/**

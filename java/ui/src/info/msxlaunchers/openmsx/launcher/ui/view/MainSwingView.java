@@ -278,6 +278,15 @@ class MainSwingView implements MainView
 	}
 
 	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#displayFilterDetails(java.lang.String[])
+	 */
+	@Override
+	public void displayFilterDetails( List<String> filterDescriptions )
+	{
+		mainWindow.setFiltersToolTip( filterDescriptions );
+	}
+
+	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.MainView#enableFeedAccess(boolean)
 	 */
 	@Override

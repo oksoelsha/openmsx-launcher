@@ -15,6 +15,8 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view;
 
+import java.util.List;
+
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 
 /**
@@ -40,7 +42,7 @@ public interface FilterEditingView
 	 * @param language Language
 	 * @param rightToLeft Flag to determine screen orientation based on language
 	 * @param filterName Filter name
-	 * @param filter Filter represented as an array of filter item monikers
+	 * @param filter Filter represented as a list of filter item monikers
 	 */
-	void displayEditFilterScreen( Language language, boolean rightToLeft, String filterName, String[] filter );
+	void displayEditFilterScreen( Language language, boolean rightToLeft, String filterName, List<String> filter );
 }

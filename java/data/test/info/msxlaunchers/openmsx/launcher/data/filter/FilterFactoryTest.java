@@ -6,6 +6,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class FilterFactoryTest
 {
 	@Test
@@ -188,6 +194,71 @@ public class FilterFactoryTest
 	public void testGetFilterMonikerNullValue()
 	{
 		FilterFactory.getFilterMoniker( null );
+	}
+
+	@Test
+	public void testGetFilterMonikers()
+	{
+		Set<Filter> filters = new HashSet<>();
+		List<String> monikers = new ArrayList<>();
+
+		Filter companyFilter = FilterFactory.createFilter( FilterType.COMPANY, "Konami", null, null );
+		filters.add( companyFilter );
+		monikers.add( "COMPANY:Konami::" );
+
+		Filter countryFilter = FilterFactory.createFilter( FilterType.COUNTRY, "JP", null, null );
+		filters.add( countryFilter );
+		monikers.add( "COUNTRY:JP::" );
+
+		Filter generationFilter = FilterFactory.createFilter( FilterType.GENERATION, "MSX2Plus", null, null );
+		filters.add( generationFilter );
+		monikers.add( "GENERATION:MSX2Plus::" );
+
+		Filter genreFilter = FilterFactory.createFilter( FilterType.GENRE, "ACTION", null, null );
+		filters.add( genreFilter );
+		monikers.add( "GENRE:ACTION::" );
+
+		Filter mediumFilter = FilterFactory.createFilter( FilterType.MEDIUM, "HARDDISK", null, null );
+		filters.add( mediumFilter );
+		monikers.add( "MEDIUM:HARDDISK::" );
+
+		Filter sizeFilter1 = FilterFactory.createFilter( FilterType.SIZE, "32", null, FilterParameter.EQUAL_OR_GREATER );
+		filters.add( sizeFilter1 );
+		monikers.add( "SIZE:32:0:EQUAL_OR_GREATER" );
+
+		Filter sizeFilter2 = FilterFactory.createFilter( FilterType.SIZE, "32", "64", FilterParameter.BETWEEN_INCLUSIVE );
+		filters.add( sizeFilter2 );
+		monikers.add( "SIZE:32:64:BETWEEN_INCLUSIVE" );
+
+		Filter soundFilter = FilterFactory.createFilter( FilterType.SOUND, "MSX_MUSIC", null, null );
+		filters.add( soundFilter );
+		monikers.add( "SOUND:MSX_MUSIC::" );
+
+		Filter yearFilter1 = FilterFactory.createFilter( FilterType.YEAR, "1985", null, FilterParameter.EQUAL_OR_GREATER );
+		filters.add( yearFilter1 );
+		monikers.add( "YEAR:1985:0:EQUAL_OR_GREATER" );
+
+		Filter yearFilter2 = FilterFactory.createFilter( FilterType.YEAR, "1985", "1988", FilterParameter.BETWEEN_INCLUSIVE );
+		filters.add( yearFilter2 );
+		monikers.add( "YEAR:1985:1988:BETWEEN_INCLUSIVE" );
+
+		Filter videoSourceFilter = FilterFactory.createFilter( FilterType.VIDEO_SOURCE, "MSX", null, null );
+		filters.add( videoSourceFilter );
+		monikers.add( "VIDEO_SOURCE:MSX::" );
+
+		Filter soundFilter2 = FilterFactory.createFilter( FilterType.SOUND, "SCC", null, null );
+		filters.add( soundFilter2 );
+		monikers.add( "SOUND:SCC::" );
+
+		List<String> returnedList = FilterFactory.getFilterMonikers( filters );
+
+		assertTrue(returnedList.size() == monikers.size() &&  returnedList.containsAll( monikers ) && monikers.containsAll( returnedList ) );
+	}
+
+	@Test
+	public void testGetFilterMonikersNullValue()
+	{
+		assertEquals( Collections.emptyList(), FilterFactory.getFilterMonikers( null ) );
 	}
 
 	@Test

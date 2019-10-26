@@ -43,6 +43,7 @@ import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.filter.Filter;
+import info.msxlaunchers.openmsx.launcher.data.filter.FilterFactory;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
@@ -297,6 +298,7 @@ final class MainPresenterImpl implements MainPresenter
 			if( untitledFilter )
 			{
 				view.setFilterNameLabelUntitled();
+				view.displayFilterDetails( FilterFactory.getFilterMonikers( currentFilter ) );
 			}
 		}
 
@@ -841,12 +843,10 @@ final class MainPresenterImpl implements MainPresenter
 	public void onSelectQuickFilter( Filter filter ) throws LauncherException
 	{
 		currentFilter = Collections.singleton( filter );
-
 		populateGameList();
-
 		untitledFilter = true;
-
 		view.setFilterNameLabelUntitled();
+		view.displayFilterDetails( FilterFactory.getFilterMonikers( currentFilter ) );
 	}
 
 	/* (non-Javadoc)
@@ -927,12 +927,14 @@ final class MainPresenterImpl implements MainPresenter
 			{
 				untitledFilter = true;
 				view.setFilterNameLabelUntitled();
+				view.displayFilterDetails( FilterFactory.getFilterMonikers( currentFilter ) );
 			}
 			else
 			{
 				//this could be the case where in an untitled filter the last filter item was deleted from the Add/Edit table
 				untitledFilter = false;
 				view.updateFilterNameLabel( null );
+				view.displayFilterDetails( null );
 			}
 		}
 	}
@@ -954,6 +956,7 @@ final class MainPresenterImpl implements MainPresenter
 	{
 		untitledFilter = true;
 		view.setFilterNameLabelUntitled();
+		view.displayFilterDetails( FilterFactory.getFilterMonikers( currentFilter ) );
 	}
 
 	/* (non-Javadoc)
@@ -1399,6 +1402,7 @@ final class MainPresenterImpl implements MainPresenter
 		untitledFilter = false;
 		currentFilterName = filterName;
 		view.updateFilterNameLabel( filterName );
+		view.displayFilterDetails( FilterFactory.getFilterMonikers( currentFilter ) );
 	}
 
 	private class DatabaseItemComparator implements Comparator<DatabaseItem>

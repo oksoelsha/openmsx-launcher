@@ -1105,6 +1105,25 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		filtersLabel.setValue("(" + messages.get("UNTITLED_FILTER") + ")");
 	}
 
+	public void setFiltersToolTip(List<String> filterMonikers)
+	{
+		String descriptions;
+
+		if(!filterMonikers.isEmpty())
+		{
+			List<String> filterDescriptions = FilterUtils.getFiltersStringRepresentation(filterMonikers, messages);
+			StringBuilder builder = new StringBuilder("<html>");
+			builder.append(filterDescriptions.stream().collect(Collectors.joining("<br>")));
+			descriptions = builder.append("</html>").toString();
+		}
+		else
+		{
+			descriptions = null;
+		}
+
+		filtersLabel.setToolTipText(descriptions);
+	}
+
 	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.view.swing.component.SearchFieldHandler#getSearchMatches(java.lang.String)
 	 */

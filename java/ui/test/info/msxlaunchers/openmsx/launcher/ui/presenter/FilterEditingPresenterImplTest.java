@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -92,7 +92,7 @@ public class FilterEditingPresenterImplTest
 
 		presenter.onRequestEditFilterScreen( Language.ENGLISH, false, filterName, filterItems );
 
-		verify( filterEditingView, times( 1 ) ).displayEditFilterScreen( eq( Language.ENGLISH ), eq( false ), eq( filterName ), any( String[].class ) );
+		verify( filterEditingView, times( 1 ) ).displayEditFilterScreen( eq( Language.ENGLISH ), eq( false ), eq( filterName ), anyListOf( String.class ) );
 		assertTrue( getPrivateFieldBooleanValue( presenter, editMode ) );
 		assertFalse( getPrivateFieldBooleanValue( presenter, changedFilter ) );
 	}
