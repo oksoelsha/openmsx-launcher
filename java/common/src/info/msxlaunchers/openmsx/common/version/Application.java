@@ -26,7 +26,7 @@ public interface Application
 {
 	public static final String APP_NAME = "openMSX Launcher";
 
-	public static final String VERSION = "1.11";
+	public static final String VERSION = "1.12";
 
 	public static final String RELEASE_YEARS = "2013-2019";
 }
