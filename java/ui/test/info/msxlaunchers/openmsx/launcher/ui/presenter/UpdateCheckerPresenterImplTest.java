@@ -31,9 +31,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Matchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyMap;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -319,7 +319,7 @@ public class UpdateCheckerPresenterImplTest
 		}
 	}
 
-	@Test( expected = LauncherException.class ) @SuppressWarnings("unchecked")
+	@Test( expected = LauncherException.class )
 	public void test_givenUpdateGameExtraDataInDatabasesThrowsIOException_whenOnRequestUpdateExtraData_ThenThrowException() throws FileUpdateFailedException, IOException, GamePersistenceException, LauncherException
 	{
 		UpdateCheckerPresenterImpl presenter = new UpdateCheckerPresenterImpl( view, updateChecker, extraDataGetter, settingsPersister, launcherPersistence, mainPresenter );

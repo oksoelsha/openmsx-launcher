@@ -18,11 +18,12 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -207,14 +208,14 @@ public class FileScannerTest
 		verify( repositoryData, never() ).getRepositoryInfo();
 	}
 
-	@Test @SuppressWarnings("unchecked")
+	@Test
 	public void testSearchForRomsOnly() throws GamePersistenceException, IOException
 	{
 		FileScanner scanner = new FileScanner( gamePersister, repositoryData, gameBuilder, extraDataGetter, null );
 
 		when( gameBuilder
-				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyLong(), anyMap() ) )
-				.thenReturn( Game.name("name").build() );
+				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("romName").build() );
 
 		//traverse all test directories
 		int found = scanner.scan( paths, true, database, false, false, "machine", true, false, false, false, false, false );
@@ -223,14 +224,14 @@ public class FileScannerTest
 		assertEquals( 4, found );
 	}
 
-	@Test @SuppressWarnings("unchecked")
+	@Test
 	public void testSearchForDisksOnly() throws GamePersistenceException, IOException
 	{
 		FileScanner scanner = new FileScanner( gamePersister, repositoryData, gameBuilder, extraDataGetter, null );
 
 		when( gameBuilder
-				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyLong(), anyMap() ) )
-				.thenReturn( Game.name("name").build() );
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), anyString(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("diskName").build() );
 
 		//traverse all test directories
 		int found = scanner.scan( paths, true, database, false, false, "machine", false, true, false, false, false, false );
@@ -239,14 +240,14 @@ public class FileScannerTest
 		assertEquals( 4, found );
 	}
 
-	@Test @SuppressWarnings("unchecked")
+	@Test
 	public void testSearchForTapesOnly() throws GamePersistenceException, IOException
 	{
 		FileScanner scanner = new FileScanner( gamePersister, repositoryData, gameBuilder, extraDataGetter, null );
 
 		when( gameBuilder
-				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyLong(), anyMap() ) )
-				.thenReturn( Game.name("name").build() );
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), anyString(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("tapeName").build() );
 
 		//traverse all test directories
 		int found = scanner.scan( paths, true, database, false, false, "machine", false, false, true, false, false, false );
@@ -255,14 +256,14 @@ public class FileScannerTest
 		assertEquals( 3, found );
 	}
 
-	@Test @SuppressWarnings("unchecked")
+	@Test
 	public void testSearchForLaserdiscsOnly() throws GamePersistenceException, IOException
 	{
 		FileScanner scanner = new FileScanner( gamePersister, repositoryData, gameBuilder, extraDataGetter, null );
 
 		when( gameBuilder
-				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyLong(), anyMap() ) )
-				.thenReturn( Game.name("name").build() );
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("laserdiscName").build() );
 
 		//traverse all test directories
 		int found = scanner.scan( paths, true, database, false, false, "machine", false, false, false, true, false, false );
@@ -271,14 +272,23 @@ public class FileScannerTest
 		assertEquals( 3, found );
 	}
 
-	@Test @SuppressWarnings("unchecked")
+	@Test
 	public void testSearchForAllMediaWithTraverseOptionOn() throws GamePersistenceException, IOException
 	{
 		FileScanner scanner = new FileScanner( gamePersister, repositoryData, gameBuilder, extraDataGetter, null );
 
 		when( gameBuilder
-				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyLong(), anyMap() ) )
-				.thenReturn( Game.name("name").build() );
+				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("romName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), anyString(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("diskName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), anyString(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("tapeName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("laserdiscName").build() );
 
 		//traverse all test directories
 		int found = scanner.scan( paths, true, database, false, false, "machine", true, true, true, true, false, false );
@@ -287,7 +297,7 @@ public class FileScannerTest
 		assertEquals( 14, found );
 	}
 
-	@Test @SuppressWarnings("unchecked")
+	@Test
 	public void testSearchForAllMediaWithTraverseOptionOnAndBaseDirectory() throws GamePersistenceException, IOException
 	{
 		//traverse dir1 directory
@@ -305,8 +315,17 @@ public class FileScannerTest
 		FileScanner scanner = new FileScanner( gamePersister, repositoryData, gameBuilder, extraDataGetter, base.toString() );
 
 		when( gameBuilder
-				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyLong(), anyMap() ) )
-				.thenReturn( Game.name("name").build() );
+				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("romName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), anyString(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("diskName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), anyString(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("tapeName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("laserdiscName").build() );
 
 		int found = scanner.scan( new String[] { relative.toString() }, true, database, false, false, "machine", true, true, true, true, false, false );
 
@@ -314,14 +333,23 @@ public class FileScannerTest
 		assertEquals( 9, found );
 	}
 
-	@Test @SuppressWarnings("unchecked")
+	@Test
 	public void testSearchForAllMediaWithTraverseOptionOff() throws GamePersistenceException, IOException
 	{
 		FileScanner scanner = new FileScanner( gamePersister, repositoryData, gameBuilder, extraDataGetter, null );
 
 		when( gameBuilder
-				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyLong(), anyMap() ) )
-				.thenReturn( Game.name("name").build() );
+				.createGameObjectForScannedFiles( anyString(), anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("romName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), anyString(), isNull(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("diskName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), anyString(), isNull(), isNull(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("tapeName").build() );
+		when( gameBuilder
+				.createGameObjectForScannedFiles( anyString(), anyString(), isNull(), isNull(), isNull(), isNull(), isNull(), anyString(), anyString(), anyLong(), anyMap() ) )
+				.thenReturn( Game.name("laserdiscName").build() );
 
 		//don't traverse
 		int found = scanner.scan( paths, false, database, false, false, "machine", true, true, true, true, false, false );

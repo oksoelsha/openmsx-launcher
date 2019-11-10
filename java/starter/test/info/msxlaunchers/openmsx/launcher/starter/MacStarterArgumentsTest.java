@@ -16,8 +16,9 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -84,7 +85,8 @@ public class MacStarterArgumentsTest extends AbstractStarterArgumentTest
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-laserdisc" ), any( String.class ) );
 		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), eq( null ) );
 
-		verify( argsBuilder, times( 11 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+		verify( argsBuilder, times( 10 ) ).appendIfValueDefined( any( String.class ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( any( String.class ), isNull() );
 	}
 
 	@Test
@@ -99,7 +101,8 @@ public class MacStarterArgumentsTest extends AbstractStarterArgumentTest
 
 		arguments.getArguments( settings,  game );
 
-		verify( argsBuilder, times( 2 ) ).appendIfValueDefined( eq( "-script" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), isNull() );
 	}
 
 	@Test
@@ -114,7 +117,8 @@ public class MacStarterArgumentsTest extends AbstractStarterArgumentTest
 
 		arguments.getArguments( settings,  game );
 
-		verify( argsBuilder, times( 2 ) ).appendIfValueDefined( eq( "-script" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), isNull() );
 	}
 
 	@Test
@@ -129,7 +133,8 @@ public class MacStarterArgumentsTest extends AbstractStarterArgumentTest
 
 		arguments.getArguments( settings,  game );
 
-		verify( argsBuilder, times( 2 ) ).appendIfValueDefined( eq( "-script" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), any( String.class ) );
+		verify( argsBuilder, times( 1 ) ).appendIfValueDefined( eq( "-script" ), isNull() );
 	}
 
 	@Test

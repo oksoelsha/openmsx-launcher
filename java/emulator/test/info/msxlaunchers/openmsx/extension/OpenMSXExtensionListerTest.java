@@ -12,7 +12,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -84,7 +84,7 @@ public class OpenMSXExtensionListerTest
 
 		Set<String> extensions = openMSXExtensionLister.get();	
 
-		assertEquals( extensions.size(), 2 );
+		assertEquals( 2, extensions.size() );
 	}
 
 	@Test( expected = UnsupportedOperationException.class )

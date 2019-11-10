@@ -19,13 +19,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anySetOf;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -99,7 +99,7 @@ public class DatabaseManagerPresenterImplTest
 	{
 		presenter.onRequestDatabaseManagerScreen();
 
-		verify( view, times( 1 ) ).displayScreen( any( DatabaseManagerPresenterImpl.class ), any( Language.class ), anyBoolean(), anySetOf( DatabaseAndBackups.class ) );
+		verify( view, times( 1 ) ).displayScreen( any( DatabaseManagerPresenterImpl.class ), any( Language.class ), anyBoolean(), anySet() );
 	}
 
 	@Test
@@ -271,8 +271,6 @@ public class DatabaseManagerPresenterImplTest
 	{
 		DatabaseInfo databaseInfo = presenter.getDatabaseInfo( databases );
 
-		when( gamePersister.getGames( anyString() ) ).thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) );
-
 		assertEquals( databases.size(), databaseInfo.getTotalDatabases() );
 		assertEquals( 0, databaseInfo.getTotalGames() );
 		assertEquals( 0, databaseInfo.getTotalBackups() );
@@ -285,7 +283,7 @@ public class DatabaseManagerPresenterImplTest
 		Set<DatabaseBackup> backups = Stream.of( backup ).collect( Collectors.toSet() );
 
 		when( gamePersister.getBackups( database ) ).thenReturn( backups );
-		when( databaseBackupsPresenterFactory.create( any( DatabaseManagerPresenter.class ), anyString(), anySetOf( DatabaseBackup.class ) ) ).thenReturn( databaseBackupsPresenter );
+		when( databaseBackupsPresenterFactory.create( any( DatabaseManagerPresenter.class ), anyString(), anySet() ) ).thenReturn( databaseBackupsPresenter );
 		presenter.onRequestDatabaseBackupsScreen( database );
 
 		verify( databaseBackupsPresenter, times( 1 ) ).onRequestDatabaseBackupsScreen( any( Language.class ), anyBoolean() );

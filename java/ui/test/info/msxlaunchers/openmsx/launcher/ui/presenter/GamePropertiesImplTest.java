@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -70,8 +70,6 @@ public class GamePropertiesImplTest
 		Game game = Game.name( "name" ).romA( "romA.rom" ).sha1Code( "1234" ).build();
 
 		when( repositoryData.getGameInfo( game.getSha1Code() ) ).thenThrow( new IOException() );
-		when( otherCodes.size() ).thenReturn( 5 );
-		when( repositoryData.getDumpCodes( game.getSha1Code() ) ).thenReturn( otherCodes );
 
 		presenter.onRequestGamePropertiesScreen( game, Language.ENGLISH, false );
 

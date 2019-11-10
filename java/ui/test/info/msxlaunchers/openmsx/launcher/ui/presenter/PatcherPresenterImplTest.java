@@ -16,7 +16,7 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.patch.PatchException;
@@ -64,7 +64,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE, le.getCode() );
 			throw le;
 		}
 	}
@@ -80,7 +80,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE, le.getCode() );
 			throw le;
 		}
 	}
@@ -96,7 +96,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE, le.getCode() );
 			throw le;
 		}
 	}
@@ -112,7 +112,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE, le.getCode() );
 			throw le;
 		}
 	}
@@ -128,7 +128,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE, le.getCode() );
 			throw le;
 		}
 	}
@@ -144,7 +144,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_CANNOT_LOCATE_FILE, le.getCode() );
 			throw le;
 		}
 	}
@@ -160,7 +160,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
+			Assert.assertEquals( LauncherExceptionCode.ERR_EMPTY_CHECKSUM, le.getCode() );
 			throw le;
 		}
 	}
@@ -176,7 +176,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_EMPTY_CHECKSUM );
+			Assert.assertEquals( LauncherExceptionCode.ERR_EMPTY_CHECKSUM, le.getCode() );
 			throw le;
 		}
 	}
@@ -192,7 +192,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			Assert.assertEquals( LauncherExceptionCode.ERR_IO, le.getCode() );
 			throw le;
 		}
 	}
@@ -208,7 +208,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			Assert.assertEquals( LauncherExceptionCode.ERR_IO, le.getCode() );
 			throw le;
 		}
 	}
@@ -280,7 +280,6 @@ public class PatcherPresenterImplTest
 		String fileToPatch = tmpFolder.newFile().toString();
 		String targetFile = tmpFolder.newFile().toString();
 
-		when( view.confirmTargetFileReplacement() ).thenReturn( true );
 		presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, true, targetFile, true, null );
 
 		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), Paths.get( targetFile ), true, null );
@@ -294,7 +293,6 @@ public class PatcherPresenterImplTest
 		String patchFile = tmpFolder.newFile().toString();
 		String fileToPatch = tmpFolder.newFile().toString();
 
-		when( view.confirmTargetFileReplacement() ).thenReturn( false );
 		presenter.onRequestPatchFileActionForIPS( patchFile, fileToPatch, false, null, false, "123456" );
 
 		verify( patcher, times( 1 ) ).patch( Paths.get( fileToPatch ), Paths.get( patchFile ), null, false, "123456" );
@@ -317,7 +315,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_FILE_TO_PATCH_NOT_PATCHABLE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_FILE_TO_PATCH_NOT_PATCHABLE, le.getCode() );
 			throw le;
 		}
 	}
@@ -339,7 +337,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_INVALID_PATCH_FILE );
+			Assert.assertEquals( LauncherExceptionCode.ERR_INVALID_PATCH_FILE, le.getCode() );
 			throw le;
 		}
 	}
@@ -361,7 +359,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_SOURCE_FILE_CHECKSUM_NOT_MATCH );
+			Assert.assertEquals( LauncherExceptionCode.ERR_SOURCE_FILE_CHECKSUM_NOT_MATCH, le.getCode() );
 			throw le;
 		}
 	}
@@ -383,7 +381,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_ZIP_SOURCE_FILE_CANNOT_BE_PATCHED_DIRECTLY );
+			Assert.assertEquals( LauncherExceptionCode.ERR_ZIP_SOURCE_FILE_CANNOT_BE_PATCHED_DIRECTLY, le.getCode() );
 			throw le;
 		}
 	}
@@ -406,7 +404,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			Assert.assertEquals( LauncherExceptionCode.ERR_IO, le.getCode() );
 			throw le;
 		}
 	}
@@ -429,7 +427,7 @@ public class PatcherPresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			Assert.assertEquals( LauncherExceptionCode.ERR_IO, le.getCode() );
 			throw le;
 		}
 	}

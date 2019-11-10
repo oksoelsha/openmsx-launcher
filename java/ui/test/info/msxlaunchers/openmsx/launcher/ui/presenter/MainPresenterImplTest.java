@@ -2,12 +2,12 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.anySetOf;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -27,7 +26,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.google.inject.Provider;
 
@@ -151,14 +150,6 @@ public class MainPresenterImplTest
 	}
 
 	@Test
-	public void testStart() throws IOException
-	{
-		when( settingsPersister.getSettings() ).thenReturn( new Settings( null, null, null, defaultDatabase, null, false, false ) );
-
-		presenter.start();
-	}
-
-	@Test
 	public void testOnRequestSettingsScreen() throws IOException
 	{
 		SettingsPresenter settingsPresenter = mock( SettingsPresenter.class );
@@ -225,7 +216,6 @@ public class MainPresenterImplTest
 			throws IOException, LauncherException
 	{
 		when( emulatorStarter.start( (Settings)any(), (Game)any() ) ).thenThrow( new IOException() );
-		when( gamePersister.getDatabases() ).thenReturn( Collections.singleton( defaultDatabase ) );
 
 		presenter.onLaunchGame( "gameName" );
 	}
@@ -233,7 +223,7 @@ public class MainPresenterImplTest
 	@Test( expected = LauncherException.class )
 	public void testOnRemoveGamesIOException() throws IOException, GamePersistenceException, LauncherException
 	{
-		doThrow( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) ).when( gamePersister ).deleteGames( anySetOf( Game.class ), anyString() );
+		doThrow( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) ).when( gamePersister ).deleteGames( anySet(), anyString() );
 
 		Set<String> gameNames = new HashSet<String>();
 		presenter.onRequestRemoveGamesAction( gameNames );
@@ -242,7 +232,7 @@ public class MainPresenterImplTest
 	@Test( expected = LauncherException.class )
 	public void testOnRemoveGamesDatabaseDatabaseNotFoundException() throws IOException, GamePersistenceException, LauncherException
 	{
-		doThrow( new GamePersistenceException( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND, defaultDatabase ) ).when( gamePersister ).deleteGames( anySetOf( Game.class ), anyString() );
+		doThrow( new GamePersistenceException( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND, defaultDatabase ) ).when( gamePersister ).deleteGames( anySet(), anyString() );
 
 		Set<String> gameNames = new HashSet<String>();
 		presenter.onRequestRemoveGamesAction( gameNames );
@@ -251,12 +241,10 @@ public class MainPresenterImplTest
 	@Test
 	public void testOnRemoveGameFromNonExistentDatabase() throws IOException, GamePersistenceException, LauncherException
 	{
-		when( gamePersister.getDatabases() ).thenReturn( Collections.singleton( defaultDatabase ) );
-
 		Set<String> gameNames = new HashSet<String>();
 		gameNames.add( "gameName" );
 
-		doThrow( new GamePersistenceException( GamePersistenceExceptionIssue.GAME_NOT_FOUND, "gameName" ) ).when( gamePersister ).deleteGames( anySetOf( Game.class ), anyString() );
+		doThrow( new GamePersistenceException( GamePersistenceExceptionIssue.GAME_NOT_FOUND, "gameName" ) ).when( gamePersister ).deleteGames( anySet(), anyString() );
 
 		presenter.onRequestRemoveGamesAction( gameNames );
 
@@ -302,7 +290,7 @@ public class MainPresenterImplTest
 	{
 		presenter.onRequestMoveGamesScreen( new HashSet<String>(), defaultDatabase );
 
-		verify( view, times( 1 ) ).displayAndGetMoveGames( any( Language.class ), anySetOf( String.class ), anyString(), anySetOf( String.class ), anyBoolean() );
+		verify( view, times( 1 ) ).displayAndGetMoveGames( any( Language.class ), anySet(), anyString(), anySet(), anyBoolean() );
 	}
 
 	@Test
@@ -310,7 +298,7 @@ public class MainPresenterImplTest
 	{
 		presenter.onRequestMoveGamesAction( new HashSet<String>(), defaultDatabase, "newDatabase" );
 
-		verify( gamePersister, times( 1 ) ).moveGames( anySetOf( Game.class ), anyString(), anyString(), any( ActionDecider.class ) );
+		verify( gamePersister, times( 1 ) ).moveGames( anySet(), anyString(), anyString(), any( ActionDecider.class ) );
 		verify( view, times( 1 ) ).updateGameCount( anyInt() );
 	}
 
@@ -324,7 +312,7 @@ public class MainPresenterImplTest
 		movedGames.add( game1 );
 		movedGames.add( game2 );
 
-		when( gamePersister.moveGames( anySetOf( Game.class ), anyString(), anyString(), any( ActionDecider.class ) ) ).thenReturn( movedGames );
+		when( gamePersister.moveGames( anySet(), anyString(), anyString(), any( ActionDecider.class ) ) ).thenReturn( movedGames );
 
 		Set<String> movedGameNames = presenter.onRequestMoveGamesAction( new HashSet<String>(), defaultDatabase, "newDatabase" );
 
@@ -336,7 +324,7 @@ public class MainPresenterImplTest
 	@Test( expected = LauncherException.class )
 	public void testOnRequestMoveGamesActionGameNotFound() throws LauncherException, GamePersistenceException
 	{
-		when( gamePersister.moveGames( anySetOf( Game.class ), anyString(), anyString(), any( ActionDecider.class ) ) )
+		when( gamePersister.moveGames( anySet(), anyString(), anyString(), any( ActionDecider.class ) ) )
 			.thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.GAME_NOT_FOUND, "name" ) );
 
 		try
@@ -353,7 +341,7 @@ public class MainPresenterImplTest
 	@Test( expected = LauncherException.class )
 	public void testOnRequestMoveGamesActionDatabaseNotFound() throws LauncherException, GamePersistenceException
 	{
-		when( gamePersister.moveGames( anySetOf( Game.class ), anyString(), anyString(), any( ActionDecider.class ) ) )
+		when( gamePersister.moveGames( anySet(), anyString(), anyString(), any( ActionDecider.class ) ) )
 			.thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.DATABASE_NOT_FOUND, "name" ) );
 
 		try
@@ -370,7 +358,7 @@ public class MainPresenterImplTest
 	@Test( expected = LauncherException.class )
 	public void testOnRequestMoveGamesActionGameWithNullName() throws LauncherException, GamePersistenceException
 	{
-		when( gamePersister.moveGames( anySetOf( Game.class ), anyString(), anyString(), any( ActionDecider.class ) ) )
+		when( gamePersister.moveGames( anySet(), anyString(), anyString(), any( ActionDecider.class ) ) )
 			.thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.GAME_WITH_NULL_NAME ) );
 
 		try
@@ -387,7 +375,7 @@ public class MainPresenterImplTest
 	@Test( expected = LauncherException.class )
 	public void testOnRequestMoveGamesActionIOException() throws LauncherException, GamePersistenceException
 	{
-		when( gamePersister.moveGames( anySetOf( Game.class ), anyString(), anyString(), any( ActionDecider.class ) ) )
+		when( gamePersister.moveGames( anySet(), anyString(), anyString(), any( ActionDecider.class ) ) )
 			.thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.IO ) );
 
 		try
@@ -590,7 +578,7 @@ public class MainPresenterImplTest
 		presenter.onRequestSetFilterNameUntitled();
 
 		verify( view, times( 1 ) ).setFilterNameLabelUntitled();
-		verify( view, times( 1 ) ).displayFilterDetails( anyListOf( String.class ) );
+		verify( view, times( 1 ) ).displayFilterDetails( anyList() );
 	}
 
 	@Test
@@ -642,7 +630,7 @@ public class MainPresenterImplTest
 	public void testOnRequestDatabaseManagerScreen() throws LauncherException
 	{
 		DatabaseManagerPresenter databaseManagerPresenter = Mockito.mock( DatabaseManagerPresenter.class );
-		when( databaseManagerPresenterFactory.create( anySetOf( String.class ), any( Language.class ), anyBoolean() ) ).thenReturn( databaseManagerPresenter );
+		when( databaseManagerPresenterFactory.create( anySet(), any( Language.class ), anyBoolean() ) ).thenReturn( databaseManagerPresenter );
 
 		presenter.onRequestDatabaseManagerScreen();
 
@@ -710,7 +698,7 @@ public class MainPresenterImplTest
 
 		presenter.onAcceptAddGameSaveAction( game );
 
-		verify( view, times(1) ).fillGameList( anyString(), anySetOf( GameLabel.class ), anyString() );
+		verify( view, times(1) ).fillGameList( anyString(), anySet(), anyString() );
 	}
 
 	@Test
@@ -720,7 +708,7 @@ public class MainPresenterImplTest
 
 		presenter.onAcceptEditGameSaveAction( "oldName", game );
 
-		verify( view, times(1) ).fillGameList( anyString(), anySetOf( GameLabel.class ), anyString() );
+		verify( view, times(1) ).fillGameList( anyString(), anySet(), anyString() );
 	}
 
 	@Test

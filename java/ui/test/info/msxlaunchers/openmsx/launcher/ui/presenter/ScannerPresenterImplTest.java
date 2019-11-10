@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -150,8 +150,8 @@ public class ScannerPresenterImplTest
 		when( scanner.scan( paths, traverseSubDirectories, database, newDatabase, append, machine, searchROM, searchDisk, searchTape, searchLaserdisc, getNameFromOpenMSXDatabase, backupDatabase ) )
 			.thenThrow( new GamePersistenceException( GamePersistenceExceptionIssue.GAME_WITH_NULL_NAME ) );
 
-		assertEquals( presenter.onRequestFillDatabaseAction( paths, traverseSubDirectories, database, newDatabase, append, machine, searchROM, searchDisk, searchTape, searchLaserdisc, getNameFromOpenMSXDatabase, backupDatabase )
-				, 0 );
+		assertEquals( 0,
+				presenter.onRequestFillDatabaseAction( paths, traverseSubDirectories, database, newDatabase, append, machine, searchROM, searchDisk, searchTape, searchLaserdisc, getNameFromOpenMSXDatabase, backupDatabase ) );
 	}
 
 	@Test( expected = LauncherException.class )

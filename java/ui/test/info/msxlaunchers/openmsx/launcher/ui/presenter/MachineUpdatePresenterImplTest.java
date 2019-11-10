@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
@@ -57,7 +57,7 @@ public class MachineUpdatePresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_INVALID_MACHINES_DIRECTORY );
+			Assert.assertEquals( LauncherExceptionCode.ERR_INVALID_MACHINES_DIRECTORY, le.getCode() );
 			throw le;
 		}
 	}
@@ -75,7 +75,7 @@ public class MachineUpdatePresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			Assert.assertEquals( LauncherExceptionCode.ERR_IO, le.getCode() );
 			throw le;
 		}
 	}
@@ -103,7 +103,7 @@ public class MachineUpdatePresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_DATABASE_MAX_BACKUPS_REACHED );
+			Assert.assertEquals( LauncherExceptionCode.ERR_DATABASE_MAX_BACKUPS_REACHED, le.getCode() );
 			throw le;
 		}
 	}
@@ -121,7 +121,7 @@ public class MachineUpdatePresenterImplTest
 		}
 		catch( LauncherException le )
 		{
-			Assert.assertEquals( le.getCode(), LauncherExceptionCode.ERR_IO );
+			Assert.assertEquals( LauncherExceptionCode.ERR_IO, le.getCode() );
 			throw le;
 		}
 	}

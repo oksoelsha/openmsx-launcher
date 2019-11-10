@@ -21,14 +21,14 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -92,7 +92,7 @@ public class FilterEditingPresenterImplTest
 
 		presenter.onRequestEditFilterScreen( Language.ENGLISH, false, filterName, filterItems );
 
-		verify( filterEditingView, times( 1 ) ).displayEditFilterScreen( eq( Language.ENGLISH ), eq( false ), eq( filterName ), anyListOf( String.class ) );
+		verify( filterEditingView, times( 1 ) ).displayEditFilterScreen( eq( Language.ENGLISH ), eq( false ), eq( filterName ), anyList() );
 		assertTrue( getPrivateFieldBooleanValue( presenter, editMode ) );
 		assertFalse( getPrivateFieldBooleanValue( presenter, changedFilter ) );
 	}
@@ -153,7 +153,7 @@ public class FilterEditingPresenterImplTest
 
 		presenter.onRemoveFromFilterList( type, value1, value2, parameter );
 
-		assertEquals( filterItemsSet.size(), 0 );
+		assertEquals( 0, filterItemsSet.size() );
 
 		verify( mainPresenter, times( 1 ) ).onApplyFilter( filterItemsSet );
 		assertFalse( getPrivateFieldBooleanValue( presenter, editMode ) );

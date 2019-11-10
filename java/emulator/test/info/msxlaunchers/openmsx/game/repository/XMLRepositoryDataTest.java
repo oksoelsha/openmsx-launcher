@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith( MockitoJUnitRunner.class )
 public class XMLRepositoryDataTest
@@ -90,20 +90,18 @@ public class XMLRepositoryDataTest
 		Assert.assertTrue( repositoryData.getDumpCodes( "code" ).size() == 0 );
 	}
 
+	
 	@Test
-	public void givenTwoExistingXMLFilesWithMatchingCode_whenGetDumps_thenReturnDumpCodes() throws IOException
+	public void givenTwoExistingXMLFilesWithMatchingCode_whenGetDumps_thenReturnDumpCodesFromFirstXML() throws IOException
 	{
 		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2 ).collect( Collectors.toSet() );
 
 		File xmlFile1 = new File( "file1" );
-		File xmlFile2 = new File( "file2" );
 
 		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
-		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
 
 		Set<String> dumpCodes = Stream.of( "code1", "code2" ).collect( Collectors.toSet() );
 		Mockito.when( xmlProcessor.getDumpCodes( xmlFile1, "code" ) ).thenReturn( dumpCodes );
-		Mockito.when( xmlProcessor.getDumpCodes( xmlFile2, "code" ) ).thenReturn( Collections.emptySet() );
 
 		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
 

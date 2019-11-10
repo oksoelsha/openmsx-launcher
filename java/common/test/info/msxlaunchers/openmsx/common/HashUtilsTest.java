@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import static org.mockito.Matchers.notNull;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.mock;
 
 public class HashUtilsTest
@@ -29,10 +29,10 @@ public class HashUtilsTest
 	public void testGetSHA1CodeForValidFile()
 	{
 		String validFile = getClass().getResource( "files/valid.rom" ).getFile();
-		assertEquals( HashUtils.getSHA1Code( new File( validFile ) ), "f236345f43828597739f4a326318b6a3876ff73f" );
+		assertEquals( "f236345f43828597739f4a326318b6a3876ff73f", HashUtils.getSHA1Code( new File( validFile ) ) );
 
 		String emptyFile = getClass().getResource( "files/empty.rom" ).getFile();
-		assertEquals( HashUtils.getSHA1Code( new File( emptyFile ) ), "da39a3ee5e6b4b0d3255bfef95601890afd80709" );
+		assertEquals( "da39a3ee5e6b4b0d3255bfef95601890afd80709", HashUtils.getSHA1Code( new File( emptyFile ) ) );
 	}
 
 	@Test( expected = NullPointerException.class )
@@ -66,10 +66,10 @@ public class HashUtilsTest
 	public void testGetMD5SumForValidFile()
 	{
 		String validFile = getClass().getResource( "files/valid.rom" ).getFile();
-		assertEquals( HashUtils.getMD5Sum( new File( validFile ) ), "cf623b0847e0dc101cb183d7ade3cb27" );
+		assertEquals( "cf623b0847e0dc101cb183d7ade3cb27", HashUtils.getMD5Sum( new File( validFile ) ) );
 
 		String emptyFile = getClass().getResource( "files/empty.rom" ).getFile();
-		assertEquals( HashUtils.getMD5Sum( new File( emptyFile ) ), "d41d8cd98f00b204e9800998ecf8427e" );
+		assertEquals( "d41d8cd98f00b204e9800998ecf8427e", HashUtils.getMD5Sum( new File( emptyFile ) ) );
 	}
 
 	@Test( expected = NullPointerException.class )
@@ -88,10 +88,10 @@ public class HashUtilsTest
 	public void testGetCRC32CodeForValidFile()
 	{
 		String validFile = getClass().getResource( "files/valid.rom" ).getFile();
-		assertEquals( HashUtils.getCRC32Code( new File( validFile ) ), "b1ace0a0" );
+		assertEquals( "b1ace0a0", HashUtils.getCRC32Code( new File( validFile ) ) );
 
 		String emptyFile = getClass().getResource( "files/empty.rom" ).getFile();
-		assertEquals( HashUtils.getCRC32Code( new File( emptyFile ) ), "0" );
+		assertEquals( "0", HashUtils.getCRC32Code( new File( emptyFile ) ) );
 	}
 
 	@Test( expected = NullPointerException.class )
