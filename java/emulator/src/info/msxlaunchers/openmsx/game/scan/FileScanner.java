@@ -120,9 +120,9 @@ final class FileScanner implements Scanner
 
 		this.extraDataMap = extraDataGetter.getExtraData();
 
-		processedGames = new HashSet<Game>();
-		processedGameNames = new HashSet<String>();
-		processedGameSha1Codes = new HashSet<String>();
+		processedGames = new HashSet<>();
+		processedGameNames = new HashSet<>();
+		processedGameSha1Codes = new HashSet<>();
 
 		//append to or create new database
 		if( newDatabase )
