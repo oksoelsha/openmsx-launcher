@@ -82,6 +82,7 @@ import info.msxlaunchers.openmsx.launcher.data.filter.FilterType;
 import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.MSXGeneration;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
+import info.msxlaunchers.openmsx.launcher.data.game.constants.Sound;
 import info.msxlaunchers.openmsx.launcher.data.repository.constants.Company;
 import info.msxlaunchers.openmsx.launcher.data.repository.constants.Country;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
@@ -172,6 +173,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenu countryQuickFilterMenuItemList;
 	private JMenu mediumQuickFilterMenuItemList;
 	private JMenu generationQuickFilterMenuItemList;
+	private JMenu soundQuickFilterMenuItemList;
 	private JMenuItem newFilterMenuItem;
 	private JMenuItem editCurrentUntitledFilterMenuItem;
 	private JMenuItem resetFilterMenuItem;
@@ -748,6 +750,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		countryQuickFilterMenuItemList.setText(messages.get("COUNTRY"));
 		mediumQuickFilterMenuItemList.setText(messages.get("MEDIUM"));
 		generationQuickFilterMenuItemList.setText(messages.get("GENERATION"));
+		soundQuickFilterMenuItemList.setText(messages.get("SOUND"));
 		newFilterMenuItem.setText(messages.get("NEW") + "...");
 		editCurrentUntitledFilterMenuItem.setText(messages.get("EDIT_UNTITLED_FILTER") + "...");
 		resetFilterMenuItem.setText(messages.get("RESET"));
@@ -1089,6 +1092,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		quickFilterMenuItemList.add(countryQuickFilterMenuItemList);
 		quickFilterMenuItemList.add(mediumQuickFilterMenuItemList);
 		quickFilterMenuItemList.add(generationQuickFilterMenuItemList);
+		quickFilterMenuItemList.add(soundQuickFilterMenuItemList);
 
 		filtersContextMenu.add(newFilterMenuItem);
 
@@ -1304,6 +1308,17 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 			generationQuickFilterMenuItem.setAction(new QuickFilterMenuItemName(filter));
 			generationQuickFilterMenuItem.setText(generation.getDisplayName());
 			generationQuickFilterMenuItemList.add(generationQuickFilterMenuItem);
+		}
+
+		soundQuickFilterMenuItemList.removeAll();
+		for(Sound sound: Sound.values())
+		{
+			JMenuItem soundQuickFilterMenuItem = new JMenuItem();
+			Filter filter = FilterFactory.createFilter(FilterType.SOUND, sound.toString(), null, null);
+			soundQuickFilterMenuItem.addActionListener(this);
+			soundQuickFilterMenuItem.setAction(new QuickFilterMenuItemName(filter));
+			soundQuickFilterMenuItem.setText(sound.getDisplayName());
+			soundQuickFilterMenuItemList.add(soundQuickFilterMenuItem);
 		}
 }
 
@@ -1748,6 +1763,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		countryQuickFilterMenuItemList.setComponentOrientation(orientation);
 		mediumQuickFilterMenuItemList.setComponentOrientation(orientation);
 		generationQuickFilterMenuItemList.setComponentOrientation(orientation);
+		soundQuickFilterMenuItemList.setComponentOrientation(orientation);
 		newFilterMenuItem.setComponentOrientation(orientation);
 		editCurrentUntitledFilterMenuItem.setComponentOrientation(orientation);
 		resetFilterMenuItem.setComponentOrientation(orientation);
@@ -1829,6 +1845,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		countryQuickFilterMenuItemList = new JMenu();
 		mediumQuickFilterMenuItemList = new JMenu();
 		generationQuickFilterMenuItemList = new JMenu();
+		soundQuickFilterMenuItemList = new JMenu();
 
 		newFilterMenuItem = new JMenuItem();
 		newFilterMenuItem.addActionListener(this);
