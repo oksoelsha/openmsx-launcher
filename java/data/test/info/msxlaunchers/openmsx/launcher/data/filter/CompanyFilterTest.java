@@ -41,7 +41,7 @@ public class CompanyFilterTest
 	{
 		String company = "company";
 
-		RepositoryGame repositoryGame = new RepositoryGame( "title", company, "year", "country" );
+		RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "system" ).company( "company" ).year( "year" ).country( "country" ).build();
 
 		CompanyFilter companyFilter = new CompanyFilter( company );
 
@@ -52,7 +52,7 @@ public class CompanyFilterTest
 	@Test
 	public void testIsFilteredCompanyNotMatch()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "year", "country" );
+		RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "system" ).company( "company" ).year( "year" ).country( "country" ).build();
 
 		CompanyFilter companyFilter = new CompanyFilter( "different-company" );
 

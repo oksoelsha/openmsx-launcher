@@ -16,6 +16,8 @@ import static org.junit.Assert.assertTrue;
 
 public class YearFilterTest
 {
+	private RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "system" ).company( "company" ).year( "1983" ).country( "country" ).build();
+
 	@Test
 	public void testConstructor()
 	{
@@ -48,8 +50,6 @@ public class YearFilterTest
 	@Test
 	public void testEqualFilter()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "1983", "country" );
-
 		Game game = Game.name( "name" ).build();
 
 		YearFilter yearFilter1 = new YearFilter( 1983, 0, FilterParameter.EQUAL );
@@ -65,8 +65,6 @@ public class YearFilterTest
 	@Test
 	public void testEqualOrLessFilter()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "1983", "country" );
-
 		Game game = Game.name( "name" ).build();
 
 		YearFilter yearFilter1 = new YearFilter( 1983, 0, FilterParameter.EQUAL_OR_LESS );
@@ -82,8 +80,6 @@ public class YearFilterTest
 	@Test
 	public void testEqualOrGreaterFilter()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "1983", "country" );
-
 		Game game = Game.name( "name" ).build();
 
 		YearFilter yearFilter1 = new YearFilter( 1983, 0, FilterParameter.EQUAL_OR_GREATER );
@@ -99,8 +95,6 @@ public class YearFilterTest
 	@Test
 	public void testLessFilter()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "1983", "country" );
-
 		Game game = Game.name( "name" ).build();
 
 		YearFilter yearFilter1 = new YearFilter( 1983, 0, FilterParameter.LESS );
@@ -116,8 +110,6 @@ public class YearFilterTest
 	@Test
 	public void testGreaterFilter()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "1983", "country" );
-
 		Game game = Game.name( "name" ).build();
 
 		YearFilter yearFilter1 = new YearFilter( 1983, 0, FilterParameter.GREATER );
@@ -133,24 +125,25 @@ public class YearFilterTest
 	@Test
 	public void testBetweenInclusiveFilter()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "1985", "country" );
+		RepositoryGame repositoryGameForThisTest =
+				RepositoryGame.title( "title" ).system( "system" ).company( "company" ).year( "1985" ).country( "country" ).build();
 
 		Game game = Game.name( "name" ).build();
 
 		YearFilter yearFilter1 = new YearFilter( 1985, 1987, FilterParameter.BETWEEN_INCLUSIVE );
-		assertFalse( yearFilter1.isFiltered( game, repositoryGame ) );
+		assertFalse( yearFilter1.isFiltered( game, repositoryGameForThisTest ) );
 
 		YearFilter yearFilter2 = new YearFilter( 1983, 1985, FilterParameter.BETWEEN_INCLUSIVE );
-		assertFalse( yearFilter2.isFiltered( game, repositoryGame ) );
+		assertFalse( yearFilter2.isFiltered( game, repositoryGameForThisTest ) );
 
 		YearFilter yearFilter3 = new YearFilter( 1984, 1986, FilterParameter.BETWEEN_INCLUSIVE );
-		assertFalse( yearFilter3.isFiltered( game, repositoryGame ) );
+		assertFalse( yearFilter3.isFiltered( game, repositoryGameForThisTest ) );
 
 		YearFilter yearFilter4 = new YearFilter( 1986, 1987, FilterParameter.BETWEEN_INCLUSIVE );
-		assertTrue( yearFilter4.isFiltered( game, repositoryGame ) );
+		assertTrue( yearFilter4.isFiltered( game, repositoryGameForThisTest ) );
 
 		YearFilter yearFilter5 = new YearFilter( 1982, 1984, FilterParameter.BETWEEN_INCLUSIVE );
-		assertTrue( yearFilter5.isFiltered( game, repositoryGame ) );
+		assertTrue( yearFilter5.isFiltered( game, repositoryGameForThisTest ) );
 	}
 
 	@Test

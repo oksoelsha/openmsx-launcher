@@ -33,12 +33,12 @@ import org.xml.sax.SAXException;
  */
 final class RepositoryInfoParseHandler extends ParseHandler
 {
-	private Map<String,RepositoryGame> repositoryInfo = new HashMap<String, RepositoryGame>();
+	private Map<String,RepositoryGame> repositoryInfo = new HashMap<>();
 
 	private String title;
+	private String system;
 	private String company;
 	private String year;
-	private String country;
 
 	private RepositoryGame repositoryGame = null;
 
@@ -57,6 +57,10 @@ final class RepositoryInfoParseHandler extends ParseHandler
 		{
 			title = tempText;
 		}
+		else if( qName.equalsIgnoreCase( "system" ) )
+		{
+			system = tempText;
+		}
 		else if( qName.equalsIgnoreCase( "company" ) )
 		{
 			company = tempText;
@@ -67,8 +71,8 @@ final class RepositoryInfoParseHandler extends ParseHandler
 		}
 		else if( qName.equalsIgnoreCase( "country" ) )
 		{
-			country = tempText;
-			repositoryGame = new RepositoryGame( title, company, year, country );
+			String country = tempText;
+			repositoryGame = RepositoryGame.title( title ).system( system ).company( company ).year( year ).country( country ).build();
 		}
 		else if( qName.equalsIgnoreCase( "hash" ) )
 		{

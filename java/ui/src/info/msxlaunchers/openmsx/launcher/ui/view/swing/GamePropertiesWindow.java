@@ -142,6 +142,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 
         if(repositoryGame != null)
         {
+            addPropertyToDisplay(messages.get("SYSTEM"), repositoryGame.getSystem());
             addPropertyToDisplay(messages.get("KNOWN_DUMPS"), String.valueOf(knownDumps));
         }
         if(game.getSize() > 0)

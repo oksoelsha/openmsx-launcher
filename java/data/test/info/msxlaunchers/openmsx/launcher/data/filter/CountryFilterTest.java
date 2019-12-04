@@ -42,7 +42,7 @@ public class CountryFilterTest
 	{
 		String country = "country";
 
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "year", country );
+		RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "system" ).company( "company" ).year( "year" ).country( "country" ).build();
 
 		CountryFilter countryFilter = new CountryFilter( country );
 
@@ -53,7 +53,7 @@ public class CountryFilterTest
 	@Test
 	public void testIsFilteredCountryNotMatch()
 	{
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "year", "country" );
+		RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "system" ).company( "company" ).year( "year" ).country( "country" ).build();
 
 		CountryFilter countryFilter = new CountryFilter( "different-country" );
 

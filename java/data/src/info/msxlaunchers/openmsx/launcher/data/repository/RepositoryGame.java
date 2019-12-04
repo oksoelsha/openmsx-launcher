@@ -29,6 +29,7 @@ public final class RepositoryGame
 	public static final String MIRRORED_ROM = "Mirrored ROM";
 
 	private final String title;
+	private final String system;
 	private final String company;
 	private final String year;
 	private final String country;
@@ -39,48 +40,73 @@ public final class RepositoryGame
 	private final String mapper;
 	private final String start;
 	private final String remark;
-	
-	/**
-	 * @param title
-	 * @param company
-	 * @param year
-	 * @param country
-	 */
-	public RepositoryGame( String title, String company, String year, String country )
+
+	public static class RepositoryGameParam
 	{
-		this( title, company, year, country, false, null, null, null, null );
+		private String title;
+		private String system;
+		private String company;
+		private String year;
+		private String country;
+		private boolean original;
+		private String originalText;
+		private String mapper;
+		private String start;
+		private String remark;
+
+		public RepositoryGameParam title( String title ) { this.title = Objects.requireNonNull( title ); return this; }
+		public RepositoryGameParam system( String system ) { this.system = Objects.requireNonNull( system ); return this; }
+		public RepositoryGameParam company( String company ) { this.company = Objects.requireNonNull( company ); return this; }
+		public RepositoryGameParam year( String year ) { this.year = Objects.requireNonNull( year ); return this; }
+		public RepositoryGameParam country( String country ) { this.country = Objects.requireNonNull( country ); return this; }
+		public RepositoryGameParam isOriginal( boolean original ) { this.original = original; return this; }
+		public RepositoryGameParam originalText( String originalText ) { this.originalText = originalText; return this; }
+		public RepositoryGameParam mapper( String mapper ) { this.mapper = mapper; return this; }
+		public RepositoryGameParam start( String start ) { this.start = start; return this; }
+		public RepositoryGameParam remark( String remark ) { this.remark = remark; return this; }
+
+		public RepositoryGame build()
+		{
+			if( title == null || system == null || company == null || year == null || country == null )
+			{
+				throw new IllegalArgumentException( "Title, System, Company, Year and Country must be set" );
+			}
+
+			return new RepositoryGame( this );
+        }
 	}
 
-	/**
-	 * @param title
-	 * @param company
-	 * @param year
-	 * @param country
-	 * @param original
-	 * @param originalText Can be null
-	 * @param mapper Can be null
-	 * @param start Can be null
-	 * @param remark Can be null
-	 */
-	public RepositoryGame( String title, String company, String year, String country,
-			boolean original, String originalText, String mapper, String start, String remark )
+	public static RepositoryGameParam title( String title ) { return new RepositoryGameParam().title( title ); }
+	public static RepositoryGameParam system( String system ) { return new RepositoryGameParam().system( system ); }
+	public static RepositoryGameParam company( String company ) { return new RepositoryGameParam().company( company ); }
+	public static RepositoryGameParam year( String year ) { return new RepositoryGameParam().year( year ); }
+	public static RepositoryGameParam country( String country ) { return new RepositoryGameParam().country( country ); }
+	public static RepositoryGameParam isOriginal( boolean original ) { return new RepositoryGameParam().isOriginal( original ); }
+	public static RepositoryGameParam originalText( String originalText ) { return new RepositoryGameParam().originalText( originalText ); }
+	public static RepositoryGameParam mapper( String mapper ) { return new RepositoryGameParam().mapper( mapper ); }
+	public static RepositoryGameParam start( String start ) { return new RepositoryGameParam().start( start ); }
+	public static RepositoryGameParam remark( String remark ) { return new RepositoryGameParam().remark( remark ); }
+
+	private RepositoryGame( RepositoryGameParam param )
 	{
-		this.title = Objects.requireNonNull( title );
-		this.company = Objects.requireNonNull( company );
-		this.year = Objects.requireNonNull( year );
-		this.country = Objects.requireNonNull( country );
+		this.title = param.title;
+		this.system = param.system;
+		this.company = param.company;
+		this.year = param.year;
+		this.country = param.country;
 		
-		this.original = original;
-		this.originalText = originalText;
-		this.mapper = mapper;
-		this.start = start;
-		this.remark = remark;
+		this.original = param.original;
+		this.originalText = param.originalText;
+		this.mapper = param.mapper;
+		this.start = param.start;
+		this.remark = param.remark;
 	}
 
 	//--------
 	// Getters
 	//--------
 	public String getTitle()	{ return title; }
+	public String getSystem()	{ return system; }
 	public String getCompany()	{ return company; }
 	public String getYear()	{ return year; }
 	public String getCountry()	{ return country; }

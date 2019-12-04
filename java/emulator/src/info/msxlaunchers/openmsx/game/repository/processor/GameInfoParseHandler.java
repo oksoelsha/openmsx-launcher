@@ -33,6 +33,7 @@ final class GameInfoParseHandler extends ParseHandler
 	private RepositoryGame repositoryGame;
 
 	private String title;
+	private String system;
 	private String company;
 	private String year;
 	private String country;
@@ -76,6 +77,10 @@ final class GameInfoParseHandler extends ParseHandler
 		{
 			title = tempText;
 		}
+		if( qName.equalsIgnoreCase( "system" ) )
+		{
+			system = tempText;
+		}
 		else if( qName.equalsIgnoreCase( "company" ) )
 		{
 			company = tempText;
@@ -115,8 +120,8 @@ final class GameInfoParseHandler extends ParseHandler
 		{
 			if( found )
 			{
-				repositoryGame = new RepositoryGame( title, company, year, country,
-						original, originalString, mapper, start, remark );
+				repositoryGame = RepositoryGame.title( title ).system( system ).company( company ).year( year ).country( country )
+						.isOriginal( original ).originalText( originalString ).mapper( mapper ).start( start ).remark( remark ).build();
 				throw new StopSAXParsingException();
 			}
 			else

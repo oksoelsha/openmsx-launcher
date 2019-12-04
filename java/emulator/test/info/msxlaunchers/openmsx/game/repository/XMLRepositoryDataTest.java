@@ -135,7 +135,7 @@ public class XMLRepositoryDataTest
 		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
 		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
 
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company", "year", "country" );
+		RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "MSX" ).company( "company" ).year( "year" ).country( "country" ).build();
 		Mockito.when( xmlProcessor.getGameInfo( xmlFile1, "code" ) ).thenReturn( repositoryGame );
 
 		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );

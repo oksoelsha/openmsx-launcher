@@ -51,7 +51,7 @@ public class GamePropertiesImplTest
 		GamePropertiesPresenterImpl presenter = new GamePropertiesPresenterImpl( gamePropertiesView, repositoryData );
 
 		Game game = Game.name( "name" ).diskA( "diskA.dsk" ).sha1Code( "1234" ).build();
-		RepositoryGame repositoryGame = new RepositoryGame( "title", "company","year", "country" );
+		RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "system" ).company( "company" ).year( "year" ).country( "country" ).build();
 
 		when( repositoryData.getGameInfo( game.getSha1Code() ) ).thenReturn( repositoryGame );
 		when( otherCodes.size() ).thenReturn( 3 );
