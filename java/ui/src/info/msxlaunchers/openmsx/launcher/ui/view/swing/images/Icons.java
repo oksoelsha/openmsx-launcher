@@ -91,6 +91,13 @@ public enum Icons
 	FLAG_zh_TW( "flags/zh_TW" ),
 	FLAG_pl_PL( "flags/pl_PL" ),
 
+	FLAG_GB( "flags/UK" ),
+	FLAG_HK( "flags/HK" ),
+	FLAG_KW( "flags/KW" ),
+	FLAG_PT( "flags/PT" ),
+	FLAG_SA( "flags/SA" ),
+	FLAG_UK( "flags/UK" ),
+
 	SOUND_PSG( "sound/psg" ),
 	SOUND_SCC( "sound/scc" ),
 	SOUND_SCC_I( "sound/scc_i" ),

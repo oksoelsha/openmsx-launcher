@@ -25,6 +25,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.Sound;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
 import java.awt.Color;
@@ -37,6 +38,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +80,28 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 
 	private static final String SEPARATOR = ", ";
 	private static final int MSX_GEN_NON_EXISTING_CODES_START = 10000;
+
+	private static final Map<String,String> countryFlag = new HashMap<>();
+	static
+	{
+		countryFlag.put("BR", "FLAG_pt_BR");
+		countryFlag.put("DE", "FLAG_de_DE");
+		countryFlag.put("ES", "FLAG_es_ES");
+		countryFlag.put("FR", "FLAG_fr_FR");
+		countryFlag.put("GB", "FLAG_UK");
+		countryFlag.put("HK", "FLAG_HK");
+		countryFlag.put("IT", "FLAG_it_IT");
+		countryFlag.put("JP", "FLAG_ja_JP");
+		countryFlag.put("KR", "FLAG_ko_KR");
+		countryFlag.put("KW", "FLAG_KW");
+		countryFlag.put("NL", "FLAG_nl_NL");
+		countryFlag.put("PT", "FLAG_PT");
+		countryFlag.put("RU", "FLAG_ru_RU");
+		countryFlag.put("SA", "FLAG_SA");
+		countryFlag.put("SE", "FLAG_sv_SE");
+		countryFlag.put("UK", "FLAG_UK");
+		countryFlag.put("US", "FLAG_en_US");
+	}
 
 	public GamePropertiesWindow(Game game,
 								RepositoryGame repositoryGame,
@@ -154,7 +178,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
         {
             addPropertyToDisplay(messages.get("COMPANY"), repositoryGame.getCompany());
             addPropertyToDisplay(messages.get("YEAR"), repositoryGame.getYear());
-            addPropertyToDisplay(messages.get("COUNTRY"), messages.get(repositoryGame.getCountry()));
+            addPropertyToDisplayWithIcon(messages.get("COUNTRY"), repositoryGame.getCountry(), countryFlag);
             if(game.isROM())
             {
             	addPropertyToDisplay(messages.get("MAPPER"), repositoryGame.getMapper());
@@ -196,6 +220,29 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		}
 	}
 
+	private void addPropertyToDisplayWithIcon(String attribute, String value, Map<String,String> valueToIcon)
+	{
+		if(!Utils.isEmpty(value))
+		{
+			String localizedValue = messages.get(value);
+			if(!Utils.isEmpty(localizedValue))
+			{
+				addAttribute(attribute, false);
+
+				JLabel valueLabel = new JLabel();
+				valueLabel.setIcon(Icons.valueOf(valueToIcon.get(value)).getImageIcon());
+				valueLabel.setText(localizedValue);
+				tableLayout.setConstraints(valueLabel, valueConstraints);
+				tablePane.add(valueLabel);
+
+				if(rightToLeft)
+				{
+					valueLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+				}
+			}
+		}
+	}
+
 	private void addPropertyToDisplay(String attribute, String value)
 	{
 		addPropertyToDisplay(attribute, value, false);
@@ -205,38 +252,48 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 	{
 		if(!Utils.isEmpty(value))
 		{
-			JLabel attributeLabel;
-			if(rightToLeft && colonOnTheLeft)
+			addAttribute(attribute, colonOnTheLeft);
+
+			JTextField valueTextField = new JTextField(value) {
+				@Override public void setBorder(Border border) {
+					// No border
+				}
+			};
+
+			valueTextField.setEditable(false);
+			valueTextField.setOpaque(false);
+			valueTextField.setColumns(30);
+			valueTextField.setCaretPosition(0);
+			valueTextField.setBackground(new Color(0, 0, 0, 0));
+
+			if(rightToLeft)
 			{
-				attributeLabel = new JLabel(":" + attribute);
+				valueTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			}
-			else
-			{
-				attributeLabel = new JLabel(attribute + ":");				
-			}
-	        tableLayout.setConstraints(attributeLabel, labelConstraints);
-	        tablePane.add(attributeLabel);
 
-	        JTextField valueTextField = new JTextField(value) {
-	        	@Override public void setBorder(Border border) {
-	                // No border
-	           	}
-	        };
-	
-	        valueTextField.setEditable(false);
-	        valueTextField.setOpaque(false);
-	        valueTextField.setColumns(30);
-	        valueTextField.setCaretPosition(0);
-	        valueTextField.setBackground(new Color(0, 0, 0, 0));
+			tableLayout.setConstraints(valueTextField, valueConstraints);
+			tablePane.add(valueTextField);
+		}
+	}
 
-	        if(rightToLeft)
-	        {
-	        	attributeLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-	        	valueTextField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-	        }
 
-	        tableLayout.setConstraints(valueTextField, valueConstraints);
-	        tablePane.add(valueTextField);
+	private void addAttribute(String attribute, boolean colonOnTheLeft)
+	{
+		JLabel attributeLabel;
+		if(rightToLeft && colonOnTheLeft)
+		{
+			attributeLabel = new JLabel(":" + attribute);
+		}
+		else
+		{
+			attributeLabel = new JLabel(attribute + ":");
+		}
+		tableLayout.setConstraints(attributeLabel, labelConstraints);
+		tablePane.add(attributeLabel);
+
+		if(rightToLeft)
+		{
+			attributeLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		}
 	}
 
