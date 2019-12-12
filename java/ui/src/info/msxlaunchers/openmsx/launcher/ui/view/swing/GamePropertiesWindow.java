@@ -101,6 +101,9 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		countryFlag.put("SE", "FLAG_sv_SE");
 		countryFlag.put("UK", "FLAG_UK");
 		countryFlag.put("US", "FLAG_en_US");
+		countryFlag.put("TW", "FLAG_zh_TW");
+		countryFlag.put("CA", "FLAG_CA");
+		countryFlag.put("EU", "FLAG_EU");
 	}
 
 	public GamePropertiesWindow(Game game,

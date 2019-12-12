@@ -97,6 +97,8 @@ public enum Icons
 	FLAG_PT( "flags/PT" ),
 	FLAG_SA( "flags/SA" ),
 	FLAG_UK( "flags/UK" ),
+	FLAG_CA( "flags/CA" ),
+	FLAG_EU( "flags/EU" ),
 
 	SOUND_PSG( "sound/psg" ),
 	SOUND_SCC( "sound/scc" ),

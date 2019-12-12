@@ -40,4 +40,7 @@ public enum Country
 	SE,
 	UK,
 	US,
+	TW,
+	CA,
+	EU
 }
