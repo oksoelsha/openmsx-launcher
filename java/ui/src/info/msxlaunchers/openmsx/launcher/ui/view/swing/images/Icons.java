@@ -113,6 +113,10 @@ public enum Icons
 	GENERATION_MSX2( "generation/msx2" ),
 	GENERATION_MSX2P( "generation/msx2p" ),
 	GENERATION_TURBO_R( "generation/msxturbor" ),
+	GENERATION_MSX_LARGE( "generation/msx-large" ),
+	GENERATION_MSX2_LARGE( "generation/msx2-large" ),
+	GENERATION_MSX2P_LARGE( "generation/msx2p-large" ),
+	GENERATION_TURBO_R_LARGE( "generation/msxturbor-large" ),
 
 	BUSY_INDICATOR( "busy", "gif" )
 	;

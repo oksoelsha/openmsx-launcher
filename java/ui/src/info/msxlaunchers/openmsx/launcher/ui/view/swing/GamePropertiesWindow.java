@@ -38,10 +38,12 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -104,6 +106,15 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		countryFlag.put("TW", "FLAG_zh_TW");
 		countryFlag.put("CA", "FLAG_CA");
 		countryFlag.put("EU", "FLAG_EU");
+	}
+
+	private static final Map<String,String> generationImage = new HashMap<>();
+	static
+	{
+		generationImage.put(MSXGeneration.MSX.getDisplayName(), "GENERATION_MSX_LARGE");
+		generationImage.put(MSXGeneration.MSX2.getDisplayName(), "GENERATION_MSX2_LARGE");
+		generationImage.put(MSXGeneration.MSX2Plus.getDisplayName(), "GENERATION_MSX2P_LARGE");
+		generationImage.put(MSXGeneration.TURBO_R.getDisplayName(), "GENERATION_TURBO_R_LARGE");
 	}
 
 	public GamePropertiesWindow(Game game,
@@ -190,7 +201,8 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
             addPropertyToDisplay(messages.get("DUMP"), repositoryGame.getOriginalText());
             addPropertyToDisplay(messages.get("REMARK"), repositoryGame.getRemark());
         }
-        addPropertyToDisplay(messages.get("GENERATION"), getGeneration(game));
+        addPropertyToDisplayAsIcon(messages.get("GENERATION"), getGenerationList(game), generationImage);
+
         addPropertyToDisplay(messages.get("SOUND"), getSound(game));
         addPropertyToDisplay(messages.get("GENRE"), getGenre(game));
         if(game.getMsxGenID() > 0 && game.getMsxGenID() < MSX_GEN_NON_EXISTING_CODES_START)
@@ -246,6 +258,32 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		}
 	}
 
+	private void addPropertyToDisplayAsIcon(String attribute, List<String> values, Map<String,String> valueToIcon)
+	{
+		if(!values.isEmpty())
+		{
+			addAttribute(attribute, false);
+
+			JPanel valuePanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 1));
+
+			for(String value: values)
+			{
+				JLabel valueLabel = new JLabel();
+				valueLabel.setIcon(Icons.valueOf(valueToIcon.get(value)).getImageIcon());
+				valuePanel.add(valueLabel);
+				valuePanel.add(Box.createHorizontalStrut(8));
+			}
+
+			tableLayout.setConstraints(valuePanel, valueConstraints);
+			tablePane.add(valuePanel);
+
+			if(rightToLeft)
+			{
+				valuePanel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+			}
+		}
+	}
+
 	private void addPropertyToDisplay(String attribute, String value)
 	{
 		addPropertyToDisplay(attribute, value, false);
@@ -278,7 +316,6 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 			tablePane.add(valueTextField);
 		}
 	}
-
 
 	private void addAttribute(String attribute, boolean colonOnTheLeft)
 	{
@@ -369,33 +406,28 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		return  builder.toString();
 	}
 
-	private String getGeneration(Game game)
+	private List<String> getGenerationList(Game game)
 	{
-		StringBuilder generation = new StringBuilder("");
+		List<String> generationList = new ArrayList<>();
 
 		if(game.isMSX())
 		{
-			generation.append(MSXGeneration.MSX.getDisplayName()).append(SEPARATOR);
+			generationList.add(MSXGeneration.MSX.getDisplayName());
 		}
 		if(game.isMSX2())
 		{
-			generation.append(MSXGeneration.MSX2.getDisplayName()).append(SEPARATOR);
+			generationList.add(MSXGeneration.MSX2.getDisplayName());
 		}
 		if(game.isMSX2Plus())
 		{
-			generation.append(MSXGeneration.MSX2Plus.getDisplayName()).append(SEPARATOR);
+			generationList.add(MSXGeneration.MSX2Plus.getDisplayName());
 		}
 		if(game.isTurboR())
 		{
-			generation.append(MSXGeneration.TURBO_R.getDisplayName()).append(SEPARATOR);
+			generationList.add(MSXGeneration.TURBO_R.getDisplayName());
 		}
 
-		if(generation.length() > 0)
-		{
-			generation.setLength(generation.length() - SEPARATOR.length());
-		}
-
-		return generation.toString();
+		return generationList;
 	}
 
 	private String getSound(Game game)
