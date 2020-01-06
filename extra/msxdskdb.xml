@@ -7,6 +7,7 @@
 	Nov 2017 Sam Elsharif		version 2
 	Mar 2018 Sam Elsharif		version 3
 	Aug 2018 Sam Elsharif		version 4
+	Jan 2020 Sam Elsharif		version 5
 -->
 <softwaredb>
 	<software>
@@ -16,6 +17,14 @@
 		<year>1993</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">8634eb51b318b36354f7e92fbd0e49ce5f291696</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Adventure of Randar III, The</title>
+		<system>MSX</system>
+		<company>Compile</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">52e16b7339699263193154de1bfd577b76c25624</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Akanbe Dragon</title>
@@ -613,6 +622,24 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">0252990148465bca949e3c9fc277191dc052fcbd</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Fony Demodisk #1</title>
+		<system>MSX</system>
+		<company>Fony</company>
+		<year>1991</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">18481e8629b575cc877235532deb3bc4bae3adf7</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">196bfa3f5228a896a578fd2e547aa22380b04846</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Forbidden City, The</title>
+		<system>MSX</system>
+		<company>Scaptrust</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e93b9171ec11b2a6fac8336967f466c979acae8a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6159d15d5aca52c6e25d3e3b94176b04e20b9c47</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Fray - In Magical Adventure</title>
 		<system>MSX</system>
 		<company>Microcabin</company>
@@ -899,6 +926,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">d37c06d798aa2b208c0dcc009682c37d97ffcc75</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Matrices</title>
+		<system>MSX</system>
+		<company>OKS</company>
+		<year>2010</year>
+		<country>CA</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0a71a5e0406489f1d9ae8fc989e78b932fed986b</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Milkymate</title>
 		<system>MSX</system>
 		<company>Atsic</company>
@@ -916,6 +951,8 @@
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">e2be3e65395fa96d09f90bd700769b69edf69ba4</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">c6e339c992562800ded94b29cd910cfe7d656cea</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">eaa635baa16e1263c4f743889679a90061dffec7</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">850e5482e14ccbd7cd853d78718ad1ad0ee1235d</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Moskow 2024</title>
@@ -935,6 +972,22 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">35cac8a3f45d2b21faa6219e2d5949f2959ab405</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">e7f2dae1e5b927905027b8aea245994f9fb36b19</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">839fe87d070f4b13ea8466bd56c0f83003e351a5</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>New Music</title>
+		<system>MSX</system>
+		<company>OKS</company>
+		<year>2001</year>
+		<country>US</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6d2faf4cd43ede005103e50a5b8bfdaa52ad24d5</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>New Music - Turbo-R</title>
+		<system>MSX</system>
+		<company>OKS</company>
+		<year>2009</year>
+		<country>CA</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">015d6fbc96771e0513aaf0bafcd9b107caf85d91</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Niko2</title>
@@ -1224,6 +1277,15 @@
 		<year>1990</year>
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">9e558953e5b4dcf5a087c80da00cde7818248815</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">244eba4e998040a01e61ec814f5ec56ee374ab32</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Solid Snail</title>
+		<system>MSX</system>
+		<company>Vivid</company>
+		<year>1994</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3e27518f178b4e289aaef27c7b3c9fdd308448bc</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Solitaire</title>
@@ -1308,6 +1370,8 @@
 		<year>1989</year>
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">1f465217109ce71ecb81c30841ed69514dd8ffd8</hash></format><remark><text>Disc Station Special 2 - Summer Edition</text></remark></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">32229235366d7467724ebdca219115b438a1899c</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0df862324ab023f06543191df1500eaaa6f83927</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Super Daisenryaku</title>
@@ -1334,29 +1398,19 @@
 	<software>
 		<title>Teachers Terror</title>
 		<system>MSX</system>
-		<company>BPS</company>
-		<year>1988</year>
-		<country>JP</country>
-		<dump><dsk><format type="dsk"><hash algo="sha1">af310ee21b5534f32ea92c0ae34a44d828d157a7</hash></format></dsk></dump>
-		<dump><dsk><format type="dsk"><hash algo="sha1">6641aa6bbdc456e5bd2004a47172b9a5ddfa7032</hash></format></dsk></dump>
-		<dump><dsk><format type="dsk"><hash algo="sha1">e23259d6d941db9e0ff62da503a3a8087e9ed36e</hash></format></dsk></dump>
-		<dump><dsk><format type="dsk"><hash algo="sha1">662a3bb5cb9ea41352d49248aa604a33065fa855</hash></format></dsk></dump>
-	</software>
-	<software>
-		<title>Tetris</title>
-		<system>MSX</system>
 		<company>Hegega</company>
 		<year>1993</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">34e6c8e5c332cf458b21351e580dbeefdcb6ff6f</hash></format></dsk></dump>
 	</software>
 	<software>
-		<title>The Adventure of Randar III</title>
+		<title>Tetris</title>
 		<system>MSX</system>
-		<company>Compile</company>
-		<year>1990</year>
+		<company>BPS</company>
+		<year>1988</year>
 		<country>JP</country>
-		<dump><dsk><format type="dsk"><hash algo="sha1">52e16b7339699263193154de1bfd577b76c25624</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">e23259d6d941db9e0ff62da503a3a8087e9ed36e</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6641aa6bbdc456e5bd2004a47172b9a5ddfa7032</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Time Bandits</title>
