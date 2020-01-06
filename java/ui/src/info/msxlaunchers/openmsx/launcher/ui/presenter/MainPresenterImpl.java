@@ -927,15 +927,14 @@ final class MainPresenterImpl implements MainPresenter
 			{
 				untitledFilter = true;
 				view.setFilterNameLabelUntitled();
-				view.displayFilterDetails( FilterFactory.getFilterMonikers( currentFilter ) );
 			}
 			else
 			{
 				//this could be the case where in an untitled filter the last filter item was deleted from the Add/Edit table
 				untitledFilter = false;
 				view.updateFilterNameLabel( null );
-				view.displayFilterDetails( null );
 			}
+			view.displayFilterDetails( FilterFactory.getFilterMonikers( currentFilter ) );
 		}
 	}
 
