@@ -156,6 +156,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenuItem moveMenuItem;
 	private JMenuItem locateFileMenuItem;
 	private JMenuItem addFavoriteMenuItem;
+	private JMenuItem findRelatedMenuItem;
 	private JMenuItem infoMenuItem;
 	private JMenuItem propertiesMenuItem;
 
@@ -741,6 +742,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		moveMenuItem.setText(messages.get("MOVE") + "...");
 		locateFileMenuItem.setText(messages.get("LOCATE_FILE"));
 		addFavoriteMenuItem.setText(messages.get("ADD_FAVORITE"));
+		findRelatedMenuItem.setText("FIND_RELATED");
 		infoMenuItem.setText(messages.get("INFO"));
 		propertiesMenuItem.setText(messages.get("PROPERTIES"));
 
@@ -849,6 +851,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		else if(source == addFavoriteMenuItem)
 		{
 			addSelectedGameToFavorites();
+		}
+		else if(source == findRelatedMenuItem)
+		{
+			findRelated();
 		}
 		else if(source == infoMenuItem)
 		{
@@ -1617,6 +1623,24 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		}
 	}
 
+	private void findRelated()
+	{
+		String selectedGame = getSelectedGame();
+		if(selectedGame != null )
+		{
+			//selected game could be null if nothing was highlighted in the game list.
+			//this can happen if Ctrl+D was pressed, for example, without selecting a game
+			try
+			{
+				presenter.onRequestFindRelated(selectedGame);
+			}
+			catch(LauncherException le)
+			{
+				MessageBoxUtil.showErrorMessageBox(this, le, messages, orientation);
+			}
+		}
+	}
+
 	private void showPropertiesOfSelectedGame()
 	{
 		String selectedGame = getSelectedGame();
@@ -1770,6 +1794,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		moveMenuItem.setComponentOrientation(orientation);
 		locateFileMenuItem.setComponentOrientation(orientation);
 		addFavoriteMenuItem.setComponentOrientation(orientation);
+		findRelatedMenuItem.setComponentOrientation(orientation);
 		infoMenuItem.setComponentOrientation(orientation);
 		propertiesMenuItem.setComponentOrientation(orientation);
 		databaseLabel.setComponentOrientation(orientation);
@@ -1823,6 +1848,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	    addFavoriteMenuItem.setIcon(Icons.FAVORITE.getImageIcon());
 	    addFavoriteMenuItem.addActionListener(this);
 	    contextMenu.add(addFavoriteMenuItem);
+
+	    findRelatedMenuItem = new JMenuItemWithIcon();
+//	    findSimilarMenuItem.setAccelerator(getCtrlDKeyStroke());
+	    findRelatedMenuItem.addActionListener(this);
+	    contextMenu.add(findRelatedMenuItem);
 
 	    contextMenu.addSeparator();
 

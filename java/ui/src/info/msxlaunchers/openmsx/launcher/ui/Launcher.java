@@ -28,6 +28,7 @@ import info.msxlaunchers.openmsx.launcher.importer.DatabaseImporterModule;
 import info.msxlaunchers.openmsx.launcher.log.analyser.LoggerModule;
 import info.msxlaunchers.openmsx.launcher.patch.PatcherModule;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceModule;
+import info.msxlaunchers.openmsx.launcher.related.RelatedGamesModule;
 import info.msxlaunchers.openmsx.launcher.starter.StarterModule;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.PresenterModule;
@@ -49,22 +50,23 @@ public class Launcher
 	{
 		Injector injector = Guice.createInjector(
 				new AppModule(),
-	    		new LauncherPersistenceModule(),
-	    		new StarterModule(),
-	    		new PlatformModule(),
-	    		new ViewModule(),
-	    		new PresenterModule(),
-	    		new ScannerModule(),
-	    		new RepositoryDataModule(),
-	    		new MachineListerModule(),
-	    		new ExtensionListerModule(),
-	    		new ExtraDataModule(),
-	    		new DatabaseImporterModule(),
-	    		new GameBuilderModule(),
-	    		new UpdateCheckerModule(),
-	    		new LoggerModule(),
-	    		new PatcherModule(),
-	    		new FeedServiceModule()
+				new LauncherPersistenceModule(),
+				new StarterModule(),
+				new PlatformModule(),
+				new ViewModule(),
+				new PresenterModule(),
+				new ScannerModule(),
+				new RepositoryDataModule(),
+				new MachineListerModule(),
+				new ExtensionListerModule(),
+				new ExtraDataModule(),
+				new DatabaseImporterModule(),
+				new GameBuilderModule(),
+				new UpdateCheckerModule(),
+				new LoggerModule(),
+				new PatcherModule(),
+				new FeedServiceModule(),
+				new RelatedGamesModule()
 				);
 
 		MainPresenter launcher = injector.getInstance( MainPresenter.class );

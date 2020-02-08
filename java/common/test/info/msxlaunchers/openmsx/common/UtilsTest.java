@@ -34,6 +34,15 @@ public class UtilsTest
 	}
 
 	@Test
+	public void testIsNumber()
+	{
+		assertFalse( Utils.isNumber( null ) );
+		assertFalse( Utils.isNumber( "" ) );
+		assertFalse( Utils.isNumber( "a" ) );
+		assertTrue( Utils.isNumber( "12" ) );
+	}
+
+	@Test
 	public void testGetStringForInt()
 	{
 		assertEquals( Utils.getString( 0 ), "0" );

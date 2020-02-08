@@ -94,6 +94,7 @@ final class MainPresenterImpl implements MainPresenter
 	private final Provider<PatcherPresenter> patcherPresenterFactory;
 	private final MachineUpdatePresenterFactory machineUpdatePresenterFactory;
 	private final FeedServicePresenter feedServicePresenter;
+	private final Provider<RelatedGamesPresenter> relatedGamesPresenterFactory;
 
 	private static final String SCREENSHOT_EXT = ".png";
 	private static final String SCREENSHOT1_SUFFIX = "a";
@@ -141,7 +142,8 @@ final class MainPresenterImpl implements MainPresenter
 			DraggedAndDroppedGamesPresenterFactory draggedAndDroppedGamesPresenterFactory,
 			Provider<PatcherPresenter> patcherPresenterFactory,
 			MachineUpdatePresenterFactory machineUpdatePresenterFactory,
-			FeedServicePresenter feedServicePresenter ) throws IOException
+			FeedServicePresenter feedServicePresenter,
+			Provider<RelatedGamesPresenter> relatedGamesPresenterFactory ) throws IOException
 	{
 		this.view = Objects.requireNonNull( view );
 		this.settingsPresenterFactory = Objects.requireNonNull( settingsPresenterFactory );
@@ -163,6 +165,7 @@ final class MainPresenterImpl implements MainPresenter
 		this.patcherPresenterFactory = Objects.requireNonNull( patcherPresenterFactory );
 		this.machineUpdatePresenterFactory = Objects.requireNonNull( machineUpdatePresenterFactory );
 		this.feedServicePresenter = Objects.requireNonNull( feedServicePresenter );
+		this.relatedGamesPresenterFactory = Objects.requireNonNull( relatedGamesPresenterFactory );
 
 		try
 		{
@@ -748,6 +751,7 @@ final class MainPresenterImpl implements MainPresenter
 	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestAddFavorite(java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void onRequestAddFavorite( String gameName, String database ) throws LauncherException
 	{
 		try
@@ -765,6 +769,15 @@ final class MainPresenterImpl implements MainPresenter
 				throw new LauncherException( LauncherExceptionCode.ERR_IO );
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestFindRelated(java.lang.String)
+	 */
+	@Override
+	public void onRequestFindRelated( String gameName ) throws LauncherException
+	{
+		relatedGamesPresenterFactory.get().onRequestRelatedGamesScreen( gamesMap.get( gameName ), repositoryInfoMap, currentLanguage );
 	}
 
 	/* (non-Javadoc)

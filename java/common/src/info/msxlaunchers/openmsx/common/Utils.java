@@ -57,6 +57,25 @@ public final class Utils
 
 		return number;
 	}
+
+	/**
+	 * Returns whether the given string is a number
+	 * 
+	 * @param string Potential number as a string
+	 * @return True if given string is a number
+	 */
+	public static boolean isNumber( String string )
+	{
+		try
+		{
+			Integer.parseInt( string );
+			return true;
+		}
+		catch( NumberFormatException nfe )
+		{
+			return false;
+		}
+	}
 	
 	/**
 	 * Returns a String object representing the given integer value

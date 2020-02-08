@@ -202,6 +202,14 @@ public interface MainPresenter
 	void onRequestAddFavorite( String gameName, String database ) throws LauncherException;
 
 	/**
+	 * Called when user requests to find similar games to the selected one
+	 * 
+	 * @param gameName Name of game to locate its main file
+	 * @throws LauncherException
+	 */
+	void onRequestFindRelated( String gameName ) throws LauncherException;
+
+	/**
 	 * Called when user requests the current list of favorites
 	 */
 	void onRequestListOfFavorites();

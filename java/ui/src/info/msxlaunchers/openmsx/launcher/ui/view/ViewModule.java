@@ -44,6 +44,7 @@ public class ViewModule extends AbstractModule
 		bind( ActivityViewerView.class ).to( ActivityViewerSwingView.class );
 		bind( PatcherView.class ).to( PatcherSwingView.class );
 		bind( MachineUpdateView.class ).to( MachineUpdateSwingView.class );
+		bind( RelatedGamesView.class ).to( RelatedGamesSwingView.class );
 
 		install( new ViewPlatformModule() );
 	}
