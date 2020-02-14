@@ -36,8 +36,10 @@ public interface RelatedGamesPresenter
 	 * @param Game game
 	 * @param repositoryInfoMap Repository Info Map
 	 * @param currentLanguage Language enum currently used
+	 * @param currentRightToLeft Orientation of the current language
 	 * @throws LauncherException
 	 */
-	void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage ) throws LauncherException;
+	void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
+			throws LauncherException;
 
 }

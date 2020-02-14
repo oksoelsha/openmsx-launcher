@@ -38,7 +38,7 @@ public abstract class AbstractActionButton extends JComponent
 	private final Color hoverColor;
 	private final Color pressedColor;
 
-	private boolean inside = false;
+	protected boolean inside = false;
 	private boolean pressed = false;
 
 	public AbstractActionButton(ActionListener listener, Color normalColor, Color hoverColor, Color pressedColor)

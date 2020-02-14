@@ -28,12 +28,14 @@ public final class RelatedGame
 {
 	private final String gameName;
 	private final String company;
+	private final String year;
 	private final int msxGenId;
 
-	public RelatedGame( String gameName, String company, int msxGenId )
+	public RelatedGame( String gameName, String company, String year, int msxGenId )
 	{
 		this.gameName = Objects.requireNonNull( gameName );
 		this.company = company;
+		this.year = year;
 		this.msxGenId = msxGenId;
 	}
 
@@ -45,6 +47,11 @@ public final class RelatedGame
 	public String getCompany()
 	{
 		return company;
+	}
+
+	public String getYear()
+	{
+		return year;
 	}
 
 	public int getMSXGenId()

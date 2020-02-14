@@ -31,10 +31,13 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.RelatedGamesWindow;
 final class RelatedGamesSwingView implements RelatedGamesView
 {
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.RelatedGamesView#displayRelatedGamesScreen(java.util.List, java.lang.String, info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, boolean)
+	 */
 	@Override
-	public void displayRelatedGamesScreen( List<RelatedGame> relatedGames, Language language )
+	public void displayRelatedGamesScreen( List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft )
 	{
-		RelatedGamesWindow window = new RelatedGamesWindow( relatedGames, language );
+		RelatedGamesWindow window = new RelatedGamesWindow( relatedGames, screenshotsPath, language, rightToLeft );
 
 		window.displayScreen();
 	}

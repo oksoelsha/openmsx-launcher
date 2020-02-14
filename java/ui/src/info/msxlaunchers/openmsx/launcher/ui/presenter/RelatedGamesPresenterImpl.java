@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,6 +26,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 import info.msxlaunchers.openmsx.launcher.related.RelatedGamesFactory;
 import info.msxlaunchers.openmsx.launcher.ui.view.RelatedGamesView;
 
@@ -40,20 +42,23 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 	private final RelatedGamesFactory relatedGamesFactory;
 	private final RelatedGamesView view;
 	private final MainPresenter mainPresenter;
+	private final String scrrenshotsPath;
 
 	@Inject
-	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, MainPresenter mainPresenter )
+	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, MainPresenter mainPresenter, SettingsPersister settingsPersister ) throws IOException
 	{
 		this.relatedGamesFactory = relatedGamesFactory;
 		this.view = view;
 		this.mainPresenter = Objects.requireNonNull( mainPresenter );
+		this.scrrenshotsPath = settingsPersister.getSettings().getScreenshotsFullPath();
 	}
 
 	@Override
-	public void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage ) throws LauncherException
+	public void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
+			throws LauncherException
 	{
 		List<RelatedGame> relatedGames = relatedGamesFactory.create( repositoryInfoMap ).findRelated( game );
 
-		view.displayRelatedGamesScreen( relatedGames, currentLanguage );
+		view.displayRelatedGamesScreen( relatedGames, scrrenshotsPath, currentLanguage, currentRightToLeft );
 	}
 }

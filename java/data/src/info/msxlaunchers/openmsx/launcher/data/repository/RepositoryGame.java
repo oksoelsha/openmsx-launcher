@@ -132,4 +132,30 @@ public final class RepositoryGame
 
 	public String getStart()	{ return start; }
 	public String getRemark()	{ return remark; }
+
+	@Override
+	public boolean equals( Object obj )
+	{
+		if( obj == null || !(obj instanceof RepositoryGame) )
+		{
+			return false;
+		}
+		else if( this == obj )
+		{
+			return true;
+		}
+		else
+		{
+			RepositoryGame other = (RepositoryGame)obj;
+			return other.getTitle().equals( title ) && other.getSystem().equals( system ) &&
+					other.getCompany().equals( company ) && other.getYear().equals( year ) &&
+					other.getCountry().equals( country );
+		}
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash( title, system, company, year, country );
+	}
 }

@@ -742,7 +742,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		moveMenuItem.setText(messages.get("MOVE") + "...");
 		locateFileMenuItem.setText(messages.get("LOCATE_FILE"));
 		addFavoriteMenuItem.setText(messages.get("ADD_FAVORITE"));
-		findRelatedMenuItem.setText("FIND_RELATED");
+		findRelatedMenuItem.setText(messages.get("FIND_RELATED"));
 		infoMenuItem.setText(messages.get("INFO"));
 		propertiesMenuItem.setText(messages.get("PROPERTIES"));
 

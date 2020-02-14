@@ -777,7 +777,7 @@ final class MainPresenterImpl implements MainPresenter
 	@Override
 	public void onRequestFindRelated( String gameName ) throws LauncherException
 	{
-		relatedGamesPresenterFactory.get().onRequestRelatedGamesScreen( gamesMap.get( gameName ), repositoryInfoMap, currentLanguage );
+		relatedGamesPresenterFactory.get().onRequestRelatedGamesScreen( gamesMap.get( gameName ), repositoryInfoMap, currentLanguage, currentRightToLeft );
 	}
 
 	/* (non-Javadoc)
