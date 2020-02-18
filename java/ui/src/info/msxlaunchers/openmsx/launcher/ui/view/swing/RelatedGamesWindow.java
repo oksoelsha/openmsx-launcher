@@ -37,6 +37,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
@@ -44,7 +45,7 @@ import javax.swing.border.EmptyBorder;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JLabelTransitionedNewImage;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
@@ -58,23 +59,32 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 {
 	private final List<RelatedGame> relatedGames;
 	private final String screenshotsPath;
+	private final String generationMSXURL;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final Component mainWindow;
+	private final ImageIcon noScreenshot;
 
 	private JComponent closeButton;
 
+	private static final Dimension CLOSE_BUTTON_SIZE = new Dimension(20, 19);
 	private static final Font NAME_FONT = new Font(null, Font.PLAIN, 16);
 	private static final Font INFO_FONT = new Font(null, Font.PLAIN, 11);
-	private static final Dimension LABEL_WIDTH = new Dimension(400,20);
+	private static final Dimension LABEL_SIZE = new Dimension(400,20);
+	private static final int SCROLL_PANE_WIDTH = 540;
+	private static final int SCROLL_PANE_UNIT_HEIGHT = 104;
+	private static final int SCREENSHOT_WIDTH = 102;
+	private static final int SCREENSHOT_HEIGHT = 90;
 
-	public RelatedGamesWindow(List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft)
+	public RelatedGamesWindow(List<RelatedGame> relatedGames, String screenshotsPath, String generationMSXURL, Language language, boolean rightToLeft)
 	{
 		this.relatedGames = relatedGames;
 		this.screenshotsPath = screenshotsPath;
+		this.generationMSXURL = generationMSXURL;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
 		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
+		this.noScreenshot = getScaledImage(Icons.NO_SCREENSHOT.getImageIcon());
 
 		closeButton = new CloseButton(this);
 	}
@@ -93,7 +103,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 
 		contentPane.setLayout(new BorderLayout());
 
-		closeButton.setPreferredSize(new Dimension(20, 19));
+		closeButton.setPreferredSize(CLOSE_BUTTON_SIZE);
 		JPanel closeButtonPanel = new JPanel();
 		if(rightToLeft)
 		{
@@ -117,25 +127,31 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 			rowPanel.add(screenshotLabel);
 
 			JLabel nameLabel = new JLabel(relatedGame.getGameName());
-			nameLabel.setPreferredSize(LABEL_WIDTH);
+			nameLabel.setPreferredSize(LABEL_SIZE);
 
 			nameLabel.setFont(NAME_FONT);
-//			nameLabel.setBorder(LABEL_MARGIN);
 
 			JLabel infoLabel = new JLabel(relatedGame.getCompany() + " " + relatedGame.getYear());
 			infoLabel.setFont(INFO_FONT);
-//			infoLabel.setBorder(LABEL_MARGIN);
 
-			JPanel textPanel = new JPanel(new BorderLayout());
-			textPanel.add(nameLabel, BorderLayout.NORTH);
-			textPanel.add(infoLabel, BorderLayout.SOUTH);
+			JPanel textPanel = new JPanel();
+			textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+			textPanel.add(nameLabel);
+			textPanel.add(infoLabel);
+			if(relatedGame.getMSXGenId() > 0 && relatedGame.getMSXGenId() < 10000)
+			{
+				textPanel.add(HyperLink.size(9).address(generationMSXURL + relatedGame.getMSXGenId()).label("MSX Generation").build());
+			}
 
 			rowPanel.add(textPanel);
 
 			table.add(rowPanel);
 		}
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		scrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH, Math.min(5, relatedGames.size()) * SCROLL_PANE_UNIT_HEIGHT));
 
-		contentPane.add(table, BorderLayout.SOUTH);
+		contentPane.add(scrollPane, BorderLayout.SOUTH);
 
 		pack();
 		setLocationRelativeTo(mainWindow);
@@ -151,16 +167,16 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 		}
 		else
 		{
-			return getScaledImage(Icons.NO_SCREENSHOT.getImageIcon());
+			return noScreenshot;
 		}
 	}
 
 	private ImageIcon getScaledImage(ImageIcon imageIcon)
 	{
-		BufferedImage bufferedImage = new BufferedImage(68, 60, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bufferedImage = new BufferedImage(SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = bufferedImage.createGraphics();
 		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g2d.drawImage(imageIcon.getImage(), 0, 0, 68, 60, null);
+		g2d.drawImage(imageIcon.getImage(), 0, 0, SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT, null);
 		g2d.dispose();
 
 		return new ImageIcon(bufferedImage);
