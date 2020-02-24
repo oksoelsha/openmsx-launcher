@@ -99,5 +99,10 @@
 			<artifactId>feed</artifactId>
 			<version>${version}</version>
 		</dependency>
+		<dependency>
+			<groupId>info.msxlaunchers.openmsx</groupId>
+			<artifactId>related</artifactId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 </project>

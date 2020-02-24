@@ -118,7 +118,10 @@ public enum Icons
 	GENERATION_MSX2P_LARGE( "generation/msx2p-large" ),
 	GENERATION_TURBO_R_LARGE( "generation/msxturbor-large" ),
 
-	BUSY_INDICATOR( "busy", "gif" )
+	BUSY_INDICATOR( "busy", "gif" ),
+
+	MSX_GENERATION( "gmsx" ),
+	YOUTUBE( "youtube" )
 	;
 
 	private final ImageIcon imageIcon;

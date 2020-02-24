@@ -31,6 +31,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -44,6 +45,7 @@ import javax.swing.border.EmptyBorder;
 
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
@@ -57,6 +59,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplay
 @SuppressWarnings("serial")
 public class RelatedGamesWindow extends JDialog implements ActionListener
 {
+	private final RelatedGamesPresenter presenter;
 	private final List<RelatedGame> relatedGames;
 	private final String screenshotsPath;
 	private final String generationMSXURL;
@@ -68,16 +71,19 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private JComponent closeButton;
 
 	private static final Dimension CLOSE_BUTTON_SIZE = new Dimension(20, 19);
-	private static final Font NAME_FONT = new Font(null, Font.PLAIN, 16);
+	private static final Font NAME_FONT = new Font(null, Font.PLAIN, 17);
 	private static final Font INFO_FONT = new Font(null, Font.PLAIN, 11);
-	private static final Dimension LABEL_SIZE = new Dimension(400,20);
-	private static final int SCROLL_PANE_WIDTH = 540;
+	private static final int SCROLL_PANE_WIDTH = 560;
 	private static final int SCROLL_PANE_UNIT_HEIGHT = 104;
 	private static final int SCREENSHOT_WIDTH = 102;
 	private static final int SCREENSHOT_HEIGHT = 90;
+	private static final FlowLayout DATA_LAYOUT = new FlowLayout(FlowLayout.LEADING, 0, 1);
+	private static final Color MSX_GENERATION_BACKGROUND_COLOR = new Color(90, 90, 220);
 
-	public RelatedGamesWindow(List<RelatedGame> relatedGames, String screenshotsPath, String generationMSXURL, Language language, boolean rightToLeft)
+	public RelatedGamesWindow(RelatedGamesPresenter presenter, List<RelatedGame> relatedGames, String screenshotsPath, String generationMSXURL,
+			Language language, boolean rightToLeft)
 	{
+		this.presenter = presenter;
 		this.relatedGames = relatedGames;
 		this.screenshotsPath = screenshotsPath;
 		this.generationMSXURL = generationMSXURL;
@@ -92,7 +98,6 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	public void displayScreen()
 	{
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(messages.get("FIND_RELATED"));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 		setUndecorated(true);
@@ -121,29 +126,40 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 		for(RelatedGame relatedGame: relatedGames)
 		{
 			JPanel rowPanel = new JPanel();
-			rowPanel.setLayout(new FlowLayout());
+			rowPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
 			JLabel screenshotLabel = new JLabel(getScreenshot(relatedGame.getMSXGenId()));
 			rowPanel.add(screenshotLabel);
 
+			JPanel namePanel = new JPanel(DATA_LAYOUT);
 			JLabel nameLabel = new JLabel(relatedGame.getGameName());
-			nameLabel.setPreferredSize(LABEL_SIZE);
-
 			nameLabel.setFont(NAME_FONT);
+			namePanel.add(nameLabel);
 
+			JPanel infoPanel =  new JPanel(DATA_LAYOUT);
 			JLabel infoLabel = new JLabel(relatedGame.getCompany() + " " + relatedGame.getYear());
 			infoLabel.setFont(INFO_FONT);
+			infoPanel.add(infoLabel);
 
-			JPanel textPanel = new JPanel();
-			textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-			textPanel.add(nameLabel);
-			textPanel.add(infoLabel);
+			JPanel dataPanel = new JPanel();
+			dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
+			dataPanel.add(namePanel);
+			dataPanel.add(infoPanel);
+			JPanel iconsPanel = new JPanel(DATA_LAYOUT);
 			if(relatedGame.getMSXGenId() > 0 && relatedGame.getMSXGenId() < 10000)
 			{
-				textPanel.add(HyperLink.size(9).address(generationMSXURL + relatedGame.getMSXGenId()).label("MSX Generation").build());
+				JPanel msxGenerationPanel = new JPanel();
+				msxGenerationPanel.setBackground(MSX_GENERATION_BACKGROUND_COLOR);
+				msxGenerationPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
+				msxGenerationPanel.add(HyperLink.address(generationMSXURL + relatedGame.getMSXGenId()).label("MSX Generation")
+						.linkColor(Color.WHITE).noUnderline().bold().size(10).build());
+				iconsPanel.add(msxGenerationPanel);
+				iconsPanel.add(Box.createHorizontalStrut(5));
 			}
+			iconsPanel.add(HyperLink.address(presenter.getYouTubeURL(relatedGame.getGameName())).icon(Icons.YOUTUBE.getImageIcon()).build());
+			dataPanel.add(iconsPanel);
 
-			rowPanel.add(textPanel);
+			rowPanel.add(dataPanel);
 
 			table.add(rowPanel);
 		}

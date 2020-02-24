@@ -32,7 +32,8 @@ import com.google.inject.util.Providers;
  */
 public class AppModule extends AbstractModule
 {
-	private final static String GENERATION_MSX_URL = "http://www.generation-msx.nl/msxdb/softwareinfo/";
+	private static final String GENERATION_MSX_URL = "http://www.generation-msx.nl/msxdb/softwareinfo/";
+	private static final String YOUTUBE_URL = "https://www.youtube.com/results?search_query=MSX";
 
 	@Override
 	protected void configure()
@@ -42,6 +43,7 @@ public class AppModule extends AbstractModule
 		bind( String.class ).annotatedWith( Names.named( "JarFilesDirectory" ) ).toInstance( getJarFilesDirectory() );
 		bind( String.class ).annotatedWith( Names.named( "GenerationMSXURL" ) ).toInstance( GENERATION_MSX_URL );
 		bind( String.class ).annotatedWith( Names.named( "BaseDirectory" ) ).toProvider( Providers.<String>of( null ) );
+		bind( String.class ).annotatedWith( Names.named( "YouTubeURL" ) ).toInstance( YOUTUBE_URL );
 	}
 
 	private String getUserDataDirectory()

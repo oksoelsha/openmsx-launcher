@@ -119,5 +119,6 @@
 		<module>../updater</module>
 		<module>../patch</module>
 		<module>../feed</module>
+		<module>../related</module>
 	</modules>
 </project>

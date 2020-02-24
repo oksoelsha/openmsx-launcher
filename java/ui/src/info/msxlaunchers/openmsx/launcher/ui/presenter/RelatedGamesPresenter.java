@@ -42,4 +42,11 @@ public interface RelatedGamesPresenter
 	void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
 			throws LauncherException;
 
+	/**
+	 * Return full YouTune URL with search parameter for the given game name
+	 * 
+	 * @param gameName Game name to search for
+	 * @return Full YouTube URL that includes search parameter
+	 */
+	String getYouTubeURL( String gameName );
 }

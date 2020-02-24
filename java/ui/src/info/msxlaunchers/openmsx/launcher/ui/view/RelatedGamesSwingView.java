@@ -22,6 +22,7 @@ import com.google.inject.name.Named;
 
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.RelatedGamesWindow;
 
 /**
@@ -33,11 +34,13 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.RelatedGamesWindow;
  */
 final class RelatedGamesSwingView implements RelatedGamesView
 {
+	private final RelatedGamesPresenter presenter;
 	private final String generationMSXURL;
 
 	@Inject
-	public RelatedGamesSwingView( @Named("GenerationMSXURL") String generationMSXURL )
+	public RelatedGamesSwingView( RelatedGamesPresenter presenter, @Named("GenerationMSXURL") String generationMSXURL )
 	{
+		this.presenter = presenter;
 		this.generationMSXURL = generationMSXURL;
 	}
 
@@ -47,7 +50,7 @@ final class RelatedGamesSwingView implements RelatedGamesView
 	@Override
 	public void displayRelatedGamesScreen( List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft )
 	{
-		RelatedGamesWindow window = new RelatedGamesWindow( relatedGames, screenshotsPath, generationMSXURL, language, rightToLeft );
+		RelatedGamesWindow window = new RelatedGamesWindow( presenter, relatedGames, screenshotsPath, generationMSXURL, language, rightToLeft );
 
 		window.displayScreen();
 	}

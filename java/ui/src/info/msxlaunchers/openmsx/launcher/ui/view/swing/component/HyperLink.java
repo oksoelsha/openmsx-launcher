@@ -23,6 +23,7 @@ import java.awt.font.TextAttribute;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import info.msxlaunchers.openmsx.common.Utils;
@@ -51,6 +52,7 @@ public class HyperLink extends JLabel
 		private boolean noUnderline;
 		private boolean bold;
 		private int size;
+		private ImageIcon icon;
 
 		public HyperLinkParam label(String label) { this.label = label; return this; }
 		public HyperLinkParam address(String address) { this.address = address; return this; }
@@ -58,6 +60,7 @@ public class HyperLink extends JLabel
 		public HyperLinkParam noUnderline() { this.noUnderline = true; return this; }
 		public HyperLinkParam bold() { this.bold = true; return this; }
 		public HyperLinkParam size(int size) { this.size = size; return this; }
+		public HyperLinkParam icon(ImageIcon icon) { this.icon = icon; return this; }
 
 		public HyperLink build()
 		{
@@ -71,6 +74,7 @@ public class HyperLink extends JLabel
 	public static HyperLinkParam noUnderline() { return new HyperLinkParam().noUnderline(); }
 	public static HyperLinkParam bold() { return new HyperLinkParam().noUnderline(); }
 	public static HyperLinkParam size(int size) { return new HyperLinkParam().size(size); }
+	public static HyperLinkParam icon(ImageIcon icon) { return new HyperLinkParam().icon(icon); }
 
 	@SuppressWarnings("unchecked")
 	private HyperLink(HyperLinkParam param)
@@ -99,6 +103,11 @@ public class HyperLink extends JLabel
 		{
 			attributes.put(TextAttribute.SIZE, param.size);
 			setFont(getFont().deriveFont(attributes));
+		}
+
+		if(param.icon != null)
+		{
+			setIcon(param.icon);
 		}
 
 		addMouseListener(new MouseListener() {

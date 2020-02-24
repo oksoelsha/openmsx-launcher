@@ -18,9 +18,9 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
@@ -41,16 +41,17 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 {
 	private final RelatedGamesFactory relatedGamesFactory;
 	private final RelatedGamesView view;
-	private final MainPresenter mainPresenter;
 	private final String scrrenshotsPath;
+	private final String youtubeURL;
 
 	@Inject
-	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, MainPresenter mainPresenter, SettingsPersister settingsPersister ) throws IOException
+	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, SettingsPersister settingsPersister,
+			@Named("YouTubeURL") String youtubeURL ) throws IOException
 	{
 		this.relatedGamesFactory = relatedGamesFactory;
 		this.view = view;
-		this.mainPresenter = Objects.requireNonNull( mainPresenter );
 		this.scrrenshotsPath = settingsPersister.getSettings().getScreenshotsFullPath();
+		this.youtubeURL = youtubeURL;
 	}
 
 	@Override
@@ -61,4 +62,11 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 
 		view.displayRelatedGamesScreen( relatedGames, scrrenshotsPath, currentLanguage, currentRightToLeft );
 	}
+
+	@Override
+	public String getYouTubeURL( String gameName )
+	{
+		return youtubeURL + "+" + gameName.replace( " ", "+" ).replaceAll( "\\&", "%26" );
+	}
+
 }
