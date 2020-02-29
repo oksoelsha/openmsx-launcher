@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.FileUtils;
 import info.msxlaunchers.openmsx.game.repository.RepositoryData;
@@ -89,5 +90,23 @@ final class GamePropertiesPresenterImpl implements GamePropertiesPresenter
 		}
 
 		view.displayGamePropertiesScreen( game, repositoryGame, knownDumps, fileGroup, currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter#isMSXGenerationIdValid(info.msxlaunchers.openmsx.launcher.data.game.Game)
+	 */
+	@Override
+	public boolean isMSXGenerationIdValid( Game game )
+	{
+		return ExternalLinksUtils.isMSXGenerationIdValid( game.getMsxGenID() );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter#getMSXGenerationURL(info.msxlaunchers.openmsx.launcher.data.game.Game)
+	 */
+	@Override
+	public String getMSXGenerationURL( Game game )
+	{
+		return ExternalLinksUtils.getMSXGenerationURL( game.getMsxGenID() );
 	}
 }

@@ -114,10 +114,8 @@ public class XMLRepositoryDataTest
 		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2 ).collect( Collectors.toSet() );
 
 		File xmlFile1 = new File( "file1" );
-		File xmlFile2 = new File( "file2" );
 
 		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
-		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
 
 		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
 

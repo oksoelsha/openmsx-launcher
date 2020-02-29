@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
+import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
@@ -42,16 +42,14 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 	private final RelatedGamesFactory relatedGamesFactory;
 	private final RelatedGamesView view;
 	private final String scrrenshotsPath;
-	private final String youtubeURL;
 
 	@Inject
-	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, SettingsPersister settingsPersister,
-			@Named("YouTubeURL") String youtubeURL ) throws IOException
+	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, SettingsPersister settingsPersister )
+			throws IOException
 	{
 		this.relatedGamesFactory = relatedGamesFactory;
 		this.view = view;
 		this.scrrenshotsPath = settingsPersister.getSettings().getScreenshotsFullPath();
-		this.youtubeURL = youtubeURL;
 	}
 
 	/* (non-Javadoc)
@@ -66,10 +64,30 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 		view.displayRelatedGamesScreen( game.getName(), relatedGames, scrrenshotsPath, currentLanguage, currentRightToLeft );
 	}
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#isMSXGenerationIdValid(info.msxlaunchers.openmsx.launcher.data.game.RelatedGame)
+	 */
+	@Override
+	public boolean isMSXGenerationIdValid( RelatedGame relatedGame )
+	{
+		return ExternalLinksUtils.isMSXGenerationIdValid( relatedGame.getMSXGenId() );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#getMSXGenerationURL(info.msxlaunchers.openmsx.launcher.data.game.RelatedGame)
+	 */
+	@Override
+	public String getMSXGenerationURL( RelatedGame relatedGame )
+	{
+		return ExternalLinksUtils.getMSXGenerationURL( relatedGame.getMSXGenId() );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#getYouTubeURL(java.lang.String)
+	 */
 	@Override
 	public String getYouTubeURL( String gameName )
 	{
-		return youtubeURL + "+" + gameName.replace( " ", "+" ).replaceAll( "\\&", "%26" );
+		return ExternalLinksUtils.getYouTubeSearchURL( gameName );
 	}
-
 }

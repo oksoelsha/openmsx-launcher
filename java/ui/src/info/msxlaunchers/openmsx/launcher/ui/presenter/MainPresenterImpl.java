@@ -37,6 +37,7 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
+import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.common.version.VersionUtils;
@@ -1209,7 +1210,7 @@ final class MainPresenterImpl implements MainPresenter
 
 		try
 		{
-			Utils.startBrowser( uri );
+			ExternalLinksUtils.startBrowser( uri );
 		}
 		catch( IOException ioe )
 		{

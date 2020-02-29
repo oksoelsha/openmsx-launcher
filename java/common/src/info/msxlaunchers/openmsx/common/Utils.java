@@ -15,17 +15,11 @@
  */
 package info.msxlaunchers.openmsx.common;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-
-import info.msxlaunchers.openmsx.common.version.Application;
 
 /**
  * Utility class that contains general purpose methods
@@ -76,7 +70,7 @@ public final class Utils
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns a String object representing the given integer value
 	 * 
@@ -181,69 +175,5 @@ public final class Utils
 		sortedSet.addAll( set );
 
 		return sortedSet;
-	}
-
-	/**
-	 * Returns the OS-specific directory full name where the launcher will save some of its data
-	 * 
-	 */
-	public static String getUserDataDirectory()
-	{
-		String userDataDirectory = null;
-
-		if( OSUtils.isWindows() )
-		{
-			userDataDirectory = System.getProperty( "user.dir" );
-		}
-		else if( OSUtils.isMac() )
-		{
-			userDataDirectory = System.getProperty( "user.home" ) + "/Library/Application Support/" + Application.APP_NAME;
-		}
-		else if( OSUtils.isLinux() || OSUtils.isBSD() )
-		{
-			userDataDirectory = System.getProperty( "user.home" ) + "/" + Application.APP_NAME;
-		}
-
-		return userDataDirectory;
-	}
-
-	/**
-	 * Starts default browser pointing to given address or host name
-	 * 
-	 * @param address Address or host name as String
-	 * @throws IOException if the user default browser is not found, or it fails to be launched, or the default handler application failed to be launched. The given address must be valid
-	 */
-	public static void startBrowser( URI uri ) throws IOException
-	{
-		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-	    if( desktop != null && desktop.isSupported( Desktop.Action.OPEN ) )
-	    {
-			desktop.browse( uri );
-	    }
-	    else
-	    {
-	    	//the following link:
-	    	// http://stackoverflow.com/questions/8258153/how-to-get-desktop-class-supported-under-linux
-	    	//explains why code might get here on Linux
-	    }		
-	}
-
-	/**
-	 * Starts default browser pointing to given address or host name
-	 * 
-	 * @param address Address or host name as String
-	 * @throws IOException if the user default browser is not found, or it fails to be launched, or the default handler application failed to be launched. The given address must be valid
-	 */
-	public static void startBrowser( String address ) throws IOException
-	{
-		try
-		{
-			URI uri = new URI( address );
-			startBrowser( uri );
-		}
-		catch( URISyntaxException e )
-		{
-			//this is not supposed to happen but throw an IOException anyway
-		}
 	}
 }

@@ -23,7 +23,7 @@ import java.util.Objects;
 
 import com.google.inject.Inject;
 
-import info.msxlaunchers.openmsx.common.Utils;
+import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
 import info.msxlaunchers.openmsx.common.version.Application;
 import info.msxlaunchers.openmsx.common.version.VersionUtils;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
@@ -253,7 +253,7 @@ final class UpdateCheckerPresenterImpl implements UpdateCheckerPresenter
 	{
 		try
 		{
-			Utils.startBrowser( DOWNLOAD_URL );
+			ExternalLinksUtils.startBrowser( DOWNLOAD_URL );
 		}
 		catch( IOException ioe )
 		{

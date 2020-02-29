@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 import java.util.Map;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 
@@ -41,6 +42,22 @@ public interface RelatedGamesPresenter
 	 */
 	void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
 			throws LauncherException;
+
+	/**
+	 * Returns whether given related game has a valid (or existing) MSX Generation id
+	 * 
+	 * @param relatedGame Related game to get MSX Generation id from
+	 * @return True if MSX Generation id is valid, false otherwise
+	 */
+	boolean isMSXGenerationIdValid( RelatedGame relatedGame );
+
+	/**
+	 * Returns full MSX Generation id URL for the given game
+	 * 
+	 * @param relatedGame Related game to get MSX Generation URL for
+	 * @return Full MSX Generation URL
+	 */
+	String getMSXGenerationURL( RelatedGame relatedGame );
 
 	/**
 	 * Return full YouTune URL with search parameter for the given game name

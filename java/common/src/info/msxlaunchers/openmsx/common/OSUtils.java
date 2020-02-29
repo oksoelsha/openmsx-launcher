@@ -15,6 +15,8 @@
  */
 package info.msxlaunchers.openmsx.common;
 
+import info.msxlaunchers.openmsx.common.version.Application;
+
 /**
  * Utility class that contains methods to determine the OS where the JRE is running
  * 
@@ -24,7 +26,7 @@ package info.msxlaunchers.openmsx.common;
  */
 public final class OSUtils
 {
-	private final static String OS = System.getProperty( "os.name" );
+	private static final String OS = System.getProperty( "os.name" );
 
 	/**
 	 * Returns if the current OS is Windows
@@ -74,5 +76,30 @@ public final class OSUtils
 	public static boolean isUnixFamily()
 	{
 		return isLinux() || isMac()|| isBSD();
+	}
+
+
+	/**
+	 * Returns the OS-specific directory full name where the launcher will save some of its data
+	 * 
+	 */
+	public static String getUserDataDirectory()
+	{
+		String userDataDirectory = null;
+
+		if( OSUtils.isWindows() )
+		{
+			userDataDirectory = System.getProperty( "user.dir" );
+		}
+		else if( OSUtils.isMac() )
+		{
+			userDataDirectory = System.getProperty( "user.home" ) + "/Library/Application Support/" + Application.APP_NAME;
+		}
+		else if( OSUtils.isLinux() || OSUtils.isBSD() )
+		{
+			userDataDirectory = System.getProperty( "user.home" ) + "/" + Application.APP_NAME;
+		}
+
+		return userDataDirectory;
 	}
 }

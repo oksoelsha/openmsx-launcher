@@ -40,21 +40,9 @@ public class GameBuilderTest
 	public final TemporaryFolder tmpFolder = new TemporaryFolder();
 
 	@Test
-	public void testConstructor()
-	{
-		new GameBuilder( "url" );
-	}
-
-	@Test( expected = NullPointerException.class )
-	public void test_WhenCreatingGameBuilderWithNullArg1_ThenThrowNullPointerException()
-	{
-		new GameBuilder( null );
-	}
-
-	@Test
 	public void test_GivenNullGameFields_WhenCallingCreateGameObjectForDataEnteredByUser_ThenGameShouldBeNull()
 	{
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 
 		Game game = gameBuilder.createGameObjectForDataEnteredByUser( null, null, null, null, null, null, null, null, null, null, null, null, null, false, null, false, null );
 
@@ -64,7 +52,7 @@ public class GameBuilderTest
 	@Test
 	public void test_GivenNullGameFields_WhenCallingCreateGameObjectForImportedData_ThenGameShouldBeNull()
 	{
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 
 		Game game = gameBuilder.createGameObjectForImportedData( null, null, null, null, null, null, null, null, null, null, null );
 
@@ -74,7 +62,7 @@ public class GameBuilderTest
 	@Test
 	public void test_GivenNullGameFields_WhenCallingCreateGameObjectForScannedFiles_ThenGameShouldBeNull()
 	{
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 
 		Game game = gameBuilder.createGameObjectForScannedFiles( null, null, null, null, null, null, null, null, null, 0, null );
 
@@ -84,7 +72,7 @@ public class GameBuilderTest
 	@Test( expected = NullPointerException.class )
 	public void test_GivenNullGameObject_WhenCallingCreateGameObjectFromGameAndUpdateExtraData_ThenThrowNullPointerException()
 	{
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 
 		gameBuilder.createGameObjectFromGameAndUpdateExtraData( null, null );
 	}
@@ -109,7 +97,7 @@ public class GameBuilderTest
 		String name = "name";
 		String info = "info";
 
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, true, null, true, extraDataMap );
 
 		//now check all game fields
@@ -173,7 +161,7 @@ public class GameBuilderTest
 		String name = "name";
 		String info = "info";
 
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 		Game game = gameBuilder.createGameObjectForDataEnteredByUser( name, info, null, tmpZipFile.getAbsolutePath(), null, null, null, null, null, null, null, null, null, false, null, false, extraDataMap );
 
 		//now check all game fields
@@ -216,7 +204,7 @@ public class GameBuilderTest
 	@Test
 	public void test_GivenScriptAndNoExtraData_WhenCallingCreateGameObjectForDataEnteredByUser_ThenGameExtraFieldsShouldNotBeSet()
 	{
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 
 		String name = "name";
 		String info = "info";
@@ -284,7 +272,7 @@ public class GameBuilderTest
 		String info = "info";
 		String machine = "msx2+";
 
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 		Game game = gameBuilder.createGameObjectForImportedData( name, info, machine, tmpFile.getAbsolutePath(), null, null, null, null, null, null, extraDataMap );
 
 		//now check all game fields
@@ -333,7 +321,7 @@ public class GameBuilderTest
 		String machine = "msx2+";
 		String rom = "rom";
 
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 		Game game = gameBuilder.createGameObjectForImportedData( name, info, machine, rom, null, null, null, null, null, null, extraDataMap );
 
 		assertNull( game );
@@ -347,7 +335,7 @@ public class GameBuilderTest
 		Map<String,ExtraData> extraDataMap = new HashMap<String,ExtraData>();
 		extraDataMap.put( "123456", extraData );
 
-		GameBuilder gameBuilder = new GameBuilder( "url/" );
+		GameBuilder gameBuilder = new GameBuilder();
 
 		String name = "name";
 		String machine = "machine";
@@ -364,7 +352,7 @@ public class GameBuilderTest
 
 		assertEquals( name, game.getName() );
 		assertEquals( machine, game.getMachine() );
-		assertEquals( "url/199", game.getInfo() );
+		assertEquals( "http://www.generation-msx.nl/msxdb/softwareinfo/199", game.getInfo() );
 		assertEquals( rom, game.getRomA() );
 		assertNull( game.getRomB() );
 		assertEquals( extensionRom, game.getExtensionRom() );
@@ -416,7 +404,7 @@ public class GameBuilderTest
 		Map<String,ExtraData> extraDataMap = new HashMap<String,ExtraData>();
 		extraDataMap.put( sha1Code, extraData );
 
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 		Game newGame = gameBuilder.createGameObjectFromGameAndUpdateExtraData( game, extraDataMap );
 
 		assertEquals( name, newGame.getName() );
@@ -471,7 +459,7 @@ public class GameBuilderTest
 				.isMSX2( true ).isMSX2Plus( true ).isPCM( true ).isMoonsound( true )
 				.sha1Code( sha1Code ).size( tmpFile.length() ).build();
 
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 		Game newGame = gameBuilder.createGameObjectFromGameAndUpdateExtraData( game, null );
 
 		assertEquals( name, newGame.getName() );
@@ -526,7 +514,7 @@ public class GameBuilderTest
 				.isMSX2( true ).isMSX2Plus( true ).isPCM( true ).isMoonsound( true )
 				.sha1Code( sha1Code ).size( tmpFile.length() ).build();
 
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 		Game newGame = gameBuilder.createGameObjectFromGameAndUpdateExtraData( game, null );
 
 		assertEquals( name, newGame.getName() );
@@ -565,7 +553,7 @@ public class GameBuilderTest
 	@Test
 	public void test_GivenManyGameObjects_WhenCallingIsNotScript_ThenReturnTrueWhenScriptOnly() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException
 	{
-		GameBuilder gameBuilder = new GameBuilder( "url" );
+		GameBuilder gameBuilder = new GameBuilder();
 
 		Method method = GameBuilder.class.getDeclaredMethod( "isNotScript", String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class );
 		method.setAccessible( true );

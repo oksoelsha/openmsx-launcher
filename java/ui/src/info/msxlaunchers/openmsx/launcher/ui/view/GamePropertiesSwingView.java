@@ -18,11 +18,11 @@ package info.msxlaunchers.openmsx.launcher.ui.view;
 import java.util.List;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.GamePropertiesWindow;
 
 /**
@@ -34,12 +34,12 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.GamePropertiesWindow;
  */
 class GamePropertiesSwingView implements GamePropertiesView
 {
-	private final String generationMSXURL;
+	private final GamePropertiesPresenter presenter;
 
 	@Inject
-	public GamePropertiesSwingView( @Named("GenerationMSXURL") String generationMSXURL )
+	public GamePropertiesSwingView( GamePropertiesPresenter presenter )
 	{
-		this.generationMSXURL = generationMSXURL;
+		this.presenter = presenter;
 	}
 
 	/* (non-Javadoc)
@@ -49,8 +49,8 @@ class GamePropertiesSwingView implements GamePropertiesView
 	public void displayGamePropertiesScreen( Game game, RepositoryGame repositoryGame, int knownDumps,
 			List<String> fileGroup, Language language, boolean rightToLeft )
 	{
-		GamePropertiesWindow gamePropertiesWindow = new GamePropertiesWindow( game, repositoryGame, knownDumps, fileGroup,
-				language, rightToLeft, generationMSXURL );
+		GamePropertiesWindow gamePropertiesWindow = new GamePropertiesWindow( presenter, game, repositoryGame, knownDumps, fileGroup,
+				language, rightToLeft );
 
 		gamePropertiesWindow.display();
 	}

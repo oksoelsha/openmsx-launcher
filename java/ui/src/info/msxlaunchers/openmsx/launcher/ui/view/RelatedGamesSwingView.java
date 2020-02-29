@@ -18,7 +18,6 @@ package info.msxlaunchers.openmsx.launcher.ui.view;
 import java.util.List;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
@@ -35,19 +34,17 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.RelatedGamesWindow;
 final class RelatedGamesSwingView implements RelatedGamesView
 {
 	private final RelatedGamesPresenter presenter;
-	private final String generationMSXURL;
 
 	@Inject
-	public RelatedGamesSwingView( RelatedGamesPresenter presenter, @Named("GenerationMSXURL") String generationMSXURL )
+	public RelatedGamesSwingView( RelatedGamesPresenter presenter )
 	{
 		this.presenter = presenter;
-		this.generationMSXURL = generationMSXURL;
 	}
 
 	@Override
 	public void displayRelatedGamesScreen( String gameName, List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft )
 	{
-		RelatedGamesWindow window = new RelatedGamesWindow( presenter, gameName, relatedGames, screenshotsPath, generationMSXURL, language, rightToLeft );
+		RelatedGamesWindow window = new RelatedGamesWindow( presenter, gameName, relatedGames, screenshotsPath, language, rightToLeft );
 
 		window.displayScreen();
 	}

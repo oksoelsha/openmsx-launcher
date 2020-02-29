@@ -26,7 +26,7 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import info.msxlaunchers.openmsx.common.Utils;
+import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
 
 /**
  * @since v1.2
@@ -141,7 +141,7 @@ public class HyperLink extends JLabel
 			{
 				try
 				{
-					Utils.startBrowser(param.address);
+					ExternalLinksUtils.startBrowser(param.address);
 				}
 				catch(IOException ioe)
 				{

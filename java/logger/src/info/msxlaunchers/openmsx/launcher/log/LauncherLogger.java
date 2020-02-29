@@ -26,7 +26,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import info.msxlaunchers.openmsx.common.Utils;
+import info.msxlaunchers.openmsx.common.OSUtils;
 
 /**
  * Logger class 
@@ -36,18 +36,18 @@ import info.msxlaunchers.openmsx.common.Utils;
  */
 public final class LauncherLogger
 {
-	private final static String logDirectory = Utils.getUserDataDirectory();
+	private static final String LOG_DIRECTORY = OSUtils.getUserDataDirectory();
 
-	private final static String MESSAGE_LOGGER_NAME = "MessageLogger";
-	private final static String EXCEPTION_LOGGER_NAME = "ExceptionLogger";
-	public final static String MESSAGE_LOG_FILENAME = "message.log";
-	private final static String EXCEPTION_LOG_FILENAME = "exception.log";
-	private final static int MAX_LOG_SIZE = 1024 * 50;
-	private final static int MAX_LOGS_NUMBER = 2;
-	private final static String LINE_SEPARATOR = System.getProperty( "line.separator" );
+	private static final String MESSAGE_LOGGER_NAME = "MessageLogger";
+	private static final String EXCEPTION_LOGGER_NAME = "ExceptionLogger";
+	public static final String MESSAGE_LOG_FILENAME = "message.log";
+	private static final String EXCEPTION_LOG_FILENAME = "exception.log";
+	private static final int MAX_LOG_SIZE = 1024 * 50;
+	private static final int MAX_LOGS_NUMBER = 2;
+	private static final String LINE_SEPARATOR = System.getProperty( "line.separator" );
 
-	private final static Logger messageLogger = Logger.getLogger( MESSAGE_LOGGER_NAME );
-	private final static Logger exceptionLogger = Logger.getLogger( EXCEPTION_LOGGER_NAME );
+	private static final Logger messageLogger = Logger.getLogger( MESSAGE_LOGGER_NAME );
+	private static final Logger exceptionLogger = Logger.getLogger( EXCEPTION_LOGGER_NAME );
 
 	static
 	{
@@ -56,9 +56,9 @@ public final class LauncherLogger
 
 		try
 		{
-			messageHandler = new FileHandler( new File( logDirectory, MESSAGE_LOG_FILENAME ).toString(), MAX_LOG_SIZE, MAX_LOGS_NUMBER, true );
+			messageHandler = new FileHandler( new File( LOG_DIRECTORY, MESSAGE_LOG_FILENAME ).toString(), MAX_LOG_SIZE, MAX_LOGS_NUMBER, true );
 			messageHandler.setEncoding( "UTF-8" );
-			exceptionHandler = new FileHandler( new File( logDirectory, EXCEPTION_LOG_FILENAME ).toString(), MAX_LOG_SIZE, MAX_LOGS_NUMBER, true );
+			exceptionHandler = new FileHandler( new File( LOG_DIRECTORY, EXCEPTION_LOG_FILENAME ).toString(), MAX_LOG_SIZE, MAX_LOGS_NUMBER, true );
 			exceptionHandler.setEncoding( "UTF-8" );
 		}
 		catch( SecurityException | IOException ex )

@@ -35,4 +35,20 @@ public interface GamePropertiesPresenter
 	 * @param currentRightToLeft Orientation of the current language
 	 */
 	void onRequestGamePropertiesScreen( Game game, Language currentLanguage, boolean currentRightToLeft );
+
+	/**
+	 * Returns whether given game has a valid (or existing) MSX Generation id
+	 * 
+	 * @param game Game to get MSX Generation id from
+	 * @return True if MSX Generation id is valid, false otherwise
+	 */
+	boolean isMSXGenerationIdValid( Game game );
+
+	/**
+	 * Returns full MSX Generation id URL for the given game
+	 * 
+	 * @param game Game to get MSX Generation URL for
+	 * @return Full MSX Generation URL
+	 */
+	String getMSXGenerationURL( Game game );
 }

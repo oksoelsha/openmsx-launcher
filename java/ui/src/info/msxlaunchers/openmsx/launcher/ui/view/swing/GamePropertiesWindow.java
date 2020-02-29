@@ -24,6 +24,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.Medium;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Sound;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
@@ -64,6 +65,7 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class GamePropertiesWindow extends JDialog implements ActionListener
 {
+	private final GamePropertiesPresenter presenter;
 	private final Game game;
 	private final RepositoryGame repositoryGame;
 	private final int knownDumps;
@@ -71,7 +73,6 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final Component mainWindow;
-	private final String generationMSXURL;
 
 	private JPanel tablePane = null;
 	private GridBagLayout tableLayout = null;
@@ -81,7 +82,6 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 	private JButton okButton;
 
 	private static final String SEPARATOR = ", ";
-	private static final int MSX_GEN_NON_EXISTING_CODES_START = 10000;
 
 	private static final Map<String,String> countryFlag = new HashMap<>();
 	static
@@ -117,14 +117,15 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		generationImage.put(MSXGeneration.TURBO_R.getDisplayName(), "GENERATION_TURBO_R_LARGE");
 	}
 
-	public GamePropertiesWindow(Game game,
+	public GamePropertiesWindow(GamePropertiesPresenter presenter,
+								Game game,
 								RepositoryGame repositoryGame,
 								int knownDumps,
 								List<String> fileGroup,
 								Language language,
-								boolean rightToLeft,
-								String generationMSXURL)
+								boolean rightToLeft)
 	{
+		this.presenter = presenter;
 		this.game = game;
 		this.fileGroup = fileGroup;
 		this.repositoryGame = repositoryGame;
@@ -132,7 +133,6 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		this.rightToLeft = rightToLeft;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
-		this.generationMSXURL = generationMSXURL;
 	}
 
 	public void display()
@@ -205,9 +205,9 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 
         addPropertyToDisplay(messages.get("SOUND"), getSound(game));
         addPropertyToDisplay(messages.get("GENRE"), getGenre(game));
-        if(game.getMsxGenID() > 0 && game.getMsxGenID() < MSX_GEN_NON_EXISTING_CODES_START)
+        if(presenter.isMSXGenerationIdValid(game))
         {
-            addLinkToDisplay("Generation-MSX ID", Utils.getString(game.getMsxGenID()), generationMSXURL + game.getMsxGenID(), true);
+            addLinkToDisplay("Generation-MSX ID", Utils.getString(game.getMsxGenID()), presenter.getMSXGenerationURL(game), true);
         }
 
 		JPanel buttonsPane = new JPanel();

@@ -63,7 +63,6 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private final String gameName;
 	private final List<RelatedGame> relatedGames;
 	private final String screenshotsPath;
-	private final String generationMSXURL;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final Component mainWindow;
@@ -82,13 +81,12 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private static final Color MSX_GENERATION_BACKGROUND_COLOR = new Color(90, 90, 220);
 
 	public RelatedGamesWindow(RelatedGamesPresenter presenter, String gameName, List<RelatedGame> relatedGames, String screenshotsPath,
-			String generationMSXURL, Language language, boolean rightToLeft)
+			Language language, boolean rightToLeft)
 	{
 		this.presenter = presenter;
 		this.gameName = gameName;
 		this.relatedGames = relatedGames;
 		this.screenshotsPath = screenshotsPath;
-		this.generationMSXURL = generationMSXURL;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
 		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
@@ -161,12 +159,12 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 			dataPanel.add(namePanel);
 			dataPanel.add(infoPanel);
 			JPanel iconsPanel = new JPanel(DATA_LAYOUT);
-			if(relatedGame.getMSXGenId() > 0 && relatedGame.getMSXGenId() < 10000)
+			if(presenter.isMSXGenerationIdValid(relatedGame))
 			{
 				JPanel msxGenerationPanel = new JPanel();
 				msxGenerationPanel.setBackground(MSX_GENERATION_BACKGROUND_COLOR);
 				msxGenerationPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
-				msxGenerationPanel.add(HyperLink.address(generationMSXURL + relatedGame.getMSXGenId()).label("MSX Generation")
+				msxGenerationPanel.add(HyperLink.address(presenter.getMSXGenerationURL(relatedGame)).label("MSX Generation")
 						.linkColor(Color.WHITE).noUnderline().bold().size(10).build());
 				iconsPanel.add(msxGenerationPanel);
 				iconsPanel.add(Box.createHorizontalStrut(5));

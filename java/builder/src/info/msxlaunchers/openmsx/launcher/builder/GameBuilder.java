@@ -25,9 +25,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
+import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.common.HashUtils;
 import info.msxlaunchers.openmsx.common.Utils;
@@ -46,14 +44,6 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
  */
 public class GameBuilder
 {
-	private final String generationMSXURL;
-
-	@Inject
-	GameBuilder( @Named("GenerationMSXURL") String generationMSXURL )
-	{
-		this.generationMSXURL = Objects.requireNonNull( generationMSXURL );
-	}
-
 	/*
 	 * Create and return a Game object given data entered by the user (e.g. in the Add/Edit screen)
 	 * 
@@ -307,7 +297,7 @@ public class GameBuilder
 			msxGenID = extraData.getMSXGenerationsID();
 			if( useGenenerationMSXURLAsInfo )
 			{
-				infoField = generationMSXURL + msxGenID;
+				infoField = ExternalLinksUtils.getMSXGenerationURL( msxGenID );
 			}
 			isMSX = extraData.isMSX();
 			isMSX2 = extraData.isMSX2();

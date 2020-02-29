@@ -19,7 +19,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import info.msxlaunchers.openmsx.common.OSUtils;
-import info.msxlaunchers.openmsx.common.Utils;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
@@ -32,23 +31,18 @@ import com.google.inject.util.Providers;
  */
 public class AppModule extends AbstractModule
 {
-	private static final String GENERATION_MSX_URL = "http://www.generation-msx.nl/msxdb/softwareinfo/";
-	private static final String YOUTUBE_URL = "https://www.youtube.com/results?search_query=MSX";
-
 	@Override
 	protected void configure()
 	{
 		bind( String.class ).annotatedWith( Names.named( "UserDataDirectory" ) ).toInstance( getUserDataDirectory() );
 		bind( String.class ).annotatedWith( Names.named( "LauncherDataDirectory" ) ).toInstance( getLauncherDataDirectory() );
 		bind( String.class ).annotatedWith( Names.named( "JarFilesDirectory" ) ).toInstance( getJarFilesDirectory() );
-		bind( String.class ).annotatedWith( Names.named( "GenerationMSXURL" ) ).toInstance( GENERATION_MSX_URL );
 		bind( String.class ).annotatedWith( Names.named( "BaseDirectory" ) ).toProvider( Providers.<String>of( null ) );
-		bind( String.class ).annotatedWith( Names.named( "YouTubeURL" ) ).toInstance( YOUTUBE_URL );
 	}
 
 	private String getUserDataDirectory()
 	{
-		String userDataDirectory = Utils.getUserDataDirectory();
+		String userDataDirectory = OSUtils.getUserDataDirectory();
 
 		//before anything, make sure user data directories exist
 		createUserDataDirectoryIfNecessary( userDataDirectory );
