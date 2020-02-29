@@ -35,11 +35,19 @@ import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
 
+/**
+ * 
+ * Implementation of the interface <code>RelatedGames</code> that returns a maximum of 15 games related to the given name
+ * based on name, company and genre.
+ * 
+ * @since v1.13
+ * @author Sam Elsharif
+ */
 class RelatedGamesImpl implements RelatedGames
 {
-	private static final int NAME_MATCH_1_SCORE = 3;
 	private static final int NAME_MATCH_ONE_WORD_GAME_SCORE = 5;
-	private static final int NAME_MATCH_MORE_SCORE = 5;
+	private static final int NAME_MATCH_ONE_IN_MANY_WORDS_SCORE = 3;
+	private static final int NAME_MATCH_TWO_OR_MORE_IN_MANY_WORDS_SCORE = 5;
 	private static final int GENRE_MATCH_SCORE = 4;
 	private static final int COMPANY_MATCH_SCORE = 2;
 	private static final int MAX_SIZE_RESULTS = 15;
@@ -76,6 +84,9 @@ class RelatedGamesImpl implements RelatedGames
 		this.repositoryInfoMap = repositoryInfoMap;
 	}
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.related.RelatedGames#findRelated(info.msxlaunchers.openmsx.launcher.data.game.Game)
+	 */
 	@Override
 	public List<RelatedGame> findRelated( Game game )
 	{
@@ -139,7 +150,7 @@ class RelatedGamesImpl implements RelatedGames
 							else
 							{
 								matches++;
-								score += (matches == 1) ? NAME_MATCH_1_SCORE : NAME_MATCH_MORE_SCORE;
+								score += (matches == 1) ? NAME_MATCH_ONE_IN_MANY_WORDS_SCORE : NAME_MATCH_TWO_OR_MORE_IN_MANY_WORDS_SCORE;
 							}
 						}
 					}
@@ -179,7 +190,6 @@ class RelatedGamesImpl implements RelatedGames
 		//order by score and get top 15
 		return similarGames.stream()
 				.sorted( Comparator.comparingInt( SimilarGame::getScore ).reversed() )
-				.filter( s -> s.score > 0 )
 				.map( g -> g.relatedGame )
 				.limit( MAX_SIZE_RESULTS )
 				.collect( Collectors.toList() );

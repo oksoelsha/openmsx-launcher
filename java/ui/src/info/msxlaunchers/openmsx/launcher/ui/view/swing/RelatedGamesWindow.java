@@ -60,6 +60,7 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplay
 public class RelatedGamesWindow extends JDialog implements ActionListener
 {
 	private final RelatedGamesPresenter presenter;
+	private final String gameName;
 	private final List<RelatedGame> relatedGames;
 	private final String screenshotsPath;
 	private final String generationMSXURL;
@@ -80,10 +81,11 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private static final FlowLayout DATA_LAYOUT = new FlowLayout(FlowLayout.LEADING, 0, 1);
 	private static final Color MSX_GENERATION_BACKGROUND_COLOR = new Color(90, 90, 220);
 
-	public RelatedGamesWindow(RelatedGamesPresenter presenter, List<RelatedGame> relatedGames, String screenshotsPath, String generationMSXURL,
-			Language language, boolean rightToLeft)
+	public RelatedGamesWindow(RelatedGamesPresenter presenter, String gameName, List<RelatedGame> relatedGames, String screenshotsPath,
+			String generationMSXURL, Language language, boolean rightToLeft)
 	{
 		this.presenter = presenter;
+		this.gameName = gameName;
 		this.relatedGames = relatedGames;
 		this.screenshotsPath = screenshotsPath;
 		this.generationMSXURL = generationMSXURL;
@@ -108,18 +110,31 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 
 		contentPane.setLayout(new BorderLayout());
 
-		closeButton.setPreferredSize(CLOSE_BUTTON_SIZE);
+		JPanel topPanel = new JPanel(new BorderLayout());
+		JPanel titlePanel = new JPanel();
 		JPanel closeButtonPanel = new JPanel();
+
+		titlePanel.add(new JLabel(messages.get("RELATED_TO") + ": " + gameName));
+		closeButton.setPreferredSize(CLOSE_BUTTON_SIZE);
+		closeButtonPanel.add(titlePanel);
+		closeButtonPanel.add(closeButton);
+
 		if(rightToLeft)
 		{
-			closeButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			closeButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			topPanel.add(titlePanel, BorderLayout.EAST);
+			topPanel.add(closeButtonPanel, BorderLayout.WEST);
 		}
 		else
 		{
-			closeButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			titlePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			closeButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			topPanel.add(titlePanel, BorderLayout.WEST);
+			topPanel.add(closeButtonPanel, BorderLayout.EAST);
 		}
-		closeButtonPanel.add(closeButton);
-		contentPane.add(closeButtonPanel, BorderLayout.NORTH);
+
+		contentPane.add(topPanel, BorderLayout.NORTH);
 
 		JPanel table = new JPanel();
 		table.setLayout(new BoxLayout(table, BoxLayout.Y_AXIS));

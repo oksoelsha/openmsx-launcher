@@ -21,7 +21,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 
 /**
- * Interface for finding related games to the given one
+ * Interface for finding games related to the given one
  * 
  * @author Sam Elsharif
  * @since v1.13
@@ -32,7 +32,7 @@ public interface RelatedGames
 	 * Find related games to the given game
 	 * 
 	 * @param game Game
-	 * @return List of size 15 of related games to given one sorted by "closeness"
+	 * @return List of related games to given one sorted by "proximity". List size is to be determined by implementation
 	 */
 	List<RelatedGame> findRelated( Game game );
 }

@@ -44,13 +44,10 @@ final class RelatedGamesSwingView implements RelatedGamesView
 		this.generationMSXURL = generationMSXURL;
 	}
 
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.RelatedGamesView#displayRelatedGamesScreen(java.util.List, java.lang.String, info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, boolean)
-	 */
 	@Override
-	public void displayRelatedGamesScreen( List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft )
+	public void displayRelatedGamesScreen( String gameName, List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft )
 	{
-		RelatedGamesWindow window = new RelatedGamesWindow( presenter, relatedGames, screenshotsPath, generationMSXURL, language, rightToLeft );
+		RelatedGamesWindow window = new RelatedGamesWindow( presenter, gameName, relatedGames, screenshotsPath, generationMSXURL, language, rightToLeft );
 
 		window.displayScreen();
 	}

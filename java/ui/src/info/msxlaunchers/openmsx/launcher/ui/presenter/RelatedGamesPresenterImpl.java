@@ -54,13 +54,16 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 		this.youtubeURL = youtubeURL;
 	}
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#onRequestRelatedGamesScreen(info.msxlaunchers.openmsx.launcher.data.game.Game, java.util.Map, info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, boolean)
+	 */
 	@Override
 	public void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
 			throws LauncherException
 	{
 		List<RelatedGame> relatedGames = relatedGamesFactory.create( repositoryInfoMap ).findRelated( game );
 
-		view.displayRelatedGamesScreen( relatedGames, scrrenshotsPath, currentLanguage, currentRightToLeft );
+		view.displayRelatedGamesScreen( game.getName(), relatedGames, scrrenshotsPath, currentLanguage, currentRightToLeft );
 	}
 
 	@Override
