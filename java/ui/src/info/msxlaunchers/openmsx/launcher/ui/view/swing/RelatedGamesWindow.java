@@ -17,7 +17,6 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -36,6 +35,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -65,7 +65,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private final String screenshotsPath;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
-	private final Component mainWindow;
+	private final JFrame mainWindow;
 	private final ImageIcon noScreenshot;
 
 	private JComponent closeButton;
@@ -136,54 +136,65 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 
 		JPanel table = new JPanel();
 		table.setLayout(new BoxLayout(table, BoxLayout.Y_AXIS));
-		for(RelatedGame relatedGame: relatedGames)
+
+		if(!relatedGames.isEmpty())
 		{
-			JPanel rowPanel = new JPanel();
-			rowPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-
-			JLabel screenshotLabel = new JLabel(getScreenshot(relatedGame.getMSXGenId()));
-			rowPanel.add(screenshotLabel);
-
-			JPanel namePanel = new JPanel(DATA_LAYOUT);
-			JLabel nameLabel = new JLabel(relatedGame.getGameName());
-			nameLabel.setFont(NAME_FONT);
-			namePanel.add(nameLabel);
-
-			JPanel infoPanel =  new JPanel(DATA_LAYOUT);
-			JLabel infoLabel = new JLabel(relatedGame.getCompany() + " " + relatedGame.getYear());
-			infoLabel.setFont(INFO_FONT);
-			infoPanel.add(infoLabel);
-
-			JPanel dataPanel = new JPanel();
-			dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
-			dataPanel.add(namePanel);
-			dataPanel.add(infoPanel);
-			JPanel iconsPanel = new JPanel(DATA_LAYOUT);
-			if(presenter.isMSXGenerationIdValid(relatedGame))
+			for(RelatedGame relatedGame: relatedGames)
 			{
-				JPanel msxGenerationPanel = new JPanel();
-				msxGenerationPanel.setBackground(MSX_GENERATION_BACKGROUND_COLOR);
-				msxGenerationPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
-				msxGenerationPanel.add(HyperLink.address(presenter.getMSXGenerationURL(relatedGame)).label("MSX Generation")
-						.linkColor(Color.WHITE).noUnderline().bold().size(10).build());
-				iconsPanel.add(msxGenerationPanel);
-				iconsPanel.add(Box.createHorizontalStrut(5));
+				JPanel rowPanel = new JPanel();
+				rowPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+
+				JLabel screenshotLabel = new JLabel(getScreenshot(relatedGame.getMSXGenId()));
+				rowPanel.add(screenshotLabel);
+
+				JPanel namePanel = new JPanel(DATA_LAYOUT);
+				JLabel nameLabel = new JLabel(relatedGame.getGameName());
+				nameLabel.setFont(NAME_FONT);
+				namePanel.add(nameLabel);
+
+				JPanel infoPanel =  new JPanel(DATA_LAYOUT);
+				JLabel infoLabel = new JLabel(relatedGame.getCompany() + " " + relatedGame.getYear());
+				infoLabel.setFont(INFO_FONT);
+				infoPanel.add(infoLabel);
+
+				JPanel dataPanel = new JPanel();
+				dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
+				dataPanel.add(namePanel);
+				dataPanel.add(infoPanel);
+				JPanel iconsPanel = new JPanel(DATA_LAYOUT);
+				if(presenter.isMSXGenerationIdValid(relatedGame))
+				{
+					JPanel msxGenerationPanel = new JPanel();
+					msxGenerationPanel.setBackground(MSX_GENERATION_BACKGROUND_COLOR);
+					msxGenerationPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
+					msxGenerationPanel.add(HyperLink.address(presenter.getMSXGenerationURL(relatedGame)).label("MSX Generation")
+							.linkColor(Color.WHITE).noUnderline().bold().size(10).build());
+					iconsPanel.add(msxGenerationPanel);
+					iconsPanel.add(Box.createHorizontalStrut(5));
+				}
+				iconsPanel.add(HyperLink.address(presenter.getYouTubeURL(relatedGame.getGameName())).icon(Icons.YOUTUBE.getImageIcon()).build());
+				dataPanel.add(iconsPanel);
+
+				rowPanel.add(dataPanel);
+
+				table.add(rowPanel);
 			}
-			iconsPanel.add(HyperLink.address(presenter.getYouTubeURL(relatedGame.getGameName())).icon(Icons.YOUTUBE.getImageIcon()).build());
-			dataPanel.add(iconsPanel);
-
-			rowPanel.add(dataPanel);
-
-			table.add(rowPanel);
+			JScrollPane scrollPane = new JScrollPane(table);
+			scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+			scrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH, Math.min(5, relatedGames.size()) * SCROLL_PANE_UNIT_HEIGHT));
+			contentPane.add(scrollPane, BorderLayout.SOUTH);
 		}
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		scrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH, Math.min(5, relatedGames.size()) * SCROLL_PANE_UNIT_HEIGHT));
-
-		contentPane.add(scrollPane, BorderLayout.SOUTH);
+		else
+		{
+			JPanel noResultsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+			JLabel noResultsLabel = new JLabel(messages.get("NO_RESULTS"));
+			noResultsPanel.add(noResultsLabel);
+			contentPane.add(noResultsPanel, BorderLayout.SOUTH);
+		}
 
 		pack();
 		setLocationRelativeTo(mainWindow);
+		greyoutBackground();
 		setVisible(true);
 	}
 
@@ -216,6 +227,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	{
 		if(e.getSource() == closeButton)
 		{
+			reenableBackground();
 			dispose();
 		}
 	}
@@ -253,5 +265,27 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 			g.drawLine(4, 3, 4+X_LENGTH, 3+X_LENGTH);
 			g.drawLine(4+X_LENGTH, 3, 4, 3+X_LENGTH);
 		}
+	}
+
+	//the following two methods can be moved to a more common place if they need to be reused in other parts of the application
+	private void greyoutBackground()
+	{
+		JPanel glass = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g)
+			{
+				g.setColor(new Color(0, 0, 0, 80));
+				g.fillRect(0, 0, mainWindow.getWidth(), mainWindow.getHeight());
+			}
+		};
+
+		glass.setOpaque(false);
+		mainWindow.setGlassPane(glass);
+		glass.setVisible(true);
+	}
+
+	private void reenableBackground()
+	{
+		mainWindow.getGlassPane().setVisible(false);
 	}
 }
