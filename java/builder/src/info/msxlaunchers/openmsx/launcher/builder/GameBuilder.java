@@ -297,7 +297,7 @@ public class GameBuilder
 			msxGenID = extraData.getMSXGenerationsID();
 			if( useGenenerationMSXURLAsInfo )
 			{
-				infoField = ExternalLinksUtils.getMSXGenerationURL( msxGenID );
+				infoField = ExternalLinksUtils.getGenerationMSXURL( msxGenID );
 			}
 			isMSX = extraData.isMSX();
 			isMSX2 = extraData.isMSX2();

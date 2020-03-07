@@ -120,7 +120,6 @@ public enum Icons
 
 	BUSY_INDICATOR( "busy", "gif" ),
 
-	MSX_GENERATION( "gmsx" ),
 	YOUTUBE( "youtube" )
 	;
 

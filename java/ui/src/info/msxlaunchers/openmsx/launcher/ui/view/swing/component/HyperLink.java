@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 
 /**
  * @since v1.2
@@ -53,6 +54,7 @@ public class HyperLink extends JLabel
 		private boolean bold;
 		private int size;
 		private ImageIcon icon;
+		private String tooltip;
 
 		public HyperLinkParam label(String label) { this.label = label; return this; }
 		public HyperLinkParam address(String address) { this.address = address; return this; }
@@ -61,6 +63,7 @@ public class HyperLink extends JLabel
 		public HyperLinkParam bold() { this.bold = true; return this; }
 		public HyperLinkParam size(int size) { this.size = size; return this; }
 		public HyperLinkParam icon(ImageIcon icon) { this.icon = icon; return this; }
+		public HyperLinkParam tooltip(String tooltip) { this.tooltip = tooltip; return this; }
 
 		public HyperLink build()
 		{
@@ -75,6 +78,7 @@ public class HyperLink extends JLabel
 	public static HyperLinkParam bold() { return new HyperLinkParam().noUnderline(); }
 	public static HyperLinkParam size(int size) { return new HyperLinkParam().size(size); }
 	public static HyperLinkParam icon(ImageIcon icon) { return new HyperLinkParam().icon(icon); }
+	public static HyperLinkParam tooltip(String tooltip) { return new HyperLinkParam().tooltip(tooltip); }
 
 	@SuppressWarnings("unchecked")
 	private HyperLink(HyperLinkParam param)
@@ -109,6 +113,8 @@ public class HyperLink extends JLabel
 		{
 			setIcon(param.icon);
 		}
+
+		setToolTipText(param.tooltip);
 
 		addMouseListener(new MouseListener() {
 
@@ -145,7 +151,7 @@ public class HyperLink extends JLabel
 				}
 				catch(IOException ioe)
 				{
-					//TODO log it
+					LauncherLogger.logException(this, ioe);
 				}
 			}
 	    });

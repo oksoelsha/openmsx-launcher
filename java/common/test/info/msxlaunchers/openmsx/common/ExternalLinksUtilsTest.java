@@ -15,16 +15,16 @@ public class ExternalLinksUtilsTest
 	@Test
 	public void test_whenIsMSXGenerationIdValid_thenReturnCorrectResult()
 	{
-		Assert.assertTrue( ExternalLinksUtils.isMSXGenerationIdValid( 1 ) );
-		Assert.assertTrue( ExternalLinksUtils.isMSXGenerationIdValid( 10000-1 ) );
-		Assert.assertFalse( ExternalLinksUtils.isMSXGenerationIdValid( 0 ) );
-		Assert.assertFalse( ExternalLinksUtils.isMSXGenerationIdValid( 10000 ) );
+		Assert.assertTrue( ExternalLinksUtils.isGenerationMSXIdValid( 1 ) );
+		Assert.assertTrue( ExternalLinksUtils.isGenerationMSXIdValid( 10000-1 ) );
+		Assert.assertFalse( ExternalLinksUtils.isGenerationMSXIdValid( 0 ) );
+		Assert.assertFalse( ExternalLinksUtils.isGenerationMSXIdValid( 10000 ) );
 	}
 
 	@Test
 	public void test_whenGetMSXGenerationURL_thenReturnMSXGenURL()
 	{
-		Assert.assertEquals( "http://www.generation-msx.nl/msxdb/softwareinfo/34", ExternalLinksUtils.getMSXGenerationURL( 34 ) );
+		Assert.assertEquals( "http://www.generation-msx.nl/msxdb/softwareinfo/34", ExternalLinksUtils.getGenerationMSXURL( 34 ) );
 	}
 
 	@Test

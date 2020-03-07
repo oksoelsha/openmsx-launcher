@@ -37,18 +37,18 @@ public interface GamePropertiesPresenter
 	void onRequestGamePropertiesScreen( Game game, Language currentLanguage, boolean currentRightToLeft );
 
 	/**
-	 * Returns whether given game has a valid (or existing) MSX Generation id
+	 * Returns whether given game has a valid (or existing) Generation MSX id
 	 * 
-	 * @param game Game to get MSX Generation id from
+	 * @param game Game to get Generation MSX id from
 	 * @return True if MSX Generation id is valid, false otherwise
 	 */
-	boolean isMSXGenerationIdValid( Game game );
+	boolean isGenerationMSXIdValid( Game game );
 
 	/**
-	 * Returns full MSX Generation id URL for the given game
+	 * Returns full Generation MSX id URL for the given game
 	 * 
-	 * @param game Game to get MSX Generation URL for
+	 * @param game Game to get Generation MSX URL for
 	 * @return Full MSX Generation URL
 	 */
-	String getMSXGenerationURL( Game game );
+	String getGenerationMSXURL( Game game );
 }

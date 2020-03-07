@@ -44,20 +44,20 @@ public interface RelatedGamesPresenter
 			throws LauncherException;
 
 	/**
-	 * Returns whether given related game has a valid (or existing) MSX Generation id
+	 * Returns whether given related game has a valid (or existing) Generation MSX id
 	 * 
-	 * @param relatedGame Related game to get MSX Generation id from
-	 * @return True if MSX Generation id is valid, false otherwise
+	 * @param relatedGame Related game to get Generation MSX id from
+	 * @return True if Generation MSX id is valid, false otherwise
 	 */
-	boolean isMSXGenerationIdValid( RelatedGame relatedGame );
+	boolean isGenerationMSXIdValid( RelatedGame relatedGame );
 
 	/**
-	 * Returns full MSX Generation id URL for the given game
+	 * Returns full Generation MSX id URL for the given game
 	 * 
-	 * @param relatedGame Related game to get MSX Generation URL for
-	 * @return Full MSX Generation URL
+	 * @param relatedGame Related game to get Generation MSX URL for
+	 * @return Full Generation MSX URL
 	 */
-	String getMSXGenerationURL( RelatedGame relatedGame );
+	String getGenerationMSXURL( RelatedGame relatedGame );
 
 	/**
 	 * Return full YouTune URL with search parameter for the given game name

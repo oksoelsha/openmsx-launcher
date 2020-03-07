@@ -30,27 +30,27 @@ import java.net.URISyntaxException;
 public final class ExternalLinksUtils
 {
 	private static final String GENERATION_MSX_URL = "http://www.generation-msx.nl/msxdb/softwareinfo/";
-	private static final int MSX_GEN_NON_EXISTING_CODES_START = 10000;
+	private static final int GEN_MSX_NON_EXISTING_CODES_START = 10000;
 	private static final String YOUTUBE_URL = "https://www.youtube.com/results?search_query=MSX";
 
 	/**
-	 * Returns whether the given game id is a valid MSX Generation id
+	 * Returns whether the given game id is a valid Generation MSX id
 	 * 
 	 * @param id Game id to check
 	 * @return True if given game id is a valid MSX Generation id, false otherwise
 	 */
-	public static boolean isMSXGenerationIdValid( int id )
+	public static boolean isGenerationMSXIdValid( int id )
 	{
-		return id > 0 && id < MSX_GEN_NON_EXISTING_CODES_START;
+		return id > 0 && id < GEN_MSX_NON_EXISTING_CODES_START;
 	}
 
 	/**
-	 * Returns MSX Generation URL for the given game id
+	 * Returns Generation MSX URL for the given game id
 	 * 
-	 * @param id Game MSX Generation id
+	 * @param id Game Generation MSX id
 	 * @return MSX Generation URL for the given game id
 	 */
-	public static String getMSXGenerationURL( int id )
+	public static String getGenerationMSXURL( int id )
 	{
 		return GENERATION_MSX_URL + id;
 	}

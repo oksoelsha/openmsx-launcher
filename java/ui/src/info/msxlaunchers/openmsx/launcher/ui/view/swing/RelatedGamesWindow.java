@@ -162,17 +162,20 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 				dataPanel.add(namePanel);
 				dataPanel.add(infoPanel);
 				JPanel iconsPanel = new JPanel(DATA_LAYOUT);
-				if(presenter.isMSXGenerationIdValid(relatedGame))
+				if(presenter.isGenerationMSXIdValid(relatedGame))
 				{
 					JPanel msxGenerationPanel = new JPanel();
 					msxGenerationPanel.setBackground(MSX_GENERATION_BACKGROUND_COLOR);
 					msxGenerationPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
-					msxGenerationPanel.add(HyperLink.address(presenter.getMSXGenerationURL(relatedGame)).label("MSX Generation")
+					msxGenerationPanel.add(HyperLink.address(presenter.getGenerationMSXURL(relatedGame)).label("Generation-MSX")
 							.linkColor(Color.WHITE).noUnderline().bold().size(10).build());
 					iconsPanel.add(msxGenerationPanel);
 					iconsPanel.add(Box.createHorizontalStrut(5));
 				}
-				iconsPanel.add(HyperLink.address(presenter.getYouTubeURL(relatedGame.getGameName())).icon(Icons.YOUTUBE.getImageIcon()).build());
+				iconsPanel.add(HyperLink.address(presenter.getYouTubeURL(relatedGame.getGameName()))
+						.icon(Icons.YOUTUBE.getImageIcon())
+						.tooltip(messages.get("SEARCH_ON_YOUTUBE"))
+						.build());
 				dataPanel.add(iconsPanel);
 
 				rowPanel.add(dataPanel);

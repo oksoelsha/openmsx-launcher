@@ -65,21 +65,21 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#isMSXGenerationIdValid(info.msxlaunchers.openmsx.launcher.data.game.RelatedGame)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#isGenerationMSXIdValid(info.msxlaunchers.openmsx.launcher.data.game.RelatedGame)
 	 */
 	@Override
-	public boolean isMSXGenerationIdValid( RelatedGame relatedGame )
+	public boolean isGenerationMSXIdValid( RelatedGame relatedGame )
 	{
-		return ExternalLinksUtils.isMSXGenerationIdValid( relatedGame.getMSXGenId() );
+		return ExternalLinksUtils.isGenerationMSXIdValid( relatedGame.getMSXGenId() );
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#getMSXGenerationURL(info.msxlaunchers.openmsx.launcher.data.game.RelatedGame)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#getGenerationMSXURL(info.msxlaunchers.openmsx.launcher.data.game.RelatedGame)
 	 */
 	@Override
-	public String getMSXGenerationURL( RelatedGame relatedGame )
+	public String getGenerationMSXURL( RelatedGame relatedGame )
 	{
-		return ExternalLinksUtils.getMSXGenerationURL( relatedGame.getMSXGenId() );
+		return ExternalLinksUtils.getGenerationMSXURL( relatedGame.getMSXGenId() );
 	}
 
 	/* (non-Javadoc)

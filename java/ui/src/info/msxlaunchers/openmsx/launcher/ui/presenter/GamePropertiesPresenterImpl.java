@@ -93,20 +93,20 @@ final class GamePropertiesPresenterImpl implements GamePropertiesPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter#isMSXGenerationIdValid(info.msxlaunchers.openmsx.launcher.data.game.Game)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter#isGenerationMSXIdValid(info.msxlaunchers.openmsx.launcher.data.game.Game)
 	 */
 	@Override
-	public boolean isMSXGenerationIdValid( Game game )
+	public boolean isGenerationMSXIdValid( Game game )
 	{
-		return ExternalLinksUtils.isMSXGenerationIdValid( game.getMsxGenID() );
+		return ExternalLinksUtils.isGenerationMSXIdValid( game.getMsxGenID() );
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter#getMSXGenerationURL(info.msxlaunchers.openmsx.launcher.data.game.Game)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter#getGenerationMSXURL(info.msxlaunchers.openmsx.launcher.data.game.Game)
 	 */
 	@Override
-	public String getMSXGenerationURL( Game game )
+	public String getGenerationMSXURL( Game game )
 	{
-		return ExternalLinksUtils.getMSXGenerationURL( game.getMsxGenID() );
+		return ExternalLinksUtils.getGenerationMSXURL( game.getMsxGenID() );
 	}
 }

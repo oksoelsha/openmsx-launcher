@@ -205,9 +205,9 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 
         addPropertyToDisplay(messages.get("SOUND"), getSound(game));
         addPropertyToDisplay(messages.get("GENRE"), getGenre(game));
-        if(presenter.isMSXGenerationIdValid(game))
+        if(presenter.isGenerationMSXIdValid(game))
         {
-            addLinkToDisplay("Generation-MSX ID", Utils.getString(game.getMsxGenID()), presenter.getMSXGenerationURL(game), true);
+            addLinkToDisplay("Generation-MSX ID", Utils.getString(game.getMsxGenID()), presenter.getGenerationMSXURL(game), true);
         }
 
 		JPanel buttonsPane = new JPanel();
