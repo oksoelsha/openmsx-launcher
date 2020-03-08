@@ -16,6 +16,8 @@
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +63,15 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 	{
 		List<RelatedGame> relatedGames = relatedGamesFactory.create( repositoryInfoMap ).findRelated( game );
 
-		view.displayRelatedGamesScreen( game.getName(), relatedGames, scrrenshotsPath, currentLanguage, currentRightToLeft );
+		view.displayRelatedGamesScreen( game.getName(), relatedGames, currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#getScreenshotPath(int)
+	 */
+	public Path getScreenshotPath( int msxGenId )
+	{
+		return Paths.get( scrrenshotsPath, msxGenId + "b.png" );
 	}
 
 	/* (non-Javadoc)

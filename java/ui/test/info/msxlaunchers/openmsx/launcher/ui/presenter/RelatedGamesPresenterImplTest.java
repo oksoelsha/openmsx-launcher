@@ -59,7 +59,7 @@ public class RelatedGamesPresenterImplTest
 
 		relatedGamesPresenterImpl.onRequestRelatedGamesScreen( game, repositoryInfoMap, language, rightToLeft );
 
-		Mockito.verify( view, Mockito.times( 1) ).displayRelatedGamesScreen( game.getName(), relatedGamesList, "screenshotsPath", language, rightToLeft );
+		Mockito.verify( view, Mockito.times( 1) ).displayRelatedGamesScreen( game.getName(), relatedGamesList, language, rightToLeft );
 	}
 
 	@Test

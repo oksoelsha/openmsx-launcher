@@ -37,5 +37,5 @@ public interface RelatedGamesView
 	 * @param language Language
 	 * @param rightToLeft Flag to determine screen orientation based on language
 	 */
-	void displayRelatedGamesScreen( String gameName, List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft );
+	void displayRelatedGamesScreen( String gameName, List<RelatedGame> relatedGames, Language language, boolean rightToLeft );
 }

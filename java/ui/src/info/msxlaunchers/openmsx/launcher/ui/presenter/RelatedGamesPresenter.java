@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
+import java.nio.file.Path;
 import java.util.Map;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
@@ -42,6 +43,14 @@ public interface RelatedGamesPresenter
 	 */
 	void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
 			throws LauncherException;
+
+	/**
+	 * Returns path to the screenshot of the given game Generation MSX id
+	 * 
+	 * @param msxGenId Generation MSX id of a game
+	 * @return Path of the screenshot corresponding to the given Generation MSX id
+	 */
+	Path getScreenshotPath( int msxGenId );
 
 	/**
 	 * Returns whether given related game has a valid (or existing) Generation MSX id

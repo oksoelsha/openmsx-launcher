@@ -26,7 +26,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +48,7 @@ import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JTextFieldBorderless;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
@@ -62,7 +63,6 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private final RelatedGamesPresenter presenter;
 	private final String gameName;
 	private final List<RelatedGame> relatedGames;
-	private final String screenshotsPath;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final JFrame mainWindow;
@@ -80,13 +80,11 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private static final FlowLayout DATA_LAYOUT = new FlowLayout(FlowLayout.LEADING, 0, 1);
 	private static final Color MSX_GENERATION_BACKGROUND_COLOR = new Color(90, 90, 220);
 
-	public RelatedGamesWindow(RelatedGamesPresenter presenter, String gameName, List<RelatedGame> relatedGames, String screenshotsPath,
-			Language language, boolean rightToLeft)
+	public RelatedGamesWindow(RelatedGamesPresenter presenter, String gameName, List<RelatedGame> relatedGames, Language language, boolean rightToLeft)
 	{
 		this.presenter = presenter;
 		this.gameName = gameName;
 		this.relatedGames = relatedGames;
-		this.screenshotsPath = screenshotsPath;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
 		this.rightToLeft = rightToLeft;
 		this.mainWindow = GlobalSwingContext.getIntance().getMainWindow();
@@ -148,7 +146,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 				rowPanel.add(screenshotLabel);
 
 				JPanel namePanel = new JPanel(DATA_LAYOUT);
-				JLabel nameLabel = new JLabel(relatedGame.getGameName());
+				JTextFieldBorderless nameLabel = new JTextFieldBorderless(relatedGame.getGameName());
 				nameLabel.setFont(NAME_FONT);
 				namePanel.add(nameLabel);
 
@@ -203,10 +201,10 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 
 	private ImageIcon getScreenshot(int msxGenId)
 	{
-		File screenshot = new File(screenshotsPath, msxGenId + "b.png");
-		if(screenshot.exists())
+		Path path = presenter.getScreenshotPath(msxGenId);
+		if(path.toFile().exists())
 		{
-			return getScaledImage(new ImageIcon(screenshot.getAbsolutePath()));
+			return getScaledImage(new ImageIcon(path.toString()));
 		}
 		else
 		{

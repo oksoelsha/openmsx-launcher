@@ -26,10 +26,10 @@ import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.GamePropertiesPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JTextFieldBorderless;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
@@ -52,7 +52,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -295,17 +294,7 @@ public class GamePropertiesWindow extends JDialog implements ActionListener
 		{
 			addAttribute(attribute, colonOnTheLeft);
 
-			JTextField valueTextField = new JTextField(value) {
-				@Override public void setBorder(Border border) {
-					// No border
-				}
-			};
-
-			valueTextField.setEditable(false);
-			valueTextField.setOpaque(false);
-			valueTextField.setColumns(30);
-			valueTextField.setCaretPosition(0);
-			valueTextField.setBackground(new Color(0, 0, 0, 0));
+			JTextField valueTextField = new JTextFieldBorderless(value);
 
 			if(rightToLeft)
 			{

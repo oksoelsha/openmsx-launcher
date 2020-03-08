@@ -41,10 +41,13 @@ final class RelatedGamesSwingView implements RelatedGamesView
 		this.presenter = presenter;
 	}
 
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.view.RelatedGamesView#displayRelatedGamesScreen(java.lang.String, java.util.List, info.msxlaunchers.openmsx.launcher.data.settings.constants.Language, boolean)
+	 */
 	@Override
-	public void displayRelatedGamesScreen( String gameName, List<RelatedGame> relatedGames, String screenshotsPath, Language language, boolean rightToLeft )
+	public void displayRelatedGamesScreen( String gameName, List<RelatedGame> relatedGames, Language language, boolean rightToLeft )
 	{
-		RelatedGamesWindow window = new RelatedGamesWindow( presenter, gameName, relatedGames, screenshotsPath, language, rightToLeft );
+		RelatedGamesWindow window = new RelatedGamesWindow( presenter, gameName, relatedGames, language, rightToLeft );
 
 		window.displayScreen();
 	}
