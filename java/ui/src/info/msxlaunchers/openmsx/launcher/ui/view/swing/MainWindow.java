@@ -451,6 +451,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		gameList.registerKeyboardAction(event -> processShowFavoritesMenuRequest(), getCtrlIKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
 		gameList.registerKeyboardAction(event -> processShowFiltersMenuRequest(), getCtrlLKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
 		gameList.registerKeyboardAction(event -> applyFilter(null), getCtrlRKeyStroke(), JComponent.WHEN_IN_FOCUSED_WINDOW);
+		gameList.registerKeyboardAction(event -> findRelated(), getCtrlShiftRKeyStroke(), JComponent.WHEN_FOCUSED);
 
         JScrollPane gameListScrollBar = new JScrollPane(gameList);
 
@@ -1629,7 +1630,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		if(selectedGame != null )
 		{
 			//selected game could be null if nothing was highlighted in the game list.
-			//this can happen if Ctrl+D was pressed, for example, without selecting a game
+			//this can happen if Ctrl+Shift+R was pressed, for example, without selecting a game
 			try
 			{
 				presenter.onRequestFindRelated(selectedGame);
@@ -1850,7 +1851,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	    contextMenu.add(addFavoriteMenuItem);
 
 	    findRelatedMenuItem = new JMenuItemWithIcon();
-//	    findSimilarMenuItem.setAccelerator(getCtrlDKeyStroke());
+	    findRelatedMenuItem.setAccelerator(getCtrlShiftRKeyStroke());
 	    findRelatedMenuItem.addActionListener(this);
 	    contextMenu.add(findRelatedMenuItem);
 
@@ -1976,6 +1977,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private KeyStroke getCtrlRKeyStroke()
 	{
 		return KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+	}
+
+	private KeyStroke getCtrlShiftRKeyStroke()
+	{
+		return KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() | KeyEvent.SHIFT_DOWN_MASK);
 	}
 
 	private abstract class PopupMenuAction extends AbstractAction

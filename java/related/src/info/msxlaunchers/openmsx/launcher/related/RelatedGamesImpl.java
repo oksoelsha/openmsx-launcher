@@ -98,7 +98,7 @@ class RelatedGamesImpl implements RelatedGames
 		}
 		catch( IOException ioe )
 		{
-			//TODO
+			//TODO - why do we reload this all the time?
 			throw new RuntimeException();
 		}
 
@@ -134,51 +134,15 @@ class RelatedGamesImpl implements RelatedGames
 			{
 				if( repeatedRepositoryGame.add( entry.getValue() ) )
 				{
-					//name score
-					Set<String> repositoryTitleParts = getNormalizedStrings( repositoryTitle );
 					int score = 0;
-	
-					int matches = 0;
-					for( String part: gameNameParts )
-					{
-						if( repositoryTitleParts.contains( part ) )
-						{
-							if( repositoryTitleParts.size() == 1 || gameNameParts.size() == 1 )
-							{
-								score += NAME_MATCH_ONE_WORD_GAME_SCORE;
-							}
-							else
-							{
-								matches++;
-								score += (matches == 1) ? NAME_MATCH_ONE_IN_MANY_WORDS_SCORE : NAME_MATCH_TWO_OR_MORE_IN_MANY_WORDS_SCORE;
-							}
-						}
-					}
-	
-					//genre and company matches
 					String sha1CodeOfRepositoryGame = entry.getKey();
 					ExtraData extraData = extraDataMap.get( sha1CodeOfRepositoryGame );
-					if( extraData != null )
-					{
-						Genre selectedGameGenre1 = game.getGenre1();
-						Genre selectedGameGenre2 = game.getGenre2();
-						Genre genre1OfRepositoryGame = Genre.fromValue( extraData.getGenre1() );
-						Genre genre2OfRepositoryGame = Genre.fromValue( extraData.getGenre2() );
-	
-						if( (!selectedGameGenre1.equals( Genre.UNKNOWN ) && (selectedGameGenre1.equals( genre1OfRepositoryGame ) || selectedGameGenre1.equals( genre2OfRepositoryGame ))) ||
-								(!selectedGameGenre2.equals( Genre.UNKNOWN ) && (selectedGameGenre2.equals( genre1OfRepositoryGame ) || selectedGameGenre2.equals( genre2OfRepositoryGame ))) )
-						{
-							score += GENRE_MATCH_SCORE;
-						}
-					}
-	
-					if( !companyOfRepositoryGame.isEmpty() && companyOfRepositoryGame.equals( companyOfSelectedGame ) )
-					{
-						score += COMPANY_MATCH_SCORE;
-					}
+
+					score += getNameScore( repositoryTitle, gameNameParts );
+					score += getGenreScore( extraData, game );
+					score += getCompanyScore( companyOfRepositoryGame, companyOfSelectedGame );
 		
-					//record score
-					if( score > 0)
+					if( score > 0 )
 					{
 						similarGames.add( new SimilarGame( new RelatedGame( repositoryTitle, entry.getValue().getCompany(), entry.getValue().getYear(),
 							extraData != null? extraData.getMSXGenerationsID() : 0 ), score ) );
@@ -193,6 +157,64 @@ class RelatedGamesImpl implements RelatedGames
 				.map( g -> g.relatedGame )
 				.limit( MAX_SIZE_RESULTS )
 				.collect( Collectors.toList() );
+	}
+
+	private int getNameScore( String repositoryTitle, Set<String> gameNameParts )
+	{
+		Set<String> repositoryTitleParts = getNormalizedStrings( repositoryTitle );
+		int score = 0;
+
+		int matches = 0;
+		for( String part: gameNameParts )
+		{
+			if( repositoryTitleParts.contains( part ) )
+			{
+				if( repositoryTitleParts.size() == 1 || gameNameParts.size() == 1 )
+				{
+					score += NAME_MATCH_ONE_WORD_GAME_SCORE;
+				}
+				else
+				{
+					matches++;
+					score += (matches == 1) ? NAME_MATCH_ONE_IN_MANY_WORDS_SCORE : NAME_MATCH_TWO_OR_MORE_IN_MANY_WORDS_SCORE;
+				}
+			}
+		}
+
+		return score;
+	}
+
+	private int getGenreScore( ExtraData extraData, Game game )
+	{
+		int score = 0;
+
+		if( extraData != null )
+		{
+			Genre selectedGameGenre1 = game.getGenre1();
+			Genre selectedGameGenre2 = game.getGenre2();
+			Genre genre1OfRepositoryGame = Genre.fromValue( extraData.getGenre1() );
+			Genre genre2OfRepositoryGame = Genre.fromValue( extraData.getGenre2() );
+
+			if( (!selectedGameGenre1.equals( Genre.UNKNOWN ) && (selectedGameGenre1.equals( genre1OfRepositoryGame ) || selectedGameGenre1.equals( genre2OfRepositoryGame ))) ||
+					(!selectedGameGenre2.equals( Genre.UNKNOWN ) && (selectedGameGenre2.equals( genre1OfRepositoryGame ) || selectedGameGenre2.equals( genre2OfRepositoryGame ))) )
+			{
+				score = GENRE_MATCH_SCORE;
+			}
+		}
+
+		return score;
+	}
+
+	private int getCompanyScore( String companyOfRepositoryGame, String companyOfSelectedGame )
+	{
+		if( !companyOfRepositoryGame.isEmpty() && companyOfRepositoryGame.equals( companyOfSelectedGame ) )
+		{
+			return COMPANY_MATCH_SCORE;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 	private class SimilarGame
