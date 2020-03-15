@@ -15,8 +15,10 @@
  */
 package info.msxlaunchers.openmsx.launcher.extra;
 
+import info.msxlaunchers.openmsx.common.HashUtils;
 import info.msxlaunchers.openmsx.common.Utils;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 /**
@@ -38,15 +41,20 @@ import com.google.inject.name.Named;
  * @author Sam Elsharif
  *
  */
+@Singleton
 final class ExtraDataGetterImpl implements ExtraDataGetter
 {
 	private final String extraDataDirectory;
 
-	private final String EXTRA_DATA_FILENAME = "extra-data.dat";
-	private final String COMMENT_START = "--";
-	private final char GENERATION_MSX_ID_START = '#';
-	private final char COMMA = ',';
-	private final char PIPE = '|';
+	private static final String EXTRA_DATA_FILENAME = "extra-data.dat";
+	private static final String COMMENT_START = "--";
+	private static final char GENERATION_MSX_ID_START = '#';
+	private static final char COMMA = ',';
+	private static final char PIPE = '|';
+	private static final String VERSION_COMMENT = "-- Version ";
+
+	private static String cachedExtraDataFileHash = null;
+	private static Map<String,ExtraData> cachedExtraDataMap = null;
 
 	@Inject
 	ExtraDataGetterImpl( @Named("LauncherDataDirectory") String extraDataDirectory )
@@ -58,14 +66,32 @@ final class ExtraDataGetterImpl implements ExtraDataGetter
 	 * @see info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter#getExtraData()
 	 */
 	@Override
-	public Map<String,ExtraData> getExtraData() throws FileNotFoundException, IOException
+	public Map<String,ExtraData> getExtraData() throws IOException
+	{
+		File extraDataFile = new File( extraDataDirectory, EXTRA_DATA_FILENAME );
+		String extraDataFileHash = HashUtils.getSHA1Code( extraDataFile );
+
+		if( extraDataFileHash == null )
+		{
+			IOException ioe = new FileNotFoundException();
+			LauncherLogger.logException( this, ioe );
+			throw ioe;
+		}
+		else if( !extraDataFileHash.equals( cachedExtraDataFileHash ) )
+		{
+			cachedExtraDataFileHash = extraDataFileHash;
+			cachedExtraDataMap = readExtraDataFileAndGetMap( extraDataFile );
+		}
+
+		return cachedExtraDataMap;
+	}
+
+	private Map<String,ExtraData> readExtraDataFileAndGetMap( File extraDataFile ) throws IOException
 	{
 		Map<String,ExtraData> extraDataMap = null;
-		File file = new File( extraDataDirectory, EXTRA_DATA_FILENAME );
-
-		try( BufferedReader reader = new BufferedReader( new InputStreamReader( new FileInputStream( file ), "UTF-8" ) ) )
+		try( BufferedReader reader = new BufferedReader( new InputStreamReader( new FileInputStream( extraDataFile ), "UTF-8" ) ) )
 		{
-		    extraDataMap = new HashMap<String,ExtraData>();
+		    extraDataMap = new HashMap<>();
 		    String text = null;
 		    boolean done = false;
 
@@ -120,17 +146,14 @@ final class ExtraDataGetterImpl implements ExtraDataGetter
 		    	}
 		    }
 		}
-
 		return Collections.unmodifiableMap( extraDataMap );
 	}
-
-	private final String VERSION_COMMENT = "-- Version ";
 
 	/* (non-Javadoc)
 	 * @see info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter#getExtraDataFileVersion()
 	 */
 	@Override
-	public String getExtraDataFileVersion() throws FileNotFoundException, IOException
+	public String getExtraDataFileVersion() throws IOException
 	{
 		String version = null;
 

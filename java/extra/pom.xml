@@ -19,5 +19,10 @@
 			<artifactId>data</artifactId>
 			<version>${version}</version>
 		</dependency>
+		<dependency>
+			<groupId>info.msxlaunchers.openmsx</groupId>
+			<artifactId>logger</artifactId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 </project>
