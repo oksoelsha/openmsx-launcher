@@ -15,7 +15,7 @@ td { padding: 12px; }
 
 <body>
 
-<h2>openMSX Launcher v1.12</h2>
+<h2>openMSX Launcher v1.13</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -31,19 +31,19 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from version 1.11</u></h3>
+<h3><u>Upgrade from version 1.12</u></h3>
 
 <p>In all platforms (Windows, MacOS, Linux and BSD) you can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.
 
-<h3><u>Upgrade from versions earlier than 1.11</u></h3>
+<h3><u>Upgrade from versions earlier than 1.12</u></h3>
 
-You must upgrade to 1.11 first before upgrading to 1.12. You can find these instructions in the older 1.11 README file.
+You must upgrade to 1.12 first before upgrading to 1.13. You can find these instructions in the older 1.12 README file.
 
 <h3><u>How to start</u></h3>
 
 <p class="tab"><b>Windows</b>: double-click on the exe file. The exe will locate the JRE on the machine automatically and start it. The exe takes in the JRE location
 as an optional argument in case it cannot find it. In this case, in order to pass the JRE location as an option, create a shortcut for the executable and edit its target to pass
-the JRE location. Make sure you add the location without double quotes (i.e. C:\Program Files\Java\jre1.8.0_151\bin\java.exe)</p>
+the JRE location. Make sure you add the location without double quotes (i.e. C:\Program Files\Java\jre1.8.0_212\bin\java.exe)</p>
 
 <p class="tab"><b>MacOS</b>: double-click on the application icon.</p>
 
@@ -135,10 +135,14 @@ GNOME, nautilus will open up with the directory where game's main file is.
 3) Add to Favorites: add the selected game to the list of favorites. The list is accessible through the favorites button
 in the main window.
 <br></br>
-4) Info: this displays the user-specified info file using the system's default viewer. In the "Fill Database" feature, this
+4) Find Related: this finds up to 15 MSX games related to the currently selected game. The selection takes into account the game name,
+company and genre and the results are displayed with a screenshot for each, a link to the corresponding Generation-MSX page and a search
+link on YouTube.
+<br></br>
+5) Info: this displays the user-specified info file using the system's default viewer. In the "Fill Database" feature, this
 field gets set to the game's MSX Generation page, but it can be anything the user desires (text file, PDF, etc).
 <br></br>
-5) Properties: this only works on a single selection and it brings up the properties screen for the selected game.
+6) Properties: this only works on a single selection and it brings up the properties screen for the selected game.
 
 <h3><u>Database Manager</u></h3>
 This can be accessed from the Tools menu and there you can rename or delete existing databases. You can also view, restore or delete backups.
@@ -169,6 +173,7 @@ You can drag and drop game files and directories to the main launcher window for
 <tr><td>Ctrl+X</td><td>Command+X</td><td>Move profile</td></tr>
 <tr><td>F1</td><td>F1</td><td>Info button</td></tr>
 <tr><td>Ctrl+Shift+F</td><td>Command+Shift+F</td><td>Locate file</td></tr>
+<tr><td>Ctrl+Shift+R</td><td>Command+Shift+R</td><td>Find related games</td></tr>
 <tr><td>Ctrl+F1</td><td>Command+F1</td><td>Properties</td></tr>
 </table>
 
@@ -194,6 +199,16 @@ end script
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.13 - released Mar 22, 2020</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Added find related games</li>
+<li>Added sound quick filter</li>
+<li>Added system field (MSX or ColecoVision) to game properties</li>
+<li>Minor graphical changes to game properties</li>
+</ul>
 
 <b>Version 1.12 - released Nov 3, 2019</b>
 <br></br>

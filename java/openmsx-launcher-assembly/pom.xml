@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>info.msxlaunchers.openmsx</groupId>
 		<artifactId>openmsx-launcher-build</artifactId>
-		<version>1.12</version>
+		<version>1.13</version>
 		<relativePath>../openmsx-launcher-build/pom.xml</relativePath>
 	</parent>
 	<build>
