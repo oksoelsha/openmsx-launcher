@@ -61,7 +61,15 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 	public void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
 			throws LauncherException
 	{
-		List<RelatedGame> relatedGames = relatedGamesFactory.create( repositoryInfoMap ).findRelated( game );
+		List<RelatedGame> relatedGames;
+		try
+		{
+			relatedGames = relatedGamesFactory.create( repositoryInfoMap ).findRelated( game );
+		}
+		catch( IOException ioe )
+		{
+			throw new LauncherException( LauncherExceptionCode.ERR_IO );
+		}
 
 		view.displayRelatedGamesScreen( game.getName(), relatedGames, currentLanguage, currentRightToLeft );
 	}
@@ -71,6 +79,17 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 	 */
 	public Path getScreenshotPath( int msxGenId )
 	{
+		String[] variations = {"b", "b-en", "b-a"};
+		for( int index = 0; index < variations.length; index++ )
+		{
+			Path path = Paths.get( scrrenshotsPath, msxGenId + variations[index] + ".png" );
+			if( path.toFile().exists())
+			{
+				return path;
+			}
+		}
+
+		//here just return any path that doesn't exist so that No Screenshot image is shown
 		return Paths.get( scrrenshotsPath, msxGenId + "b.png" );
 	}
 

@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.related;
 
+import java.io.IOException;
 import java.util.List;
 
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
@@ -32,7 +33,8 @@ public interface RelatedGames
 	 * Find related games to the given game
 	 * 
 	 * @param game Game
+	 * @throws IOException
 	 * @return List of related games to given one sorted by "proximity". List size is to be determined by implementation
 	 */
-	List<RelatedGame> findRelated( Game game );
+	List<RelatedGame> findRelated( Game game ) throws IOException;
 }

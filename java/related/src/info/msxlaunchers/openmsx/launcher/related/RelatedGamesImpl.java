@@ -34,6 +34,7 @@ import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
+import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 
 /**
  * 
@@ -43,7 +44,7 @@ import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
  * @since v1.13
  * @author Sam Elsharif
  */
-class RelatedGamesImpl implements RelatedGames
+final class RelatedGamesImpl implements RelatedGames
 {
 	private static final int NAME_MATCH_ONE_WORD_GAME_SCORE = 5;
 	private static final int NAME_MATCH_ONE_IN_MANY_WORDS_SCORE = 3;
@@ -88,7 +89,7 @@ class RelatedGamesImpl implements RelatedGames
 	 * @see info.msxlaunchers.openmsx.launcher.related.RelatedGames#findRelated(info.msxlaunchers.openmsx.launcher.data.game.Game)
 	 */
 	@Override
-	public List<RelatedGame> findRelated( Game game )
+	public List<RelatedGame> findRelated( Game game ) throws IOException
 	{
 		Map<String, ExtraData> extraDataMap = null;
 
@@ -98,8 +99,8 @@ class RelatedGamesImpl implements RelatedGames
 		}
 		catch( IOException ioe )
 		{
-			//TODO - why do we reload this all the time?
-			throw new RuntimeException();
+			LauncherLogger.logException( this, ioe );
+			throw ioe;
 		}
 
 		Set<SimilarGame> similarGames = new HashSet<>();
@@ -126,26 +127,29 @@ class RelatedGamesImpl implements RelatedGames
 
 		for( Map.Entry<String,RepositoryGame> entry: repositoryInfoMap.entrySet() )
 		{
-			String companyOfRepositoryGame = entry.getValue().getCompany();
-			String repositoryTitle = entry.getValue().getTitle();
-
-			//skip the score if both name and company are the same
-			if( !( selectedGameTitleFromRepository.equals( repositoryTitle ) && companyOfRepositoryGame.equals( companyOfSelectedGame ) ) )
+			if( "MSX".equals( entry.getValue().getSystem() ) )
 			{
-				if( repeatedRepositoryGame.add( entry.getValue() ) )
-				{
-					int score = 0;
-					String sha1CodeOfRepositoryGame = entry.getKey();
-					ExtraData extraData = extraDataMap.get( sha1CodeOfRepositoryGame );
+				String companyOfRepositoryGame = entry.getValue().getCompany();
+				String repositoryTitle = entry.getValue().getTitle();
 
-					score += getNameScore( repositoryTitle, gameNameParts );
-					score += getGenreScore( extraData, game );
-					score += getCompanyScore( companyOfRepositoryGame, companyOfSelectedGame );
-		
-					if( score > 0 )
+				//skip the score if both name and company are the same
+				if( !( selectedGameTitleFromRepository.equals( repositoryTitle ) && companyOfRepositoryGame.equals( companyOfSelectedGame ) ) )
+				{
+					if( repeatedRepositoryGame.add( entry.getValue() ) )
 					{
-						similarGames.add( new SimilarGame( new RelatedGame( repositoryTitle, entry.getValue().getCompany(), entry.getValue().getYear(),
-							extraData != null? extraData.getMSXGenerationsID() : 0 ), score ) );
+						int score = 0;
+						String sha1CodeOfRepositoryGame = entry.getKey();
+						ExtraData extraData = extraDataMap.get( sha1CodeOfRepositoryGame );
+
+						score += getNameScore( repositoryTitle, gameNameParts );
+						score += getGenreScore( extraData, game );
+						score += getCompanyScore( companyOfRepositoryGame, companyOfSelectedGame );
+
+						if( score > 0 )
+						{
+							similarGames.add( new SimilarGame( new RelatedGame( repositoryTitle, entry.getValue().getCompany(), entry.getValue().getYear(),
+								extraData != null? extraData.getMSXGenerationsID() : 0 ), score ) );
+						}
 					}
 				}
 			}

@@ -46,7 +46,7 @@ public class RelatedGamesPresenterImplTest
 	}
 
 	@Test
-	public void givenRelatedGame_whenOnRequestRelatedGamesScreen_thenReturnCorrectAnswer() throws LauncherException
+	public void givenRelatedGame_whenOnRequestRelatedGamesScreen_thenReturnCorrectAnswer() throws LauncherException, IOException
 	{
 		Map<String,RepositoryGame> repositoryInfoMap = Collections.emptyMap();
 		List<RelatedGame> relatedGamesList = Collections.emptyList();
