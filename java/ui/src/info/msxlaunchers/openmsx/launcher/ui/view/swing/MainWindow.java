@@ -665,8 +665,9 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 					 moveMenuItem.setEnabled(databases.size() > 1);
 
 					 //need to disable the add favorite, locate file and properties menu items if more than one game was selected
-					 addFavoriteMenuItem.setEnabled(gameList.getSelectedIndices().length == 1);
 					 locateFileMenuItem.setEnabled(gameList.getSelectedIndices().length == 1);
+					 addFavoriteMenuItem.setEnabled(gameList.getSelectedIndices().length == 1);
+					 findRelatedMenuItem.setEnabled(gameList.getSelectedIndices().length == 1);
 					 propertiesMenuItem.setEnabled(gameList.getSelectedIndices().length == 1);
 
 					 contextMenu.show(gameList, me.getX(), me.getY());
