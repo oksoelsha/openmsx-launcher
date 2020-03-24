@@ -79,6 +79,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private static final int SCREENSHOT_HEIGHT = 90;
 	private static final FlowLayout DATA_LAYOUT = new FlowLayout(FlowLayout.LEADING, 0, 1);
 	private static final Color MSX_GENERATION_BACKGROUND_COLOR = new Color(90, 90, 220);
+	private static final Color ALTERNATE_BG_COLOR = new Color(212,214,223);
 
 	public RelatedGamesWindow(RelatedGamesPresenter presenter, String gameName, List<RelatedGame> relatedGames, Language language, boolean rightToLeft)
 	{
@@ -110,7 +111,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 		JPanel titlePanel = new JPanel();
 		JPanel closeButtonPanel = new JPanel();
 
-		titlePanel.add(new JLabel(messages.get("RELATED_TO") + ": " + gameName));
+		titlePanel.add(new JLabel("<html>" + messages.get("RELATED_TO") + ": <b>" + gameName + "</b></html>"));
 		closeButton.setPreferredSize(CLOSE_BUTTON_SIZE);
 		closeButtonPanel.add(titlePanel);
 		closeButtonPanel.add(closeButton);
@@ -137,20 +138,26 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 
 		if(!relatedGames.isEmpty())
 		{
+			boolean alternateColor = false;
 			for(RelatedGame relatedGame: relatedGames)
 			{
+				alternateColor = !alternateColor;
+
 				JPanel rowPanel = new JPanel();
 				rowPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+				setAlternateBackgrounfColor(rowPanel, alternateColor);
 
 				JLabel screenshotLabel = new JLabel(getScreenshot(relatedGame.getMSXGenId()));
 				rowPanel.add(screenshotLabel);
 
 				JPanel namePanel = new JPanel(DATA_LAYOUT);
+				setAlternateBackgrounfColor(namePanel, alternateColor);
 				JTextFieldBorderless nameLabel = new JTextFieldBorderless(relatedGame.getGameName());
 				nameLabel.setFont(NAME_FONT);
 				namePanel.add(nameLabel);
 
 				JPanel infoPanel =  new JPanel(DATA_LAYOUT);
+				setAlternateBackgrounfColor(infoPanel, alternateColor);
 				JLabel infoLabel = new JLabel(relatedGame.getCompany() + " " + relatedGame.getYear());
 				infoLabel.setFont(INFO_FONT);
 				infoPanel.add(infoLabel);
@@ -160,6 +167,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 				dataPanel.add(namePanel);
 				dataPanel.add(infoPanel);
 				JPanel iconsPanel = new JPanel(DATA_LAYOUT);
+				setAlternateBackgrounfColor(iconsPanel, alternateColor);
 				if(presenter.isGenerationMSXIdValid(relatedGame))
 				{
 					JPanel msxGenerationPanel = new JPanel();
@@ -197,6 +205,14 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 		setLocationRelativeTo(mainWindow);
 		greyoutBackground();
 		setVisible(true);
+	}
+
+	private void setAlternateBackgrounfColor(JPanel panel, boolean alternateColor)
+	{
+		if(alternateColor)
+		{
+			panel.setBackground(ALTERNATE_BG_COLOR);
+		}
 	}
 
 	private ImageIcon getScreenshot(int msxGenId)
