@@ -54,13 +54,13 @@ public class RelatedGamesImplTest
 
 		List<RelatedGame> relatedGames;
 
-		relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash1" ).genre1( Genre.SHOOT_EM_UP_ALL ).genre2( Genre.UNKNOWN ).build() );
+		relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash1" ).genre1( Genre.SHOOT_EM_UP_ALL ).genre2( Genre.UNKNOWN ).msxGenID( 11 ).build() );
 		Assert.assertEquals( Arrays.asList( "Gradius 21 - Nemesis 7", "Manbow", "Vampire Killer" ), getMatchedGameNames( relatedGames ) );
 
-		relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash6" ).genre1( Genre.ADULT ).genre2( Genre.UNKNOWN ).build() );
+		relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash6" ).genre1( Genre.ADULT ).genre2( Genre.UNKNOWN ).msxGenID( 66 ).build() );
 		Assert.assertEquals( Arrays.asList( "Night Fun", "Vampire Killer" ), getMatchedGameNames( relatedGames ) );
 
-		relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash7" ).genre1( Genre.ADULT ).genre2( Genre.UNKNOWN ).build() );
+		relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash7" ).genre1( Genre.ADULT ).genre2( Genre.UNKNOWN ).msxGenID( 77 ).build() );
 		Assert.assertEquals( Arrays.asList( "Great Vampire" ), getMatchedGameNames( relatedGames ) );
 	}
 

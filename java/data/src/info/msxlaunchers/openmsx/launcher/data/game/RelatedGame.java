@@ -62,7 +62,7 @@ public final class RelatedGame
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash( gameName, msxGenId );
+		return Objects.hash( msxGenId );
 	}
 
 	@Override
@@ -77,7 +77,6 @@ public final class RelatedGame
 			return false;
 		}
 
-		RelatedGame other = (RelatedGame) obj;
-		return gameName.equals( other.gameName ) && msxGenId == other.msxGenId;
+		return msxGenId == ((RelatedGame)obj).msxGenId;
 	}
 }

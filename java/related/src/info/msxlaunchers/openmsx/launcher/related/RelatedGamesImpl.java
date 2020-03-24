@@ -107,23 +107,18 @@ final class RelatedGamesImpl implements RelatedGames
 
 		RepositoryGame repositoryGame = repositoryInfoMap.get( game.getSha1Code() );
 
-		String selectedGameTitleFromRepository;
 		String companyOfSelectedGame;
 		Set<String> gameNameParts;
 		if( repositoryGame == null )
 		{
-			selectedGameTitleFromRepository = "";
 			companyOfSelectedGame = "";
 			gameNameParts = getNormalizedStrings( game.getName() );
 		}
 		else
 		{
-			selectedGameTitleFromRepository = repositoryGame.getTitle();
 			companyOfSelectedGame = repositoryGame.getCompany();
 			gameNameParts = getNormalizedStrings( repositoryGame.getTitle() );
 		}
-
-		Set<RepositoryGame> repeatedRepositoryGame = new HashSet<>();
 
 		for( Map.Entry<String,RepositoryGame> entry: repositoryInfoMap.entrySet() )
 		{
@@ -132,23 +127,23 @@ final class RelatedGamesImpl implements RelatedGames
 				String companyOfRepositoryGame = entry.getValue().getCompany();
 				String repositoryTitle = entry.getValue().getTitle();
 
-				//skip the score if both name and company are the same
-				if( !( selectedGameTitleFromRepository.equals( repositoryTitle ) && companyOfRepositoryGame.equals( companyOfSelectedGame ) ) )
+				int score = 0;
+				String sha1CodeOfRepositoryGame = entry.getKey();
+				ExtraData extraData = extraDataMap.get( sha1CodeOfRepositoryGame );
+
+				if( extraData != null && extraData.getMSXGenerationsID() != game.getMsxGenID() )
 				{
-					if( repeatedRepositoryGame.add( entry.getValue() ) )
+					score += getNameScore( repositoryTitle, gameNameParts );
+					score += getGenreScore( extraData, game );
+					score += getCompanyScore( companyOfRepositoryGame, companyOfSelectedGame );
+
+					if( score > 0 )
 					{
-						int score = 0;
-						String sha1CodeOfRepositoryGame = entry.getKey();
-						ExtraData extraData = extraDataMap.get( sha1CodeOfRepositoryGame );
-
-						score += getNameScore( repositoryTitle, gameNameParts );
-						score += getGenreScore( extraData, game );
-						score += getCompanyScore( companyOfRepositoryGame, companyOfSelectedGame );
-
-						if( score > 0 )
+						SimilarGame similarGame = new SimilarGame( new RelatedGame( repositoryTitle, entry.getValue().getCompany(), entry.getValue().getYear(),
+								extraData.getMSXGenerationsID()), score );
+						if( !similarGames.contains( similarGame ) )
 						{
-							similarGames.add( new SimilarGame( new RelatedGame( repositoryTitle, entry.getValue().getCompany(), entry.getValue().getYear(),
-								extraData != null? extraData.getMSXGenerationsID() : 0 ), score ) );
+							similarGames.add( similarGame );
 						}
 					}
 				}
