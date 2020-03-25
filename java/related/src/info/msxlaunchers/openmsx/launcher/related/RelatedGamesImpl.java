@@ -16,11 +16,14 @@
 package info.msxlaunchers.openmsx.launcher.related;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,6 +54,7 @@ final class RelatedGamesImpl implements RelatedGames
 	private static final int NAME_MATCH_TWO_OR_MORE_IN_MANY_WORDS_SCORE = 5;
 	private static final int GENRE_MATCH_SCORE = 4;
 	private static final int COMPANY_MATCH_SCORE = 2;
+	private static final int SAME_CLUSTER_MATCH_SCORE = 7;
 	private static final int MAX_SIZE_RESULTS = 15;
 	private static final Set<String> excludedStrings;
 	static
@@ -68,6 +72,7 @@ final class RelatedGamesImpl implements RelatedGames
 		excludedStrings.add( "on" );
 		excludedStrings.add( "at" );
 		excludedStrings.add( "to" );
+		excludedStrings.add( "version" );
 
 		excludedStrings.add( "de" );
 		excludedStrings.add( "el" );
@@ -75,8 +80,31 @@ final class RelatedGamesImpl implements RelatedGames
 		excludedStrings.add( "en" );
 	}
 
+	private static final Map<Integer,Set<Integer>> idToCluster = new HashMap<>();
+	static
+	{
+		List<Set<Integer>> clusters = Arrays.asList(
+				//Gradius series
+				Stream.of( 742, 932, 1254, 941, 1188 ).collect( Collectors.toSet() ),
+
+				//Knightmare series
+				Stream.of( 855, 916, 946 ).collect( Collectors.toSet() ),
+
+				//Space Manbow and Manbow 2
+				Stream.of( 1238, 3607 ).collect( Collectors.toSet() ),
+
+				//Road fighter and Car Fighter
+				Stream.of( 684, 412 ).collect( Collectors.toSet() ),
+
+				//Knightlore and Knightlore Remake
+				Stream.of( 810, 4221 ).collect( Collectors.toSet() )
+				);
+
+		clusters.stream().forEach( cluster -> idToCluster.putAll( cluster.stream().collect( Collectors.toMap( Function.identity(), c -> cluster ) ) ) );
+	}
+
 	private final ExtraDataGetter extraDataGetter;
-	Map<String,RepositoryGame> repositoryInfoMap;
+	private final Map<String,RepositoryGame> repositoryInfoMap;
 
 	@Inject
 	RelatedGamesImpl( ExtraDataGetter extraDataGetter, @Assisted Map<String,RepositoryGame> repositoryInfoMap )
@@ -120,8 +148,11 @@ final class RelatedGamesImpl implements RelatedGames
 			gameNameParts = getNormalizedStrings( repositoryGame.getTitle() );
 		}
 
+		Set<Integer> clusterForGivenGame = idToCluster.get( game.getMsxGenID() );
+
 		for( Map.Entry<String,RepositoryGame> entry: repositoryInfoMap.entrySet() )
 		{
+			//limit the results to MSX system only (i.e. exclude others such as ColecoVision)
 			if( "MSX".equals( entry.getValue().getSystem() ) )
 			{
 				String companyOfRepositoryGame = entry.getValue().getCompany();
@@ -136,6 +167,7 @@ final class RelatedGamesImpl implements RelatedGames
 					score += getNameScore( repositoryTitle, gameNameParts );
 					score += getGenreScore( extraData, game );
 					score += getCompanyScore( companyOfRepositoryGame, companyOfSelectedGame );
+					score += getClusterScore( clusterForGivenGame, extraData.getMSXGenerationsID() );
 
 					if( score > 0 )
 					{
@@ -209,6 +241,18 @@ final class RelatedGamesImpl implements RelatedGames
 		if( !companyOfRepositoryGame.isEmpty() && companyOfRepositoryGame.equals( companyOfSelectedGame ) )
 		{
 			return COMPANY_MATCH_SCORE;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	private int getClusterScore( Set<Integer> clusterForGivenGame, int extraDataGenMSXId )
+	{
+		if( clusterForGivenGame != null && clusterForGivenGame.contains( extraDataGenMSXId ) )
+		{
+			return SAME_CLUSTER_MATCH_SCORE;
 		}
 		else
 		{
