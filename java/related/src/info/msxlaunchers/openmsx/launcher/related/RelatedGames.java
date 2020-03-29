@@ -34,7 +34,7 @@ public interface RelatedGames
 	 * 
 	 * @param game Game
 	 * @throws IOException
-	 * @return List of related games to given one sorted by "proximity". List size is to be determined by implementation
+	 * @return Unmodifiable list of related games to given one sorted by "proximity". List size is to be determined by implementation
 	 */
 	List<RelatedGame> findRelated( Game game ) throws IOException;
 }

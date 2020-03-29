@@ -17,6 +17,7 @@ package info.msxlaunchers.openmsx.launcher.related;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -187,7 +188,7 @@ final class RelatedGamesImpl implements RelatedGames
 				.sorted( Comparator.comparingInt( SimilarGame::getScore ).reversed() )
 				.map( g -> g.relatedGame )
 				.limit( MAX_SIZE_RESULTS )
-				.collect( Collectors.toList() );
+				.collect( Collectors.collectingAndThen( Collectors.toList(), Collections::unmodifiableList ) );
 	}
 
 	private int getNameScore( String repositoryTitle, Set<String> gameNameParts )
@@ -301,7 +302,7 @@ final class RelatedGamesImpl implements RelatedGames
 				.map( String::toLowerCase )
 				.map( s -> s.replace( ",", "" ) )
 				.filter( s -> !excludedStrings.contains( s ) )
-				.filter( s -> !Utils.isNumber( s ) )
+				.filter( s -> !(Utils.isNumber( s ) && Utils.getNumber( s ) < 5) )
 				.collect( Collectors.toSet() );
 	}
 }

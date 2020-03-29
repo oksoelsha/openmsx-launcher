@@ -3,6 +3,7 @@ package info.msxlaunchers.openmsx.launcher.related;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class RelatedGamesImplTest
 	@Mock ExtraDataGetter extraDataGetter;
 
 	@Test
-	public void test() throws FileNotFoundException, IOException
+	public void givenRepositoryInfoAndExtraData_whenFindRelated_thenReturnRelatedData() throws FileNotFoundException, IOException
 	{
 		Map<String,ExtraData> extraDataMap = new HashMap<>();
 		extraDataMap.put( "hash1", new ExtraData( 11, 2, 3, Genre.SHOOT_EM_UP_ALL.getValue(), 0, "a" ) );
@@ -62,6 +63,18 @@ public class RelatedGamesImplTest
 
 		relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash7" ).genre1( Genre.ADULT ).genre2( Genre.UNKNOWN ).msxGenID( 77 ).build() );
 		Assert.assertEquals( Arrays.asList( "Great Vampire" ), getMatchedGameNames( relatedGames ) );
+	}
+
+	@Test( expected = UnsupportedOperationException.class )
+	public void givenRepositoryInfoAndExtraData_whenFindRelatedAndAddToResult_thenThrowException() throws FileNotFoundException, IOException
+	{
+		Mockito.when( extraDataGetter.getExtraData() ).thenReturn( Collections.emptyMap() );
+
+		RelatedGamesImpl relatedGamesImpl = new RelatedGamesImpl( extraDataGetter, Collections.emptyMap() );
+
+		List<RelatedGame> relatedGames = relatedGamesImpl.findRelated( Game.name( "Name is irrelevant" ).sha1Code( "hash1" ).genre1( Genre.SHOOT_EM_UP_ALL ).genre2( Genre.UNKNOWN ).msxGenID( 11 ).build() );
+
+		relatedGames.add( new RelatedGame( "gameName", "company", "1990", 100 ) );
 	}
 
 	private List<String> getMatchedGameNames( List<RelatedGame> relatedGames )
