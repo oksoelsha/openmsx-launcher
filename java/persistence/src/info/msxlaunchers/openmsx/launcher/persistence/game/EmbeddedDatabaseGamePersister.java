@@ -20,10 +20,12 @@ import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
 import info.msxlaunchers.openmsx.launcher.data.backup.DatabaseBackup;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -370,4 +372,22 @@ final class EmbeddedDatabaseGamePersister implements GamePersister
 			throw (GamePersistenceException)lpe.getException();
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister#getRelatedGamesWithLauncherLinks(java.util.List)
+	 */
+	public List<RelatedGame> getRelatedGamesWithLauncherLinks( List<RelatedGame> relatedGames ) throws GamePersistenceException
+	{
+		Objects.requireNonNull( relatedGames );
+
+		try
+		{
+			return new GetRelatedGamesWithLauncherLinksAction( relatedGames ).execute( databaseFullPath ).getResult();
+		}
+		catch( LauncherPersistenceException lpe )
+		{
+			throw (GamePersistenceException)lpe.getException();
+		}
+	}
+
 }

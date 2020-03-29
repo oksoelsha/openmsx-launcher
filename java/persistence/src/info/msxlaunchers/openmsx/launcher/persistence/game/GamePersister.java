@@ -18,7 +18,9 @@ package info.msxlaunchers.openmsx.launcher.persistence.game;
 import info.msxlaunchers.openmsx.launcher.data.backup.DatabaseBackup;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -182,7 +184,7 @@ public interface GamePersister
 	Set<Game> moveGames( Set<Game> games, String oldDatabase, String newDatabase, ActionDecider actionDecider ) throws GamePersistenceException;
 
 	/**
-	 * Update machine name in the database from the given value to the given value
+	 * Updates machine name in the database from the given value to the given value
 	 * 
 	 * @param to Machine name to change to. Cannot be null
 	 * @param from Machine name to change from. If null, change all machine to the to value
@@ -192,4 +194,12 @@ public interface GamePersister
 	 * @throws GamePersistenceException
 	 */
 	int updateMachine( String to, String from, String database, boolean backupDatabases ) throws GamePersistenceException;
+
+	/**
+	 * Returns list of updates related games references populated with database item that links to the game in the launcher
+	 * 
+	 * @param relatedGames
+	 * @return
+	 */
+	List<RelatedGame> getRelatedGamesWithLauncherLinks( List<RelatedGame> relatedGames )  throws GamePersistenceException;
 }

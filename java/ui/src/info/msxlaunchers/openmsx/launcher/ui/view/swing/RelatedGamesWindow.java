@@ -17,6 +17,8 @@ package info.msxlaunchers.openmsx.launcher.ui.view.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -25,6 +27,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.List;
@@ -32,7 +36,9 @@ import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -43,12 +49,15 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.AbstractActionButton;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.HyperLink;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JTextFieldBorderless;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.images.Icons;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
@@ -69,6 +78,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private final ImageIcon noScreenshot;
 
 	private JComponent closeButton;
+	private ComponentOrientation orientation = null;
 
 	private static final Dimension CLOSE_BUTTON_SIZE = new Dimension(20, 19);
 	private static final Font NAME_FONT = new Font(null, Font.PLAIN, 17);
@@ -118,6 +128,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 
 		if(rightToLeft)
 		{
+			orientation = ComponentOrientation.RIGHT_TO_LEFT;
 			titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			closeButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			topPanel.add(titlePanel, BorderLayout.EAST);
@@ -125,6 +136,7 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 		}
 		else
 		{
+			orientation = ComponentOrientation.LEFT_TO_RIGHT;
 			titlePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			closeButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			topPanel.add(titlePanel, BorderLayout.WEST);
@@ -182,6 +194,15 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 						.icon(Icons.YOUTUBE.getImageIcon())
 						.tooltip(messages.get("SEARCH_ON_YOUTUBE"))
 						.build());
+				if(relatedGame.getDatabaseItem().isPresent())
+				{
+					JButtonIconWithAction<DatabaseItem> launcherButton = new JButtonIconWithAction<>(Icons.APPLICATION_16.getImageIcon(), relatedGame.getDatabaseItem().get());
+					launcherButton.setToolTipText(messages.get("LOCATE_IN_LAUNCHER"));
+					launcherButton.addActionListener(this);
+					iconsPanel.add(Box.createHorizontalStrut(5));
+					iconsPanel.add(launcherButton);
+				}
+
 				dataPanel.add(iconsPanel);
 
 				rowPanel.add(dataPanel);
@@ -205,6 +226,66 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 		setLocationRelativeTo(mainWindow);
 		greyoutBackground();
 		setVisible(true);
+	}
+
+	private class JButtonIconWithAction<T> extends JButton
+	{
+		final T actionType;
+		public JButtonIconWithAction(Icon icon, T actionType)
+		{
+			super(icon);
+			this.actionType = actionType;
+
+			setBorderPainted(false);
+			setContentAreaFilled(false);
+			setFocusPainted(false);
+			setOpaque(false);
+			setPreferredSize(new Dimension(16, 16));
+
+			addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent me) {}
+
+				@Override
+				public void mousePressed(MouseEvent me) {}
+
+				@Override
+				public void mouseExited(MouseEvent me) {
+					setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent me) {
+					setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent me) {}
+			});
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource() == closeButton)
+		{
+			reenableBackground();
+		}
+		else if(e.getSource() instanceof JButtonIconWithAction)
+		{
+			reenableBackground();
+			DatabaseItem databaseItem = ((DatabaseItem)((JButtonIconWithAction<?>)e.getSource()).actionType);
+			try
+			{
+				presenter.onRequestHighlightGameInLauncher( databaseItem );
+			}
+			catch(LauncherException le)
+			{
+				MessageBoxUtil.showErrorMessageBox(this, le, messages, orientation);
+			}
+		}
 	}
 
 	private void setAlternateBackgrounfColor(JPanel panel, boolean alternateColor)
@@ -237,16 +318,6 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 		g2d.dispose();
 
 		return new ImageIcon(bufferedImage);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		if(e.getSource() == closeButton)
-		{
-			reenableBackground();
-			dispose();
-		}
 	}
 
 	private static class CloseButton extends AbstractActionButton
@@ -304,5 +375,6 @@ public class RelatedGamesWindow extends JDialog implements ActionListener
 	private void reenableBackground()
 	{
 		mainWindow.getGlassPane().setVisible(false);
+		dispose();
 	}
 }

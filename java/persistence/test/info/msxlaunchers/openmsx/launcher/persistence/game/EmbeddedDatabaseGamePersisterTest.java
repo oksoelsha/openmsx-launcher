@@ -3,7 +3,9 @@ package info.msxlaunchers.openmsx.launcher.persistence.game;
 import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
 import info.msxlaunchers.openmsx.launcher.data.backup.DatabaseBackup;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
+import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.FDDMode;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.Genre;
 import info.msxlaunchers.openmsx.launcher.data.game.constants.InputDevice;
@@ -15,10 +17,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +51,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	private static final String database2 = "database2";
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_whenCreateDatabaseIsCalledWithNull_thenThrowException() throws GamePersistenceException
+	public void whenCreateDatabaseIsCalledWithNull_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -61,7 +67,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_whenCreateDatabaseIsCalledWithEmpty_thenThrowException() throws GamePersistenceException
+	public void whenCreateDatabaseIsCalledWithEmpty_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -77,7 +83,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenCreateDatabase_thenSuccess() throws GamePersistenceException
+	public void whenCreateDatabase_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -85,7 +91,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_whenCreateDatabaseIsCalledWithExistingDatabase_thenThrowException() throws GamePersistenceException
+	public void whenCreateDatabaseIsCalledWithExistingDatabase_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -103,7 +109,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_whenCreateDatabaseIsCalledWithInvalidDatabase_thenThrowException() throws GamePersistenceException
+	public void whenCreateDatabaseIsCalledWithInvalidDatabase_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -137,7 +143,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenGetDatabases_thenSuccess() throws GamePersistenceException
+	public void whenGetDatabases_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -158,7 +164,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenGameIsDuplicate_whenSaveGame_thenThrowException() throws GamePersistenceException
+	public void givenGameIsDuplicate_whenSaveGame_thenThrowException() throws GamePersistenceException
 	{
 		Game game = Game.name( "name" ).machine( "machine" ).romA( "romA" ).build();
 
@@ -178,7 +184,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenGameWithoutName_whenSaveGame_thenThrowException() throws GamePersistenceException
+	public void givenGameWithoutName_whenSaveGame_thenThrowException() throws GamePersistenceException
 	{
 		Game game = Game.machine( "machine" ).romA( "romA" ).build();
 
@@ -197,7 +203,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenGameWithoutMedia_whenSaveGame_thenThrowException() throws GamePersistenceException
+	public void givenGameWithoutMedia_whenSaveGame_thenThrowException() throws GamePersistenceException
 	{
 		Game game = Game.name( "name" ).machine( "machine" ).build();
 
@@ -216,7 +222,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenSaveGame_thenSuccess() throws GamePersistenceException
+	public void whenSaveGame_thenSuccess() throws GamePersistenceException
 	{
 		Game game1 = Game.name( "name" ).info( "info" ).machine( "machine" )
 				.romA( "romA" ).extensionRom( "extensionRom" ).romB( "romB" )
@@ -285,7 +291,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenInvalidGameField_whenSaveGame_thenThrowException() throws GamePersistenceException
+	public void givenInvalidGameField_whenSaveGame_thenThrowException() throws GamePersistenceException
 	{
 		//screen suffix must be at most 10 
 		Game game = Game.name( "name" ).machine( "machine" ).romA( "romA" ).screenshotSuffix( "qwertyuiopa" ).build();
@@ -306,7 +312,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenDeleteDatabase_thenSuccess() throws GamePersistenceException
+	public void whenDeleteDatabase_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -324,7 +330,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenNonExistingDatabase_whenDeleteDatabase_thenThrowException() throws GamePersistenceException
+	public void givenNonExistingDatabase_whenDeleteDatabase_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -340,7 +346,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenRenameDatabase_thenSuccess() throws GamePersistenceException
+	public void whenRenameDatabase_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -354,7 +360,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenNonExistingDatabase_whenRenameDatabase_thenThrowException() throws GamePersistenceException
+	public void givenNonExistingDatabase_whenRenameDatabase_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -370,7 +376,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenAlreadyExistingDatabase_whenRenameDatabase_thenThrowException() throws GamePersistenceException
+	public void givenAlreadyExistingDatabase_whenRenameDatabase_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -389,7 +395,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenRecreateDatabase_thenSuccess() throws GamePersistenceException
+	public void whenRecreateDatabase_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -407,7 +413,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenGetGames_thenSuccess() throws GamePersistenceException
+	public void whenGetGames_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -433,7 +439,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = UnsupportedOperationException.class )
-	public void test_whenModifyReturnValueOfGetGames_thenThrowException() throws GamePersistenceException
+	public void whenModifyReturnValueOfGetGames_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -456,7 +462,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenDeleteGames_thenSuccess() throws GamePersistenceException
+	public void whenDeleteGames_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -485,7 +491,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenNewGameWithDifferentName_whenUpdateGame_thenSuccess() throws GamePersistenceException
+	public void givenNewGameWithDifferentName_whenUpdateGame_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -571,7 +577,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenNewGameWithSameName_whenUpdateGame_thenSuccess() throws GamePersistenceException
+	public void givenNewGameWithSameName_whenUpdateGame_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -657,7 +663,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenNewGameWithoutName_whenUpdateGame_thenThrowException() throws GamePersistenceException
+	public void givenNewGameWithoutName_whenUpdateGame_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -678,7 +684,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenNewGameWithoutMedia_whenUpdateGame_thenThrowException() throws GamePersistenceException
+	public void givenNewGameWithoutMedia_whenUpdateGame_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -699,7 +705,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenNonexistingNewGame_whenUpdateGame_thenThrowException() throws GamePersistenceException
+	public void givenNonexistingNewGame_whenUpdateGame_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -720,7 +726,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_givenAlreadyExistingNewGame_whenUpdateGame_thenThrowException() throws GamePersistenceException
+	public void givenAlreadyExistingNewGame_whenUpdateGame_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -745,7 +751,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenUpdateGameExtraDataInDatabases_thenSuccess() throws GamePersistenceException
+	public void whenUpdateGameExtraDataInDatabases_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -819,7 +825,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenDuplicateGameInDestinationAndYesAllIsTrue_whenMoveGames_thenActionDeciderPromptForActionIsCalled() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndYesAllIsTrue_whenMoveGames_thenActionDeciderPromptForActionIsCalled() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -847,7 +853,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenDuplicateGameInDestinationAndYesAllIsFalse_whenMoveGames_thenActionDeciderPromptForActionIsNeverCalled() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndYesAllIsFalse_whenMoveGames_thenActionDeciderPromptForActionIsNeverCalled() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -874,7 +880,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenDuplicateGameInDestinationAndNoIsTrueAndNoAllFalse_whenMoveGames_thenActionDeciderPromptForActionIsCalled() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndNoIsTrueAndNoAllFalse_whenMoveGames_thenActionDeciderPromptForActionIsCalled() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -902,7 +908,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenDuplicateGameInDestinationAndNoAllTrue_whenMoveGames_thenActionDeciderPromptForActionIsNeverCalled() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndNoAllTrue_whenMoveGames_thenActionDeciderPromptForActionIsNeverCalled() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -929,7 +935,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenDuplicateGameInDestinationAndYesTrue_whenMoveGames_thenGameIsOverriddenInDestination() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndYesTrue_whenMoveGames_thenGameIsOverriddenInDestination() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -999,7 +1005,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenDuplicateGameInDestinationAndNoTrue_whenMoveGames_thenGameIsNotOverriddenInDestination() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndNoTrue_whenMoveGames_thenGameIsNotOverriddenInDestination() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1058,7 +1064,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenDuplicateGameInDestinationAndCancelTrue_whenMoveGames_thenGamesAreNotMoved() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndCancelTrue_whenMoveGames_thenGamesAreNotMoved() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1120,7 +1126,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = RuntimeException.class )
-	public void test_givenDuplicateGameInDestinationAndNoAction_whenMoveGames_thenThrowException() throws GamePersistenceException
+	public void givenDuplicateGameInDestinationAndNoAction_whenMoveGames_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1152,7 +1158,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenNoDuplicateGamesInDestination_whenMoveGames_thenAllGamesAreMoved() throws GamePersistenceException
+	public void givenNoDuplicateGamesInDestination_whenMoveGames_thenAllGamesAreMoved() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1216,7 +1222,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenBackupDatabase_thenSuccess() throws GamePersistenceException
+	public void whenBackupDatabase_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1228,7 +1234,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_whenGetDatabaseBackups_thenSuccess() throws GamePersistenceException, InterruptedException
+	public void whenGetDatabaseBackups_thenSuccess() throws GamePersistenceException, InterruptedException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1250,7 +1256,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenNonExistentDatabase_whenGetDatabaseBackups_thenReturnEmptySet() throws GamePersistenceException
+	public void givenNonExistentDatabase_whenGetDatabaseBackups_thenReturnEmptySet() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1260,7 +1266,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = UnsupportedOperationException.class )
-	public void test_whenGetDatabaseBackups_thenSetCannotBeModified() throws GamePersistenceException
+	public void whenGetDatabaseBackups_thenSetCannotBeModified() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1274,7 +1280,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	 * games in the game_backup will be deleted by cascade.
 	 */
 	@Test
-	public void test_whenDeleteDatabaseBackup_thenBackupIsDeleted() throws SQLException, GamePersistenceException
+	public void whenDeleteDatabaseBackup_thenBackupIsDeleted() throws SQLException, GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1346,7 +1352,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	 * databases and their backed up games will be deleted by cascade.
 	 */
 	@Test
-	public void test_whenDeleteGamesDatabase_thenBackedUpDatabaseAndGamesAreDeleted() throws SQLException, GamePersistenceException
+	public void whenDeleteGamesDatabase_thenBackedUpDatabaseAndGamesAreDeleted() throws SQLException, GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1433,7 +1439,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test
-	public void test_givenExistingBackup_whenRestoreDatabaseBackup_thenSuccess() throws GamePersistenceException
+	public void givenExistingBackup_whenRestoreDatabaseBackup_thenSuccess() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1532,7 +1538,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_whenRestoreNonExistentDatabaseBackup_thenThrowException() throws GamePersistenceException
+	public void whenRestoreNonExistentDatabaseBackup_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1548,7 +1554,7 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 	}
 
 	@Test( expected = GamePersistenceException.class )
-	public void test_whenBackupDatabaseMoreThanLimit_thenThrowException() throws GamePersistenceException
+	public void whenBackupDatabaseMoreThanLimit_thenThrowException() throws GamePersistenceException
 	{
 		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
 
@@ -1706,6 +1712,48 @@ public class EmbeddedDatabaseGamePersisterTest extends DatabaseTest
 				assertEquals( "machine2", game.getMachine() );
 			}
 		}
+	}
+
+	@Test
+	public void whenGetRelatedGamesWithLauncherLinks_thenSuccess() throws GamePersistenceException
+	{
+		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
+
+		persister.createDatabase( database1 );
+
+		Game game1 = Game.name( "name1" ).machine( "machine" ).romA( "rom1" ).msxGenID( 11 ).build();
+		Game game2 = Game.name( "name2" ).machine( "machine" ).romA( "rom2" ).msxGenID( 22 ).build();
+		Game game3 = Game.name( "name3" ).machine( "machine" ).romA( "rom3" ).msxGenID( 33 ).build();
+		Game game4 = Game.name( "name4" ).machine( "machine" ).romA( "rom4" ).msxGenID( 44 ).build();
+
+		Set<Game> games = Stream.of( game1, game2, game3, game4 ).collect( Collectors.toSet() );
+
+		persister.saveGames( games, database1 );
+
+		RelatedGame relatedGame1 = new RelatedGame( "gameName1", "company1", "1990", 22 );
+		RelatedGame relatedGame2 = new RelatedGame( "gameName2", "company2", "1992", 33 );
+		RelatedGame relatedGame3 = new RelatedGame( "gameName3", "company3", "1993", 44 );
+		RelatedGame relatedGame4 = new RelatedGame( "gameName4", "company4", "1983", 55 );
+
+		List<RelatedGame> relatedGames = Arrays.asList( relatedGame1, relatedGame2, relatedGame3, relatedGame4 );
+
+		List<RelatedGame> updatedRelatedGames = persister.getRelatedGamesWithLauncherLinks( relatedGames );
+
+		assertEquals( 4, updatedRelatedGames.size() );
+		assertEquals( new DatabaseItem( "name2", database1 ), updatedRelatedGames.get( 0 ).getDatabaseItem().get() );
+		assertEquals( new DatabaseItem( "name3", database1 ), updatedRelatedGames.get( 1 ).getDatabaseItem().get() );
+		assertEquals( new DatabaseItem( "name4", database1 ), updatedRelatedGames.get( 2 ).getDatabaseItem().get() );
+		assertFalse( updatedRelatedGames.get( 3 ).getDatabaseItem().isPresent() );
+	}
+
+	@Test( expected = UnsupportedOperationException.class )
+	public void whenGetRelatedGamesWithLauncherLinks_thenListCannotBeModified() throws GamePersistenceException
+	{
+		EmbeddedDatabaseGamePersister persister = new EmbeddedDatabaseGamePersister( dbLocation, gameBuilder );
+
+		List<RelatedGame> updatedRelatedGames = persister.getRelatedGamesWithLauncherLinks( Collections.emptyList() );
+
+		updatedRelatedGames.add( new RelatedGame( "gameName", "company", "1985", 1 ) );
 	}
 
 	private void initializeDatabasesForMachineUpdateTests() throws GamePersistenceException

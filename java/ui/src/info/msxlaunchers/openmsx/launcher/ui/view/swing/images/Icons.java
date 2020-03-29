@@ -28,6 +28,7 @@ import javax.swing.ImageIcon;
  */
 public enum Icons
 {
+	APPLICATION_16( "icon-16" ),
 	APPLICATION_32( "icon-32" ),
 	APPLICATION_64( "icon-64" ),
 	BACKGROUND( "bkgrd" ),

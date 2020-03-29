@@ -24,10 +24,13 @@ import java.util.Map;
 import com.google.inject.Inject;
 
 import info.msxlaunchers.openmsx.common.ExternalLinksUtils;
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
+import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
 import info.msxlaunchers.openmsx.launcher.persistence.settings.SettingsPersister;
 import info.msxlaunchers.openmsx.launcher.related.RelatedGamesFactory;
 import info.msxlaunchers.openmsx.launcher.ui.view.RelatedGamesView;
@@ -44,14 +47,19 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 	private final RelatedGamesFactory relatedGamesFactory;
 	private final RelatedGamesView view;
 	private final String scrrenshotsPath;
+	private final GamePersister gamePersister;
+	private final MainPresenter mainPresenter;
 
 	@Inject
-	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, SettingsPersister settingsPersister )
+	RelatedGamesPresenterImpl( RelatedGamesFactory relatedGamesFactory, RelatedGamesView view, SettingsPersister settingsPersister,
+			GamePersister gamePersister, MainPresenter mainPresenter )
 			throws IOException
 	{
 		this.relatedGamesFactory = relatedGamesFactory;
 		this.view = view;
 		this.scrrenshotsPath = settingsPersister.getSettings().getScreenshotsFullPath();
+		this.gamePersister = gamePersister;
+		this.mainPresenter = mainPresenter;
 	}
 
 	/* (non-Javadoc)
@@ -71,7 +79,24 @@ final class RelatedGamesPresenterImpl implements RelatedGamesPresenter
 			throw new LauncherException( LauncherExceptionCode.ERR_IO );
 		}
 
+		try
+		{
+			relatedGames = gamePersister.getRelatedGamesWithLauncherLinks( relatedGames );
+		}
+		catch ( GamePersistenceException gpe )
+		{
+			throw new LauncherException( LauncherExceptionCode.ERR_IO );
+		}
+
 		view.displayRelatedGamesScreen( game.getName(), relatedGames, currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.RelatedGamesPresenter#onRequestHiglightGameInLauncher(info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem)
+	 */
+	public void onRequestHighlightGameInLauncher( DatabaseItem databaseItem ) throws LauncherException
+	{
+		mainPresenter.onSelectDatabaseItem( databaseItem );
 	}
 
 	/* (non-Javadoc)

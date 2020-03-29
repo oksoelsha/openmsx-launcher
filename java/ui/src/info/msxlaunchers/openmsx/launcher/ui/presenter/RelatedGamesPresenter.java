@@ -18,6 +18,7 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 import java.nio.file.Path;
 import java.util.Map;
 
+import info.msxlaunchers.openmsx.launcher.data.game.DatabaseItem;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.data.game.RelatedGame;
 import info.msxlaunchers.openmsx.launcher.data.repository.RepositoryGame;
@@ -43,6 +44,14 @@ public interface RelatedGamesPresenter
 	 */
 	void onRequestRelatedGamesScreen( Game game, Map<String,RepositoryGame> repositoryInfoMap, Language currentLanguage, boolean currentRightToLeft )
 			throws LauncherException;
+
+	/**
+	 * Called when user clicks on icon to find related game in the launcher
+	 * 
+	 * @param databaseItem Selected related game database item
+	 * @throws LauncherException
+	 */
+	void onRequestHighlightGameInLauncher( DatabaseItem databaseItem ) throws LauncherException;
 
 	/**
 	 * Returns path to the screenshot of the given game Generation MSX id

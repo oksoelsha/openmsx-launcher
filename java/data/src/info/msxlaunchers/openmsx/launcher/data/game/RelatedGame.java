@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.data.game;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Container for a related game
@@ -30,13 +31,20 @@ public final class RelatedGame
 	private final String company;
 	private final String year;
 	private final int msxGenId;
+	private final DatabaseItem databaseItem;
 
 	public RelatedGame( String gameName, String company, String year, int msxGenId )
+	{
+		this( gameName, company, year, msxGenId, null );
+	}
+
+	public RelatedGame( String gameName, String company, String year, int msxGenId, DatabaseItem databaseItem )
 	{
 		this.gameName = Objects.requireNonNull( gameName );
 		this.company = company;
 		this.year = year;
 		this.msxGenId = msxGenId;
+		this.databaseItem = databaseItem;
 	}
 
 	public String getGameName()
@@ -57,6 +65,11 @@ public final class RelatedGame
 	public int getMSXGenId()
 	{
 		return msxGenId;
+	}
+
+	public Optional<DatabaseItem> getDatabaseItem()
+	{
+		return Optional.ofNullable( databaseItem );
 	}
 
 	@Override
