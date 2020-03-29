@@ -16,6 +16,5 @@ public class BasicTestModule  extends AbstractModule
 	protected void configure()
 	{
 		bind( String.class ).annotatedWith( Names.named( "UserDataDirectory" ) ).toInstance( userDataDirectory );
-		bind( String.class ).annotatedWith( Names.named( "GenerationMSXURL" ) ).toInstance( "GENERATION_MSX_URL" );
 	}
 }
