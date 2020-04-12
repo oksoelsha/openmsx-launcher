@@ -83,7 +83,6 @@ public class XMLRepositoryDataTest
 		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
 
 		Mockito.when( xmlProcessor.getDumpCodes( xmlFile1, "code" ) ).thenReturn( Collections.emptySet() );
-		Mockito.when( xmlProcessor.getDumpCodes( xmlFile2, "code" ) ).thenReturn( Collections.emptySet() );
 
 		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
 
