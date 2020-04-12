@@ -46,7 +46,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -339,14 +338,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		}
 		else if(source == openMSXFullPathBrowseButton)
 		{
-			JFileChooser chooser = new JFileChooser();
-		    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		    chooser.setAcceptAllFileFilterUsed(false);
-			int returnVal = chooser.showOpenDialog(this);
-			if (returnVal == JFileChooser.APPROVE_OPTION)
-			{
-				openMSXFullPathTextField.setText(chooser.getSelectedFile().getAbsolutePath());
-			}
+			WindowUtils.browseForDirectory(this, openMSXFullPathTextField);
 		}
 		else if(source == openMSXFullPathDetectButton)
 		{
@@ -354,14 +346,7 @@ public class SettingsWindow  extends JDialog implements ActionListener
 		}
 		else if(source == screenshotsFullPathBrowseButton)
 		{
-			JFileChooser chooser = new JFileChooser();
-		    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		    chooser.setAcceptAllFileFilterUsed(false);
-			int returnVal = chooser.showOpenDialog(this);
-			if (returnVal == JFileChooser.APPROVE_OPTION)
-			{
-				screenshotsFullPathTextField.setText(chooser.getSelectedFile().getAbsolutePath());
-			}
+			WindowUtils.browseForDirectory(this, screenshotsFullPathTextField);
 		}
 	}
 

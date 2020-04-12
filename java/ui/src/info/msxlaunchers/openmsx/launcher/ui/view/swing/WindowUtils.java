@@ -81,6 +81,23 @@ public class WindowUtils
 	}
 
 	/**
+	 * 
+	 * @param window
+	 * @param field
+	 */
+	public static void browseForDirectory(JDialog window, JTextField field)
+	{
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+
+		if(chooser.showOpenDialog(window) == JFileChooser.APPROVE_OPTION)
+		{
+			field.setText(chooser.getSelectedFile().getAbsolutePath());
+		}
+	}
+
+	/**
 	 * Truncate string if its width is longer than given available width and add ellipsis, otherwise return same string
 	 * 
 	 * @param string String to truncate if longer than available width

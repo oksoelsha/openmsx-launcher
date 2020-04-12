@@ -367,6 +367,11 @@ public interface MainPresenter
 	void onRequestPatcherScreen();
 
 	/**
+	 * Called when user requests the LHA decompressor screen
+	 */
+	void onRequestLHADecompressorScreen();
+
+	/**
 	 * Called when user requests the machine update screen
 	 */
 	void onRequestMachineUpdateScreen() throws LauncherException;

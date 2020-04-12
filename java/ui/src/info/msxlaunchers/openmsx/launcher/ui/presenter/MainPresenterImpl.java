@@ -96,6 +96,7 @@ final class MainPresenterImpl implements MainPresenter
 	private final MachineUpdatePresenterFactory machineUpdatePresenterFactory;
 	private final FeedServicePresenter feedServicePresenter;
 	private final Provider<RelatedGamesPresenter> relatedGamesPresenterFactory;
+	private final Provider<LHADecompressorPresenter> lhaDecompressorPresenterFactory;
 
 	private static final String SCREENSHOT_EXT = ".png";
 	private static final String SCREENSHOT1_SUFFIX = "a";
@@ -144,7 +145,8 @@ final class MainPresenterImpl implements MainPresenter
 			Provider<PatcherPresenter> patcherPresenterFactory,
 			MachineUpdatePresenterFactory machineUpdatePresenterFactory,
 			FeedServicePresenter feedServicePresenter,
-			Provider<RelatedGamesPresenter> relatedGamesPresenterFactory ) throws IOException
+			Provider<RelatedGamesPresenter> relatedGamesPresenterFactory,
+			Provider<LHADecompressorPresenter> lhaDecompressorPresenterFactory ) throws IOException
 	{
 		this.view = Objects.requireNonNull( view );
 		this.settingsPresenterFactory = Objects.requireNonNull( settingsPresenterFactory );
@@ -167,6 +169,7 @@ final class MainPresenterImpl implements MainPresenter
 		this.machineUpdatePresenterFactory = Objects.requireNonNull( machineUpdatePresenterFactory );
 		this.feedServicePresenter = Objects.requireNonNull( feedServicePresenter );
 		this.relatedGamesPresenterFactory = Objects.requireNonNull( relatedGamesPresenterFactory );
+		this.lhaDecompressorPresenterFactory = Objects.requireNonNull( lhaDecompressorPresenterFactory );
 
 		try
 		{
@@ -1102,6 +1105,15 @@ final class MainPresenterImpl implements MainPresenter
 	public void onRequestPatcherScreen()
 	{
 		patcherPresenterFactory.get().onRequestIPSPatcherScreen( currentLanguage, currentRightToLeft );
+	}
+
+	/* (non-Javadoc)
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestLHADecompressorScreen()
+	 */
+	@Override
+	public void onRequestLHADecompressorScreen()
+	{
+		lhaDecompressorPresenterFactory.get().onRequestLHADecompressorScreen( currentLanguage, currentRightToLeft );
 	}
 
 	/* (non-Javadoc)

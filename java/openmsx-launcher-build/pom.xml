@@ -120,5 +120,6 @@
 		<module>../patch</module>
 		<module>../feed</module>
 		<module>../related</module>
+		<module>../decompressor</module>
 	</modules>
 </project>

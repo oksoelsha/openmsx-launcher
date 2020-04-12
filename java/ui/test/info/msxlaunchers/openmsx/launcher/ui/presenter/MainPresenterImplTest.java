@@ -68,6 +68,7 @@ public class MainPresenterImplTest
 	@Mock MachineUpdatePresenterFactory machineUpdatePresenterFactory;
 	@Mock FeedServicePresenter feedServicePresenter;
 	@Mock Provider<RelatedGamesPresenter> relatedGamesPresenterFactory;
+	@Mock Provider<LHADecompressorPresenter> lhaDecompressorPresenter;
 	@Mock Provider<UpdateCheckerPresenter> updateCheckerPresenterFactory;
 	@Mock SettingsPersister settingsPersister;
 	@Mock LauncherPersistence launcherPersistence;
@@ -103,7 +104,7 @@ public class MainPresenterImplTest
 		presenter = new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory,
-				feedServicePresenter, relatedGamesPresenterFactory );
+				feedServicePresenter, relatedGamesPresenterFactory, lhaDecompressorPresenter );
 	}
 
 	@Test( expected = IOException.class )
@@ -114,7 +115,7 @@ public class MainPresenterImplTest
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory,
-				feedServicePresenter, relatedGamesPresenterFactory );
+				feedServicePresenter, relatedGamesPresenterFactory, lhaDecompressorPresenter );
 	}
 
 	@Test
@@ -126,7 +127,7 @@ public class MainPresenterImplTest
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory,
-				feedServicePresenter, relatedGamesPresenterFactory );
+				feedServicePresenter, relatedGamesPresenterFactory, lhaDecompressorPresenter );
 	}
 
 	@Test
@@ -139,7 +140,7 @@ public class MainPresenterImplTest
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory,
-				feedServicePresenter, relatedGamesPresenterFactory );
+				feedServicePresenter, relatedGamesPresenterFactory, lhaDecompressorPresenter );
 	}
 
 	@Test
@@ -152,7 +153,7 @@ public class MainPresenterImplTest
 		new MainPresenterImpl( view, settingsPresenterFactory, profileEditingPresenterFactory, scannerPresenterFactor, filterEditingPresenterFactory, gamePropertiesPresenterFactory,
 				blueMSXLauncherImporterPresenterFactory, databaseManagerPresenterFactory, activityViewerPresenterFactory, updateCheckerPresenterFactory, launcherPersistence, emulatorStarter,
 				extraDataGetter, extraDataDirectory, repositoryData, fileLocator, draggedAndDroppedGamesPresenterFactory, patcherPresenterFactory, machineUpdatePresenterFactory,
-				feedServicePresenter, relatedGamesPresenterFactory );
+				feedServicePresenter, relatedGamesPresenterFactory, lhaDecompressorPresenter );
 	}
 
 	@Test

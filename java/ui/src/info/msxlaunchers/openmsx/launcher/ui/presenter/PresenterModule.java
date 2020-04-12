@@ -45,5 +45,6 @@ public class PresenterModule extends AbstractModule
 		install( new FactoryModuleBuilder().implement( MachineUpdatePresenter.class, MachineUpdatePresenterImpl.class ).build( MachineUpdatePresenterFactory.class ) );
 		bind( FeedServicePresenter.class ).to( FeedServicePresenterImpl.class );
 		bind( RelatedGamesPresenter.class ).to( RelatedGamesPresenterImpl.class );
+		bind( LHADecompressorPresenter.class ).to( LHADecompressorPresenterImpl.class );
 	}
 }

@@ -134,6 +134,7 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private JMenuItem databaseManager;
 	private JMenuItem activityViewer;
 	private JMenuItem patcher;
+	private JMenuItem lhaDecompressor;
 	private JMenu helpMenu;
 	private JMenuItem helpAbout;
 	private JMenuItem helpFile;
@@ -378,6 +379,10 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		patcher.setIcon(Icons.PATCH.getImageIcon());
 		patcher.addActionListener(event -> onRequestPatcherScreen());
 		toolsMenu.add(patcher);
+
+		lhaDecompressor = new JMenuItem();
+		lhaDecompressor.addActionListener(event -> onRequestLHADecompressorScreen());
+		toolsMenu.add(lhaDecompressor);
 
 		//help menu
 		helpMenu = new JMenu();
@@ -722,6 +727,8 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 		activityViewer.setMnemonic(KeyStroke.getKeyStroke(messages.get("ACTIVITY_VIEWER_MNEMONIC")).getKeyCode());
 		patcher.setText(messages.get("PATCH_CENTER") + "...");
 		patcher.setMnemonic(KeyStroke.getKeyStroke(messages.get("PATCH_CENTER_MNEMONIC")).getKeyCode());
+		lhaDecompressor.setText(messages.get("LHA_DECOMPRESSOR") + "...");
+		lhaDecompressor.setMnemonic(KeyStroke.getKeyStroke(messages.get("LHA_DECOMPRESSOR_MNEMONIC")).getKeyCode());
 		helpMenu.setText(messages.get("HELP"));
 		helpMenu.setMnemonic(KeyStroke.getKeyStroke(messages.get("HELP_MNEMONIC")).getKeyCode());
 		helpFile.setText(messages.get("HELP"));
@@ -1427,6 +1434,11 @@ public class MainWindow extends JFrame implements ActionListener, WindowFocusLis
 	private void onRequestPatcherScreen()
 	{
 		presenter.onRequestPatcherScreen();
+	}
+
+	private void onRequestLHADecompressorScreen()
+	{
+		presenter.onRequestLHADecompressorScreen();
 	}
 
 	private void onRequestHelpFile()

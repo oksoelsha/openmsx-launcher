@@ -52,6 +52,9 @@ public class FileTypeUtilsTest
 	private String ips = "ips.IPS";
 	private String ups = "ups.ups";
 
+	private String lha = "lha.LHA";
+	private String lzh = "lzh.lzh";
+
 	private String non = "non.non";
 
 	@Test
@@ -100,6 +103,9 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isROM( file ) );
 
 		file = new File( ips );
+		assertFalse( FileTypeUtils.isROM( file ) );
+
+		file = new File( lha );
 		assertFalse( FileTypeUtils.isROM( file ) );
 	}
 
@@ -155,6 +161,9 @@ public class FileTypeUtilsTest
 
 		file = new File( ips );
 		assertFalse( FileTypeUtils.isDisk( file ) );
+
+		file = new File( lzh );
+		assertFalse( FileTypeUtils.isDisk( file ) );
 	}
 
 	@Test
@@ -188,6 +197,9 @@ public class FileTypeUtilsTest
 
 		file = new File( ips );
 		assertFalse( FileTypeUtils.isTape( file ) );
+
+		file = new File( lha );
+		assertFalse( FileTypeUtils.isTape( file ) );
 	}
 
 	@Test
@@ -218,6 +230,9 @@ public class FileTypeUtilsTest
 
 		file = new File( ips );
 		assertFalse( FileTypeUtils.isHarddisk( file ) );
+
+		file = new File( lzh );
+		assertFalse( FileTypeUtils.isHarddisk( file ) );
 	}
 
 	@Test
@@ -247,6 +262,9 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 
 		file = new File( ips );
+		assertFalse( FileTypeUtils.isLaserdisc( file ) );
+
+		file = new File( lzh );
 		assertFalse( FileTypeUtils.isLaserdisc( file ) );
 	}
 
@@ -281,6 +299,9 @@ public class FileTypeUtilsTest
 
 		file = new File( ips );
 		assertFalse( FileTypeUtils.isZIP( file ) );
+
+		file = new File( lha );
+		assertFalse( FileTypeUtils.isZIP( file ) );
 	}
 
 	@Test
@@ -304,6 +325,9 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isXML( file ) );
 
 		file = new File( ips );
+		assertFalse( FileTypeUtils.isXML( file ) );
+
+		file = new File( lzh );
 		assertFalse( FileTypeUtils.isXML( file ) );
 	}
 
@@ -335,8 +359,47 @@ public class FileTypeUtilsTest
 
 		file = new File( xml );
 		assertFalse( FileTypeUtils.isPatch( file ) );
+
+		file = new File( lha );
+		assertFalse( FileTypeUtils.isPatch( file ) );
 	}
 	
+	@Test
+	public void testIsLHA()
+	{
+		File file;
+
+		file = null;
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( "/" );
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( ips );
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( ups );
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( tapeCasUpper );
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( harddiskUpper );
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( zip );
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( xml );
+		assertFalse( FileTypeUtils.isLHA( file ) );
+
+		file = new File( lha );
+		assertTrue( FileTypeUtils.isLHA( file ) );
+
+		file = new File( lzh );
+		assertTrue( FileTypeUtils.isLHA( file ) );
+	}
+
 	@Test
 	public void testOtherType()
 	{
@@ -350,6 +413,7 @@ public class FileTypeUtilsTest
 		assertFalse( FileTypeUtils.isZIP( file ) );
 		assertFalse( FileTypeUtils.isXML( file ) );
 		assertFalse( FileTypeUtils.isPatch( file ) );
+		assertFalse( FileTypeUtils.isLHA( file ) );
 	}
 
 	@Test
@@ -520,5 +584,26 @@ public class FileTypeUtilsTest
 		Set<String> zipExtensions = FileTypeUtils.getZIPExtensions();
 
 		zipExtensions.add( "cannot-add" );
+	}
+
+	@Test
+	public void testGetLHAExtensions()
+	{
+		Set<String> lhaExtensions = FileTypeUtils.getLHAExtensions();
+
+		//there are currently two LHA extensions supported
+		assertEquals( 2, lhaExtensions.size() );
+
+		//check the LHA extensions
+		assertTrue( lhaExtensions.contains( "lha" ) );
+		assertTrue( lhaExtensions.contains( "lzh" ) );
+	}
+
+	@Test( expected = UnsupportedOperationException.class )
+	public void testUnmodifiableGetLHAExtensions()
+	{
+		Set<String> lhaExtensions = FileTypeUtils.getLHAExtensions();
+
+		lhaExtensions.add( "cannot-add" );
 	}
 }

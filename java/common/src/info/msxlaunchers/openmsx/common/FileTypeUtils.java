@@ -37,6 +37,7 @@ public final class FileTypeUtils
 	private static final Set<String> zipExtensions = getUnmodifiableSet( "zip", "gz" );
 	private static final Set<String> xmlExtension = getUnmodifiableSet( "xml" );
 	private static final Set<String> patchExtensions = getUnmodifiableSet( "ips", "ups" );
+	private static final Set<String> lhaExtensions = getUnmodifiableSet( "lha", "lzh" );
 
 	public static final long MAX_DISK_FILE_SIZE = 737280;
 
@@ -126,6 +127,17 @@ public final class FileTypeUtils
 	public static boolean isPatch( File file )
 	{
 		return isType( file, patchExtensions );
+	}
+
+	/**
+	 * Returns if the given file is a compressed LHA file based on its extension
+	 * 
+	 * @param file File
+	 * @return true if file is an LHA compressed file, false otherwise
+	 */
+	public static boolean isLHA( File file )
+	{
+		return isType( file, lhaExtensions );
 	}
 
 	/**
@@ -252,6 +264,16 @@ public final class FileTypeUtils
 	public static Set<String> getPatchExtensions()
 	{
 		return patchExtensions;
+	}
+
+	/**
+	 * Returns set containing LHA file extensions
+	 * 
+	 * @return Non-modifiable set containing LHA file extensions
+	 */
+	public static Set<String> getLHAExtensions()
+	{
+		return lhaExtensions;
 	}
 
 	private static Set<String> getUnmodifiableSet( String...extensions )
