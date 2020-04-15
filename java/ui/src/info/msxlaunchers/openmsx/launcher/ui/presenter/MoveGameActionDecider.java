@@ -15,8 +15,8 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
+import info.msxlaunchers.openmsx.common.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.ui.view.MainView;
 
 /**

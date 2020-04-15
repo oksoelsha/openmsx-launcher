@@ -93,7 +93,7 @@
 		</dependency>
 		<dependency>
 			<groupId>info.msxlaunchers.openmsx</groupId>
-			<artifactId>decompressor</artifactId>
+			<artifactId>extractor</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<dependency>

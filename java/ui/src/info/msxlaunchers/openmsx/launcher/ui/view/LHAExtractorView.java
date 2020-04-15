@@ -18,16 +18,16 @@ package info.msxlaunchers.openmsx.launcher.ui.view;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 
 /**
- * Interface for LHA/LZH Decompressor UI View
+ * Interface for LHA/LZH Extractor UI View
  * 
  * @since v1.14
  * @author Sam Elsharif
  *
  */
-public interface LHADecompressorView
+public interface LHAExtractorView
 {
 	/**
-	 * Displays screen to decompress files
+	 * Displays screen to extract from LHA/LZH files
 	 * 
 	 * @param language Language
 	 * @param rightToLeft Flag to determine screen orientation based on language
@@ -35,9 +35,12 @@ public interface LHADecompressorView
 	void displayScreen( Language language, boolean rightToLeft );
 
 	/**
-	 * Show the replacement confirmation dialogue when the target file already exists
+	 * Displays Action Decider screen to ask the user to decide how to proceed when an extracted file exists in the target directory
 	 * 
-	 * @return True if user clicked Yes to replace, false otherwise
+	 * @param extractedFilename Name of extracted file to show in the message
+	 * @param language Language
+	 * @param rightToLeft Flag to determine screen orientation based on language
+	 * @return A 0-based integer that represents the desired action, or -1 to mean that the decision operation was cancelled.
 	 */
-	boolean confirmTargetFileReplacement();
+	int displayAndGetActionDecider( String extractedFilename, Language language, boolean rightToLeft );
 }

@@ -367,9 +367,9 @@ public interface MainPresenter
 	void onRequestPatcherScreen();
 
 	/**
-	 * Called when user requests the LHA decompressor screen
+	 * Called when user requests the LHA extractor screen
 	 */
-	void onRequestLHADecompressorScreen();
+	void onRequestLHAExtractorScreen();
 
 	/**
 	 * Called when user requests the machine update screen

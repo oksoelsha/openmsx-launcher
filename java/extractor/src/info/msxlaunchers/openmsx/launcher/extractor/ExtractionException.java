@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.decompressor;
+package info.msxlaunchers.openmsx.launcher.extractor;
 
 /**
- * Exception class for Decompressor exceptions
+ * Exception class for Extractor exceptions
  * 
  * @author Sam Elsharif
  * @since v1.14
  */
-public final class DecompressionException extends Exception
+public final class ExtractionException extends Exception
 {
 	private static final long serialVersionUID = -1137534938102354107L;
-	private final DecompressorExceptionIssue issue;
+	private final ExtractorExceptionIssue issue;
 
-	DecompressionException( DecompressorExceptionIssue issue )
+	ExtractionException( ExtractorExceptionIssue issue )
 	{
 		this.issue = issue;
 	}
 
-	public DecompressorExceptionIssue getIssue()
+	public ExtractorExceptionIssue getIssue()
 	{
 		return issue;
 	}

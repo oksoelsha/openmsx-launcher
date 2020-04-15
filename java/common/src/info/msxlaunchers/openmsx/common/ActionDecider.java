@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.persistence.game;
+package info.msxlaunchers.openmsx.common;
 
 /**
  * Interface to provide actions needed during an interactive operation

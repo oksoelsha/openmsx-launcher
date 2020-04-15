@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.msxlaunchers.openmsx.launcher.decompressor;
+package info.msxlaunchers.openmsx.launcher.extractor;
+
+import com.google.inject.AbstractModule;
 
 /**
- * Enum class to list all Decompressor exception issues
  * 
- * @author Sam Elsharif
  * @since v1.14
+ * @author Sam Elsharif
  */
-public enum DecompressorExceptionIssue
+public class ExtractorModule extends AbstractModule
 {
-	COMPRESSED_FILE_NOT_FOUND,
-	IO,
+	@Override 
+	protected void configure()
+	{
+		bind( Extractor.class ).to( LHAExtractor.class );
+	}
 }

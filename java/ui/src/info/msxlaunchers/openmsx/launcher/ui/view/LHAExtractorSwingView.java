@@ -15,27 +15,31 @@
  */
 package info.msxlaunchers.openmsx.launcher.ui.view;
 
+import java.util.Map;
+
 import com.google.inject.Inject;
 
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.LHADecompressorPresenter;
-import info.msxlaunchers.openmsx.launcher.ui.view.swing.LHADecompressorWindow;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.LHAExtractorPresenter;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.LHAExtractorWindow;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
+import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplayFactory;
 
 /**
- * Swing-based implementation of <code>LHADecompressorView</code>
+ * Swing-based implementation of <code>LHAExtractorView</code>
  * 
  * @since v1.14
  * @author Sam Elsharif
  *
  */
-class LHADecompressorSwingView implements LHADecompressorView
+class LHAExtractorSwingView implements LHAExtractorView
 {
-	private final LHADecompressorPresenter presenter;
+	private final LHAExtractorPresenter presenter;
 
-	LHADecompressorWindow window = null;
+	LHAExtractorWindow window = null;
 
 	@Inject
-	LHADecompressorSwingView( LHADecompressorPresenter presenter )
+	LHAExtractorSwingView( LHAExtractorPresenter presenter )
 	{
 		this.presenter = presenter;
 	}
@@ -46,17 +50,18 @@ class LHADecompressorSwingView implements LHADecompressorView
 	@Override
 	public void displayScreen( Language language, boolean rightToLeft )
 	{
-		window = new LHADecompressorWindow( presenter, language, rightToLeft );
+		window = new LHAExtractorWindow( presenter, language, rightToLeft );
 
 		window.displayScreen();
 	}
 
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.view.PatcherView#confirmTargetFileReplacement()
-	 */
 	@Override
-	public boolean confirmTargetFileReplacement()
+	public int displayAndGetActionDecider( String extractedFilename, Language language, boolean rightToLeft )
 	{
-		return window.targetFileReplacementIsConfirmed();
+		//TODO once I merge Swing classes with the views the following will be unnecessary
+		Map<String,String> messages = LanguageDisplayFactory.getDisplayMessages(LHAExtractorWindow.class, language);
+
+		return MessageBoxUtil.showYesNoAllMessageBox(window,
+				"<html>\"" + extractedFilename + "\" " + "REPALCE?" + "</html>", messages, rightToLeft);
 	}
 }

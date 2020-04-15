@@ -38,7 +38,7 @@ import javax.swing.border.EmptyBorder;
 
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.ui.presenter.LHADecompressorPresenter;
+import info.msxlaunchers.openmsx.launcher.ui.presenter.LHAExtractorPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JTextFieldDragDrop;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.MessageBoxUtil;
@@ -51,9 +51,9 @@ import info.msxlaunchers.openmsx.launcher.ui.view.swing.language.LanguageDisplay
  *
  */
 @SuppressWarnings("serial")
-public class LHADecompressorWindow extends JDialog implements ActionListener
+public class LHAExtractorWindow extends JDialog implements ActionListener
 {
-	private final LHADecompressorPresenter presenter;
+	private final LHAExtractorPresenter presenter;
 	private final Map<String,String> messages;
 	private final boolean rightToLeft;
 	private final Component mainWindow;
@@ -71,7 +71,7 @@ public class LHADecompressorWindow extends JDialog implements ActionListener
 	private static final FlowLayout LEFT_FLOW_LAYOUT = new FlowLayout(FlowLayout.LEFT);
 	private static final FlowLayout RIGHT_FLOW_LAYOUT = new FlowLayout(FlowLayout.RIGHT);
 
-	public LHADecompressorWindow(LHADecompressorPresenter presenter, Language language, boolean rightToLeft)
+	public LHAExtractorWindow(LHAExtractorPresenter presenter, Language language, boolean rightToLeft)
 	{
 		this.presenter = presenter;
 		this.messages = LanguageDisplayFactory.getDisplayMessages(getClass(), language);
@@ -82,7 +82,7 @@ public class LHADecompressorWindow extends JDialog implements ActionListener
 	public void displayScreen()
 	{
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(messages.get("LHA_DECOMPRESSOR"));
+		setTitle(messages.get("LHA_EXTRACTOR"));
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 
@@ -135,7 +135,7 @@ public class LHADecompressorWindow extends JDialog implements ActionListener
 		targetPane.setLayout(new BoxLayout(targetPane, BoxLayout.Y_AXIS));
 
 		JPanel targetDirectoryPane = new JPanel();
-		targetOtherDirectoryRadioButton = new JRadioButton(messages.get("SPECIFY_DIRECTORY_OTHER"));
+		targetOtherDirectoryRadioButton = new JRadioButton(messages.get("SPECIFY_DIRECTORY"));
 		targetOtherDirectoryRadioButton.addActionListener(this);
 		targetDirectoryPane.add(targetOtherDirectoryRadioButton);
 		targetPane.add(targetDirectoryPane);
@@ -185,7 +185,8 @@ public class LHADecompressorWindow extends JDialog implements ActionListener
 
 		contentPane.add(buttonsPane);
 
-		resetFields();
+		onlyMSXFilesCheckBox.setSelected(true);
+		targetOtherDirectoryRadioButton.setSelected(true);
 
 		if(rightToLeft)
 		{
@@ -219,7 +220,7 @@ public class LHADecompressorWindow extends JDialog implements ActionListener
 
 	public boolean targetFileReplacementIsConfirmed()
 	{
-		return MessageBoxUtil.showYesNoMessageBox(this, messages.get("CONFIRM_REPLACE_DECOMPRESSED_FILE_MSG"), messages, rightToLeft) == 0;
+		return MessageBoxUtil.showYesNoMessageBox(this, messages.get("CONFIRM_REPLACE_EXTRACTED_FILE_MSG"), messages, rightToLeft) == 0;
 	}
 
 	@Override
@@ -246,7 +247,7 @@ public class LHADecompressorWindow extends JDialog implements ActionListener
 		}
 		else if(source == okButton)
 		{
-			processDecompressRequest();
+			processExtractRequest();
 		}
 		else if(source == cancelButton)
 		{
@@ -254,30 +255,20 @@ public class LHADecompressorWindow extends JDialog implements ActionListener
 		}
 	}
 
-	private void resetFields()
-	{
-		onlyMSXFilesCheckBox.setSelected(true);
-		targetDirectoryTextField.setText(null);
-		targetOtherDirectoryRadioButton.setSelected(true);
-		targetDirectoryTextField.setEnabled(true);
-		targetDirectoryButton.setEnabled(true);
-	}
-
-	private void processDecompressRequest()
+	private void processExtractRequest()
 	{
 		try
 		{
-			presenter.onRequestLHADecompressAction(compressedFileTextField.getText(),
+			presenter.onRequestLHAExtractAction(compressedFileTextField.getText(),
 					targetOtherDirectoryRadioButton.isSelected()? targetDirectoryTextField.getText() : null, onlyMSXFilesCheckBox.isSelected());
+
+			MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("FILE_EXTRACTED_SUCCESSFULLY"), messages, rightToLeft);
+
+			dispose();
 		}
-		catch( LauncherException le )
+		catch(LauncherException le)
 		{
-			// TODO Auto-generated catch block
-			le.printStackTrace();
+			MessageBoxUtil.showErrorMessageBox(this, le, messages, rightToLeft);
 		}
-
-		MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("FILE_DECOMPRESSED_SUCCESSFULLY"), messages, rightToLeft);
-
-		resetFields();
 	}
 }

@@ -18,29 +18,29 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 
 /**
- * Interface for Patcher UI Model and Presenter
+ * Interface for LHA Extractor UI Model and Presenter
  * 
  * @since v1.14
  * @author Sam Elsharif
  *
  */
-public interface LHADecompressorPresenter
+public interface LHAExtractorPresenter
 {
 	/**
-	 * Called when user requests LHA Decompressor screen
+	 * Called when user requests LHA Extractor screen
 	 * 
 	 * @param currentLanguage Current language
 	 * @param currentRightToLeft Orientation of the current language (e.g. true for Arabic)
 	 */
-	void onRequestLHADecompressorScreen( Language currentLanguage, boolean currentRightToLeft );
+	void onRequestLHAExtractorScreen( Language currentLanguage, boolean currentRightToLeft );
 
 	/**
-	 * Called when user requests to patch a file with an IPS patch. This should be called after onValidate
+	 * Called when user requests to uncompress an LHA/LZH file
 	 *  
-	 * @param fileToDecompress Filename to decompress
-	 * @param targetDirectory Target directory to decompress into. Can be null
-	 * @param onlyMSXFiles If true, decompress only MSX files
+	 * @param fileToUncompress Filename to extract from
+	 * @param targetDirectory Target directory to extract into. Can be null
+	 * @param extractOnlyMSXImages If true, extract only MSX images
 	 * @throws LauncherException
 	 */
-	void onRequestLHADecompressAction( String fileToDecompress, String targetDirectory, boolean onlyMSXFiles ) throws LauncherException;
+	void onRequestLHAExtractAction( String fileToUncompress, String targetDirectory, boolean extractOnlyMSXImages ) throws LauncherException;
 }

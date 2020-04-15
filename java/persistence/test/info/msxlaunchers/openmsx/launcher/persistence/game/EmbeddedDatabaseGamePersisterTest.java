@@ -1,5 +1,6 @@
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
+import info.msxlaunchers.openmsx.common.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
 import info.msxlaunchers.openmsx.launcher.data.backup.DatabaseBackup;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;

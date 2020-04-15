@@ -15,6 +15,7 @@
  */
 package info.msxlaunchers.openmsx.launcher.persistence.game;
 
+import info.msxlaunchers.openmsx.common.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.data.game.Game;
 import info.msxlaunchers.openmsx.launcher.log.LauncherLogger;
 import info.msxlaunchers.openmsx.launcher.persistence.LauncherPersistenceException;

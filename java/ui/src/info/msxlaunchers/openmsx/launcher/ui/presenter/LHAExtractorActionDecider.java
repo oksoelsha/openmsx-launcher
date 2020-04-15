@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Sam Elsharif
+ * Copyright 2020 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +17,25 @@ package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import info.msxlaunchers.openmsx.common.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
-import info.msxlaunchers.openmsx.launcher.ui.view.BlueMSXLauncherDatabaseImporterView;
+import info.msxlaunchers.openmsx.launcher.ui.view.LHAExtractorView;
 
 /**
- * Implementation of the <code>ActionDecider</code> that prompts user for action when an imported blueMSX Launcher database name existed already in
- * openMSX Launcher. This implementation will request input from the user through the View.
+ * Implementation of the <code>ActionDecider</code> that prompts user for action when an extracted file exists already in the target directory.
+ * This implementation will request input from the user through the View.
  * 
- * @since v1.3
+ * @since v1.14
  * @author Sam Elsharif
  *
  */
-final class BlueMSXLauncherDatabasesImporterActionDecider implements ActionDecider
+final class LHAExtractorActionDecider implements ActionDecider
 {
-	private final BlueMSXLauncherDatabaseImporterView view;
+	private final LHAExtractorView view;
 	private final Language language;
 	private final boolean rightToLeft;
 
 	private boolean yes, yesAll, no, noAll, cancel;
 
-	BlueMSXLauncherDatabasesImporterActionDecider( BlueMSXLauncherDatabaseImporterView view, Language language, boolean rightToLeft )
+	LHAExtractorActionDecider( LHAExtractorView view, Language language, boolean rightToLeft )
 	{
 		this.view = view;
 		this.language = language;
@@ -46,9 +46,9 @@ final class BlueMSXLauncherDatabasesImporterActionDecider implements ActionDecid
 	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider#promptForAction(java.lang.String)
 	 */
 	@Override
-	public void promptForAction( String gameName )
+	public void promptForAction( String filename )
 	{
-		int choice = view.displayAndGetActionDecider( gameName, language, rightToLeft );
+		int choice = view.displayAndGetActionDecider( filename, language, rightToLeft );
 
 		switch( choice )
 		{

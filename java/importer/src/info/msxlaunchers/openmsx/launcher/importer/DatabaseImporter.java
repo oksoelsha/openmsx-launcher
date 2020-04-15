@@ -15,11 +15,11 @@
  */
 package info.msxlaunchers.openmsx.launcher.importer;
 
-import info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
+
+import info.msxlaunchers.openmsx.common.ActionDecider;
 
 /**
  * Interface to import databases

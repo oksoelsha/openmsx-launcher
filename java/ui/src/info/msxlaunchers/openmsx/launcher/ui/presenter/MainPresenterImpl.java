@@ -96,7 +96,7 @@ final class MainPresenterImpl implements MainPresenter
 	private final MachineUpdatePresenterFactory machineUpdatePresenterFactory;
 	private final FeedServicePresenter feedServicePresenter;
 	private final Provider<RelatedGamesPresenter> relatedGamesPresenterFactory;
-	private final Provider<LHADecompressorPresenter> lhaDecompressorPresenterFactory;
+	private final Provider<LHAExtractorPresenter> lhaExtractorPresenterFactory;
 
 	private static final String SCREENSHOT_EXT = ".png";
 	private static final String SCREENSHOT1_SUFFIX = "a";
@@ -146,7 +146,7 @@ final class MainPresenterImpl implements MainPresenter
 			MachineUpdatePresenterFactory machineUpdatePresenterFactory,
 			FeedServicePresenter feedServicePresenter,
 			Provider<RelatedGamesPresenter> relatedGamesPresenterFactory,
-			Provider<LHADecompressorPresenter> lhaDecompressorPresenterFactory ) throws IOException
+			Provider<LHAExtractorPresenter> lhaExtractorPresenterFactory ) throws IOException
 	{
 		this.view = Objects.requireNonNull( view );
 		this.settingsPresenterFactory = Objects.requireNonNull( settingsPresenterFactory );
@@ -169,7 +169,7 @@ final class MainPresenterImpl implements MainPresenter
 		this.machineUpdatePresenterFactory = Objects.requireNonNull( machineUpdatePresenterFactory );
 		this.feedServicePresenter = Objects.requireNonNull( feedServicePresenter );
 		this.relatedGamesPresenterFactory = Objects.requireNonNull( relatedGamesPresenterFactory );
-		this.lhaDecompressorPresenterFactory = Objects.requireNonNull( lhaDecompressorPresenterFactory );
+		this.lhaExtractorPresenterFactory = Objects.requireNonNull( lhaExtractorPresenterFactory );
 
 		try
 		{
@@ -1108,12 +1108,12 @@ final class MainPresenterImpl implements MainPresenter
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestLHADecompressorScreen()
+	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.MainPresenter#onRequestLHAExtractorScreen()
 	 */
 	@Override
-	public void onRequestLHADecompressorScreen()
+	public void onRequestLHAExtractorScreen()
 	{
-		lhaDecompressorPresenterFactory.get().onRequestLHADecompressorScreen( currentLanguage, currentRightToLeft );
+		lhaExtractorPresenterFactory.get().onRequestLHAExtractorScreen( currentLanguage, currentRightToLeft );
 	}
 
 	/* (non-Javadoc)

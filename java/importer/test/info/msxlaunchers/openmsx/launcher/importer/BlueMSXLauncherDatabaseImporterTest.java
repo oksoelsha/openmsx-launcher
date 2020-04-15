@@ -1,10 +1,10 @@
 package info.msxlaunchers.openmsx.launcher.importer;
 
+import info.msxlaunchers.openmsx.common.ActionDecider;
 import info.msxlaunchers.openmsx.common.FileUtils;
 import info.msxlaunchers.openmsx.launcher.builder.GameBuilder;
 import info.msxlaunchers.openmsx.launcher.data.extra.ExtraData;
 import info.msxlaunchers.openmsx.launcher.extra.ExtraDataGetter;
-import info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersistenceException;
 import info.msxlaunchers.openmsx.launcher.persistence.game.GamePersister;
 
