@@ -16,6 +16,7 @@
 package info.msxlaunchers.openmsx.launcher.ui.presenter;
 
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.extractor.ExtractorData;
 
 /**
  * Interface for LHA Extractor UI Model and Presenter
@@ -40,7 +41,8 @@ public interface LHAExtractorPresenter
 	 * @param fileToUncompress Filename to extract from
 	 * @param targetDirectory Target directory to extract into. Can be null
 	 * @param extractOnlyMSXImages If true, extract only MSX images
+	 * @return data about the extraction operation 
 	 * @throws LauncherException
 	 */
-	void onRequestLHAExtractAction( String fileToUncompress, String targetDirectory, boolean extractOnlyMSXImages ) throws LauncherException;
+	ExtractorData onRequestLHAExtractAction( String fileToUncompress, String targetDirectory, boolean extractOnlyMSXImages ) throws LauncherException;
 }

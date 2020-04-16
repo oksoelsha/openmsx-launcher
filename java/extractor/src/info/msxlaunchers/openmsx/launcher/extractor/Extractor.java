@@ -32,7 +32,8 @@ public interface Extractor
 	 * @param targetDirectory Full directory path to extracted files. If null, the original file's directory will be written to
 	 * @param extractOnlyMsxImages If true extract only MSX images (ROMs, disks and tapes) and ignore other types
 	 * @param actionDecider Reference to an ActionDecider implementation that prompts the caller for actions when an extracted file exists in target directory
+	 * @return data about the extraction operation
 	 * @throws ExtractionException
 	 */
-	void extract( String fileToExtract, String targetDirectory, boolean extractOnlyMsxImages, ActionDecider actionDecider ) throws ExtractionException;
+	ExtractorData extract( String fileToExtract, String targetDirectory, boolean extractOnlyMsxImages, ActionDecider actionDecider ) throws ExtractionException;
 }

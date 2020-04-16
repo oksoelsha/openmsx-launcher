@@ -46,7 +46,7 @@ final class LHAExtractor implements Extractor
 	 * @see info.msxlaunchers.openmsx.launcher.extractor.Extractor#extract(java.lang.String, java.lang.String, boolean, info.msxlaunchers.openmsx.common.ActionDecider)
 	 */
 	@Override
-	public void extract( String fileToExtract, String targetDirectory, boolean extractOnlyMsxImages, ActionDecider actionDecider )
+	public ExtractorData extract( String fileToExtract, String targetDirectory, boolean extractOnlyMsxImages, ActionDecider actionDecider )
 			throws ExtractionException
 	{
 		Path fileToExtractPath = Paths.get( fileToExtract );
@@ -54,15 +54,21 @@ final class LHAExtractor implements Extractor
 
 		byte[] buffer = new byte[READ_BUFFER_SIZE];
 
+		int totalFiles = 0;
+		int totalMSXImages = 0;
+		int totalExtractedFiles = 0;
+
 		try( InputStream is = new FileInputStream( fileToExtractPath.toFile() ); LhaInputStream lis = new LhaInputStream( is ) )
 		{
 			LhaHeader header = lis.getNextEntry();
 			while( header != null )
 			{
+				totalFiles++;
 				File file = new File( header.getPath() );
 				File fullFilename = new File( directoryToWriteTo.toFile(), file.getName() );
+				boolean isMsxImage = isMSXImage( file );
 
-				if( isExtract( extractOnlyMsxImages, file ) )
+				if( !extractOnlyMsxImages || isMsxImage )
 				{
 					if( fullFilename.exists() )
 					{
@@ -74,6 +80,7 @@ final class LHAExtractor implements Extractor
 						if( actionDecider.isYes() || actionDecider.isYesAll() )
 						{
 							extractFile( fullFilename, lis, buffer );
+							totalExtractedFiles++;
 						}
 						else if( actionDecider.isCancel() )
 						{
@@ -83,10 +90,19 @@ final class LHAExtractor implements Extractor
 					else
 					{
 						extractFile( fullFilename, lis, buffer );
+						totalExtractedFiles++;
 					}
 				}
+
+				if( isMsxImage )
+				{
+					totalMSXImages++;
+				}
+
 				header = lis.getNextEntry();
 			}
+
+			return new ExtractorData( totalFiles, totalMSXImages, totalExtractedFiles );
 		}
 		catch( FileNotFoundException fnfe )
 		{
@@ -110,9 +126,8 @@ final class LHAExtractor implements Extractor
 		}
 	}
 
-	private boolean isExtract( boolean extractOnlyMsxImages, File file )
+	private boolean isMSXImage( File file )
 	{
-		return (!extractOnlyMsxImages) ||
-				(FileTypeUtils.isDisk(file) || FileTypeUtils.isROM(file) || FileTypeUtils.isTape(file));
+		return FileTypeUtils.isDisk( file ) || FileTypeUtils.isROM( file ) || FileTypeUtils.isTape( file );
 	}
 }

@@ -21,6 +21,7 @@ import info.msxlaunchers.openmsx.common.ActionDecider;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
 import info.msxlaunchers.openmsx.launcher.extractor.ExtractionException;
 import info.msxlaunchers.openmsx.launcher.extractor.Extractor;
+import info.msxlaunchers.openmsx.launcher.extractor.ExtractorData;
 import info.msxlaunchers.openmsx.launcher.extractor.ExtractorExceptionIssue;
 import info.msxlaunchers.openmsx.launcher.ui.view.LHAExtractorView;
 
@@ -63,13 +64,13 @@ class LHAExtractorPresenterImpl implements LHAExtractorPresenter
 	 * @see info.msxlaunchers.openmsx.launcher.ui.presenter.LHAExtractorPresenter#onRequestLHAExtractAction(java.lang.String, java.lang.String, boolean)
 	 */
 	@Override
-	public void onRequestLHAExtractAction( String fileToUncompress, String targetDirectory, boolean extractOnlyMSXImages )
+	public ExtractorData onRequestLHAExtractAction( String fileToUncompress, String targetDirectory, boolean extractOnlyMSXImages )
 			throws LauncherException
 	{
 		try
 		{
 			ActionDecider actionDecider = new LHAExtractorActionDecider( view, currentLanguage, currentRightToLeft );
-			extractor.extract( fileToUncompress, targetDirectory, extractOnlyMSXImages, actionDecider );
+			return extractor.extract( fileToUncompress, targetDirectory, extractOnlyMSXImages, actionDecider );
 		}
 		catch( ExtractionException de )
 		{

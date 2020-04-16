@@ -62,6 +62,6 @@ class LHAExtractorSwingView implements LHAExtractorView
 		Map<String,String> messages = LanguageDisplayFactory.getDisplayMessages(LHAExtractorWindow.class, language);
 
 		return MessageBoxUtil.showYesNoAllMessageBox(window,
-				"<html>\"" + extractedFilename + "\" " + "REPALCE?" + "</html>", messages, rightToLeft);
+				"<html>\"" + extractedFilename + "\" " + messages.get("CONFIRM_REPLACE_EXTRACTED_FILE_MSG") + "</html>", messages, rightToLeft);
 	}
 }

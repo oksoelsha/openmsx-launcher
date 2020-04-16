@@ -38,6 +38,7 @@ import javax.swing.border.EmptyBorder;
 
 import info.msxlaunchers.openmsx.common.FileTypeUtils;
 import info.msxlaunchers.openmsx.launcher.data.settings.constants.Language;
+import info.msxlaunchers.openmsx.launcher.extractor.ExtractorData;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LHAExtractorPresenter;
 import info.msxlaunchers.openmsx.launcher.ui.presenter.LauncherException;
 import info.msxlaunchers.openmsx.launcher.ui.view.swing.component.JTextFieldDragDrop;
@@ -218,11 +219,6 @@ public class LHAExtractorWindow extends JDialog implements ActionListener
 		setVisible(true);
 	}
 
-	public boolean targetFileReplacementIsConfirmed()
-	{
-		return MessageBoxUtil.showYesNoMessageBox(this, messages.get("CONFIRM_REPLACE_EXTRACTED_FILE_MSG"), messages, rightToLeft) == 0;
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -259,10 +255,10 @@ public class LHAExtractorWindow extends JDialog implements ActionListener
 	{
 		try
 		{
-			presenter.onRequestLHAExtractAction(compressedFileTextField.getText(),
+			ExtractorData extractorData = presenter.onRequestLHAExtractAction(compressedFileTextField.getText(),
 					targetOtherDirectoryRadioButton.isSelected()? targetDirectoryTextField.getText() : null, onlyMSXFilesCheckBox.isSelected());
 
-			MessageBoxUtil.showInformationMessageBox(mainWindow, messages.get("FILE_EXTRACTED_SUCCESSFULLY"), messages, rightToLeft);
+			MessageBoxUtil.showInformationMessageBox(mainWindow, formatExtractorDataAsHtml(extractorData), messages, rightToLeft);
 
 			dispose();
 		}
@@ -270,5 +266,19 @@ public class LHAExtractorWindow extends JDialog implements ActionListener
 		{
 			MessageBoxUtil.showErrorMessageBox(this, le, messages, rightToLeft);
 		}
+	}
+
+	private String formatExtractorDataAsHtml(ExtractorData extractorData)
+	{
+		return "<html><table>" +
+				makeTableRow(messages.get("TOTAL_FILES"), extractorData.getTotalFiles()) +
+				makeTableRow(messages.get("TOTAL_MSX_IMAGES"), extractorData.getTotalMSXImages()) +
+				makeTableRow(messages.get("TOTAL_EXTRACTED_FILES"), extractorData.getTotalExtractedFiles()) +
+				"</table></html>";
+	}
+
+	private String makeTableRow(String key, int value)
+	{
+		return "<tr><td>" + key + ":</td><td>" + value + "</td></tr>";
 	}
 }
