@@ -108,7 +108,7 @@ public class PatcherWindow extends JDialog implements ActionListener
 
 		//Sources selection
 		JPanel sourcesPane = new JPanel();
-		sourcesPane.setBorder(BorderFactory.createTitledBorder(messages.get("INPUTS")));
+		sourcesPane.setBorder(BorderFactory.createTitledBorder(messages.get("INPUT")));
 		sourcesPane.setLayout(new BoxLayout(sourcesPane, BoxLayout.Y_AXIS));
 
 		JPanel patchMethodPane = new JPanel();
