@@ -120,9 +120,7 @@ public class LHAExtractorWindow extends JDialog implements ActionListener
 		onlyMSXFilesCheckBox = new JCheckBox(messages.get("ONLY_MSX_FILES"));
 		onlyMSXFilesCheckBox.addActionListener(this);
 		ipsChecksumVerifyPane.add(onlyMSXFilesCheckBox);
-		ipsChecksumVerifyPane.setBorder(new EmptyBorder(1, 1, 1,
-				WindowUtils.iconButtonDimension.width +
-				6));
+		ipsChecksumVerifyPane.setBorder(new EmptyBorder(1, 1, 1, WindowUtils.iconButtonDimension.width + 6));
 
 		onlyMSXFilesPane.add(ipsChecksumVerifyPane);
 
@@ -130,7 +128,6 @@ public class LHAExtractorWindow extends JDialog implements ActionListener
 
 		contentPane.add(sourcePane);
 
-		//target selection
 		JPanel targetPane = new JPanel();
 		targetPane.setBorder(BorderFactory.createTitledBorder(messages.get("OUTPUT")));
 		targetPane.setLayout(new BoxLayout(targetPane, BoxLayout.Y_AXIS));
@@ -145,7 +142,7 @@ public class LHAExtractorWindow extends JDialog implements ActionListener
 		JLabel targetDirectoryLabel = new JLabel(messages.get("DIRECTORY"));
 		targetFilePane.add(targetDirectoryLabel);
 
-		targetDirectoryTextField = new JTextFieldDragDrop();
+		targetDirectoryTextField = new JTextField();
 		targetDirectoryTextField.setColumns(25);
 		targetFilePane.add(targetDirectoryTextField);
 
@@ -198,6 +195,8 @@ public class LHAExtractorWindow extends JDialog implements ActionListener
 			ipsChecksumVerifyPane.setLayout(LEFT_FLOW_LAYOUT);
 			ipsChecksumVerifyPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			onlyMSXFilesCheckBox.setHorizontalTextPosition(SwingConstants.LEADING);
+			targetOtherDirectoryRadioButton.setHorizontalTextPosition(SwingConstants.LEADING);
+			targetDirectorySameAsFileRadioButton.setHorizontalTextPosition(SwingConstants.LEADING);
 			targetFilePane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 			targetFilePane.setLayout(LEFT_FLOW_LAYOUT);
 			targetDirectoryPane.setLayout(RIGHT_FLOW_LAYOUT);
