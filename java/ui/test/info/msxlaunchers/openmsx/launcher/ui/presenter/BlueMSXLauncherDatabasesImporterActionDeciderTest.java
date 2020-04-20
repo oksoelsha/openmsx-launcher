@@ -134,14 +134,4 @@ public class BlueMSXLauncherDatabasesImporterActionDeciderTest
 		assertFalse( actionDecider.isNoAll() );
 		assertTrue( actionDecider.isCancel() );
 	}
-
-	@Test( expected = RuntimeException.class )
-	public void testPromptForAction_InvalidPromptValue()
-	{
-		BlueMSXLauncherDatabasesImporterActionDecider actionDecider = new BlueMSXLauncherDatabasesImporterActionDecider( view, Language.ENGLISH, false );
-
-		when( view.displayAndGetActionDecider( databaseName, Language.ENGLISH, false ) ).thenReturn( 5 );
-
-		actionDecider.promptForAction( databaseName );
-	}
 }

@@ -134,14 +134,4 @@ public class MoveGameActionDeciderTest
 		assertFalse( actionDecider.isNoAll() );
 		assertTrue( actionDecider.isCancel() );
 	}
-
-	@Test( expected = RuntimeException.class )
-	public void testPromptForAction_InvalidPromptValue()
-	{
-		MoveGameActionDecider actionDecider = new MoveGameActionDecider( mainView, Language.ENGLISH, false );
-
-		when( mainView.displayAndGetActionDecider( gameName, Language.ENGLISH, false ) ).thenReturn( 5 );
-
-		actionDecider.promptForAction( gameName );
-	}
 }

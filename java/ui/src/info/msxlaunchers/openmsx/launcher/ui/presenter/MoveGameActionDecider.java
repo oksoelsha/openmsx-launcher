@@ -27,13 +27,11 @@ import info.msxlaunchers.openmsx.launcher.ui.view.MainView;
  * @author Sam Elsharif
  *
  */
-final class MoveGameActionDecider implements ActionDecider
+final class MoveGameActionDecider extends ActionDecider
 {
 	private final MainView view;
 	private final Language language;
 	private final boolean rightToLeft;
-
-	private boolean yes, yesAll, no, noAll, cancel;
 
 	MoveGameActionDecider( MainView view, Language language, boolean rightToLeft )
 	{
@@ -43,84 +41,13 @@ final class MoveGameActionDecider implements ActionDecider
 	}
 
 	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider#promptForAction(java.lang.String)
+	 * @see info.msxlaunchers.openmsx.common.ActionDecider#promptForAction(java.lang.String)
 	 */
 	@Override
 	public void promptForAction( String gameName )
 	{
 		int choice = view.displayAndGetActionDecider( gameName, language, rightToLeft );
 
-		switch( choice )
-		{
-			case 0:
-				yes = true;
-				yesAll = no = noAll = cancel = false;
-				break;
-			case 1:
-				yesAll = true;
-				yes = no = noAll = cancel = false;
-				break;
-			case 2:
-				no = true;
-				yes = yesAll = noAll = cancel = false;
-				break;
-			case 3:
-				noAll = true;
-				yes = yesAll = no = cancel = false;
-				break;
-			case 4:
-			case -1:
-				cancel = true;
-				yes = yesAll = no = noAll = false;
-				break;
-			default:
-				//this shouldn't happen
-				throw new RuntimeException( "Unsupported ActionDecider choice" );
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider#isYes()
-	 */
-	@Override
-	public boolean isYes()
-	{
-		return yes;
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider#isYesAll()
-	 */
-	@Override
-	public boolean isYesAll()
-	{
-		return yesAll;
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider#isNo()
-	 */
-	@Override
-	public boolean isNo()
-	{
-		return no;
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider#isNoAll()
-	 */
-	@Override
-	public boolean isNoAll()
-	{
-		return noAll;
-	}
-
-	/* (non-Javadoc)
-	 * @see info.msxlaunchers.openmsx.launcher.persistence.game.ActionDecider#isCancel()
-	 */
-	@Override
-	public boolean isCancel()
-	{
-		return cancel;
+		processChoice( choice );
 	}
 }

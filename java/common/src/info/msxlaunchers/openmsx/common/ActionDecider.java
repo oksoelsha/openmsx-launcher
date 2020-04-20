@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Sam Elsharif
+ * Copyright 2020 Sam Elsharif
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,53 +16,85 @@
 package info.msxlaunchers.openmsx.common;
 
 /**
- * Interface to provide actions needed during an interactive operation
+ * Class to ask for confirmation and process choices when a duplicate object is encountered
  * 
- * @since v1.1
+ * @since v1.14
  * @author Sam Elsharif
  *
  */
-public interface ActionDecider
+public abstract class ActionDecider
 {
-	/**
-	 * Prompts the user for action
-	 * 
-	 * @param duplicateObjectName Name of object that is causing the conflict (e.g. duplicate game or database name)
-	 */
-	void promptForAction( String duplicateObjectName );
+	private boolean yes;
+	private boolean yesAll;
+	private boolean no;
+	private boolean noAll;
+	private boolean cancel;
 
 	/**
-	 * Returns true if user's answer is yes
+	 * Displays the dialog that will ask the user about replacing the given duplicate object (e.g. file).
+	 * Choices are yes, yes-to-all, no, no-to-all and cancel
 	 * 
-	 * @return true if Yes
+	 * @param nameOfDuplicate Name of the duplicate object (e.g. filename)
 	 */
-	boolean isYes();
+	public abstract void promptForAction( String nameOfDuplicate );
 
 	/**
-	 * Returns true if user's answer is yes to all
+	 * Process the given choice by setting the corresponding field in the decider.
 	 * 
-	 * @return true if Yes to all
+	 * @param choice 0-based integer that represents the desired action
 	 */
-	boolean isYesAll();
+	protected void processChoice( int choice )
+	{
+		switch( choice )
+		{
+			case 0:
+				yes = true;
+				yesAll = no = noAll = cancel = false;
+				break;
+			case 1:
+				yesAll = true;
+				yes = no = noAll = cancel = false;
+				break;
+			case 2:
+				no = true;
+				yes = yesAll = noAll = cancel = false;
+				break;
+			case 3:
+				noAll = true;
+				yes = yesAll = no = cancel = false;
+				break;
+			case 4:
+			case -1:
+				cancel = true;
+				yes = yesAll = no = noAll = false;
+				break;
+			default:
+				//this shouldn't happen
+		}
+	}
 
-	/**
-	 * Returns true if user's answer is no
-	 * 
-	 * @return true if No
-	 */
-	boolean isNo();
+	public boolean isYes()
+	{
+		return yes;
+	}
 
-	/**
-	 * Returns true if user's answer is no to all
-	 * 
-	 * @return true if No to all
-	 */
-	boolean isNoAll();
+	public boolean isYesAll()
+	{
+		return yesAll;
+	}
 
-	/**
-	 * Returns true if user's decision is to cancel operation
-	 * 
-	 * @return true if user requests to cancel operation
-	 */
-	boolean isCancel();
+	public boolean isNo()
+	{
+		return no;
+	}
+
+	public boolean isNoAll()
+	{
+		return noAll;
+	}
+
+	public boolean isCancel()
+	{
+		return cancel;
+	}
 }
