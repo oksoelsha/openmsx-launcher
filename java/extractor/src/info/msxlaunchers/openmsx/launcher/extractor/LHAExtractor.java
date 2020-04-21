@@ -52,10 +52,16 @@ final class LHAExtractor implements Extractor
 		Path fileToExtractPath = Paths.get( fileToExtract );
 		Path directoryToWriteTo = targetDirectory == null? fileToExtractPath.getParent() : Paths.get( targetDirectory );
 
-		byte[] buffer = new byte[READ_BUFFER_SIZE];
+		TotalFilesAndMSXImages totalFilesAndMSXImages = getTotalFilesAndMSXImages( fileToExtractPath );
 
-		int totalFiles = 0;
-		int totalMSXImages = 0;
+		int totalExtractedFiles = extratFiles( fileToExtractPath, directoryToWriteTo, extractOnlyMsxImages, actionDecider );
+
+		return new ExtractorData( totalFilesAndMSXImages.totalFiles, totalFilesAndMSXImages.totalMSXImages, totalExtractedFiles );
+	}
+
+	private int extratFiles( Path fileToExtractPath, Path directoryToWriteTo, boolean extractOnlyMsxImages, ActionDecider actionDecider ) throws ExtractionException
+	{
+		byte[] buffer = new byte[READ_BUFFER_SIZE];
 		int totalExtractedFiles = 0;
 
 		try( InputStream is = new FileInputStream( fileToExtractPath.toFile() ); LhaInputStream lis = new LhaInputStream( is ) )
@@ -63,7 +69,6 @@ final class LHAExtractor implements Extractor
 			LhaHeader header = lis.getNextEntry();
 			while( header != null )
 			{
-				totalFiles++;
 				File file = new File( header.getPath() );
 				File fullFilename = new File( directoryToWriteTo.toFile(), file.getName() );
 				boolean isMsxImage = isMSXImage( file );
@@ -79,8 +84,12 @@ final class LHAExtractor implements Extractor
 
 						if( actionDecider.isYes() || actionDecider.isYesAll() )
 						{
-							extractFile( fullFilename, lis, buffer );
+							writeExtractedFile( fullFilename, lis, buffer );
 							totalExtractedFiles++;
+						}
+						else if( actionDecider.isNo() || actionDecider.isNoAll() )
+						{
+							//nothing
 						}
 						else if( actionDecider.isCancel() )
 						{
@@ -89,20 +98,42 @@ final class LHAExtractor implements Extractor
 					}
 					else
 					{
-						extractFile( fullFilename, lis, buffer );
+						writeExtractedFile( fullFilename, lis, buffer );
 						totalExtractedFiles++;
 					}
 				}
 
-				if( isMsxImage )
+				header = lis.getNextEntry();
+			}
+
+			return totalExtractedFiles;
+		}
+		catch( IOException ioe )
+		{
+			throw new ExtractionException( ExtractorExceptionIssue.IO );
+		}
+	}
+
+	private TotalFilesAndMSXImages getTotalFilesAndMSXImages( Path fileToExtractPath ) throws ExtractionException
+	{
+		int totalFiles = 0;
+		int totalMSXImages = 0;
+
+		try( InputStream is = new FileInputStream( fileToExtractPath.toFile() ); LhaInputStream lis = new LhaInputStream( is ) )
+		{
+			LhaHeader header = lis.getNextEntry();
+			while( header != null )
+			{
+				totalFiles++;
+
+				File file = new File( header.getPath() );
+				if( isMSXImage( file ) )
 				{
 					totalMSXImages++;
 				}
 
 				header = lis.getNextEntry();
 			}
-
-			return new ExtractorData( totalFiles, totalMSXImages, totalExtractedFiles );
 		}
 		catch( FileNotFoundException fnfe )
 		{
@@ -112,9 +143,16 @@ final class LHAExtractor implements Extractor
 		{
 			throw new ExtractionException( ExtractorExceptionIssue.IO );
 		}
+
+		return new TotalFilesAndMSXImages( totalFiles, totalMSXImages );
 	}
 
-	private void extractFile( File fullFilename, LhaInputStream lis, byte[] buffer ) throws IOException
+	private boolean isMSXImage( File file )
+	{
+		return FileTypeUtils.isDisk( file ) || FileTypeUtils.isROM( file ) || FileTypeUtils.isTape( file );
+	}
+
+	private void writeExtractedFile( File fullFilename, LhaInputStream lis, byte[] buffer ) throws IOException
 	{
 		try( OutputStream os = new FileOutputStream( fullFilename ) )
 		{
@@ -126,8 +164,15 @@ final class LHAExtractor implements Extractor
 		}
 	}
 
-	private boolean isMSXImage( File file )
+	private class TotalFilesAndMSXImages
 	{
-		return FileTypeUtils.isDisk( file ) || FileTypeUtils.isROM( file ) || FileTypeUtils.isTape( file );
+		private final int totalFiles;
+		private final int totalMSXImages;
+
+		TotalFilesAndMSXImages( int totalFiles, int totalMSXImages )
+		{
+			this.totalFiles = totalFiles;
+			this.totalMSXImages = totalMSXImages;
+		}
 	}
 }
