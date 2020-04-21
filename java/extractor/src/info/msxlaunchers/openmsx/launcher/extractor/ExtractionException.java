@@ -26,7 +26,7 @@ public final class ExtractionException extends Exception
 	private static final long serialVersionUID = -1137534938102354107L;
 	private final ExtractorExceptionIssue issue;
 
-	ExtractionException( ExtractorExceptionIssue issue )
+	public ExtractionException( ExtractorExceptionIssue issue )
 	{
 		this.issue = issue;
 	}
