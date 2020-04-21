@@ -104,5 +104,10 @@
 			<artifactId>related</artifactId>
 			<version>${version}</version>
 		</dependency>
+		<dependency>
+			<groupId>info.msxlaunchers.openmsx</groupId>
+			<artifactId>extractor</artifactId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 </project>
