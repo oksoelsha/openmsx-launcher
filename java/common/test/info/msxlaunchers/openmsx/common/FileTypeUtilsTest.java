@@ -509,11 +509,12 @@ public class FileTypeUtilsTest
 		Set<String> tapeExtensions = FileTypeUtils.getTapeExtensions();
 
 		//there are currently two tape extensions supported
-		assertEquals( 2, tapeExtensions.size() );
+		assertEquals( 3, tapeExtensions.size() );
 
 		//check the tape extensions
 		assertTrue( tapeExtensions.contains( "wav" ) );
 		assertTrue( tapeExtensions.contains( "cas" ) );
+		assertTrue( tapeExtensions.contains( "tsx" ) );
 	}
 
 	@Test( expected = UnsupportedOperationException.class )
