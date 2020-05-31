@@ -5,6 +5,7 @@
 <!--
 .tab { margin-left: 30px; }
 .double-tab { margin-left: 60px; }
+body { font-family: "Segoe UI", sans-serif }
 table { border-collapse: collapse; }
 table, td, th { border: 1px solid black;}
 th { padding: 6px; text-align: left; }
@@ -15,7 +16,7 @@ td { padding: 12px; }
 
 <body>
 
-<h2>openMSX Launcher v1.13</h2>
+<h2>openMSX Launcher v1.14</h2>
 openMSX Launcher is a front-end for openMSX written in Java, and runs on Windows, MacOS, Linux and BSD.
 
 <p></p>
@@ -31,13 +32,13 @@ After starting the launcher for the first time, you need to set a few fields in 
 
 <p class="tab"><b>Linux/BSD</b>: unzip the Linux/BSD package anywhere on your system.</p>
 
-<h3><u>Upgrade from version 1.12</u></h3>
+<h3><u>Upgrade from version 1.13</u></h3>
 
 <p>In all platforms (Windows, MacOS, Linux and BSD) you can upgrade from within the 'Help->Check for Updates' window. After you install, you need to restart the launcher.
 
 <h3><u>Upgrade from versions earlier than 1.12</u></h3>
 
-You must upgrade to 1.12 first before upgrading to 1.13. You can find these instructions in the older 1.12 README file.
+It is recommended that you upgrade to 1.13 first before upgrading to 1.14. You can find instructions on how to upgrade to 1.13 in the older 1.13 README file.
 
 <h3><u>How to start</u></h3>
 
@@ -89,7 +90,7 @@ language selection here.
 This is a tool that scans your storage drive for MSX software supported by openMSX and adds it to the launcher databases.
 
 <h3><u>Change Machine</u></h3>
-This tool allows you to change machines in your launcher profiles in the current database or in all of them.
+Here you can change machines in your launcher profiles in the current database or in all of them.
 
 <h3><u>Favorites</u></h3>
 Favorites button is located above the four main buttons. When pressing it, a menu containing the currently saved favorites appears.
@@ -99,7 +100,7 @@ You can go straight to your favorite game by selecting one from the list. You ca
 Filters box can be found above the game list. When pressing the arrow on it, a menu pops up with a list of saved filters,
 small buttons to either delete or edit saved filters, quick filters and options to reset current filters and add new ones.
 When a filter is set but not saved, the filters box will be labeled (Untitled Filter). When hovering the mouse over the filters
-box in this state, a tool tip of set filters will appear.
+box in this state, a tooltip of the currently applied filters will appear.
 
 <h3><u>Search</u></h3>
 Search button is located above the four main buttons. When pressing it, a text field appears. Enter any part of the name of the game or first few
@@ -136,8 +137,8 @@ GNOME, nautilus will open up with the directory where game's main file is.
 in the main window.
 <br></br>
 4) Find Related: this finds up to 15 MSX games related to the currently selected game. The selection takes into account the game name,
-company and genre and the results are displayed with a screenshot for each, a link to the corresponding Generation-MSX page and a search
-link on YouTube.
+company and genre and the results are displayed with a screenshot for each, a link to the corresponding Generation-MSX page, a search
+link on YouTube and a link to the game in the launcher if one is found.
 <br></br>
 5) Info: this displays the user-specified info file using the system's default viewer. In the "Fill Database" feature, this
 field gets set to the game's MSX Generation page, but it can be anything the user desires (text file, PDF, etc).
@@ -152,7 +153,10 @@ Backups are identified by their timestamps.
 This can be accessed from the Tools menu and there you can view the game launch history as well as the most played 10 games.
 
 <h3><u>IPS / UPS Patch Center</u></h3>
-This tool allows to patch any files using IPS or UPS patches.
+A tool to patch any files using IPS or UPS patches.
+
+<h3><u>LHA Extractor</u></h3>
+A tool to extract LHA/LZH files.
 
 <h3><u>Drag and Drop</u></h3>
 You can drag and drop game files and directories to the main launcher window for quick addition to the current database.
@@ -199,6 +203,15 @@ end script
 Email Sam Elsharif at oelsha at engineer dot com.
 
 <h3><u>Release history</u></h3>
+
+<b>Version 1.14 - released June 1, 2020</b>
+<br></br>
+Enhancements:
+<ul>
+<li>Improved the related games algorithm and added a link to the game if found in the launcher</li>
+<li>Added LHA/LZH file extractor</li>
+<li>Added 'tsx' extension to the list of acceptable Tape types</li>
+</ul>
 
 <b>Version 1.13 - released Mar 22, 2020</b>
 <br></br>

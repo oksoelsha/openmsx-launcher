@@ -7,7 +7,7 @@
 		<relativePath>../openmsx-launcher-build/pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>builder</artifactId>
+	<artifactId>extractor</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>info.msxlaunchers.openmsx</groupId>
@@ -15,9 +15,11 @@
 			<version>${version}</version>
 		</dependency>
 		<dependency>
-			<groupId>info.msxlaunchers.openmsx</groupId>
-			<artifactId>data</artifactId>
-			<version>${version}</version>
+			<groupId>jp.gr.java_conf.dangan</groupId>
+			<artifactId>lha</artifactId>
+			<version>0.06-05</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/lha-0.06-05.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>

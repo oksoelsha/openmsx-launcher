@@ -8,6 +8,7 @@
 	Mar 2018 Sam Elsharif		version 3
 	Aug 2018 Sam Elsharif		version 4
 	Jan 2020 Sam Elsharif		version 5
+	Jun 2020 Sam Elsharif		version 6
 -->
 <softwaredb>
 	<software>
@@ -1384,6 +1385,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">a5c7fbfb22ddc9fb39b9c01810d27ddf96e9c17f</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">7c4a2236240bff12bf0dfeee7ca046646a7e4913</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">2991c94373e7162c0da4cc7b2ca7900e82dcd7cf</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Superiority Fighters</title>
+		<system>MSX</system>
+		<company>Mushroom</company>
+		<year>1994</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">03db284a1c879694fd3693db1876f4b5646c7873</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>T.N.T.</title>
