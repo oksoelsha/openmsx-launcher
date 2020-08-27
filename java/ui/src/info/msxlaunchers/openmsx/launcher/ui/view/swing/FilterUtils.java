@@ -48,6 +48,8 @@ class FilterUtils
 				.sorted()
 				.map(FilterUtils::getFilterItemObject)
 				.map(f -> messages.get(f.type.toString()) + ": " + getFilterDescriptor(f.type, f.value1, f.value2, f.parameter, messages))
+				.map(f -> f.replaceAll("<", "&lt;"))
+				.map(f -> f.replaceAll(">", "&gt;"))
 				.collect(Collectors.toList());
 	}
 

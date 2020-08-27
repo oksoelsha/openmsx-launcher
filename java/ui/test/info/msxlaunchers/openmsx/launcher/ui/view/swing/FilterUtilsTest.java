@@ -53,7 +53,7 @@ public class FilterUtilsTest
 		monikers.add( "SOUND:SCC::" );
 
 		List<String> expectedList = Stream.of( "Co: Konami", "Cou: Jp", "Gen: MSX2+", "Genre: Action", "Med: rom",
-				"Size: >= 2 KB", "Size: >= 4 KB , <= 8 KB", "So: MSX-MUSIC", "So: SCC", "Vid: MSX", "Ye: >= 1985", "Ye: >= 1985 , <= 1988").
+				"Size: &gt;= 2 KB", "Size: &gt;= 4 KB , &lt;= 8 KB", "So: MSX-MUSIC", "So: SCC", "Vid: MSX", "Ye: &gt;= 1985", "Ye: &gt;= 1985 , &lt;= 1988").
 				collect( Collectors.toList() );
 
 		List<String> displayStrings = FilterUtils.getFiltersStringRepresentation(monikers, messages);
@@ -85,13 +85,13 @@ public class FilterUtilsTest
 		assertEquals("Vid: MSX", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
 
 		moniker = Collections.singletonList("SIZE:8192:0:LESS");
-		assertEquals("Size: < 8 KB", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
+		assertEquals("Size: &lt; 8 KB", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
 
 		moniker = Collections.singletonList("SIZE:2048:0:GREATER");
-		assertEquals("Size: > 2 KB", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
+		assertEquals("Size: &gt; 2 KB", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
 
 		moniker = Collections.singletonList("YEAR:1998::EQUAL_OR_LESS");
-		assertEquals("Ye: <= 1998", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
+		assertEquals("Ye: &lt;= 1998", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
 
 		moniker = Collections.singletonList("YEAR:1985::EQUAL");
 		assertEquals("Ye: = 1985", FilterUtils.getFiltersStringRepresentation(moniker, messages).get(0));
