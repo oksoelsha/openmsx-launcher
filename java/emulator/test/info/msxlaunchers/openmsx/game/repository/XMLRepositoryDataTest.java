@@ -122,18 +122,16 @@ public class XMLRepositoryDataTest
 	}
 
 	@Test
-	public void givenTwoExistingXMLFilesWithMatchingCode_whenGetGameInfo_thenReturnGameRepository() throws IOException
+	public void givenExistingXMLFilesWithMatchingCode_whenGetGameInfo_thenReturnGameRepository() throws IOException
 	{
 		Set<XMLFileGetter> xmlFileGetters = Stream.of( xmlFileGetter1, xmlFileGetter2 ).collect( Collectors.toSet() );
 
-		File xmlFile1 = new File( "file1" );
-		File xmlFile2 = new File( "file2" );
+		File xmlFile = new File( "file" );
 
-		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile1 );
-		Mockito.when( xmlFileGetter2.get() ).thenReturn( xmlFile2 );
+		Mockito.when( xmlFileGetter1.get() ).thenReturn( xmlFile );
 
 		RepositoryGame repositoryGame = RepositoryGame.title( "title" ).system( "MSX" ).company( "company" ).year( "year" ).country( "country" ).build();
-		Mockito.when( xmlProcessor.getGameInfo( xmlFile1, "code" ) ).thenReturn( repositoryGame );
+		Mockito.when( xmlProcessor.getGameInfo( xmlFile, "code" ) ).thenReturn( repositoryGame );
 
 		XMLRepositoryData repositoryData = new XMLRepositoryData( xmlProcessor, xmlFileGetters );
 
