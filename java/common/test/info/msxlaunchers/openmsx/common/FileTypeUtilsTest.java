@@ -19,6 +19,10 @@ public class FileTypeUtilsTest
 	private String riUpper = "riUpper.RI";
 	private String col = "col.col";
 	private String colUpper = "colUpper.COL";
+	private String mx1 = "mx1.mx1";
+	private String mx1Upper = "mx1Upper.MX1";
+	private String mx2 = "mx2.mx2";
+	private String mx2Upper = "mx2Upper.MX2";
 
 	private String di1 = "di1.di1";
 	private String di1Upper = "di1Upper.DI1";
@@ -30,6 +34,10 @@ public class FileTypeUtilsTest
 	private String dskUpper = "dskUpper.DSK";
 	private String xsa = "files/xsa.xsa";
 	private String xsaUpper = "xsaUpper.XSA";
+	private String fd1 = "fd1.fd1";
+	private String fd1Upper = "fd1Upper.FD1";
+	private String fd2 = "fd2.fd2";
+	private String fd2Upper = "fd2Upper.FD2";
 
 	private String tapeCas = "tapeCas.cas";
 	private String tapeCasUpper = "tapeCasUpper.CAS";
@@ -93,6 +101,18 @@ public class FileTypeUtilsTest
 		file = new File( colUpper );
 		assertTrue( FileTypeUtils.isROM( file ) );
 
+		file = new File( mx1 );
+		assertTrue( FileTypeUtils.isROM( file ) );
+
+		file = new File( mx1Upper );
+		assertTrue( FileTypeUtils.isROM( file ) );
+
+		file = new File( mx2 );
+		assertTrue( FileTypeUtils.isROM( file ) );
+
+		file = new File( mx2Upper );
+		assertTrue( FileTypeUtils.isROM( file ) );
+
 		file = new File( dsk );
 		assertFalse( FileTypeUtils.isROM( file ) );
 
@@ -148,6 +168,18 @@ public class FileTypeUtilsTest
 		assertTrue( FileTypeUtils.isDisk( file ) );
 
 		file = new File( xsaUpper );
+		assertTrue( FileTypeUtils.isDisk( file ) );
+
+		file = new File( fd1 );
+		assertTrue( FileTypeUtils.isDisk( file ) );
+
+		file = new File( fd1Upper );
+		assertTrue( FileTypeUtils.isDisk( file ) );
+
+		file = new File( fd2 );
+		assertTrue( FileTypeUtils.isDisk( file ) );
+
+		file = new File( fd2Upper );
 		assertTrue( FileTypeUtils.isDisk( file ) );
 
 		file = new File( rom );
@@ -463,12 +495,14 @@ public class FileTypeUtilsTest
 		Set<String> romExtensions = FileTypeUtils.getROMExtensions();
 
 		//there are currently two ROM extensions supported
-		assertEquals( 3, romExtensions.size() );
+		assertEquals( 5, romExtensions.size() );
 
 		//check the ROM extensions
 		assertTrue( romExtensions.contains( "rom" ) );
 		assertTrue( romExtensions.contains( "ri" ) );
 		assertTrue( romExtensions.contains( "col" ) );
+		assertTrue( romExtensions.contains( "mx1" ) );
+		assertTrue( romExtensions.contains( "mx2" ) );
 	}
 
 	@Test( expected = UnsupportedOperationException.class )
@@ -485,7 +519,7 @@ public class FileTypeUtilsTest
 		Set<String> diskExtensions = FileTypeUtils.getDiskExtensions();
 
 		//there are currently five disk extensions supported
-		assertEquals( 5, diskExtensions.size() );
+		assertEquals( 7, diskExtensions.size() );
 
 		//check the disk extensions
 		assertTrue( diskExtensions.contains( "di1" ) );
@@ -493,6 +527,8 @@ public class FileTypeUtilsTest
 		assertTrue( diskExtensions.contains( "dsk" ) );
 		assertTrue( diskExtensions.contains( "dmk" ) );
 		assertTrue( diskExtensions.contains( "xsa" ) );
+		assertTrue( diskExtensions.contains( "fd1" ) );
+		assertTrue( diskExtensions.contains( "fd2" ) );
 	}
 
 	@Test( expected = UnsupportedOperationException.class )

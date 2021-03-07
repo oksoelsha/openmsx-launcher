@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
  */
 public final class FileTypeUtils
 {
-	private static final Set<String> romExtensions = getUnmodifiableSet( "ri", "rom", "col" );
-	private static final Set<String> diskExtensions = getUnmodifiableSet( "di1", "di2", "dmk", "dsk", "xsa" );
+	private static final Set<String> romExtensions = getUnmodifiableSet( "ri", "rom", "col", "mx1", "mx2" );
+	private static final Set<String> diskExtensions = getUnmodifiableSet( "di1", "di2", "dmk", "dsk", "xsa", "fd1", "fd2" );
 	private static final Set<String> tapeExtensions = getUnmodifiableSet( "cas", "wav", "tsx" );
 	private static final Set<String> harddiskExtensions = getUnmodifiableSet( "dsk", "hdd" );
 	private static final Set<String> laserdiscExtensions = getUnmodifiableSet( "ogv" );
