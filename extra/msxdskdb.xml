@@ -9,6 +9,7 @@
 	Aug 2018 Sam Elsharif		version 4
 	Jan 2020 Sam Elsharif		version 5
 	Jun 2020 Sam Elsharif		version 6
+	Apr 2022 Sam Elsharif		version 7
 -->
 <softwaredb>
 	<software>
@@ -44,6 +45,8 @@
 		<year>1995</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">fac5d8b94300bb04f503076c9f1a3a7575c2eac9</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c56a482e8793392747a6df2c33a35d9cd555dad0</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f5b28a1334cc304149387fb3a76fdcd2ddacb74a</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Aleste 2</title>
@@ -219,6 +222,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">485631e2aafe305d31df2e88d7883effded8f22b</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Birdie World</title>
+		<system>MSX</system>
+		<company>Birdy software</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b2e7a9c53a026c096beaac0303a505dccfcf6e1b</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Black Cyclon</title>
 		<system>MSX</system>
 		<company>Parallax</company>
@@ -360,6 +371,14 @@
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">6424561974dbd8cf20ffc4f5ed830fca5ab63b7c</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">900408dc9a71b9a58d2c5d5bd13ce964db1b3414</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Cosmogang - DE Puzzle</title>
+		<system>MSX</system>
+		<company>CTRL+Break</company>
+		<year>1999</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">de63f1fc571e4dd4f4f1e2385ebba699265396a7</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Cosmo Traveler</title>
@@ -505,6 +524,14 @@
 		<year>1994</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">ae244126c8987d530ed2461d2371ecc4addc7244</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Entasis</title>
+		<system>MSX</system>
+		<company>White Mouse Software</company>
+		<year>1994</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">6ab35ae0ba5d74c89a11d5a0896b667ae97ecdf7</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>F-Nano 2' - 3D Car Action</title>
@@ -817,6 +844,14 @@
 		<country>BR</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">76bbabe16db07a7c8e6477f7d97d85d897508864</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">a74400276377c736d4f1f9d970e35c78c8c569c4</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>KPI Ball</title>
+		<system>MSX</system>
+		<company>boh-ken</company>
+		<year>2000</year>
+		<country>ES</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">835b776c9e5f7362914bae4f56811576c019a05a</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>L'Affaire...</title>
@@ -1435,6 +1470,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">d11153b79852a14ccd8682ca48697bfbd5a9d676</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Tokimeki Sports Gal</title>
+		<system>MSX</system>
+		<company>Adult Inn</company>
+		<year>1988</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7f02a549ed4770b2ec912cb9d7049c16c1e144cf</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Trojka</title>
 		<system>MSX</system>
 		<company>BCF</company>
@@ -1620,6 +1663,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">4b840f5bff7dfd42144b5a34d59a410999f953be</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">6efdbec948473f1f3e85038e1a4593cd93ec47fc</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">a61ae8912e21c0fbf7c9a9d558ccdb193b3a6876</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Yumeji</title>
+		<system>MSX</system>
+		<company>Fairytale</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a16af7666e4262b51152b759db9a640d8722284f</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Zanac-Ex</title>
