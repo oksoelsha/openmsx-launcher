@@ -10,6 +10,7 @@
 	Jan 2020 Sam Elsharif		version 5
 	Jun 2020 Sam Elsharif		version 6
 	Apr 2022 Sam Elsharif		version 7
+	Aug 2022 Sam Elsharif		version 8
 -->
 <softwaredb>
 	<software>
@@ -58,6 +59,7 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">08d59aa5a950e1ddd7aedd789d632def2c05c79e</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">8455db2705020b50f2226f58e6a4defd49e6dd76</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">1cf0bac6352a637ba7b13501dc9c44c73bce1096</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b28c70c4d89e0736acc94816f88482da24a78725</hash></format><remark><text>WOOMB Version</text></remark></dsk></dump>
 	</software>
 	<software>
 		<title>Aleste Bio Challenge</title>
@@ -264,6 +266,14 @@
 		<year>2004</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">1a90c2745792a0a57dc23955693cc144e0e14354</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Bombaman Extra Ammo</title>
+		<system>MSX</system>
+		<company>TeamBomba</company>
+		<year>2008</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">64f8224d76f38632331362f9214ea115a79119cd</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Bomberman 2</title>
