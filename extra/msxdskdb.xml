@@ -11,6 +11,7 @@
 	Jun 2020 Sam Elsharif		version 6
 	Apr 2022 Sam Elsharif		version 7
 	Aug 2022 Sam Elsharif		version 8
+	Nov 2022 Sam Elsharif		version 9
 -->
 <softwaredb>
 	<software>
@@ -137,6 +138,15 @@
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">168e0286eab427cd4ca47c7286c2a05b92425ff4</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">df9ceebfdc28fb3ef2d994c03dfb2692fb97451c</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Army Moves</title>
+		<system>MSX</system>
+		<company>Dynamic</company>
+		<year>1987</year>
+		<country>ES</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9e5e025092d786668f0b15d875ea4832f95c045b</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">15804a4a63dbde8c052ef144b5a6df949939eeee</hash></format><remark><text>Side B</text></remark></dsk></dump>
 	</software>
 	<software>
 		<title>Aura Battle Dunbine</title>
