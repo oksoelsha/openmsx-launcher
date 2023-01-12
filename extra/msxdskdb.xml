@@ -12,6 +12,7 @@
 	Apr 2022 Sam Elsharif		version 7
 	Aug 2022 Sam Elsharif		version 8
 	Nov 2022 Sam Elsharif		version 9
+	Jan 2023 Sam Elsharif		version 10
 -->
 <softwaredb>
 	<software>
@@ -174,7 +175,7 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">f693d1b59a6e2bfcc7e42ca83abf3d39671fb4b3</hash></format></dsk></dump>
 	</software>
 	<software>
-		<title>Barnuba</title>
+		<title>Barunba</title>
 		<system>MSX</system>
 		<company>NAMCO</company>
 		<year>1990</year>
@@ -470,6 +471,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">e49e98ec64dea296a7df95a7691c04ccbb7f383e</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Dead of the Brain</title>
+		<system>MSX</system>
+		<company>Fairytale</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">b07072ca1ec75b03707ed5d16d05f0821698c9c6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">df46b37fbff2b7334dd5b3574a640b3a8392c38e</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Devil Hunter</title>
 		<system>MSX</system>
 		<company>MSX Magazine</company>
@@ -505,6 +515,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">ee41f68aef2de5aee603e8723c1d1012431abd33</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">50031b0918507864b6904bca225c69287b398052</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">9b0f9c7cb3eff874ecb9795a43d6911884f74464</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Dragon Knight II</title>
+		<system>MSX</system>
+		<company>Elf</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">941b7b8c239e912f95b2268b6e5ba0bc43313661</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">ec513191528fcbb4b3e2a22487569e43956950af</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Dragon Slayer VI - The Legend of Heroes</title>
@@ -874,7 +893,7 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">835b776c9e5f7362914bae4f56811576c019a05a</hash></format></dsk></dump>
 	</software>
 	<software>
-		<title>L'Affaire...</title>
+		<title>L'Affaire</title>
 		<system>MSX</system>
 		<company>Infogrames</company>
 		<year>1986</year>
@@ -882,6 +901,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">074c04ca2adadf539b5ddde0fb6be278d059b138</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">ab2587b5ce258f15b4d606a3d0506e2790f02557</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">a4e7568ebb1c421bae584d94b6c2c9f292fa26d3</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>L'Empereur</title>
+		<system>MSX</system>
+		<company>KOEI</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0a39471154870b92e5b083b8db1a57c33a5aad2a</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f584aaed11368beddab5b8428eee9bb4b11a1cf7</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>La Abadía del Crimen</title>
@@ -1115,6 +1143,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">28d9dc71c80a05059ab21f3081e3f16a9ff6bc06</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Phantasie IV - The Birth of Heroes</title>
+		<system>MSX</system>
+		<company>SSI</company>
+		<year>1991</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d38b9de3a630e443d0deeaa7f89bf5c9833fde99</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dca7442954462cd1cf47bca45e5259a57a6a94ba</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Pixess</title>
 		<system>MSX</system>
 		<company>Compjoetania</company>
@@ -1271,6 +1308,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">3178ed0fa895f706d3a3d7a25573110ad09bfb30</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Sales Discontinued</title>
+		<system>MSX</system>
+		<company>NOP</company>
+		<year>2022</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5e783b85c61bed189de4180ab1e541d17ba08eda</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>SD Snatcher</title>
 		<system>MSX</system>
 		<company>Konami</company>
@@ -1304,6 +1349,16 @@
 		<year>1999</year>
 		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">9eb6e637c0aa8ac4dcd2bda0cc8e3307c7b10758</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Shanghai II</title>
+		<system>MSX</system>
+		<company>Activision</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">dc205edfff508674b1a37dd414e6c90d6347c365</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d2f578ff34a34525ee5fa7598ceb031bf72e28bd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8da08707c5738be4ecf8a945eb05caf5e90b903d</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Shrines of Enigma</title>
@@ -1475,6 +1530,15 @@
 		<country>JP</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">e23259d6d941db9e0ff62da503a3a8087e9ed36e</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">6641aa6bbdc456e5bd2004a47172b9a5ddfa7032</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>The Tower of Cabin? - Cabin Panic</title>
+		<system>MSX</system>
+		<company>Microcabin</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">0e8d2b0177bd601e84c71735b4b498be2818085f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">4aa5425898f7b6023698865aa4e8b45cff67da19</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Time Bandits</title>
@@ -1683,6 +1747,7 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">4b840f5bff7dfd42144b5a34d59a410999f953be</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">6efdbec948473f1f3e85038e1a4593cd93ec47fc</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">a61ae8912e21c0fbf7c9a9d558ccdb193b3a6876</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">8e1c4bad5a90aabdd4ab738d08c426f8aa6affbc</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Yumeji</title>
