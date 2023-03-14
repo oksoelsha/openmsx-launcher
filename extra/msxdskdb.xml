@@ -13,6 +13,7 @@
 	Aug 2022 Sam Elsharif		version 8
 	Nov 2022 Sam Elsharif		version 9
 	Jan 2023 Sam Elsharif		version 10
+	Mar 2023 Sam Elsharif		version 11
 -->
 <softwaredb>
 	<software>
@@ -1314,6 +1315,15 @@
 		<year>2022</year>
 		<country>NL</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">5e783b85c61bed189de4180ab1e541d17ba08eda</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">9cefc3c913026e2fd42d06f58e3d11971e4675a2</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Sampbox 4 macro</title>
+		<system>MSX</system>
+		<company>NOP</company>
+		<year>1992</year>
+		<country>NL</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">3a00b4adf8c1756a4973b57174169d9e003151d3</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>SD Snatcher</title>
