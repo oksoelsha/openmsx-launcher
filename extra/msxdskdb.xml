@@ -14,6 +14,7 @@
 	Nov 2022 Sam Elsharif		version 9
 	Jan 2023 Sam Elsharif		version 10
 	Mar 2023 Sam Elsharif		version 11
+	Jun 2023 Sam Elsharif		version 12
 -->
 <softwaredb>
 	<software>
@@ -328,6 +329,23 @@
 		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">508df8781a4463ad345b888bcc0dc309b8de0cc5</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">bca8592b98525c7e122affc19623a5f15d86fc69</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Burai</title>
+		<system>MSX</system>
+		<company>Riverhill Soft Inc.</company>
+		<year>1990</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">f4f7273ec041383bbf66f60a4f08c8fb9132bee5</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Burai II: The Concluding Chapter</title>
+		<system>MSX</system>
+		<company>Riverhill Soft Inc.</company>
+		<year>1992</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">de9f34f0f11858817a4df7b97a0968b3340333d2</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">71eb34a6963f59a8bc9bf5d36ff512d85a7e85cf</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Castle Adventure</title>
@@ -1019,6 +1037,17 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">0a71a5e0406489f1d9ae8fc989e78b932fed986b</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Mighty Battle Skin Panic</title>
+		<system>MSX</system>
+		<company>Gainax</company>
+		<year>1993</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">933f337eba2499f55591e3f8859f75e2638a1507</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">142fb35d2065e5a122c6368fa7baba713a36818f</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a6e353cef47044436cd309790268496d3832b7e4</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">c012907bb7d9251be08b85c57f5d57b987c9944d</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Milkymate</title>
 		<system>MSX</system>
 		<company>Atsic</company>
@@ -1572,6 +1601,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">7f02a549ed4770b2ec912cb9d7049c16c1e144cf</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Tritorn II - Road of Darkness</title>
+		<system>MSX</system>
+		<company>Sein Soft / XAIN Soft / Zainsoft</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">5fc87f74b19e20b8bfad92703594f785efc390fd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">7bfc19b2bf9e45c44828d6cce935abd99490d373</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Trojka</title>
 		<system>MSX</system>
 		<company>BCF</company>
@@ -1590,6 +1628,14 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">4a5ed7da568128295edb8c9967a7f7dead1e2838</hash></format></dsk></dump>
 	</software>
 	<software>
+		<title>Ultima IV - Quest of the Avatar</title>
+		<system>MSX</system>
+		<company>Origin Systems</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">359fd27c19cf179d96ecebaee2056f2c47044624</hash></format></dsk></dump>
+	</software>
+	<software>
 		<title>Undeadline</title>
 		<system>MSX</system>
 		<company>T&amp;ESOFT</company>
@@ -1603,6 +1649,15 @@
 		<dump><dsk><format type="dsk"><hash algo="sha1">9eff907fab1ba3c3c24c297d5d23f5b7c0083466</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">7ac6de3934dd761dd4e3027c4cefacca70d5fa7e</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">f05b0b58f9ff8c64c4797c7c30183672524ace42</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>Urusei Yatsura: Koi no Survival Birthday</title>
+		<system>MSX</system>
+		<company>Arrow Soft</company>
+		<year>1987</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a82d1a1924f8e03db3a0471a18dc2e8340cfe0fd</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a3736982e96c2c247c32d30bdea5b4cf521687b8</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Vectron</title>
@@ -1630,6 +1685,23 @@
 		<country>ES</country>
 		<dump><dsk><format type="dsk"><hash algo="sha1">f687caa73276dd59d2187f3d5dfe861b06698319</hash></format></dsk></dump>
 		<dump><dsk><format type="dsk"><hash algo="sha1">f0490d76f1bcf753a27177246e672797dd20a797</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>What's Michael?</title>
+		<system>MSX</system>
+		<company>Micro Cabin</company>
+		<year>1989</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">d467b23a83e983dd01d303d7bed1d1dc25cd2ad5</hash></format></dsk></dump>
+	</software>
+	<software>
+		<title>World Golf</title>
+		<system>MSX</system>
+		<company>ENIX</company>
+		<year>1985</year>
+		<country>JP</country>
+		<dump><dsk><format type="dsk"><hash algo="sha1">96078fc4d89e9168c0588cf894f485c3a50f1dd6</hash></format></dsk></dump>
+		<dump><dsk><format type="dsk"><hash algo="sha1">a38f422bd5403a983d15df8b5ecd11c3b4938d55</hash></format></dsk></dump>
 	</software>
 	<software>
 		<title>Xak I - The Art of Visual Stage</title>
