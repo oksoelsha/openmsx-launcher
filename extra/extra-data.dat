@@ -29,6 +29,7 @@
 -- Version 1.36 - Apr 2023 - (included in Novo Player 1.5) - Sam Elsharif
 -- Version 1.37 - Jun 2023 - (included in Novo Player 1.5.1) - Sam Elsharif
 -- Version 1.38 - Sep 2023 - (included in Novo Player 1.5.2) - Sam Elsharif
+-- Version 1.39 - Oct 2023 - (included in Novo Player 1.6) - Sam Elsharif
 --
 -- The initial SHA1-to-Generaion-MSX id mapping in version 1.10 was taken from openMSX game ROM database
 -- Thanks to Sandy Pleyte from Generation-MSX for providing the initial set (version 1.10) of generation (or system),sound chip and genre data based on game id
@@ -10499,6 +10500,33 @@ e53c000e8d4eebfe072e0842eec2acd70447a1ff
 #7967
 2,1,26
 2ea8faa80dd73afb4b72fa00a9ad2e4183fc08a4
+#7968
+1,1,7|37
+08ac425cb201433578b60a31617805f762da9e8e
+#7986
+1,1,7
+c642d32d36c665ebdfd7bcf2966eb3370200eb32
+#7991
+1,1,1
+aa1ee6e3a47872691f3e8520783c015f343a944f
+#7995
+1,1,1
+575f4a6d693dba59fa536eca73806786241bc426
+#7996
+1,1,8
+51b76ade9d1a94d85351b2f143ae1417dc41cb0d|5c54c3ff7e8299ad462c8039aa74c1088379e726
+#7999
+1,1,1|39
+e408c9f24f848d01f74bee0fdb323cb4cae4268e
+#8004
+1,1,26
+cb012b1860226a1fb06e01d2a175a466900d404d
+#8005
+3,1,4
+e16d13e4c10589609cb4a2e4f7051e68aa9c3658
+#8006
+1,1,1
+1ebfcf9f29d24c78f2c8afd5b486bf7f007bca58
 -- The following games do not exist in Generation-MSX.
 -- The starting code is 10000.
 --
