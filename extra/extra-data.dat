@@ -1,4 +1,4 @@
--- Database containing extra data for blueMSX Launcher and openMSX Launcher
+-- Database containing extra data for blueMSX Launcher, openMSX Launcher and Novo Player
 --
 -- Version 1.10 - Oct 2010 - (included in blueMSX Launcher 1.10) - Sam Elsharif
 -- Version 1.11 - Nov 2010 - (included in blueMSX Launcher 1.11) - Sam Elsharif
@@ -32,6 +32,7 @@
 -- Version 1.39 - Oct 2023 - (included in Novo Player 1.6) - Sam Elsharif
 -- Version 1.40 - Dec 2023 - (included in Novo Player 1.7) - Sam Elsharif
 -- Version 1.41 - Jan 2024 - (included in Novo Player 1.8) - Sam Elsharif
+-- Version 1.42 - Feb 2024 - (included in Novo Player 1.9) - Sam Elsharif
 --
 -- The initial SHA1-to-Generaion-MSX id mapping in version 1.10 was taken from openMSX game ROM database
 -- Thanks to Sandy Pleyte from Generation-MSX for providing the initial set (version 1.10) of generation (or system),sound chip and genre data based on game id
@@ -2209,7 +2210,7 @@ c68acf155b1245dd341641fb0ebcfcd90a3cf16c|bc4cfc1872463fdf5d1c273bc2234f552705cc0
 fc9adbd816109f7705f342c01f168bb09ca4b2ff|35c02d8d590d92053f083b0c0c897277a5375af6|772ad4eabbf0941a9b4655f5615f2a5cf22246b1|0708513c35d3de9245342353fd1c9c3994bc9792|69181fb4e37224e45a43c790ec9a6ef3c1215b1c
 #974
 1,1,30
-7dc7f7e3966943280f34836656a7d1bd3ace67cd|03b42b77b1a7412f1d7bd0998cf8f2f003f77d0a
+7dc7f7e3966943280f34836656a7d1bd3ace67cd|03b42b77b1a7412f1d7bd0998cf8f2f003f77d0a|d71600e87e0703706f481eb55cae0784f4393d8e
 #976
 2,1,30
 00c70cf37c71cb8f99567ae407ff6dd52c4774c2|aba839d554733850902f3073f7974e2e87c488ba|c3ab3edb7f9ba31124092dc0f1dd2f13d3b52f8f|19e79a79be13ac62bb002ed3323502be97886e17|db22cd03db61a495d55c460cfaa266271c8a5926|17dcbe8e9ab792483a542b0230897baf0240dcc9|936f9ba82c7cdb703a4b1fffce75b03508008e12
@@ -9529,7 +9530,7 @@ cab5cdac031134c3f5e2d846116c684372ae0997
 ace202e87337fbc54fea21e22c0b3af0abe6f4ae
 #5637
 1,1,1
-07fc04fd2e58320f44edf4721c307192a093b48c
+07fc04fd2e58320f44edf4721c307192a093b48c|3be7500cdbe086c9c5e2e20c2f5a91958fe57985
 #5638
 1,1,3
 fce65889dc551c83638f2e2ade1fd61dd44d6f58
@@ -10537,7 +10538,7 @@ e53c000e8d4eebfe072e0842eec2acd70447a1ff
 c642d32d36c665ebdfd7bcf2966eb3370200eb32
 #7989
 2,3,23|30
-6e2ea385d8cf60a6356127fa974c7497854239fe
+6e2ea385d8cf60a6356127fa974c7497854239fe|53919444590db931fa8e4937beb896d23b54ca53
 #7991
 1,1,1
 aa1ee6e3a47872691f3e8520783c015f343a944f
@@ -10655,6 +10656,12 @@ e89fd84a911901e43c533c58c639b1445151e54e
 #8132
 1,1,1
 f66a1c1f1d0e443b4fda811b4ebe0828005c3d3b
+#8146
+1,1,26
+9aef2759a6d40efa15b8099ac056555bb0458524
+#8147
+1,1,1
+1ecd56a923d062cd5e1199c3a6221603925c92d3
 -- The following games do not exist in Generation-MSX.
 -- The starting code is 10000.
 --
